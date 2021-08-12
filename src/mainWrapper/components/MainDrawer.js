@@ -2,14 +2,13 @@ import {
   Drawer,
   Typography,
   IconButton,
-  Card,
-  Divider,
   List,
   ListItemIcon,
   ListItemText,
   makeStyles,
   withStyles,
   useTheme,
+  Container,
 } from "@material-ui/core";
 import MuiListItem from "@material-ui/core/ListItem";
 import { ChevronLeft, ChevronRight } from "@material-ui/icons";
@@ -24,26 +23,6 @@ function MainDrawer({ drawerWidth, open, user, handleDrawerClose }) {
         background: "#F9F9F9",
         width: "100%",
         height: "100%",
-      },
-      appBar: {
-        transition: theme.transitions.create(["width", "margin"], {
-          easing: theme.transitions.easing.sharp,
-          duration: theme.transitions.duration.leavingScreen,
-        }),
-      },
-      appBarShift: {
-        marginLeft: drawerWidth,
-        width: `calc(100% - ${drawerWidth}px)`,
-        transition: theme.transitions.create(["width", "margin"], {
-          easing: theme.transitions.easing.sharp,
-          duration: theme.transitions.duration.enteringScreen,
-        }),
-      },
-      menuButton: {
-        marginRight: theme.spacing(2),
-      },
-      hide: {
-        display: "none",
       },
       drawer: {
         width: drawerWidth,
@@ -60,76 +39,37 @@ function MainDrawer({ drawerWidth, open, user, handleDrawerClose }) {
         // necessary for content to be below app bar
         ...theme.mixins.toolbar,
         justifyContent: "flex-end",
+        backgroundColor: "#CDCECB",
       },
-      content: {
-        flexGrow: 1,
-        //padding: theme.spacing(3),
-        transition: theme.transitions.create("margin", {
-          easing: theme.transitions.easing.sharp,
-          duration: theme.transitions.duration.leavingScreen,
-        }),
-        marginLeft: -drawerWidth,
-        backgroundSize: "cover",
-        backgroundRepeat: "repeat-x",
-        backgroundPosition: "right top",
-        backgroundAttachment: "scroll",
-      },
-      contentShift: {
-        transition: theme.transitions.create("margin", {
-          easing: theme.transitions.easing.easeOut,
-          duration: theme.transitions.duration.enteringScreen,
-        }),
-        marginLeft: 0,
+      drawerSubHeader: {
+        display: "block",
+        alignItems: "center",
+        backgroundColor: "#CDCECB",
+        borderRadius: '0px 0px 15px 15px',
       },
 
       active: {
-        background: "rgba(3,169,244,0.6)",
-      },
-      title: {
-        padding: theme.spacing(2),
-        //color: "white",
-      },
-      appTitle: {
-        flexGrow: 1,
-      },
-      avatar: {
-        marginLeft: theme.spacing(2),
-        color: theme.palette.getContrastText(theme.palette.secondary.light),
-        backgroundColor: theme.palette.secondary.light,
-      },
-      icon: {
-        width: theme.spacing(4),
-        height: theme.spacing(4),
-      },
-      cardHeader: {
-        backgroundColor: theme.palette.primary.light,
-      },
-      locationSelector: {
-        width: 150,
+        background: "rgba(247,204,0,0.9)",
       },
       listItem: {
-        //color: "white",
+        borderRadius: '0px 20px 20px 0px'
       },
-      dialogPaper: {
-        borderRadius: "10px",
-      },
-      divider: {
-        //background: "rgba(255, 255, 255, 0.5)",
-        margin: "0px 10px",
-      },
+      listItemContent: {
+        color: "white"
+      }
     };
   });
 
   const ListItem = withStyles({
-    // root: {
-    //   "&:hover": {
-    //     backgroundColor: "rgba(3,169,244,0.2)",
-    //     color: "white",
-    //     "& .MuiListItemIcon-root": {
-    //       color: "white",
-    //     },
-    //   },
-    // },
+    root: {
+      "&:hover": {
+        backgroundColor: "rgba(247,204,0,0.3)",
+        color: "black",
+        "& .MuiListItemIcon-root": {
+          color: "black",
+        },
+      },
+    },
     selected: {},
   })(MuiListItem);
 
@@ -147,9 +87,6 @@ function MainDrawer({ drawerWidth, open, user, handleDrawerClose }) {
       classes={{ paper: classes.drawerPaper }}
     >
       <div className={classes.drawerHeader}>
-        <Typography variant="h5" className={classes.title}>
-          BulSU PiP
-        </Typography>
         <IconButton onClick={handleDrawerClose}>
           {theme.direction === "ltr" ? (
             <ChevronLeft style={{ color: "white" }} />
@@ -158,35 +95,37 @@ function MainDrawer({ drawerWidth, open, user, handleDrawerClose }) {
           )}
         </IconButton>
       </div>
-
-      <Card
-        style={{
-          backgroundColor: theme.palette.secondary.light,
-          margin: "10px",
-          padding: "10px",
-        }}
-      >
-        <Typography
-          variant="h6"
-          align="center"
-        >{`${user.suc} ${user.college}`}</Typography>
-      </Card>
-      <Divider classes={{ root: classes.divider }} />
+      <Container className={classes.drawerSubHeader} align = 'center'>
+        <img
+          src="images/bsuLogo.png"
+          style={{ objectFit: "fill", width: '90%' }}
+          background-position="center"
+          alt="BSU Logo"
+        />
+        <Typography variant="h5">
+          BULACAN STATE UNIVERSITY
+        </Typography>
+      </Container>
       <List>
-        {menuItems.filter((item) => item.for.includes(user.type)).map((item) => (
-          <ListItem
-            button
-            key={item.text}
-            onClick={() => history.push(item.path)}
-            className={location.pathname === item.path ? classes.active : null}
-          >
-            <ListItemIcon>{item.icon}</ListItemIcon>
-            <ListItemText
-              primary={item.text}
-              classes={{ primary: classes.listItem }}
-            />
-          </ListItem>
-        ))}
+        {menuItems
+          .filter((item) => item.for.includes(user.type))
+          .map((item) => (
+            <ListItem
+              button
+              key={item.text}
+              onClick={() => history.push(item.path)}
+              className={
+                location.pathname === item.path ? classes.active : null
+              }
+              className={`${location.pathname === item.path ? classes.active : ''} ${classes.listItem}`}
+            >
+              <ListItemIcon className = {classes.listItemContent}>{item.icon}</ListItemIcon>
+              <ListItemText
+                primary={item.text}
+                classes={{ primary: classes.listItemContent }}
+              />
+            </ListItem>
+          ))}
       </List>
     </Drawer>
   );

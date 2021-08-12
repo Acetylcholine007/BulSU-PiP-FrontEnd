@@ -1,6 +1,5 @@
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@material-ui/core";
-import { amber, blue } from "@material-ui/core/colors";
 import { useState, useCallback } from "react";
 
 import "./App.css";
@@ -16,8 +15,18 @@ import { AuthContext } from "./contexts/AuthContext";
 
 const theme = createTheme({
   palette: {
-    primary: blue,
-    secondary: amber,
+    primary: {
+      light: '#800000',
+      main: '#800000',
+      dark: '#800000',
+      contrastText: '#FFFFFF',
+    },
+    secondary: {
+      light: '#F7CC00',
+      main: '#F7CC00',
+      dark: '#F7CC00',
+      contrastText: '#000000',
+    },
   },
   typography: {
     fontFamily: "Quicksand",
