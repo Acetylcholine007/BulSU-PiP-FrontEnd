@@ -173,7 +173,7 @@ function MainDrawer({ drawerWidth, open, user, handleDrawerClose }) {
       </Card>
       <Divider classes={{ root: classes.divider }} />
       <List>
-        {menuItems.map((item) => (
+        {menuItems.filter((item) => item.for.includes(user.type)).map((item) => (
           <ListItem
             button
             key={item.text}

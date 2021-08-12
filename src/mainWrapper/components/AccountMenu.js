@@ -11,6 +11,7 @@ import {
   makeStyles,
 } from "@material-ui/core";
 import React from "react";
+import { useHistory } from "react-router-dom";
 
 function AccountMenu({
   showDialog,
@@ -89,6 +90,7 @@ function AccountMenu({
   });
 
   const classes = useStyles();
+  const history = useHistory();
 
   return (
     <Popover
@@ -120,6 +122,7 @@ function AccountMenu({
                 color="secondary"
                 variant="contained"
                 onClick={() => {
+                  history.push('/');
                   setUser(null);
                   setAnchorEl(null);
                 }}

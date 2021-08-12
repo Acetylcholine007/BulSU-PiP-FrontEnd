@@ -1,16 +1,18 @@
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@material-ui/core";
 import { amber, blue } from "@material-ui/core/colors";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 
 import "./App.css";
-import LogInPage from "./authenticationSection/pages/LogInPage";
 import MainWrapper from "./mainWrapper/pages/MainWrapper";
-import Dashboard from "./dashboardSection/pages/Dashboard";
-import Account from "./accountSection/pages/Account";
-import Project from "./projectSection/pages/Project";
-import Notification from "./notificationSection/pages/Notification";
+import LogInPage from "./sections/authenticationSection/pages/LogInPage";
+import SignUpPage from "./sections/authenticationSection/pages/SignUpPage";
+import DashboardPage from "./sections/dashboardSection/pages/DashboardPage";
+import AccountPage from "./sections/accountSection/pages/AccountPage";
+import ProjectPage from "./sections/projectSection/pages/ProjectPage";
+import NotificationPage from "./sections/notificationSection/pages/NotificationPage";
 import NotFound from "./shared/pages/NotFound";
+import { AuthContext } from "./contexts/AuthContext";
 
 const theme = createTheme({
   palette: {
@@ -29,39 +31,66 @@ const theme = createTheme({
 function App() {
   const [user, setUser] = useState(null);
 
+  const login = useCallback(
+    (user) => {
+      setUser(user);
+    }, []);
+
+  const logout = useCallback(
+    () => {
+      setUser(null);
+    }, []);
+
+  console.log(user);
   return (
-    <ThemeProvider theme={theme}>
-      {!user && <LogInPage setUser={setUser} />}
-      {user && (
-        <Router>
-          <MainWrapper user={user} setUser={setUser}>
+    <AuthContext.Provider value = {{user: user, login: login, logout: logout}}>
+      <ThemeProvider theme={theme}>
+        {!user && (
+          <Router>
             <Switch>
               <Route exact path="/">
-                <Dashboard />
+                <LogInPage setUser={setUser} />
               </Route>
-              <Route exact path="/dashboard">
-                <Dashboard />
+              <Route exact path="/signup">
+                <SignUpPage setUser={setUser} />
               </Route>
-              <Route exact path="/accounts">
-                <Account />
-              </Route>
-              <Route exact path="/accounts/:id"></Route>
-              <Route exact path="/projects">
-                <Project />
-              </Route>
-              <Route exact path="/projects/:id"></Route>
-              <Route exact path="/notifications">
-                <Notification />
-              </Route>
-              <Route exact path="/notifications/:id"></Route>
               <Route exact path="*">
                 <NotFound />
               </Route>
             </Switch>
-          </MainWrapper>
-        </Router>
-      )}
-    </ThemeProvider>
+          </Router>
+        )}
+        {user && (
+          <Router>
+            <MainWrapper user={user} setUser={setUser}>
+              <Switch>
+                <Route exact path="/">
+                  <DashboardPage user={user} />
+                </Route>
+                <Route exact path="/dashboard">
+                  <DashboardPage user={user} />
+                </Route>
+                <Route exact path="/accounts">
+                  <AccountPage />
+                </Route>
+                <Route exact path="/accounts/:id"></Route>
+                <Route exact path="/projects">
+                  <ProjectPage user={user} />
+                </Route>
+                <Route exact path="/projects/:id"></Route>
+                <Route exact path="/notifications">
+                  <NotificationPage user={user} />
+                </Route>
+                <Route exact path="/notifications/:id"></Route>
+                <Route exact path="*">
+                  <NotFound />
+                </Route>
+              </Switch>
+            </MainWrapper>
+          </Router>
+        )}
+      </ThemeProvider>
+    </AuthContext.Provider>
   );
 }
 

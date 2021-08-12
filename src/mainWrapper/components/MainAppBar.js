@@ -1,9 +1,6 @@
-import { Fragment } from "react";
 import {
-  Button,
   IconButton,
   makeStyles,
-  useTheme,
   AppBar,
   Toolbar,
   Typography,
@@ -11,8 +8,6 @@ import {
 } from "@material-ui/core";
 import clsx from "clsx";
 import MenuIcon from "@material-ui/icons/Menu";
-import { useHistory } from "react-router";
-
 
 function MainAppBar({
   open,
@@ -20,7 +15,7 @@ function MainAppBar({
   user,
   setAnchorEl,
   setShowDialog,
-  drawerWidth
+  drawerWidth,
 }) {
   const useStyles = makeStyles((theme) => {
     return {
@@ -85,7 +80,7 @@ function MainAppBar({
         }),
         marginLeft: 0,
       },
-  
+
       active: {
         background: "rgba(3,169,244,0.6)",
       },
@@ -125,7 +120,6 @@ function MainAppBar({
   });
 
   const classes = useStyles();
-  const history = useHistory();
 
   return (
     <AppBar
@@ -148,27 +142,15 @@ function MainAppBar({
         <Typography className={classes.appTitle} variant="h5" noWrap>
           BulSU PiP
         </Typography>
-        {user != null ? (
-          <Fragment>
-            <Avatar
-              className={classes.avatar}
-              onClick={(e) => {
-                setAnchorEl(e.currentTarget);
-                setShowDialog(true);
-              }}
-            >
-              {`${user.college}`}
-            </Avatar>
-          </Fragment>
-        ) : (
-          <Button
-            color="secondary"
-            variant="contained"
-            onClick={() => history.push("/login")}
-          >
-            Log In
-          </Button>
-        )}
+        <Avatar
+          className={classes.avatar}
+          onClick={(e) => {
+            setAnchorEl(e.currentTarget);
+            setShowDialog(true);
+          }}
+        >
+          {`${user.college}`}
+        </Avatar>
       </Toolbar>
     </AppBar>
   );
