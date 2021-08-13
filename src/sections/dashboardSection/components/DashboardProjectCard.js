@@ -12,8 +12,8 @@ function DashboardProjectCard({ title, count }) {
 
   return (
     <Card className={classes.crd} variant="outlined">
-      <Typography variant="h5">{title}</Typography>
-      <Typography variant="h2">{count}</Typography>
+      <Typography variant="h6">{title}</Typography>
+      <Typography variant="h3">{count}</Typography>
     </Card>
   );
 }
