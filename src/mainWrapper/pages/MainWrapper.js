@@ -8,7 +8,7 @@ import MainDrawer from "../components/MainDrawer";
 
 function MainWrapper({ children, user, setUser }) {
   const drawerWidth = 240;
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   const [anchorEl, setAnchorEl] = useState(null);
   const [showDialog, setShowDialog] = useState(false);
 
@@ -38,7 +38,7 @@ function MainWrapper({ children, user, setUser }) {
       },
       content: {
         flexGrow: 1,
-        //padding: theme.spacing(3),
+        padding: theme.spacing(3),
         transition: theme.transitions.create("margin", {
           easing: theme.transitions.easing.sharp,
           duration: theme.transitions.duration.leavingScreen,

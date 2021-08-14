@@ -5,8 +5,6 @@ import {
   Toolbar,
   Typography,
   Avatar,
-  Card,
-  Grid,
 } from "@material-ui/core";
 import clsx from "clsx";
 import MenuIcon from "@material-ui/icons/Menu";

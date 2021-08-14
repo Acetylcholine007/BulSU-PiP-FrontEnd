@@ -7,9 +7,9 @@ import ClientProject from "./ClientProject";
 function ProjectPage({user}) {
   switch (user.type) {
     case "Client":
-      return <ClientProject />;
+      return <ClientProject user = {user} />;
     case "Admin":
-      return <AdminProject />;
+      return <AdminProject user = {user} />;
     default:
       return <Typography component="h1">Invalid user type</Typography>;
   }

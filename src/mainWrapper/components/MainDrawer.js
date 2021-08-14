@@ -117,7 +117,7 @@ function MainDrawer({ drawerWidth, open, user, handleDrawerClose }) {
               className={
                 location.pathname === item.path ? classes.active : null
               }
-              className={`${location.pathname === item.path ? classes.active : ''} ${classes.listItem}`}
+              className={`${location.pathname.includes(item.path) ? classes.active : ''} ${classes.listItem}`}
             >
               <ListItemIcon className = {classes.listItemContent}>{item.icon}</ListItemIcon>
               <ListItemText

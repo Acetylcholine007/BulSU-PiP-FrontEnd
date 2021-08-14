@@ -12,20 +12,22 @@ import ProjectPage from "./sections/projectSection/pages/ProjectPage";
 import NotificationPage from "./sections/notificationSection/pages/NotificationPage";
 import NotFound from "./shared/pages/NotFound";
 import { AuthContext } from "./contexts/AuthContext";
+import ProjectViewer from "./sections/projectSection/pages/ProjectViewer";
+import ProjectEditor from "./sections/projectSection/pages/ProjectEditor";
 
 const theme = createTheme({
   palette: {
     primary: {
-      light: '#800000',
-      main: '#800000',
-      dark: '#800000',
-      contrastText: '#FFFFFF',
+      light: "#800000",
+      main: "#800000",
+      dark: "#800000",
+      contrastText: "#FFFFFF",
     },
     secondary: {
-      light: '#F7CC00',
-      main: '#F7CC00',
-      dark: '#F7CC00',
-      contrastText: '#000000',
+      light: "#F7CC00",
+      main: "#F7CC00",
+      dark: "#F7CC00",
+      contrastText: "#000000",
     },
   },
   typography: {
@@ -40,28 +42,25 @@ const theme = createTheme({
 function App() {
   const [user, setUser] = useState(null);
 
-  const login = useCallback(
-    (user) => {
-      setUser(user);
-    }, []);
+  const login = useCallback((user) => {
+    setUser(user);
+  }, []);
 
-  const logout = useCallback(
-    () => {
-      setUser(null);
-    }, []);
+  const logout = useCallback(() => {
+    setUser(null);
+  }, []);
 
-  console.log(user);
   return (
-    <AuthContext.Provider value = {{user: user, login: login, logout: logout}}>
+    <AuthContext.Provider value={{ user: user, login: login, logout: logout }}>
       <ThemeProvider theme={theme}>
         {!user && (
           <Router>
             <Switch>
-              <Route exact path="/">
-                <LogInPage setUser={setUser} />
-              </Route>
               <Route exact path="/signup">
                 <SignUpPage setUser={setUser} />
+              </Route>
+              <Route path="/">
+                <LogInPage setUser={setUser} />
               </Route>
               <Route exact path="*">
                 <NotFound />
@@ -83,10 +82,18 @@ function App() {
                   <AccountPage />
                 </Route>
                 <Route exact path="/accounts/:id"></Route>
+                <Route exact path="/projects/new">
+                  <ProjectEditor isNew={true} user={user}/>
+                </Route>
                 <Route exact path="/projects">
                   <ProjectPage user={user} />
                 </Route>
-                <Route exact path="/projects/:id"></Route>
+                <Route exact path="/projects/:id">
+                  <ProjectViewer />
+                </Route>
+                <Route exact path="/projects/:id/edit">
+                  <ProjectEditor />
+                </Route>
                 <Route exact path="/notifications">
                   <NotificationPage user={user} />
                 </Route>
