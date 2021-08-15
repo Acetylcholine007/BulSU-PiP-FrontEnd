@@ -8,13 +8,12 @@ function DashboardNotificationCard({ notification }) {
         <Divider orientation="vertical" variant="inset" />
       </Grid>
       <Grid item xs={11}>
-        <Typography variant="body1">
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Minus,
-          animi. Provident ab doloremque nihil amet rerum blanditiis dicta vel
-          tempore, qui magni ipsa autem aliquid dolor minima voluptas officia
-          corporis.
+      <Typography variant="h6">
+          {`${notification.header} ${notification.datetime}`}
         </Typography>
-        {/*notification.message*/}
+        <Typography variant="body1">
+          {notification.message}
+        </Typography>
       </Grid>
     </Grid>
   );

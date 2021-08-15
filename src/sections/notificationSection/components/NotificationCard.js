@@ -9,7 +9,7 @@ function NotificationCard({notification}) {
                     <Avatar></Avatar>
                 </Grid>
                 <Grid item xs = {11}>
-                    <Typography variant = 'h4'>notification</Typography>
+                    <Typography variant = 'h4'>{notification.header}</Typography>
                 </Grid>
             </Grid>
         </Card>

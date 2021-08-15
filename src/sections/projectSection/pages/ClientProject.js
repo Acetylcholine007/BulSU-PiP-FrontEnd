@@ -17,7 +17,6 @@ function ClientProject({ user }) {
     data: projects,
   } = useFetch(`${serverUrl}projects?ownerId=${user.id}`);
 
-  console.log(projects);
   return (
     <React.Fragment>
       {error && <ErrorComponent message="Failed to fetch projects" />}

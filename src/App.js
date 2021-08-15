@@ -14,6 +14,7 @@ import NotFound from "./shared/pages/NotFound";
 import { AuthContext } from "./contexts/AuthContext";
 import ProjectViewer from "./sections/projectSection/pages/ProjectViewer";
 import ProjectEditor from "./sections/projectSection/pages/ProjectEditor";
+import ProjectEditorWrapper from "./sections/projectSection/components/ProjectEditorWrapper";
 
 const theme = createTheme({
   palette: {
@@ -92,7 +93,7 @@ function App() {
                   <ProjectViewer />
                 </Route>
                 <Route exact path="/projects/:id/edit">
-                  <ProjectEditor />
+                  <ProjectEditorWrapper user={user}/>
                 </Route>
                 <Route exact path="/notifications">
                   <NotificationPage user={user} />

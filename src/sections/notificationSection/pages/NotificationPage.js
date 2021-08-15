@@ -7,9 +7,9 @@ import ClientNotification from "./ClientNotification";
 function NotificationPage({user}) {
   switch (user.type) {
     case "Client":
-      return <ClientNotification />;
+      return <ClientNotification user = {user}/>;
     case "Admin":
-      return <AdminNotification />;
+      return <AdminNotification user = {user}/>;
     default:
       return <Typography component="h1">Invalid user type</Typography>;
   }

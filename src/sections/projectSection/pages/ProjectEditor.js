@@ -6,51 +6,91 @@ import Form1 from "../components/Form1";
 import Form2 from "../components/Form2";
 import { serverUrl } from "../../../utils/serverUrl";
 
-function ProjectEditor({ isNew, user }) {
+function ProjectEditor({ isNew, user, project }) {
   const [page, setPage] = useState(1);
   const history = useHistory();
-  const [form1Data, setForm1Data] = useState({
-    title: "",
-    GSP: "",
-    obligationType: "",
-    proponent: "",
-    investmentReq: "",
-    implementationPeriod: "",
-    PAPLevel: "",
-    readiness: "",
-    status: "",
-    remarks: "",
-  });
-  const [form2Data, setForm2Data] = useState({
-    address: "",
-    projectLocation: "",
-    categorization: "",
-    description: "",
-    purpose: "",
-    beneficiary: "",
-    proponentName: "",
-    designation: "",
-    contactInformation: "",
-    dateAccomplished: "",
-    signature: "",
-    fileList: [],
-  });
-  const handleSubmit = () => {
-    console.log({ ...form1Data, ...form2Data });
+  const [form1Data, setForm1Data] = useState(
+    isNew
+      ? {
+          title: "",
+          GSP: "",
+          obligationType: "",
+          proponent: "",
+          investmentReq: "",
+          implementationPeriod: "",
+          PAPLevel: "",
+          readiness: "",
+          status: "",
+          remarks: "",
+        }
+      : {
+          title: project.title,
+          GSP: project.GSP,
+          obligationType: project.obligationType,
+          proponent: project.proponent,
+          investmentReq: project.investmentReq,
+          implementationPeriod: project.implementationPeriod,
+          PAPLevel: project.PAPLevel,
+          readiness: project.readiness,
+          status: project.status,
+          remarks: project.remarks,
+        }
+  );
+  const [form2Data, setForm2Data] = useState(
+    isNew
+      ? {
+          address: "",
+          projectLocation: "",
+          categorization: "",
+          description: "",
+          purpose: "",
+          beneficiary: "",
+          proponentName: "",
+          designation: "",
+          contactInformation: "",
+          dateAccomplished: "",
+          signature: "",
+          fileList: [],
+        }
+      : {
+          address: project.address,
+          projectLocation: project.projectLocation,
+          categorization: project.categorization,
+          description: project.description,
+          purpose: project.purpose,
+          beneficiary: project.beneficiary,
+          proponentName: project.proponentName,
+          designation: project.designation,
+          contactInformation: project.contactInformation,
+          dateAccomplished: project.dateAccomplished,
+          signature: project.signature,
+          fileList: project.fileList,
+        }
+  );
 
-    if(isNew) {
+  const handleSubmit = () => {
+    if (isNew) {
       fetch(`${serverUrl}projects`, {
         method: "POST",
         headers: { "Content-type": "application/json" },
-        body: JSON.stringify({...form1Data, ...form2Data, commentList: [], ownerId: user.id}),
+        body: JSON.stringify({
+          ...form1Data,
+          ...form2Data,
+          commentList: [],
+          ownerId: user.id,
+        }),
       }).then(() => {
         history.push("/projects");
       });
     } else {
-      fetch(`${serverUrl}projects`, {
+      fetch(`${serverUrl}projects/${project.id}`, {
         method: "PUT",
         headers: { "Content-type": "application/json" },
-        body: JSON.stringify({...form1Data, ...form2Data}),
+        body: JSON.stringify({
+          ...project,
+          ...form1Data,
+          ...form2Data,
+        }),
       }).then(() => {
         history.push("/projects");
       });
@@ -65,6 +105,7 @@ function ProjectEditor({ isNew, user }) {
         return <Form2 form2Data={form2Data} setForm2Data={setForm2Data} />;
     }
   };
+
   return (
     <Container>
       <Grid container>
