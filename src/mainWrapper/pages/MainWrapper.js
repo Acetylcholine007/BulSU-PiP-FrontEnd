@@ -6,7 +6,7 @@ import AccountMenu from "../components/AccountMenu";
 import MainAppBar from "../components/MainAppBar";
 import MainDrawer from "../components/MainDrawer";
 
-function MainWrapper({ children, user, setUser }) {
+function MainWrapper({ children }) {
   const drawerWidth = 240;
   const [open, setOpen] = useState(true);
   const [anchorEl, setAnchorEl] = useState(null);
@@ -65,7 +65,6 @@ function MainWrapper({ children, user, setUser }) {
     <div className={classes.root}>
       <MainAppBar
         open={open}
-        user={user}
         handleDrawerOpen={handleDrawerOpen}
         setAnchorEl={setAnchorEl}
         setShowDialog={setShowDialog}
@@ -76,13 +75,10 @@ function MainWrapper({ children, user, setUser }) {
         anchorEl={anchorEl}
         setShowDialog={setShowDialog}
         setAnchorEl={setAnchorEl}
-        setUser={setUser}
-        user={user}
       />
       <MainDrawer
         drawerWidth={drawerWidth}
         open={open}
-        user={user}
         handleDrawerClose={handleDrawerClose}
       />
       <div className={clsx(classes.content, { [classes.contentShift]: open })}>

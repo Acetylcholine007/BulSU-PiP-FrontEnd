@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@material-ui/core";
-import { useState, useCallback } from "react";
+import { useState } from "react";
 
 import "./App.css";
 import MainWrapper from "./mainWrapper/pages/MainWrapper";
@@ -43,25 +43,17 @@ const theme = createTheme({
 function App() {
   const [user, setUser] = useState(null);
 
-  const login = useCallback((user) => {
-    setUser(user);
-  }, []);
-
-  const logout = useCallback(() => {
-    setUser(null);
-  }, []);
-
   return (
-    <AuthContext.Provider value={{ user: user, login: login, logout: logout }}>
+    <AuthContext.Provider value={{ user: user, setUser: setUser }}>
       <ThemeProvider theme={theme}>
         {!user && (
           <Router>
             <Switch>
               <Route exact path="/signup">
-                <SignUpPage setUser={setUser} />
+                <SignUpPage />
               </Route>
               <Route path="/">
-                <LogInPage setUser={setUser} />
+                <LogInPage />
               </Route>
               <Route exact path="*">
                 <NotFound />
@@ -71,32 +63,32 @@ function App() {
         )}
         {user && (
           <Router>
-            <MainWrapper user={user} setUser={setUser}>
+            <MainWrapper>
               <Switch>
                 <Route exact path="/">
-                  <DashboardPage user={user} />
+                  <DashboardPage />
                 </Route>
                 <Route exact path="/dashboard">
-                  <DashboardPage user={user} />
+                  <DashboardPage />
                 </Route>
                 <Route exact path="/accounts">
                   <AccountPage />
                 </Route>
                 <Route exact path="/accounts/:id"></Route>
                 <Route exact path="/projects/new">
-                  <ProjectEditor isNew={true} user={user}/>
+                  <ProjectEditor isNew={true} />
                 </Route>
                 <Route exact path="/projects">
-                  <ProjectPage user={user} />
+                  <ProjectPage />
                 </Route>
                 <Route exact path="/projects/:id">
                   <ProjectViewer />
                 </Route>
                 <Route exact path="/projects/:id/edit">
-                  <ProjectEditorWrapper user={user}/>
+                  <ProjectEditorWrapper />
                 </Route>
                 <Route exact path="/notifications">
-                  <NotificationPage user={user} />
+                  <NotificationPage />
                 </Route>
                 <Route exact path="/notifications/:id"></Route>
                 <Route exact path="*">

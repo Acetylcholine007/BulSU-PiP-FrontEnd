@@ -9,12 +9,13 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useHistory } from "react-router";
-import sjcl from 'sjcl';
+import sjcl from "sjcl";
 
 import { serverUrl } from "../../../utils/serverUrl";
 import { User } from "../../../utils/models";
+import { AuthContext } from "../../../contexts/AuthContext";
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -29,10 +30,10 @@ const useStyles = makeStyles(() => ({
     marginTop: 20,
     marginBottom: 20,
     display: "block",
-  }
+  },
 }));
 
-function LogInPage({setUser}) {
+function LogInPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -41,6 +42,7 @@ function LogInPage({setUser}) {
 
   const history = useHistory();
   const classes = useStyles();
+  const {setUser} = useContext(AuthContext);
 
   const login = (email, password) => {
     const abortCont = new AbortController();
@@ -85,8 +87,8 @@ function LogInPage({setUser}) {
     }
 
     if (!emailError && !passwordError) {
-      const myBitArray = sjcl.hash.sha256.hash(password)
-      const myHash = sjcl.codec.hex.fromBits(myBitArray)
+      const myBitArray = sjcl.hash.sha256.hash(password);
+      const myHash = sjcl.codec.hex.fromBits(myBitArray);
       login(email, myHash);
     }
   };
@@ -110,7 +112,7 @@ function LogInPage({setUser}) {
                   fullWidth
                   error={emailError}
                   value={email}
-                  helperText = {passwordError ? 'Error Email' : null}
+                  helperText={passwordError ? "Error Email" : null}
                 />
                 <TextField
                   onChange={(e) => setPassword(e.target.value)}
@@ -122,7 +124,7 @@ function LogInPage({setUser}) {
                   error={passwordError}
                   value={password}
                   type="password"
-                  helperText = {passwordError ? 'Error Password' : null}
+                  helperText={passwordError ? "Error Password" : null}
                 />
                 <Button
                   type="submit"
@@ -138,7 +140,7 @@ function LogInPage({setUser}) {
                   color="secondary"
                   variant="contained"
                   onClick={() => {
-                    history.push('/signup');
+                    history.push("/signup");
                   }}
                   className={classes.button}
                   fullWidth

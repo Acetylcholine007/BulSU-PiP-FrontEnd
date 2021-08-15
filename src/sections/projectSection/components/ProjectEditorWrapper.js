@@ -7,7 +7,7 @@ import LoadingComponent from "../../../shared/components/LoadingComponent";
 import ProjectEditor from "../pages/ProjectEditor";
 import { serverUrl } from "../../../utils/serverUrl";
 
-function ProjectEditorWrapper({ user }) {
+function ProjectEditorWrapper() {
   const { id } = useParams();
   const {
     error,
@@ -18,7 +18,7 @@ function ProjectEditorWrapper({ user }) {
     <React.Fragment>
       {error && <ErrorComponent message="Can't load project" />}
       {isPending && <LoadingComponent />}
-      {project && <ProjectEditor isNew={false} user={user} project={project[0]} />}
+      {project && <ProjectEditor isNew={false} project={project[0]} />}
     </React.Fragment>
   );
 }

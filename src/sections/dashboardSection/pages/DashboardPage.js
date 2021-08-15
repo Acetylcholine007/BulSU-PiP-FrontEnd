@@ -1,15 +1,18 @@
-import React from "react";
+import { useContext } from "react";
 import { Typography } from "@material-ui/core";
 
 import AdminDashboard from "./AdminDashboard";
 import ClientDashboard from "./ClientDashboard";
+import { AuthContext } from "../../../contexts/AuthContext";
 
-function DashboardPage({ user }) {
+function DashboardPage() {
+  const { user } = useContext(AuthContext);
+  
   switch (user.type) {
     case "Client":
-      return <ClientDashboard user = {user}/>;
+      return <ClientDashboard />;
     case "Admin":
-      return <AdminDashboard user = {user}/>;
+      return <AdminDashboard />;
     default:
       return <Typography variant="h3">Invalid user type</Typography>;
   }

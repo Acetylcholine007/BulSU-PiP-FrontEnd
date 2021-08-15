@@ -6,8 +6,10 @@ import {
   Typography,
   makeStyles,
 } from "@material-ui/core";
-import React from "react";
+import { useContext } from "react";
 import { useHistory } from "react-router-dom";
+
+import { AuthContext } from "../../../contexts/AuthContext";
 
 const useStyles = makeStyles({
   btn: {
@@ -27,9 +29,10 @@ const useStyles = makeStyles({
   },
 });
 
-function DashboardAccountSection({ user }) {
+function DashboardAccountSection() {
   const history = useHistory();
   const classes = useStyles();
+  const {user} = useContext(AuthContext);
 
   return (
     <Grid container>

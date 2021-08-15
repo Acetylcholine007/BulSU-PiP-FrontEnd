@@ -1,6 +1,6 @@
 import { Button, Container, Grid } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
-import React from "react";
+import React, { useContext } from "react";
 
 import ProjectFilter from "../components/ProjectFilter";
 import ProjectList from "../components/ProjectList";
@@ -8,9 +8,11 @@ import { serverUrl } from "../../../utils/serverUrl";
 import useFetch from "../../../hooks/useFetch";
 import ErrorComponent from "../../../shared/components/ErrorComponent";
 import LoadingComponent from "../../../shared/components/LoadingComponent";
+import { AuthContext } from "../../../contexts/AuthContext";
 
-function ClientProject({ user }) {
+function ClientProject() {
   const history = useHistory();
+  const {user} = useContext(AuthContext);
   const {
     error,
     isPending,

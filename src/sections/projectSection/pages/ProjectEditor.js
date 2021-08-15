@@ -1,14 +1,16 @@
 import { Button, Container, Grid, Typography } from "@material-ui/core";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 
 import Form1 from "../components/Form1";
 import Form2 from "../components/Form2";
 import { serverUrl } from "../../../utils/serverUrl";
+import { AuthContext } from "../../../contexts/AuthContext";
 
-function ProjectEditor({ isNew, user, project }) {
+function ProjectEditor({ isNew, project }) {
   const [page, setPage] = useState(1);
   const history = useHistory();
+  const {user} = useContext(AuthContext);
   const [form1Data, setForm1Data] = useState(
     isNew
       ? {

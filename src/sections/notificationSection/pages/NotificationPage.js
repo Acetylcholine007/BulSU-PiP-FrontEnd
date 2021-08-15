@@ -1,15 +1,18 @@
-import React from "react";
+import { useContext } from "react";
 import { Typography } from "@material-ui/core";
 
 import AdminNotification from "./AdminNotification";
 import ClientNotification from "./ClientNotification";
+import { AuthContext } from "../../../contexts/AuthContext";
 
-function NotificationPage({user}) {
+function NotificationPage() {
+  const {user} = useContext(AuthContext);
+
   switch (user.type) {
     case "Client":
-      return <ClientNotification user = {user}/>;
+      return <ClientNotification />;
     case "Admin":
-      return <AdminNotification user = {user}/>;
+      return <AdminNotification />;
     default:
       return <Typography component="h1">Invalid user type</Typography>;
   }

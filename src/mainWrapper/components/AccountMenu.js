@@ -10,31 +10,27 @@ import {
   Typography,
   makeStyles,
 } from "@material-ui/core";
-import React from "react";
+import { useContext } from "react";
 import { useHistory } from "react-router-dom";
 
-function AccountMenu({
-  showDialog,
-  anchorEl,
-  setShowDialog,
-  setAnchorEl,
-  setUser,
-  user
-}) {
+import { AuthContext } from "../../contexts/AuthContext";
+
+function AccountMenu({ showDialog, anchorEl, setShowDialog, setAnchorEl }) {
   const useStyles = makeStyles((theme) => {
     return {
       cardHeader: {
         backgroundColor: theme.palette.primary.light,
-        color: 'white'
+        color: "white",
       },
       dialogPaper: {
         borderRadius: "10px",
-      }
+      },
     };
   });
 
   const classes = useStyles();
   const history = useHistory();
+  const { user, setUser } = useContext(AuthContext);
 
   return (
     <Popover
@@ -66,7 +62,7 @@ function AccountMenu({
                 color="secondary"
                 variant="contained"
                 onClick={() => {
-                  history.push('/');
+                  history.push("/");
                   setUser(null);
                   setAnchorEl(null);
                 }}

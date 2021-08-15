@@ -7,12 +7,14 @@ import {
   Avatar,
 } from "@material-ui/core";
 import clsx from "clsx";
+import { useContext } from "react";
 import MenuIcon from "@material-ui/icons/Menu";
+
+import { AuthContext } from "../../contexts/AuthContext";
 
 function MainAppBar({
   open,
   handleDrawerOpen,
-  user,
   setAnchorEl,
   setShowDialog,
   drawerWidth,
@@ -49,12 +51,13 @@ function MainAppBar({
       avatar: {
         marginLeft: theme.spacing(2),
         color: theme.palette.getContrastText(theme.palette.secondary.light),
-        backgroundColor: theme.palette.secondary.light
+        backgroundColor: theme.palette.secondary.light,
       },
     };
   });
 
   const classes = useStyles();
+  const {user} = useContext(AuthContext);
 
   return (
     <AppBar

@@ -1,4 +1,4 @@
-import { Container, Grid, Typography } from "@material-ui/core";
+import { Container, Grid } from "@material-ui/core";
 import React from "react";
 import NotificationList from "../components/NotificationList";
 
@@ -7,7 +7,7 @@ function ClientNotification({user}) {
     <Container>
       <Grid container>
         <Grid item xs={12}>
-          <NotificationList notifications={user.notificationList} />
+          <NotificationList />
         </Grid>
       </Grid>
     </Container>

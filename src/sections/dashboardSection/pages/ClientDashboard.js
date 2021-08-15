@@ -11,7 +11,7 @@ const useStyles = makeStyles({
   }
 })
 
-function ClientDashboard({ user }) {
+function ClientDashboard() {
   const getProjectStatus = () => {
     return { approved: 0, revision: 0, reject: 0, pending: 0 };
   };
@@ -21,9 +21,9 @@ function ClientDashboard({ user }) {
     <Container>
       <Grid container>
         <Grid item md={9} xs={12}>
-          <DashboardAccountSection user={user} />
+          <DashboardAccountSection />
           <Divider className={classes.dv}/>
-          <DashboardNotifSection notifications={user.notificationList} />
+          <DashboardNotifSection />
         </Grid>
         <Grid item md={3} xs={12}>
           <DashboardProjectSection projectStatus={getProjectStatus()} />

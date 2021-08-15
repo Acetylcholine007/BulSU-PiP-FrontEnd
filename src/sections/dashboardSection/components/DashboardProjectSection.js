@@ -1,4 +1,4 @@
-import { Container, Grid, makeStyles } from "@material-ui/core";
+import { Container, Grid } from "@material-ui/core";
 import React from "react";
 
 import DashboardProjectCard from "./DashboardProjectCard";

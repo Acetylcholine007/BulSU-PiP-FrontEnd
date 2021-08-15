@@ -1,8 +1,9 @@
 import { Button, Grid, makeStyles, Typography } from "@material-ui/core";
-import React from "react";
+import { useContext } from "react";
 import { useHistory } from "react-router-dom";
 
 import DashboardNotificationCard from "./DashboardNotificationCard";
+import { AuthContext } from "../../../contexts/AuthContext";
 
 const useStyles = makeStyles({
   btn: {
@@ -16,6 +17,8 @@ const useStyles = makeStyles({
 function DashboardNotifSection({ notifications }) {
   const classes = useStyles();
   const history = useHistory();
+  const {user: {notificationList}} = useContext(AuthContext);
+
   return (
     <Grid container spacing={1}>
       <Grid item xs={10}>
@@ -34,7 +37,7 @@ function DashboardNotifSection({ notifications }) {
         </Button>
       </Grid>
       <Grid item xs={12}>
-        {notifications.map((notification) => (
+        {notificationList.map((notification) => (
           <DashboardNotificationCard notification={notification} />
         ))}
       </Grid>

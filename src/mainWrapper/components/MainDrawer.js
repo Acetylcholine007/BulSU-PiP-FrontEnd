@@ -10,12 +10,15 @@ import {
   useTheme,
   Container,
 } from "@material-ui/core";
+import { useContext } from "react";
 import MuiListItem from "@material-ui/core/ListItem";
 import { ChevronLeft, ChevronRight } from "@material-ui/icons";
 import { useHistory, useLocation } from "react-router";
-import { menuItems } from "../../utils/constants";
 
-function MainDrawer({ drawerWidth, open, user, handleDrawerClose }) {
+import { menuItems } from "../../utils/constants";
+import { AuthContext } from "../../contexts/AuthContext";
+
+function MainDrawer({ drawerWidth, open, handleDrawerClose }) {
   const useStyles = makeStyles((theme) => {
     return {
       root: {
@@ -45,18 +48,18 @@ function MainDrawer({ drawerWidth, open, user, handleDrawerClose }) {
         display: "block",
         alignItems: "center",
         backgroundColor: "#CDCECB",
-        borderRadius: '0px 0px 15px 15px',
+        borderRadius: "0px 0px 15px 15px",
       },
 
       active: {
         background: "rgba(247,204,0,0.9)",
       },
       listItem: {
-        borderRadius: '0px 20px 20px 0px'
+        borderRadius: "0px 20px 20px 0px",
       },
       listItemContent: {
-        color: "white"
-      }
+        color: "white",
+      },
     };
   });
 
@@ -77,6 +80,7 @@ function MainDrawer({ drawerWidth, open, user, handleDrawerClose }) {
   const history = useHistory();
   const location = useLocation();
   const theme = useTheme();
+  const {user} = useContext(AuthContext);
 
   return (
     <Drawer
@@ -95,16 +99,14 @@ function MainDrawer({ drawerWidth, open, user, handleDrawerClose }) {
           )}
         </IconButton>
       </div>
-      <Container className={classes.drawerSubHeader} align = 'center'>
+      <Container className={classes.drawerSubHeader} align="center">
         <img
           src="images/bsuLogo.png"
-          style={{ objectFit: "fill", width: '90%' }}
+          style={{ objectFit: "fill", width: "90%" }}
           background-position="center"
           alt="BSU Logo"
         />
-        <Typography variant="h5">
-          BULACAN STATE UNIVERSITY
-        </Typography>
+        <Typography variant="h5">BULACAN STATE UNIVERSITY</Typography>
       </Container>
       <List>
         {menuItems
@@ -117,9 +119,13 @@ function MainDrawer({ drawerWidth, open, user, handleDrawerClose }) {
               className={
                 location.pathname === item.path ? classes.active : null
               }
-              className={`${location.pathname.includes(item.path) ? classes.active : ''} ${classes.listItem}`}
+              className={`${
+                location.pathname.includes(item.path) ? classes.active : ""
+              } ${classes.listItem}`}
             >
-              <ListItemIcon className = {classes.listItemContent}>{item.icon}</ListItemIcon>
+              <ListItemIcon className={classes.listItemContent}>
+                {item.icon}
+              </ListItemIcon>
               <ListItemText
                 primary={item.text}
                 classes={{ primary: classes.listItemContent }}
