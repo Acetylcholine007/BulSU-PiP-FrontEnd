@@ -2,12 +2,14 @@ import { Container, Typography } from "@material-ui/core";
 import React from "react";
 import CommentCard from "./CommentCard";
 
-function CommentList({ comments }) {
+function CommentList({ comments, selectComment }) {
   return (
     <Container>
-    <Typography variant = 'h4'>Comments</Typography>
+      <Typography variant="h4">Comments</Typography>
       {comments.map((comment) => (
-        <CommentCard comment={comment} />
+        <div onClick={() => selectComment(comment)}>
+          <CommentCard comment={comment} />
+        </div>
       ))}
     </Container>
   );

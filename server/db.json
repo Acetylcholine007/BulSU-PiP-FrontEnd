@@ -9,13 +9,28 @@
       "uri": "",
       "type": "Client",
       "verified": true,
-      "notificationList": [],
+      "notificationList": [
+        {
+          "id": 1,
+          "author": "Server",
+          "header": "Notif 1",
+          "message": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas laboriosam obcaecati ullam, iste deleniti voluptatibus veniam provident animi enim error temporibus, est ad hic neque dolorum blanditiis ratione excepturi sequi.",
+          "datetime": "2021-08-15T06:01:45Z"
+        },
+        {
+          "id": 2,
+          "author": "Server",
+          "header": "Notif 2",
+          "message": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas laboriosam obcaecati ullam, iste deleniti voluptatibus veniam provident animi enim error temporibus, est ad hic neque dolorum blanditiis ratione excepturi sequi.",
+          "datetime": "2021-08-15T06:01:45Z"
+        }
+      ],
       "projectList": []
     }
   ],
   "projects": [
     {
-      "title": "asdasda",
+      "title": "Project 1",
       "GSP": "asdasd",
       "obligationType": "asdasd",
       "proponent": "asdasd",
@@ -37,34 +52,40 @@
       "dateAccomplished": "sdads",
       "signature": "",
       "fileList": [],
-      "commentList": ["Too Bad", "Revise it 10x"],
+      "commentList": [
+        "Too Bad",
+        "Revise it 10x"
+      ],
       "id": 1,
       "ownerId": 1
     },
     {
-      "title": "asdasd",
-      "GSP": "asdasd",
-      "obligationType": "asdasd",
-      "proponent": "asdasd",
-      "investmentReq": "asdasd",
-      "implementationPeriod": "asdasd",
-      "PAPLevel": "asdasd",
-      "readiness": "asdasd",
-      "status": "asdasd",
-      "remarks": "asdads",
-      "address": "asda",
-      "projectLocation": "asdasd",
-      "categorization": "asdasda",
-      "description": "sdada",
-      "purpose": "sdasd",
-      "beneficiary": "asdasdasd",
-      "proponentName": "asdsd",
-      "designation": "asdasd",
-      "contactInformation": "asdasd",
-      "dateAccomplished": "sdada",
+      "title": "Project 2",
+      "GSP": "test",
+      "obligationType": "test",
+      "proponent": "test",
+      "investmentReq": "test",
+      "implementationPeriod": "test",
+      "PAPLevel": "test",
+      "readiness": "test",
+      "status": "test",
+      "remarks": "test",
+      "address": "test",
+      "projectLocation": "test",
+      "categorization": "test",
+      "description": "test",
+      "purpose": "test",
+      "beneficiary": "test",
+      "proponentName": "test",
+      "designation": "test",
+      "contactInformation": "test",
+      "dateAccomplished": "test",
       "signature": "",
       "fileList": [],
-      "commentList": [],
+      "commentList": [
+        "Not so good",
+        "Check spelling"
+      ],
       "ownerId": 1,
       "id": 2
     }
