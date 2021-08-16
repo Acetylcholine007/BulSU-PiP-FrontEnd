@@ -5,10 +5,11 @@ import DashboardAccountSection from "../components/DashboardAccountSection";
 import DashboardProjectSection from "../components/DashboardProjectSection";
 import DashboardNotifSection from "../components/DashboardNotifSection";
 
+
 const useStyles = makeStyles({
   dv: {
-    marginTop: 25
-  }
+    marginTop: 30
+  },
 })
 
 function ClientDashboard({ user }) {
