@@ -19,6 +19,8 @@ const useStyles = makeStyles({
     marginLeft: 13,
   },
   avtr: {
+    width: 'auto',
+    height: 'auto',
     marginTop: 25,
   },
   txt: {
@@ -39,7 +41,7 @@ function DashboardAccountSection() {
       <Grid item xs={3} align="center">
         <Avatar
           className={classes.avtr}
-          style={{ height: 200, width: 200 }}
+          src="images/pf.jpg"
         ></Avatar>
       </Grid>
       <Grid item xs={9}>
