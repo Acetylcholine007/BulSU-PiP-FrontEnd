@@ -9,10 +9,12 @@ import useFetch from "../../../hooks/useFetch";
 import ErrorComponent from "../../../shared/components/ErrorComponent";
 import LoadingComponent from "../../../shared/components/LoadingComponent";
 import { AuthContext } from "../../../contexts/AuthContext";
+import { useState } from "react";
 
 function ClientProject() {
   const history = useHistory();
   const {user} = useContext(AuthContext);
+  const [filter, setFilter] = useState('');
   const {
     error,
     isPending,
@@ -38,7 +40,7 @@ function ClientProject() {
               <ProjectList projects={projects} />
             </Grid>
             <Grid item md={3} xs={12}>
-              <ProjectFilter />
+              <ProjectFilter filter = {filter} setFilter = {setFilter}/>
             </Grid>
           </Grid>
         </Container>

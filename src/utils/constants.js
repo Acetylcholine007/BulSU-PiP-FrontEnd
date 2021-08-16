@@ -3,6 +3,7 @@ import {
   AccountTreeOutlined,
   NotificationsNoneOutlined,
   SupervisorAccountOutlined,
+  AccountCircleOutlined,
 } from "@material-ui/icons";
 
 export const SUCs = ["Main", "Bustos", "Hagonoy", "Meneses"];
@@ -35,5 +36,11 @@ export const menuItems = [
     icon: <SupervisorAccountOutlined />,
     path: "/accounts",
     for: ["Admin"],
+  },
+  {
+    text: "My Account",
+    icon: <AccountCircleOutlined />,
+    path: "/myaccount",
+    for: ["Admin", "Client"],
   },
 ];

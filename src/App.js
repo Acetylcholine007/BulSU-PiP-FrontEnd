@@ -15,6 +15,8 @@ import { AuthContext } from "./contexts/AuthContext";
 import ProjectViewer from "./sections/projectSection/pages/ProjectViewer";
 import ProjectEditor from "./sections/projectSection/pages/ProjectEditor";
 import ProjectEditorWrapper from "./sections/projectSection/components/ProjectEditorWrapper";
+import MyAccountPage from "./sections/accountSection/pages/MyAccountPage";
+import AccountEditor from "./sections/accountSection/pages/AccountEditor";
 
 const theme = createTheme({
   palette: {
@@ -91,6 +93,12 @@ function App() {
                   <NotificationPage />
                 </Route>
                 <Route exact path="/notifications/:id"></Route>
+                <Route exact path="/myaccount">
+                  <MyAccountPage />
+                </Route>
+                <Route exact path="/myaccount/edit">
+                  <AccountEditor />
+                </Route>
                 <Route exact path="*">
                   <NotFound />
                 </Route>
