@@ -45,7 +45,7 @@ function DashboardAccountSection({ user }) {
         <Typography className={classes.txt} variant="h3">
           Testing
         </Typography>
-        <Divider />
+        <Divider style={{marginTop: 5, marginBottom: 5}}/>
         <Typography variant="h5">{user.suc}</Typography>
         <Typography variant="h5">{user.college}</Typography>
       </Grid>

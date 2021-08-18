@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Divider, Grid, makeStyles } from "@material-ui/core";
+import { Box, Container, Divider, Grid, makeStyles } from "@material-ui/core";
 
 import DashboardAccountSection from "../components/DashboardAccountSection";
 import DashboardProjectSection from "../components/DashboardProjectSection";
@@ -19,7 +19,7 @@ function ClientDashboard({ user }) {
   
   const classes = useStyles()
   return (
-    <Container>
+    <Container width="100%">
       <Grid container>
         <Grid item md={9} xs={12}>
           <DashboardAccountSection user={user} />
