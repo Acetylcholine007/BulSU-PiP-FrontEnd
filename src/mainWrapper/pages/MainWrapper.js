@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import { useState } from "react";
-import { makeStyles } from "@material-ui/core";
+import { Box, makeStyles } from "@material-ui/core";
 
 import AccountMenu from "../components/AccountMenu";
 import MainAppBar from "../components/MainAppBar";
@@ -83,7 +83,9 @@ function MainWrapper({ children }) {
       />
       <div className={clsx(classes.content, { [classes.contentShift]: open })}>
         <div className={classes.drawerHeader} />
+        <Box height="88vh" display="flex" flexDirection="column">
         {children}
+        </Box>
       </div>
     </div>
   );

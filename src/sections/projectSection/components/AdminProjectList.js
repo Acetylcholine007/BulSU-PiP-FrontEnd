@@ -10,11 +10,11 @@ function AdminProjectList({ projects }) {
         <Grid item xs={12}>
           <Typography variant="h4">Projects</Typography>
         </Grid>
-        <Grid item xs={12}>
-          {projects.map((project) => (
+        {projects.map((project) => (
+          <Grid item xs={12} key={project.id}>
             <AdminProjectCard project={project} />
-          ))}
-        </Grid>
+          </Grid>
+        ))}
       </Grid>
     </Container>
   );

@@ -14,7 +14,7 @@ function AdminProjectCard({ project }) {
   const history = useHistory();
   
   return (
-    <Card key={project.id} className={classes.card} onClick = {() => history.push(`/projects/${project.id}`)}>
+    <Card className={classes.card} onClick = {() => history.push(`/projects/${project.id}`)}>
       <Grid container>
         <Typography variant="h6">{project.title}</Typography>
       </Grid>
