@@ -38,6 +38,18 @@
       "verified": true,
       "notificationList": [],
       "projectList": []
+    },
+    {
+      "id": 3,
+      "suc": "Main",
+      "college": "COE",
+      "email": "root2",
+      "password": "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4",
+      "uri": "",
+      "type": "Admin",
+      "verified": true,
+      "notificationList": [],
+      "projectList": []
     }
   ],
   "projects": [
