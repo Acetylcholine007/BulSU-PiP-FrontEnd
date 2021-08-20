@@ -13,8 +13,8 @@ function MyAccountPage() {
           marginLeft: 13,
         },
         avtr: {
-          width: 'auto',
-          height: 'auto',
+          width: 200,
+          height: 200,
           marginTop: 25,
         },
         txt: {
@@ -38,20 +38,23 @@ function MyAccountPage() {
         <Grid item xs={3}>
           <Button variant = 'contained' onClick = {() => history.push('/myaccount/edit')}>Edit Account</Button>
         </Grid>
-        <Grid item xs={3} align="center">
+        <Grid item xs={9} align="center">
           <Avatar
             className={classes.avtr}
             src="images/pf.png"
           ></Avatar>
         </Grid>
-        <Grid item xs={9}>
-          <Typography className={classes.txt} variant="h3">
-            Testing
-          </Typography>
-          <Divider />
-          <Typography variant="h5">{user.suc}</Typography>
-          <Typography variant="h5">{user.college}</Typography>
+        <Grid container>
+          <Grid item xs={9} align="center">
+            <Typography className={classes.txt} variant="h3">
+              Account Details
+            </Typography>
+            <Divider />
+            <Typography variant="h5">{user.suc}</Typography>
+            <Typography variant="h5">{user.college}</Typography>
+          </Grid>
         </Grid>
+        
       </Grid>
     </Container>
   );
