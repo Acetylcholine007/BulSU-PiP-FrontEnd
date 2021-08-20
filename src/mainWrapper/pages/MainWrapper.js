@@ -5,19 +5,21 @@ import { Box, makeStyles } from "@material-ui/core";
 import AccountMenu from "../components/AccountMenu";
 import MainAppBar from "../components/MainAppBar";
 import MainDrawer from "../components/MainDrawer";
+import AccountEditorModal from "../components/AccountEditorModal";
 
 function MainWrapper({ children }) {
   const drawerWidth = 240;
-  const [open, setOpen] = useState(true);
+  const [openDrawer, setOpenDrawer] = useState(true);
+  const [openModal, setOpenModal] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const [showDialog, setShowDialog] = useState(false);
 
   const handleDrawerOpen = () => {
-    setOpen(true);
+    setOpenDrawer(true);
   };
 
   const handleDrawerClose = () => {
-    setOpen(false);
+    setOpenDrawer(false);
   };
 
   const useStyles = makeStyles((theme) => {
@@ -64,7 +66,7 @@ function MainWrapper({ children }) {
   return (
     <div className={classes.root}>
       <MainAppBar
-        open={open}
+        open={openDrawer}
         handleDrawerOpen={handleDrawerOpen}
         setAnchorEl={setAnchorEl}
         setShowDialog={setShowDialog}
@@ -75,18 +77,20 @@ function MainWrapper({ children }) {
         anchorEl={anchorEl}
         setShowDialog={setShowDialog}
         setAnchorEl={setAnchorEl}
+        setOpen={setOpenModal}
       />
       <MainDrawer
         drawerWidth={drawerWidth}
-        open={open}
+        open={openDrawer}
         handleDrawerClose={handleDrawerClose}
       />
-      <div className={clsx(classes.content, { [classes.contentShift]: open })}>
+      <div className={clsx(classes.content, { [classes.contentShift]: openDrawer })}>
         <div className={classes.drawerHeader} />
         <Box height="88vh" display="flex" flexDirection="column">
         {children}
         </Box>
       </div>
+      <AccountEditorModal open = {openModal} setOpen = {setOpenModal}/>
     </div>
   );
 }

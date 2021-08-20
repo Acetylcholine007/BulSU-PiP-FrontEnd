@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@material-ui/core";
 import { useState } from "react";
+import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 
 import "./App.css";
 import MainWrapper from "./mainWrapper/pages/MainWrapper";
@@ -20,6 +21,7 @@ import { AuthContext } from "./contexts/AuthContext";
 import { ProjectContext } from "./contexts/ProjectContext";
 import LoadingComponent from "./shared/components/LoadingComponent";
 import AdminProjectViewer from "./sections/projectSection/pages/AdminProjectViewer";
+import DateFnsUtils from "@date-io/date-fns";
 
 const theme = createTheme({
   palette: {
@@ -50,73 +52,80 @@ function App() {
   const [projects, setProjects] = useState(null);
 
   if (user) {
-    
   }
 
   return (
     <AuthContext.Provider value={{ user: user, setUser: setUser }}>
-      <ProjectContext.Provider value={{ projects: projects, setProjects: setProjects }}>
-        <ThemeProvider theme={theme}>
-          {!user && (
-            <Router>
-              <Switch>
-                <Route exact path="/signup">
-                  <SignUpPage />
-                </Route>
-                <Route path="/">
-                  <LogInPage />
-                </Route>
-                <Route exact path="*">
-                  <NotFound />
-                </Route>
-              </Switch>
-            </Router>
-          )}
-          {user && !projects && <LoadingComponent />}
-          {user && projects && (
-            <Router>
-              <MainWrapper>
+      <ProjectContext.Provider
+        value={{ projects: projects, setProjects: setProjects }}
+      >
+        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          <ThemeProvider theme={theme}>
+            {!user && (
+              <Router>
                 <Switch>
-                  <Route exact path="/">
-                    <DashboardPage />
+                  <Route exact path="/signup">
+                    <SignUpPage />
                   </Route>
-                  <Route exact path="/dashboard">
-                    <DashboardPage />
-                  </Route>
-                  <Route exact path="/accounts">
-                    <AccountPage />
-                  </Route>
-                  <Route exact path="/accounts/:id"></Route>
-                  <Route exact path="/projects/new">
-                    <ProjectEditor isNew={true} />
-                  </Route>
-                  <Route exact path="/projects">
-                    <ProjectPage />
-                  </Route>
-                  <Route exact path="/projects/:id">
-                    {user.type === 'Client' ? <ProjectViewer /> : <AdminProjectViewer />}
-                  </Route>
-                  <Route exact path="/projects/:id/edit">
-                    <ProjectEditorWrapper />
-                  </Route>
-                  <Route exact path="/notifications">
-                    <NotificationPage />
-                  </Route>
-                  <Route exact path="/notifications/:id"></Route>
-                  <Route exact path="/myaccount">
-                    <MyAccountPage />
-                  </Route>
-                  <Route exact path="/myaccount/edit">
-                    <AccountEditor />
+                  <Route path="/">
+                    <LogInPage />
                   </Route>
                   <Route exact path="*">
                     <NotFound />
                   </Route>
                 </Switch>
-              </MainWrapper>
-            </Router>
-          )}
-        </ThemeProvider>
+              </Router>
+            )}
+            {user && !projects && <LoadingComponent />}
+            {user && projects && (
+              <Router>
+                <MainWrapper>
+                  <Switch>
+                    <Route exact path="/">
+                      <DashboardPage />
+                    </Route>
+                    <Route exact path="/dashboard">
+                      <DashboardPage />
+                    </Route>
+                    <Route exact path="/accounts">
+                      <AccountPage />
+                    </Route>
+                    <Route exact path="/accounts/:id"></Route>
+                    <Route exact path="/projects/new">
+                      <ProjectEditor isNew={true} />
+                    </Route>
+                    <Route exact path="/projects">
+                      <ProjectPage />
+                    </Route>
+                    <Route exact path="/projects/:id">
+                      {user.type === "Client" ? (
+                        <ProjectViewer />
+                      ) : (
+                        <AdminProjectViewer />
+                      )}
+                    </Route>
+                    <Route exact path="/projects/:id/edit">
+                      <ProjectEditorWrapper />
+                    </Route>
+                    <Route exact path="/notifications">
+                      <NotificationPage />
+                    </Route>
+                    <Route exact path="/notifications/:id"></Route>
+                    <Route exact path="/myaccount">
+                      <MyAccountPage />
+                    </Route>
+                    <Route exact path="/myaccount/edit">
+                      <AccountEditor />
+                    </Route>
+                    <Route exact path="*">
+                      <NotFound />
+                    </Route>
+                  </Switch>
+                </MainWrapper>
+              </Router>
+            )}
+          </ThemeProvider>
+        </MuiPickersUtilsProvider>
       </ProjectContext.Provider>
     </AuthContext.Provider>
   );

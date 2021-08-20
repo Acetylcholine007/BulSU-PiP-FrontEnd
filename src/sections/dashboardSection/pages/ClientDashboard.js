@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Container, Divider, Grid, makeStyles } from "@material-ui/core";
+import { Container, Divider, Grid, makeStyles } from "@material-ui/core";
 
 import DashboardAccountSection from "../components/DashboardAccountSection";
 import DashboardProjectSection from "../components/DashboardProjectSection";

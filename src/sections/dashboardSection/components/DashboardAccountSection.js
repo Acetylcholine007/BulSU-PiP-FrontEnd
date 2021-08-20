@@ -41,7 +41,7 @@ function DashboardAccountSection() {
       <Grid item xs={3} align="center">
         <Avatar
           className={classes.avtr}
-          src="images/pf.jpg"
+          src="images/pf.png"
         ></Avatar>
       </Grid>
       <Grid item xs={9}>
