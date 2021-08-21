@@ -80,7 +80,7 @@ function Form1({ form1Data, setForm1Data }) {
             <Tab label="4th" />
             <Tab label="5th" />
           </Tabs>
-          <GSPTab index={tabIndex} />
+          <GSPTab index={tabIndex} form1Data= {form1Data} setForm1Data = {setForm1Data}/>
         </Grid>
         <Grid item xs={12}>
           <Divider className={classes.divider} />
