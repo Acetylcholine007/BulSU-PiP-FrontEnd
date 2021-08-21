@@ -10,7 +10,7 @@ function NotificationList() {
   return (
     <Grid container spacing={1}>
       {notificationList.map((notification) => (
-        <Grid item xs={12}>
+        <Grid item xs={12} key = {notification.id}>
           <NotificationCard notification={notification} />
         </Grid>
       ))}

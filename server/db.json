@@ -28,13 +28,13 @@
       "projectList": []
     },
     {
-      "id": 2,
+      "id": 3,
       "suc": "Main",
       "college": "COE",
-      "email": "rcs@rcs.com",
-      "password": "92bea11507f23b4d0a53e0e1767bd41cfd2ca8d6b2af84c0dd0279d7627d0e66",
+      "email": "root2",
+      "password": "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4",
       "uri": "",
-      "type": "Client",
+      "type": "Admin",
       "verified": true,
       "notificationList": [],
       "projectList": []
@@ -214,6 +214,41 @@
       "commentList": [],
       "ownerId": 1,
       "id": 4
+    },
+    {
+      "title": "Project3",
+      "GSP": "",
+      "obligationType": "",
+      "proponent": "",
+      "investmentReq": "",
+      "implementationPeriod": {
+        "start": "2021",
+        "end": "2025"
+      },
+      "PAPLevel": 1,
+      "readiness": 1,
+      "status": "",
+      "remarks": "",
+      "address": "",
+      "projectLocation": "",
+      "categorization": {
+        "new": false,
+        "expanded": false,
+        "infrastructure": false,
+        "nonInfrastructure": false
+      },
+      "description": "",
+      "purpose": "",
+      "beneficiary": "",
+      "proponentName": "",
+      "designation": "",
+      "contactInformation": "",
+      "dateAccomplished": "",
+      "signature": "",
+      "fileList": [],
+      "commentList": [],
+      "ownerId": 1,
+      "id": 5
     }
   ]
 }

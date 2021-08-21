@@ -19,7 +19,7 @@ function ClientDashboard() {
   
   const classes = useStyles()
   return (
-    <Container>
+    <Container width="100%">
       <Grid container>
         <Grid item md={9} xs={12}>
           <DashboardAccountSection />

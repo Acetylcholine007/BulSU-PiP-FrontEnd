@@ -41,14 +41,14 @@ function DashboardAccountSection() {
       <Grid item xs={3} align="center">
         <Avatar
           className={classes.avtr}
-          src="images/pf.jpg"
+          src="images/pf.png"
         ></Avatar>
       </Grid>
       <Grid item xs={9}>
         <Typography className={classes.txt} variant="h3">
           Testing
         </Typography>
-        <Divider />
+        <Divider style={{marginTop: 5, marginBottom: 5}}/>
         <Typography variant="h5">{user.suc}</Typography>
         <Typography variant="h5">{user.college}</Typography>
       </Grid>

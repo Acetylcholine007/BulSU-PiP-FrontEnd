@@ -1,6 +1,6 @@
-import { Button, Container, Grid, Typography, Card } from "@material-ui/core";
+import { Button, Container, Grid, Typography, Card, makeStyles } from "@material-ui/core";
 import React, { useState } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom"; 
 
 import { serverUrl } from "../../../utils/serverUrl";
 import useFetch from "../../../hooks/useFetch";
@@ -8,8 +8,25 @@ import ErrorComponent from "../../../shared/components/ErrorComponent";
 import LoadingComponent from "../../../shared/components/LoadingComponent";
 import CommentList from "../components/CommentList";
 import CommentModal from "../components/CommentModal";
+import { fontSize } from "@material-ui/system";
+import { classExpression } from "@babel/types";
+
+const useStyles = makeStyles({
+  txt:{
+    padding: "10px"
+  },
+  root: {
+    background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+    border: 0,
+    borderRadius: 3,
+    boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+    color: 'white',
+  }
+});
+
 
 function ProjectViewer() {
+  const classes = useStyles();
   const history = useHistory();
   const { id } = useParams();
   const {
@@ -25,6 +42,8 @@ function ProjectViewer() {
     setOpen(true);
   }
 
+  
+
   return (
     <React.Fragment>
       {error && <ErrorComponent message="Can't view project" />}
@@ -36,16 +55,23 @@ function ProjectViewer() {
               <Grid item xs={9}>
                 <Grid container>
                   <Grid item xs={12}>
-                    <Card style = {{backgroundColor: 'grey', padding: 10}}>
+                    <Card style = {{backgroundColor: 'maroon', padding: 10}}>
                       <Grid container>
-                        <Grid item xs={10}>
-                          <Typography variant="h3">
-                            {project[0].title}
+                        <Grid item xs={11}>
+                          <Typography 
+                          variant="h3"
+                          style={{fontWeight: 'bold',
+                          color: 'white'}}
+                          >{project[0].title}
                           </Typography>
                         </Grid>
-                        <Grid item xs={2}>
+                        <Grid item xs={1}>
                           <Button
-                            variant="outlined"
+                            className={classes.root}
+                            variant="contained"
+                            size="med"
+                            style={{marginTop: 10,
+                            fontWeight: 'bold'}}
                             onClick={() => {
                               history.push(`/projects/${id}/edit`);
                             }}
@@ -56,134 +82,290 @@ function ProjectViewer() {
                       </Grid>
                     </Card>
                   </Grid>
-                  <Grid item xs={4}>
-                    <Typography variant="h4">GSP:</Typography>
-                  </Grid>
                   <Grid item xs={8}>
-                    <Typography variant="h4">
-                      {project[0].obligationType}
+                    <Typography 
+                    className={classes.txt}
+                    style={{marginTop: 15,
+                    color: "maroon",
+                    fontWeight: 'bold'}}
+                    variant="h4"
+                    gutterBottom>Name of SUC:</Typography>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Typography 
+                    className={classes.txt}
+                    style={{marginTop: 15,
+                    textDecorationLine: 'underline'}}
+                    variant="h4"
+                    gutterBottom>{project[0].obligationType}
                     </Typography>
                   </Grid>
+                  <Grid item xs={8}>
+                    <Typography 
+                    className={classes.txt}
+                    variant="h4"
+                    style={{color: "maroon",
+                    fontWeight: 'bold'}}
+                    gutterBottom>College/Campus/Office:</Typography>
+                  </Grid>
                   <Grid item xs={4}>
-                    <Typography variant="h4">Proponent:</Typography>
+                    <Typography 
+                    className={classes.txt}
+                    variant="h4"
+                    style={{textDecorationLine: 'underline'}}
+                    gutterBottom>{project[0].proponent}</Typography>
                   </Grid>
                   <Grid item xs={8}>
-                    <Typography variant="h4">{project[0].proponent}</Typography>
+                    <Typography 
+                    className={classes.txt}
+                    variant="h4"
+                    style={{color: "maroon",
+                    fontWeight: 'bold'}}
+                    gutterBottom>Address:</Typography>
                   </Grid>
                   <Grid item xs={4}>
-                    <Typography variant="h4">Investment Request:</Typography>
-                  </Grid>
-                  <Grid item xs={8}>
-                    <Typography variant="h4">
-                      {project[0].investmentReq}
+                    <Typography
+                    className={classes.txt} 
+                    variant="h4"
+                    style={{textDecorationLine: 'underline'}}
+                    gutterBottom>{project[0].investmentReq}
                     </Typography>
                   </Grid>
-                  <Grid item xs={4}>
-                    <Typography variant="h4">Implementation Period:</Typography>
-                  </Grid>
                   <Grid item xs={8}>
-                    <Typography variant="h4">
-                      {project[0].implementationPeriod}
+                    <Typography 
+                    className={classes.txt}
+                    variant="h4"
+                    style={{color: "maroon",
+                    fontWeight: 'bold'}}
+                    gutterBottom>Location of Project:</Typography>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Typography 
+                    className={classes.txt}
+                    variant="h4"
+                    style={{textDecorationLine: 'underline'}}
+                    gutterBottom>{project[0].implementationPeriod}
                     </Typography>
                   </Grid>
-                  <Grid item xs={4}>
-                    <Typography variant="h4">PAP Level:</Typography>
-                  </Grid>
                   <Grid item xs={8}>
-                    <Typography variant="h4">{project[0].PAPLevel}</Typography>
-                  </Grid>
-                  <Grid item xs={4}>
-                    <Typography variant="h4">Readiness:</Typography>
-                  </Grid>
-                  <Grid item xs={8}>
-                    <Typography variant="h4">{project[0].readiness}</Typography>
+                    <Typography 
+                    className={classes.txt}
+                    variant="h4"
+                    style={{color: "maroon",
+                    fontWeight: 'bold'}}
+                    gutterBottom>Priority Ranking:</Typography>
                   </Grid>
                   <Grid item xs={4}>
-                    <Typography variant="h4">Status:</Typography>
+                    <Typography 
+                    className={classes.txt}
+                    variant="h4"
+                    style={{textDecorationLine: 'underline'}}
+                    gutterBottom>{project[0].PAPLevel}</Typography>
                   </Grid>
                   <Grid item xs={8}>
-                    <Typography variant="h4">{project[0].status}</Typography>
+                    <Typography 
+                    className={classes.txt}
+                    variant="h4"
+                    style={{color: "maroon",
+                    fontWeight: 'bold'}}
+                    gutterBottom>Categorization: checkbox</Typography>
                   </Grid>
                   <Grid item xs={4}>
-                    <Typography variant="h4">Remarks:</Typography>
+                    <Card 
+                    className={classes.txt}
+                    variant="h4"
+                    style={{textDecorationLine: 'underline',
+                    fontSize: 30}}
+                    gutterBottom>{project[0].readiness}</Card>
                   </Grid>
                   <Grid item xs={8}>
-                    <Typography variant="h4">{project[0].remarks}</Typography>
+                    <Typography 
+                    className={classes.txt}
+                    variant="h4"
+                    style={{color: "maroon",
+                    fontWeight: 'bold'}}
+                    gutterBottom>Description:</Typography>
                   </Grid>
                   <Grid item xs={4}>
-                    <Typography variant="h4">Address:</Typography>
+                    <Typography 
+                    className={classes.txt}
+                    variant="h4"
+                    style={{textDecorationLine: 'underline'}}
+                    gutterBottom>{project[0].status}</Typography>
                   </Grid>
                   <Grid item xs={8}>
-                    <Typography variant="h4">{project[0].address}</Typography>
+                    <Typography 
+                    className={classes.txt}
+                    variant="h4"
+                    style={{color: "maroon",
+                    fontWeight: 'bold'}}
+                    gutterBottom>Purpose:</Typography>
                   </Grid>
                   <Grid item xs={4}>
-                    <Typography variant="h4">Project Location:</Typography>
+                    <Typography
+                    className={classes.txt} 
+                    variant="h4"
+                    style={{textDecorationLine: 'underline'}}
+                    gutterBottom>{project[0].remarks}</Typography>
                   </Grid>
                   <Grid item xs={8}>
-                    <Typography variant="h4">
-                      {project[0].projectLocation}
+                    <Typography
+                    className={classes.txt} 
+                    variant="h4"
+                    style={{color: "maroon",
+                    fontWeight: 'bold'}}
+                    gutterBottom>Beneficiaries:</Typography>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Typography 
+                    className={classes.txt}
+                    variant="h4"
+                    style={{textDecorationLine: 'underline'}}
+                    gutterBottom>{project[0].address}</Typography>
+                  </Grid>
+                  <Grid item xs={8}>
+                    <Typography
+                    className={classes.txt} 
+                    variant="h4"
+                    style={{color: "maroon",
+                    fontWeight: 'bold'}}
+                    gutterBottom>Implementation Period:</Typography>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Card 
+                    className={classes.txt}
+                    variant="h4"
+                    style={{textDecorationLine: 'underline',
+                    fontSize: 30}}
+                    gutterBottom>{project[0].projectLocation}
+                    </Card>
+                  </Grid>
+                  <Grid item xs={8}>
+                    <Typography 
+                    className={classes.txt}
+                    variant="h4"
+                    style={{color: "maroon",
+                    fontWeight: 'bold'}}
+                    gutterBottom>Proposed Project Cost:</Typography>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Typography
+                    className={classes.txt} 
+                    variant="h4"
+                    style={{textDecorationLine: 'underline'}}
+                    gutterBottom>{project[0].categorization}
                     </Typography>
                   </Grid>
-                  <Grid item xs={4}>
-                    <Typography variant="h4">Categorization:</Typography>
-                  </Grid>
                   <Grid item xs={8}>
-                    <Typography variant="h4">
-                      {project[0].categorization}
+                    <Typography 
+                    className={classes.txt}
+                    variant="h4"
+                    style={{color: "maroon",
+                    fontWeight: 'bold'}}
+                    gutterBottom>Name of Proponent:</Typography>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Typography 
+                    className={classes.txt}
+                    variant="h4"
+                    style={{textDecorationLine: 'underline'}}
+                    gutterBottom>{project[0].description}
                     </Typography>
                   </Grid>
+                  <Grid item xs={8}>
+                    <Typography 
+                    className={classes.txt}
+                    variant="h4"
+                    style={{color: "maroon",
+                    fontWeight: 'bold'}}
+                    gutterBottom>Designation:</Typography>
+                  </Grid>
                   <Grid item xs={4}>
-                    <Typography variant="h4">Description:</Typography>
+                    <Typography
+                    className={classes.txt} 
+                    variant="h4"
+                    style={{textDecorationLine: 'underline'}}
+                    gutterBottom>{project[0].purpose}</Typography>
                   </Grid>
                   <Grid item xs={8}>
-                    <Typography variant="h4">
-                      {project[0].description}
+                    <Typography 
+                    className={classes.txt}
+                    variant="h4"
+                    style={{color: "maroon",
+                    fontWeight: 'bold'}}
+                    gutterBottom>Contact Information:</Typography>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Card
+                    className={classes.txt} 
+                    variant="h4"
+                    style={{textDecorationLine: 'underline',
+                    fontSize: 30}}
+                    gutterBottom>{project[0].beneficiary}
+                    </Card>
+                  </Grid>
+                  <Grid item xs={8}>
+                    <Typography 
+                    className={classes.txt}
+                    variant="h4"
+                    style={{color: "maroon",
+                    fontWeight: 'bold'}}
+                    gutterBottom>Date Accomplished:</Typography>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Typography 
+                    className={classes.txt}
+                    variant="h4"
+                    style={{textDecorationLine: 'underline'}}
+                    gutterBottom>{project[0].proponentName}
                     </Typography>
                   </Grid>
-                  <Grid item xs={4}>
-                    <Typography variant="h4">Purpose:</Typography>
-                  </Grid>
                   <Grid item xs={8}>
-                    <Typography variant="h4">{project[0].purpose}</Typography>
+                    <Typography
+                    className={classes.txt} 
+                    variant="h4"
+                    style={{color: "maroon",
+                    fontWeight: 'bold'}}
+                    gutterBottom>Received by:</Typography>
                   </Grid>
                   <Grid item xs={4}>
-                    <Typography variant="h4">Beneficiary:</Typography>
-                  </Grid>
-                  <Grid item xs={8}>
-                    <Typography variant="h4">
-                      {project[0].beneficiary}
+                    <Typography 
+                    className={classes.txt}
+                    variant="h4"
+                    style={{textDecorationLine: 'underline'}}
+                    gutterBottom>{project[0].designation}
                     </Typography>
                   </Grid>
-                  <Grid item xs={4}>
-                    <Typography variant="h4">Proponent Name:</Typography>
-                  </Grid>
                   <Grid item xs={8}>
-                    <Typography variant="h4">
-                      {project[0].proponentName}
+                    <Typography 
+                    className={classes.txt}
+                    variant="h4"
+                    style={{color: "maroon",
+                    fontWeight: 'bold'}}
+                    gutterBottom>Designation:</Typography>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Typography 
+                    className={classes.txt}
+                    variant="h4"
+                    style={{textDecorationLine: 'underline'}}
+                    gutterBottom>{project[0].contactInformation}
                     </Typography>
                   </Grid>
-                  <Grid item xs={4}>
-                    <Typography variant="h4">Designation:</Typography>
-                  </Grid>
                   <Grid item xs={8}>
-                    <Typography variant="h4">
-                      {project[0].designation}
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={4}>
-                    <Typography variant="h4">Contact Information:</Typography>
-                  </Grid>
-                  <Grid item xs={8}>
-                    <Typography variant="h4">
-                      {project[0].contactInformation}
-                    </Typography>
+                    <Typography 
+                    className={classes.txt}
+                    variant="h4"
+                    style={{color: "maroon",
+                    fontWeight: 'bold'}}
+                    gutterBottom>Date Received:</Typography>
                   </Grid>
                   <Grid item xs={4}>
-                    <Typography variant="h4">Date Accomplished:</Typography>
-                  </Grid>
-                  <Grid item xs={8}>
-                    <Typography variant="h4">
-                      {project[0].dateAccomplished}
+                    <Typography 
+                    className={classes.txt}
+                    variant="h4"
+                    style={{textDecorationLine: 'underline'}}
+                    gutterBottom>{project[0].dateAccomplished}
                     </Typography>
                   </Grid>
                 </Grid>

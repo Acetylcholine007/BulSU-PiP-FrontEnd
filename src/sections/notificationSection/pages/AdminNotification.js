@@ -1,8 +1,16 @@
-import { Typography } from '@material-ui/core';
-import React from 'react'
+import { Container, Grid } from "@material-ui/core";
+import NotificationList from "../components/NotificationList";
 
 function AdminNotification() {
-    return <Typography component="h1">Admin Notification</Typography>;
+    return (
+        <Container>
+          <Grid container>
+            <Grid item xs={12}>
+              <NotificationList />
+            </Grid>
+          </Grid>
+        </Container>
+      );
 }
 
 export default AdminNotification

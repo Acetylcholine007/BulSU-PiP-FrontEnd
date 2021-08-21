@@ -5,7 +5,9 @@ import CommentCard from "./CommentCard";
 function CommentList({ comments, selectComment }) {
   return (
     <Container>
-      <Typography variant="h4">Comments</Typography>
+      <Typography 
+      variant="h4"
+      style={{fontWeight: 'bold'}}>Comments:</Typography>
       {comments.map((comment) => (
         <div onClick={() => selectComment(comment)}>
           <CommentCard comment={comment} />
