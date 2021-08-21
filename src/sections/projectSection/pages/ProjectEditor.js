@@ -41,7 +41,7 @@ function ProjectEditor({ isNew, project }) {
     isNew
       ? {
           title: "",
-          GSP: [],
+          GSP: [null, null, null, null, null],
           obligationType: "",
           proponent: "",
           investmentReq: [
