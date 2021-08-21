@@ -15,7 +15,7 @@ import { useHistory } from "react-router-dom";
 
 import { AuthContext } from "../../contexts/AuthContext";
 
-function AccountMenu({ showDialog, anchorEl, setShowDialog, setAnchorEl }) {
+function AccountMenu({ showDialog, anchorEl, setShowDialog, setAnchorEl, setOpen }) {
   const useStyles = makeStyles((theme) => {
     return {
       cardHeader: {
@@ -57,6 +57,20 @@ function AccountMenu({ showDialog, anchorEl, setShowDialog, setAnchorEl }) {
         />
         <CardContent style={{ padding: "0px" }}>
           <List>
+            <ListItem>
+              <Button
+                color="secondary"
+                variant="contained"
+                onClick={() => {
+                  setOpen(true);
+                  setShowDialog(false);
+                }}
+                className={classes.button}
+                fullWidth
+              >
+                Edit Account
+              </Button>
+            </ListItem>
             <ListItem>
               <Button
                 color="secondary"

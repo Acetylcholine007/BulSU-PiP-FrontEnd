@@ -21,7 +21,8 @@ import { AuthContext } from "../../../contexts/AuthContext";
 import Avatar from '@material-ui/core/Avatar';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-
+import { ProjectContext } from "../../../contexts/ProjectContext";
+import LoginDialog from "../components/LoginDialog";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -59,6 +60,7 @@ const useStyles = makeStyles((theme) => ({
 function LogInPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmpassword, setConfirmPassword] = useState("");
 
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
@@ -66,6 +68,10 @@ function LogInPage() {
   const history = useHistory();
   const classes = useStyles();
   const {setUser} = useContext(AuthContext);
+  const {setProjects} = useContext(ProjectContext);
+
+  const [open, setOpen] = useState(false);
+  const [message, setMessage] = useState('');
 
   const login = (email, password) => {
     const abortCont = new AbortController();
@@ -80,8 +86,34 @@ function LogInPage() {
       })
       .then((match) => {
         if (match.length === 1) {
-          setUser(new User(match[0]));
-          history.push("/");
+          if(match[0].verified) {
+            setUser(new User(match[0]));
+            fetch(match[0].type === 'Cient' ? `${serverUrl}projects?ownerId=${match[0].id}` : `${serverUrl}projects`, {
+              signal: abortCont.signal,
+            })
+            .then((res) => {
+              if (!res.ok) {
+                // error coming back from server
+                throw Error("could not fetch the data for that resource");
+              }
+              return res.json();
+            })
+            .then((data) => {
+              setProjects(data);
+              history.push("/");
+            })
+            .catch((err) => {
+              if (err.name === "AbortError") {
+                console.log("fetch aborted");
+              } else {
+                console.log(err.message);
+              }
+            });
+          } else {
+            setMessage('Your account is either unverified or has been suspended. Contact system admin to verify your account.');
+            setOpen(true);
+          }
+          
         } else {
           setEmailError(true);
           setPasswordError(true);
@@ -246,6 +278,7 @@ function LogInPage() {
           >System</Typography>
         </Grid>
       </Grid>
+      <LoginDialog open = {open} setOpen = {setOpen} message = {message}/>
     </Container>
     
     

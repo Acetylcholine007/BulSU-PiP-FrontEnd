@@ -19,9 +19,9 @@ function ProjectEditor({ isNew, project }) {
           obligationType: "",
           proponent: "",
           investmentReq: "",
-          implementationPeriod: "",
-          PAPLevel: "",
-          readiness: "",
+          implementationPeriod: {start: '2021', end: '2025'},
+          PAPLevel: 1,
+          readiness: 1,
           status: "",
           remarks: "",
         }
@@ -43,7 +43,7 @@ function ProjectEditor({ isNew, project }) {
       ? {
           address: "",
           projectLocation: "",
-          categorization: "",
+          categorization: {new: false, expanded: false, infrastructure: false, nonInfrastructure: false},
           description: "",
           purpose: "",
           beneficiary: "",
