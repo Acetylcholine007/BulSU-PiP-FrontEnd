@@ -41,9 +41,11 @@ import {
           <div className={classes.paper}>
             <Container>
               <Grid container>
-                <Grid item xs = {11} >
-                    <Typography variant = 'h4'>{notification.header}</Typography>
-                    <Typography>{notification.message}</Typography>
+                <Grid item xs = {15} >
+                    <Typography variant = 'h2'>{notification.header}</Typography>
+                    <Typography>{notification.datetime}</Typography>
+                    <Typography variant = 'h5'>{notification.message}</Typography>
+
                 </Grid>
               </Grid>
             </Container>
