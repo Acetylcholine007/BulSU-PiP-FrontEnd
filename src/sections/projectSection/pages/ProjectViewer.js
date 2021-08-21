@@ -8,8 +8,6 @@ import ErrorComponent from "../../../shared/components/ErrorComponent";
 import LoadingComponent from "../../../shared/components/LoadingComponent";
 import CommentList from "../components/CommentList";
 import CommentModal from "../components/CommentModal";
-import { fontSize } from "@material-ui/system";
-import { classExpression } from "@babel/types";
 
 const useStyles = makeStyles({
   txt:{

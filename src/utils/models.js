@@ -7,6 +7,7 @@ class User {
     password,
     uri,
     type,
+    institute,
     verified,
     notificationList,
     projectList,
@@ -18,6 +19,7 @@ class User {
     this.password = password;
     this.uri = uri;
     this.type = type;
+    this.institute = institute;
     this.verified = verified;
     this.notificationList = notificationList;
     this.projectList = projectList;
@@ -41,6 +43,7 @@ class User {
       password: this.password,
       uri: this.uri,
       type: this.type,
+      institute: this.institute,
       verified: this.verified,
       notificationList: this.notificationList,
       projectList: this.projectList,

@@ -1,5 +1,16 @@
-import { Button, Container, Grid, Typography } from "@material-ui/core";
-import { useState, useContext } from "react";
+import {
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  Container,
+  Divider,
+  Grid,
+  Typography,
+  makeStyles,
+  CardActions,
+} from "@material-ui/core";
+import React, { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 
 import Form1 from "../components/Form1";
@@ -10,16 +21,37 @@ import { AuthContext } from "../../../contexts/AuthContext";
 function ProjectEditor({ isNew, project }) {
   const [page, setPage] = useState(1);
   const history = useHistory();
-  const {user} = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
+  const useStyles = makeStyles((theme) => ({
+    card: {
+      margin: 20,
+    },
+    cardHeader: {
+      backgroundColor: "#d3d3d3",
+    },
+    cardActions: {
+      backgroundColor: "#d3d3d3",
+      alignItems: "center",
+    },
+  }));
+
+  const classes = useStyles();
+
   const [form1Data, setForm1Data] = useState(
     isNew
       ? {
           title: "",
-          GSP: "",
+          GSP: [],
           obligationType: "",
           proponent: "",
-          investmentReq: "",
-          implementationPeriod: {start: '2021', end: '2025'},
+          investmentReq: [
+            { year: "2021", value: "0" },
+            { year: "2021", value: "0" },
+            { year: "2021", value: "0" },
+            { year: "2021", value: "0" },
+            { year: "2021", value: "0" },
+          ],
+          implementationPeriod: { start: "2021", end: "2025" },
           PAPLevel: 1,
           readiness: 1,
           status: "",
@@ -43,13 +75,23 @@ function ProjectEditor({ isNew, project }) {
       ? {
           address: "",
           projectLocation: "",
-          categorization: {new: false, expanded: false, infrastructure: false, nonInfrastructure: false},
+          categorization: {
+            new: true,
+            expanded: false,
+            infrastructure: true,
+            nonInfrastructure: false,
+          },
           description: "",
           purpose: "",
           beneficiary: "",
-          proponentName: "",
+          proposedProjectCost: [
+            { year: "2021", cost: "0" },
+            { year: "2021", cost: "0" },
+            { year: "2021", cost: "0" },
+          ],
+          proponentName: {surname: '', firstName: '', middleInitial: ''},
           designation: "",
-          contactInformation: "",
+          contactInformation: {telNumber: '', email: '', phoneNumber: '', others: ''},
           dateAccomplished: "",
           signature: "",
           fileList: [],
@@ -109,48 +151,54 @@ function ProjectEditor({ isNew, project }) {
   };
 
   return (
-    <Container>
-      <Grid container>
-        <Grid item xs={12}>
-          <Typography variant="h3">
-            {isNew ? "New Project" : "Edit Project"}
-          </Typography>
+    <React.Fragment>
+      <Typography variant="h3">
+        {isNew ? "New Project" : "Edit Project"}
+      </Typography>
+      <Divider />
+      <Container>
+        <Grid container>
+          <Grid item xs={12}>
+            <Card className={classes.card}>
+              <CardHeader
+                title={page == 1 ? "Investment Programming" : "Form 2"}
+                subheader={`Page ${page} of 2`}
+                className={classes.cardHeader}
+              />
+              <CardContent>{formSelector()}</CardContent>
+              <CardActions className={classes.cardActions}>
+                {page === 2 && (
+                  <Button variant="contained" onClick={() => setPage(1)}>
+                    Previous
+                  </Button>
+                )}
+                {page === 1 ? (
+                  <Button
+                    variant="contained"
+                    onClick={() => {
+                      //perform form1 validation
+                      setPage(2);
+                    }}
+                  >
+                    Next
+                  </Button>
+                ) : (
+                  <Button
+                    variant="contained"
+                    onClick={() => {
+                      //perform form2 validation
+                      handleSubmit();
+                    }}
+                  >
+                    Submit
+                  </Button>
+                )}
+              </CardActions>
+            </Card>
+          </Grid>
         </Grid>
-        <Grid item xs={12}>
-          {formSelector()}
-        </Grid>
-        <Grid item xs={6} align="center">
-          {page === 2 && (
-            <Button variant="contained" onClick={() => setPage(1)}>
-              Previous
-            </Button>
-          )}
-        </Grid>
-        <Grid item xs={6} align="center">
-          {page === 1 ? (
-            <Button
-              variant="contained"
-              onClick={() => {
-                //perform form1 validation
-                setPage(2);
-              }}
-            >
-              Next
-            </Button>
-          ) : (
-            <Button
-              variant="contained"
-              onClick={() => {
-                //perform form2 validation
-                handleSubmit();
-              }}
-            >
-              Submit
-            </Button>
-          )}
-        </Grid>
-      </Grid>
-    </Container>
+      </Container>
+    </React.Fragment>
   );
 }
 
