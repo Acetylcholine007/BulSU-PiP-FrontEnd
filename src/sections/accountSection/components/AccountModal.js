@@ -9,9 +9,9 @@ import {
     Modal,
     Typography,
   } from "@material-ui/core";
-  import React from "react";
+  import { serverUrl } from "../../../utils/serverUrl";
   
-  function AccountModal({ open, setOpen, account }) {
+  function AccountModal({ open, setOpen, user, setAccounts, accounts }) {
     const useStyles = makeStyles((theme) => ({
       modal: {
         display: "flex",
@@ -25,11 +25,36 @@ import {
         borderRadius: 10,
       },
       status: {
-          color: account.verified ? '#00FF00' : '#FF0000'
+          color: user.verified ? '#00FF00' : '#FF0000'
+      },
+      button: {
+        margin: '10px 0px 10px 0px'
       }
     }));
   
     const classes = useStyles();
+
+    const toggleAccountStatus = () => {
+      fetch(`${serverUrl}users/${user.id}`, {
+        method: "PUT",
+        headers: { "Content-type": "application/json" },
+        body: JSON.stringify({
+          ...user,
+          verified: !user.verified,
+        }),
+      }).then(() => {
+        accounts[accounts.indexOf(user)].verified = !user.verified;
+        setAccounts([...accounts])
+      });
+    };
+  
+    const deleteAccount = () => {
+      fetch(`${serverUrl}users/${user.id}`, {
+        method: "DELETE"
+      }).then(() => {
+        setAccounts(accounts.filter((account) => account.id !== user.id))
+      });
+    }
     
     return (
       <Modal
@@ -46,18 +71,17 @@ import {
           <div className={classes.paper}>
             <Container>
               <Grid container>
-              hello
                 <Grid item xs={12}>
-                  <Typography variant="h4">{`${account.suc} - ${account.college}`}</Typography>
-                  <Typography variant="body1">{account.email}</Typography>
+                  <Typography variant="h4">{`${user.suc} - ${user.college}`}</Typography>
+                  <Typography variant="body1">{user.email}</Typography>
                   <Divider />
                 </Grid>
                 <Grid item xs={9}>
-                  <Typography variant="h6" className = {classes.status}>{`Status: ${account.verified ? 'Verified' : 'Unverified'}`}</Typography>
+                  <Typography variant="h6" className = {classes.status}>{`Status: ${user.verified ? 'Verified' : 'Unverified'}`}</Typography>
                 </Grid>
                 <Grid item xs={3}>
-                  <Button variant = 'contained'>Reject</Button>
-                  <Button variant = 'contained'>Delete</Button>
+                  <Button variant = 'contained' fullWidth className = {classes.button} onClick={toggleAccountStatus}>{user.verified ? "Suspend" : "Verify"}</Button>
+                  <Button variant = 'contained' fullWidth className = {classes.button} onClick={deleteAccount}>Delete</Button>
                 </Grid>
               </Grid>
             </Container>

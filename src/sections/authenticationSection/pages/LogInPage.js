@@ -17,6 +17,7 @@ import { serverUrl } from "../../../utils/serverUrl";
 import { User } from "../../../utils/models";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { ProjectContext } from "../../../contexts/ProjectContext";
+import LoginDialog from "../components/LoginDialog";
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -46,6 +47,9 @@ function LogInPage() {
   const {setUser} = useContext(AuthContext);
   const {setProjects} = useContext(ProjectContext);
 
+  const [open, setOpen] = useState(false);
+  const [message, setMessage] = useState('');
+
   const login = (email, password) => {
     const abortCont = new AbortController();
     fetch(`${serverUrl}users?password=${password}&&email=${email}`, {
@@ -59,28 +63,34 @@ function LogInPage() {
       })
       .then((match) => {
         if (match.length === 1) {
-          setUser(new User(match[0]));
-          fetch(match[0].type === 'Cient' ? `${serverUrl}projects?ownerId=${match[0].id}` : `${serverUrl}projects`, {
-            signal: abortCont.signal,
-          })
-          .then((res) => {
-            if (!res.ok) {
-              // error coming back from server
-              throw Error("could not fetch the data for that resource");
-            }
-            return res.json();
-          })
-          .then((data) => {
-            setProjects(data);
-            history.push("/");
-          })
-          .catch((err) => {
-            if (err.name === "AbortError") {
-              console.log("fetch aborted");
-            } else {
-              console.log(err.message);
-            }
-          });
+          if(match[0].verified) {
+            setUser(new User(match[0]));
+            fetch(match[0].type === 'Cient' ? `${serverUrl}projects?ownerId=${match[0].id}` : `${serverUrl}projects`, {
+              signal: abortCont.signal,
+            })
+            .then((res) => {
+              if (!res.ok) {
+                // error coming back from server
+                throw Error("could not fetch the data for that resource");
+              }
+              return res.json();
+            })
+            .then((data) => {
+              setProjects(data);
+              history.push("/");
+            })
+            .catch((err) => {
+              if (err.name === "AbortError") {
+                console.log("fetch aborted");
+              } else {
+                console.log(err.message);
+              }
+            });
+          } else {
+            setMessage('Your account is either unverified or has been suspended. Contact system admin to verify your account.');
+            setOpen(true);
+          }
+          
         } else {
           setEmailError(true);
           setPasswordError(true);
@@ -174,6 +184,7 @@ function LogInPage() {
           </Card>
         </Grid>
       </Grid>
+      <LoginDialog open = {open} setOpen = {setOpen} message = {message}/>
     </Container>
   );
 }

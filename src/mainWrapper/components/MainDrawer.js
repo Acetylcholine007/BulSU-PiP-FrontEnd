@@ -67,9 +67,9 @@ function MainDrawer({ drawerWidth, open, handleDrawerClose }) {
     root: {
       "&:hover": {
         backgroundColor: "rgba(247,204,0,0.3)",
-        color: "black",
+        color: "white",
         "& .MuiListItemIcon-root": {
-          color: "black",
+          color: "white",
         },
       },
     },
