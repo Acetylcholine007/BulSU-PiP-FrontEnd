@@ -7,7 +7,9 @@ import {
   Grid,
   makeStyles,
   TextField,
+  ThemeProvider,
   Typography,
+
 } from "@material-ui/core";
 import { useState, useContext } from "react";
 import { useHistory } from "react-router";
@@ -16,12 +18,16 @@ import sjcl from "sjcl";
 import { serverUrl } from "../../../utils/serverUrl";
 import { User } from "../../../utils/models";
 import { AuthContext } from "../../../contexts/AuthContext";
+import Avatar from '@material-ui/core/Avatar';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
 import { ProjectContext } from "../../../contexts/ProjectContext";
 import LoginDialog from "../components/LoginDialog";
 
-const useStyles = makeStyles(() => ({
+
+const useStyles = makeStyles((theme) => ({
   container: {
-    marginTop: 100,
+    marginTop: 250,
   },
   field: {
     marginTop: 20,
@@ -33,7 +39,23 @@ const useStyles = makeStyles(() => ({
     marginBottom: 20,
     display: "block",
   },
+ avtr: {
+   width:180,
+   height:180,
+   marginTop: theme.spacing(5),
+   marginRight: theme.spacing(10)
+ },
+ 
+ toolbar: theme.mixins.toolbar,
+  date:{
+    flexGrow: 1
+  },
+ title:{
+   marginTop:40,
+ }
+ 
 }));
+
 
 function LogInPage() {
   const [email, setEmail] = useState("");
@@ -126,15 +148,55 @@ function LogInPage() {
     }
   };
 
+
   return (
     <Container className={classes.container}>
+       <AppBar
+    className={classes.appbar}
+    elevation={0}
+    color="transparent"
+    >
+      <Toolbar>
+      <Avatar
+        className={classes.avtr} 
+        src="favicon.ico"
+        ></Avatar>
+        <Typography
+        className={classes.date}
+        variant="h2"
+        align="left"
+        >
+          Planning and Development Office
+        </Typography>
+        <Typography>
+          
+        </Typography>
+        <Avatar
+        className={classes.avtr} 
+        src="favicon.ico"
+        ></Avatar>
+      </Toolbar>
+    </AppBar>
       <Grid container>
-        <Grid item xs={12} md={5} key="description">
-          <Typography variant="h1">BulSU PiP</Typography>
+      <Grid item xs={12} md={5} key="description">
+        <Typography variant="h2"
+        align="left"
+        >
+        
+        </Typography>
+        <Typography
+        variant="h5"
+        align="left"
+        >
+        
+        </Typography>
+      </Grid>
+      <Grid item xs={12} md={5} key="description">
+      
         </Grid>
-        <Grid item xs={12} md={6} offset={1} key="form">
+        <Grid item xs={12} md={5} offset={1} key="form">
           <Card>
-            <CardContent>
+            <CardContent>  
               <form noValidate autoComplete="off" onSubmit={handleLogin}>
                 <TextField
                   onChange={(e) => setEmail(e.target.value)}
@@ -161,12 +223,12 @@ function LogInPage() {
                 />
                 <Button
                   type="submit"
-                  color="primary"
+                  color="secondary"
                   variant="contained"
                   className={classes.button}
-                  fullWidth
+                  size = "medium"
                 >
-                  LOG IN
+                  LOGIN
                 </Button>
                 <Divider />
                 <Button
@@ -176,18 +238,52 @@ function LogInPage() {
                     history.push("/signup");
                   }}
                   className={classes.button}
-                  fullWidth
+                  size = "medium"
                 >
-                  CREATE ACCOUNT
+                  Sign-Up
+                </Button>
+                <Button
+                size= "extra small">
+                  forgot password?
                 </Button>
               </form>
             </CardContent>
           </Card>
         </Grid>
+        <Grid item xs={12} md={5} key="description">
+          <Typography
+          className={classes.title}
+          variant="h2"
+          align="right"
+          >BulSU PiPs</Typography>
+          <Typography
+           
+          variant="h4"
+           align="right"
+          >BulSU-PDO</Typography>
+          <Typography
+            
+          variant="h4"
+           align="right"
+          >Investment</Typography>
+          <Typography
+            
+          variant="h4"
+           align="right"
+          >Program</Typography>
+          <Typography
+           
+          variant="h4"
+           align="right"
+          >System</Typography>
+        </Grid>
       </Grid>
       <LoginDialog open = {open} setOpen = {setOpen} message = {message}/>
     </Container>
+    
+    
   );
+ 
 }
 
 export default LogInPage;
