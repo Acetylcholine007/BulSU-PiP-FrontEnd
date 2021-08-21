@@ -25,6 +25,7 @@
     "react-scripts": "4.0.3",
     "react-spinkit": "^3.0.0",
     "sjcl": "^1.0.8",
+    "ui": "^0.2.4",
     "web-vitals": "^1.0.1"
   },
   "scripts": {

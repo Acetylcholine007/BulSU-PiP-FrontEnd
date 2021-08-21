@@ -8,18 +8,21 @@ import {
   makeStyles,
   TextField,
   Typography,
+  Divider,
 } from "@material-ui/core";
 import { useState } from "react";
 import { useHistory } from "react-router";
 import sjcl from "sjcl";
+import React from 'react';
 
 import { accountTypes, colleges, SUCs } from "../../../utils/constants";
 import { serverUrl } from "../../../utils/serverUrl";
 import { User } from "../../../utils/models";
+import Avatar from '@material-ui/core/Avatar';
 
 const useStyles = makeStyles(() => ({
   container: {
-    marginTop: 100,
+    marginTop: 50,
   },
   field: {
     marginTop: 20,
@@ -31,6 +34,12 @@ const useStyles = makeStyles(() => ({
     marginBottom: 20,
     display: "block",
   },
+  avtr: {
+    width: 180,
+    height: 180,
+    marginTop: 50,
+  },
+
 }));
 
 function SignUpPage() {
@@ -41,12 +50,14 @@ function SignUpPage() {
   const [college, setCollege] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmpassword, setConfirmPassword] = useState("");
   const [type, setType] = useState("");
 
   const [sucError, setSucError] = useState(false);
   const [collegeError, setCollegeError] = useState(false);
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
+  const [confirmpasswordError, setConfirmPasswordError] = useState(false);
   const [typeError, setTypeError] = useState(false);
 
   const handleSignUp = (e, newUser) => {
@@ -66,10 +77,23 @@ function SignUpPage() {
   return (
     <Container className={classes.container}>
       <Grid container>
-        <Grid item xs={12} md={5} key="description">
-          <Typography variant="h1">BulSU PiP</Typography>
+        <Grid item xs={12} md= {3}> 
+          <Avatar 
+          classname={classes.avtr}
+          src="bsuLogo.png"
+          ></Avatar> 
         </Grid>
-        <Grid item xs={12} md={6} offset={1} key="form">
+        <Grid item xs={12} md={6} key="description">
+          <Typography variant="h2">Planning and Development Office</Typography>
+          <Typography variant="h5">BULACAN STATE UNIVERSITY</Typography>
+        </Grid>
+        <Grid item xs={12} md= {3}>
+        <Avatar 
+          classname={classes.avtr}
+          src="bsuLogo.png"
+          ></Avatar> 
+        </Grid>
+        <Grid item xs={12} md={8} offset={1} key="form">
           <Card>
             <CardContent>
               <form
@@ -172,6 +196,20 @@ function SignUpPage() {
                       value={password}
                       type="password"
                     />
+                    </Grid>
+                  <Grid item xs={12} key="confirm password">
+                    <TextField
+                      onChange={(e) => setConfirmPassword(e.target.value)}
+                      className={classes.field}
+                      label="Confirm Password"
+                      variant="outlined"
+                      color="primary"
+                      fullWidth
+                      error={passwordError}
+                      helperText = {passwordError ? 'Error Password' : null}
+                      value={confirmpassword}
+                      type="password"
+                    />
                   </Grid>
                   <Grid item xs={12} key="submit">
                     <Button
@@ -189,9 +227,15 @@ function SignUpPage() {
             </CardContent>
           </Card>
         </Grid>
-      </Grid>
+        <Grid item xs={12} md={4} key="description">
+          <Typography variant="h2">BulSU PIPs</Typography>
+          <Divider />
+          <typography variant="h3">BulSU-PDO Investment Program System</typography>
+        </Grid>  
+      </Grid>    
     </Container>
   );
 }
+
 
 export default SignUpPage;

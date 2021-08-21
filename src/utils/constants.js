@@ -8,7 +8,7 @@ import {
 
 export const SUCs = ["Main", "Bustos", "Hagonoy", "Meneses"];
 
-export const colleges = ["COE", "CON", "CSSP", "CAFA", "CS", "COED"];
+export const colleges = ["COE", "COED", "CHTM", "CIT", "CICT", "CBA", "CS", "CSER", "CSSP", "CAL", "CAFA", "CCJE", "CON"];
 
 export const proponents = {
   COE: [
