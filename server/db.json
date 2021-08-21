@@ -99,6 +99,18 @@
       "verified": true,
       "notificationList": [],
       "projectList": []
+    },
+    {
+      "id": 8,
+      "suc": "Main",
+      "college": "COE",
+      "email": "asdf",
+      "password": "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4",
+      "uri": "",
+      "type": "Client",
+      "verified": true,
+      "notificationList": [],
+      "projectList": []
     }
   ],
   "projects": [

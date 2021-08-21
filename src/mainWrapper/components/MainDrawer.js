@@ -101,7 +101,7 @@ function MainDrawer({ drawerWidth, open, handleDrawerClose }) {
       </div>
       <Container className={classes.drawerSubHeader} align="center">
         <img
-          src="images/bsuLogo.png"
+          src="/bsuLogo.png"
           style={{ objectFit: "fill", width: "90%" }}
           background-position="center"
           alt="BSU Logo"
