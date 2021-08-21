@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@fontsource/roboto": "^4.5.0",
     "@date-io/date-fns": "1.x",
     "@date-io/dayjs": "1.x",
     "@date-io/luxon": "1.x",
