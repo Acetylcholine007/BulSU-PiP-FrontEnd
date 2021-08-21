@@ -10,10 +10,10 @@ const useStyles = makeStyles((theme) => ({
       },
     }));
 
-function NotificationCard({notification}) {
+function NotificationCard({notification, selectNotification}) {
     const classes = useStyles();
     return (
-        <Card>
+        <Card onClick = {() => selectNotification(notification)}>
             <Grid container>
                 <Grid item xs = {1}>
                     <Avatar className={classes.avatr}>
