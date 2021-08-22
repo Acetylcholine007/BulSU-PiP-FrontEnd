@@ -8,7 +8,23 @@ import {
 
 export const SUCs = ["Main", "Bustos", "Hagonoy", "Meneses"];
 
-export const colleges = ["COE", "COED", "CHTM", "CIT", "CICT", "CBA", "CS", "CSER", "CSSP", "CAL", "CAFA", "CCJE", "CON"];
+export const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+export const colleges = [
+  "COE",
+  "COED",
+  "CHTM",
+  "CIT",
+  "CICT",
+  "CBA",
+  "CS",
+  "CSER",
+  "CSSP",
+  "CAL",
+  "CAFA",
+  "CCJE",
+  "CON",
+];
 
 export const institutes = [
   "Satellite - Bustos Campus",
@@ -116,7 +132,7 @@ export const proponents = [
 
 export const accountTypes = ["Admin", "Client"];
 
-export const obligationTypes = ["OO", "MYO"];
+export const obligationTypes = ["One-Year Obligation", "Multi-Year Obligation"];
 
 export const papLevels = [
   {

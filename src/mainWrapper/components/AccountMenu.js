@@ -10,6 +10,7 @@ import {
   Typography,
   makeStyles,
 } from "@material-ui/core";
+import { Edit, ExitToApp } from "@material-ui/icons";
 import { useContext } from "react";
 import { useHistory } from "react-router-dom";
 
@@ -67,6 +68,7 @@ function AccountMenu({ showDialog, anchorEl, setShowDialog, setAnchorEl, setOpen
                 }}
                 className={classes.button}
                 fullWidth
+                startIcon={<Edit />}
               >
                 Edit Account
               </Button>
@@ -82,6 +84,7 @@ function AccountMenu({ showDialog, anchorEl, setShowDialog, setAnchorEl, setOpen
                 }}
                 className={classes.button}
                 fullWidth
+                startIcon={<ExitToApp />}
               >
                 Log Out
               </Button>

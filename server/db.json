@@ -43,153 +43,151 @@
   ],
   "projects": [
     {
-      "title": "Project 1",
-      "GSP": "asdasd",
-      "obligationType": "asdasd",
-      "proponent": "asdasd",
-      "investmentReq": "asdasd",
-      "implementationPeriod": "asdf",
-      "PAPLevel": "asda",
-      "readiness": "asdada",
-      "status": "asdasd",
-      "remarks": "asdasd",
-      "address": "asdasd",
-      "projectLocation": "asdda",
-      "categorization": "dsdasda",
-      "description": "sdasda",
-      "purpose": "sdasdad",
-      "beneficiary": "sdasdad",
-      "proponentName": "sdasd",
-      "designation": "asdasd",
-      "contactInformation": "asdf",
-      "dateAccomplished": "sdads",
-      "signature": "",
-      "fileList": [],
-      "commentList": [
-        "Too Bad",
-        "Revise it 10x"
+      "title": "FloodSafe",
+      "GSP": [
+        null,
+        [
+          [
+            true,
+            true,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ],
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        [
+          [
+            true,
+            false,
+            false,
+            false
+          ],
+          null,
+          null,
+          [
+            true
+          ]
+        ],
+        null,
+        [
+          [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            true
+          ],
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
       ],
-      "id": 1,
-      "ownerId": 1
-    },
-    {
-      "title": "Project 2",
-      "GSP": "test",
-      "obligationType": "test",
-      "proponent": "test",
-      "investmentReq": "test",
-      "implementationPeriod": "test",
-      "PAPLevel": "test",
-      "readiness": "test",
-      "status": "test",
-      "remarks": "test",
-      "address": "test",
-      "projectLocation": "test",
-      "categorization": "test",
-      "description": "test",
-      "purpose": "test",
-      "beneficiary": "test",
-      "proponentName": "test",
-      "designation": "test",
-      "contactInformation": "test",
-      "dateAccomplished": "test",
-      "signature": "",
-      "fileList": [],
-      "commentList": [
-        "Not so good",
-        "Check spelling"
+      "obligationType": "Multi-Year Obligation",
+      "proponent": "Computer Engineering",
+      "investmentReq": [
+        {
+          "year": "2021",
+          "value": "5000"
+        },
+        {
+          "year": "2022",
+          "value": "5000"
+        },
+        {
+          "year": "2023",
+          "value": "5000"
+        },
+        {
+          "year": "2024",
+          "value": "5000"
+        },
+        {
+          "year": "2025",
+          "value": "5000"
+        }
       ],
-      "ownerId": 1,
-      "id": 2
-    },
-    {
-      "title": "asdf",
-      "GSP": "asdf",
-      "obligationType": "asdf",
-      "proponent": "asdf",
-      "investmentReq": "asdf",
-      "implementationPeriod": "asdf",
-      "PAPLevel": "asdf",
-      "readiness": "asdf",
-      "status": "asdf",
-      "remarks": "asdf",
-      "address": "asdf",
-      "projectLocation": "asdf",
-      "categorization": "asdf",
-      "description": "asdf",
-      "purpose": "asdf",
-      "beneficiary": "asdf",
-      "proponentName": "asdf",
-      "designation": "asdf",
-      "contactInformation": "asdf",
-      "dateAccomplished": "asdf",
-      "signature": "",
-      "fileList": [],
-      "commentList": [],
-      "ownerId": 2,
-      "id": 3
-    },
-    {
-      "title": "asdf",
-      "GSP": "asdf",
-      "obligationType": "asdf",
-      "proponent": "asdf",
-      "investmentReq": "asdf",
-      "implementationPeriod": "asdf",
-      "PAPLevel": "asdf",
-      "readiness": "asdf",
-      "status": "asdf",
-      "remarks": "asdf",
-      "address": "asdf",
-      "projectLocation": "asdf",
-      "categorization": "asdf",
-      "description": "asdf",
-      "purpose": "asdf",
-      "beneficiary": "asdf",
-      "proponentName": "asdf",
-      "designation": "asdf",
-      "contactInformation": "asdf",
-      "dateAccomplished": "asdf",
-      "signature": "",
-      "fileList": [],
-      "commentList": [],
-      "ownerId": 1,
-      "id": 4
-    },
-    {
-      "title": "Project3",
-      "GSP": "",
-      "obligationType": "",
-      "proponent": "",
-      "investmentReq": "",
       "implementationPeriod": {
-        "start": "2021",
-        "end": "2025"
+        "start": "2021-08-22T01:59:00.000Z",
+        "end": "2023-08-22T01:59:00.000Z"
       },
-      "PAPLevel": 1,
+      "PAPLevel": 2,
       "readiness": 1,
-      "status": "",
+      "status": 1,
       "remarks": "",
+      "suc": "Bulacan State University",
+      "institute": "College of Engineering",
       "address": "",
-      "projectLocation": "",
+      "projectLocation": "Bulacan Region",
       "categorization": {
-        "new": false,
+        "new": true,
         "expanded": false,
-        "infrastructure": false,
+        "infrastructure": true,
         "nonInfrastructure": false
       },
-      "description": "",
-      "purpose": "",
-      "beneficiary": "",
-      "proponentName": "",
-      "designation": "",
-      "contactInformation": "",
-      "dateAccomplished": "",
+      "description": "Flood sensing system for forecasting and monitoring",
+      "purpose": "To help local residents prepare for potential flood risks",
+      "beneficiary": "Local Residents",
+      "proposedProjectCost": [
+        {
+          "year": "2021",
+          "cost": "5000"
+        },
+        {
+          "year": "2022",
+          "cost": "5000"
+        },
+        {
+          "year": "2023",
+          "cost": "5000"
+        }
+      ],
+      "proponentName": {
+        "surname": "Sins",
+        "firstName": "Johnny",
+        "middleInitial": "X"
+      },
+      "designation": "Eng",
+      "contactInformation": {
+        "telNumber": "1234",
+        "email": "test@gmail.com",
+        "phoneNumber": "1234",
+        "others": "facebook"
+      },
+      "dateAccomplished": "2021-08-22T01:59:44.448Z",
       "signature": "",
       "fileList": [],
-      "commentList": [],
+      "commentList": [{
+        "author": "Admin",
+        "header": "Comment",
+        "message": "Too bad",
+        "datetime": "2021-08-22T01:59:44.448Z"
+      }],
       "ownerId": 1,
-      "id": 5
+      "priority": 0,
+      "recievedBy": "",
+      "recieverDesignation": "",
+      "dateRecieved": "",
+      "pdoSignature": "",
+      "id": 1
     }
   ]
 }

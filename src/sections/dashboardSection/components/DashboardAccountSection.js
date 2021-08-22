@@ -6,6 +6,7 @@ import {
   Typography,
   makeStyles,
 } from "@material-ui/core";
+import { Add, ViewList } from "@material-ui/icons";
 import { useContext } from "react";
 import { useHistory } from "react-router-dom";
 
@@ -58,6 +59,7 @@ function DashboardAccountSection() {
           variant="contained"
           color="primary"
           onClick={() => history.push("/projects")}
+          startIcon={<ViewList />}
         >
           View Projects
         </Button>
@@ -68,6 +70,7 @@ function DashboardAccountSection() {
           variant="contained"
           color="secondary"
           onClick={() => history.push("/projects/new")}
+          startIcon={<Add />}
         >
           Create Project
         </Button>

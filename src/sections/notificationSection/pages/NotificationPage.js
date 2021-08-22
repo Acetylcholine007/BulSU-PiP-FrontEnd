@@ -1,21 +1,36 @@
-import { useContext } from "react";
-import { Typography } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
+import {
+  Container,
+  Divider,
+  Toolbar,
+  Typography,
+} from "@material-ui/core";
+import React from "react";
 
-import AdminNotification from "./AdminNotification";
-import ClientNotification from "./ClientNotification";
-import { AuthContext } from "../../../contexts/AuthContext";
+import NotificationList from "../components/NotificationList";
 
 function NotificationPage() {
-  const {user} = useContext(AuthContext);
+  const useStyles = makeStyles({
+    pageTitle: {
+      flexGrow: 11,
+    },
+  });
 
-  switch (user.type) {
-    case "Client":
-      return <ClientNotification />;
-    case "Admin":
-      return <AdminNotification />;
-    default:
-      return <Typography component="h1">Invalid user type</Typography>;
-  }
+  const classes = useStyles();
+
+  return (
+    <React.Fragment>
+      <Toolbar>
+        <Typography variant="h4" className={classes.pageTitle}>
+          {"Project Viewer"}
+        </Typography>
+      </Toolbar>
+      <Divider />
+      <Container>
+        <NotificationList />
+      </Container>
+    </React.Fragment>
+  );
 }
 
 export default NotificationPage;

@@ -16,7 +16,7 @@ import {
 } from "@material-ui/core";
 import { DatePicker } from "@material-ui/pickers";
 
-function Form2({ form2Data, setForm2Data }) {
+function EditorForm2({ form2Data, setForm2Data }) {
   const useStyles = makeStyles(() => ({
     field: {
       marginTop: 10,
@@ -357,4 +357,4 @@ function Form2({ form2Data, setForm2Data }) {
   );
 }
 
-export default Form2;
+export default EditorForm2;
