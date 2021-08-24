@@ -13,12 +13,11 @@ import {
 import { useState } from "react";
 import { useHistory } from "react-router";
 import sjcl from "sjcl";
-import React from 'react';
+import React from "react";
 
-import { accountTypes, colleges, SUCs } from "../../../utils/constants";
+import { institutes } from "../../../utils/constants";
 import { serverUrl } from "../../../utils/serverUrl";
-import { User } from "../../../utils/models";
-import Avatar from '@material-ui/core/Avatar';
+import Avatar from "@material-ui/core/Avatar";
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -39,30 +38,19 @@ const useStyles = makeStyles(() => ({
     height: 180,
     marginTop: 50,
   },
-
 }));
 
 function SignUpPage() {
   const history = useHistory();
   const classes = useStyles();
 
-  const [suc, setSuc] = useState("");
-  const [college, setCollege] = useState("");
+  const [institute, setInstitute] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmpassword, setConfirmPassword] = useState("");
-  const [type, setType] = useState("");
-
-  const [sucError, setSucError] = useState(false);
-  const [collegeError, setCollegeError] = useState(false);
-  const [emailError, setEmailError] = useState(false);
-  const [passwordError, setPasswordError] = useState(false);
-  const [confirmpasswordError, setConfirmPasswordError] = useState(false);
-  const [typeError, setTypeError] = useState(false);
 
   const handleSignUp = (e, newUser) => {
     e.preventDefault();
-    console.log(newUser.toObject());
     if (true) {
       fetch(`${serverUrl}users`, {
         method: "POST",
@@ -77,21 +65,15 @@ function SignUpPage() {
   return (
     <Container className={classes.container}>
       <Grid container>
-        <Grid item xs={12} md= {3}> 
-          <Avatar 
-          classname={classes.avtr}
-          src="bsuLogo.png"
-          ></Avatar> 
+        <Grid item xs={12} md={3}>
+          <Avatar className={classes.avtr} src="bsuLogo.png"></Avatar>
         </Grid>
-        <Grid item xs={12} md={6} key="description">
+        <Grid item xs={12} md={6}>
           <Typography variant="h2">Planning and Development Office</Typography>
           <Typography variant="h5">BULACAN STATE UNIVERSITY</Typography>
         </Grid>
-        <Grid item xs={12} md= {3}>
-        <Avatar 
-          classname={classes.avtr}
-          src="bsuLogo.png"
-          ></Avatar> 
+        <Grid item xs={12} md={3}>
+          <Avatar className={classes.avtr} src="bsuLogo.png"></Avatar>
         </Grid>
         <Grid item xs={12} md={8} offset={1} key="form">
           <Card>
@@ -103,71 +85,38 @@ function SignUpPage() {
                   e.preventDefault();
                   const myBitArray = sjcl.hash.sha256.hash(password);
                   const myHash = sjcl.codec.hex.fromBits(myBitArray);
-                  handleSignUp(e, new User({id: "", suc, college, email, password: myHash, uri: "", type, verified: true, notificationList: [], projectList: []}));
+                  handleSignUp(e, {
+                    institute: {institute: institute.institute, abbv: institute.abbv},
+                    email,
+                    password: myHash,
+                    uri: `${institute.abbv}.png`,
+                    verified: true,
+                    type: institute.type,
+                    notificationList: [],
+                    projectList: [],
+                  });
                 }}
               >
                 <Grid container>
-                  <Grid item xs={12} key="suc">
+                  <Grid item xs={12} key="institute">
                     <TextField
                       className={classes.field}
-                      id="suc"
+                      id="institute"
                       color="primary"
                       fullWidth
                       select
-                      label="SUC"
-                      value={suc}
-                      onChange={(e) => setSuc(e.target.value)}
+                      label="Institute"
+                      value={institute}
+                      onChange={(e) => setInstitute(e.target.value)}
                       variant="outlined"
                     >
-                      {SUCs.map((option) => (
-                        <MenuItem key={option} value={option}>
-                          {option}
+                      {institutes.map((institute) => (
+                        <MenuItem key={institute.abbv} value={institute}>
+                          {institute.institute}
                         </MenuItem>
                       ))}
-                      error = {sucError}
-                      helperText = {sucError ? 'Error Email' : null}
-                    </TextField>
-                  </Grid>
-                  <Grid item xs={12} key="college">
-                    <TextField
-                      className={classes.field}
-                      id="college"
-                      color="primary"
-                      fullWidth
-                      select
-                      label="College"
-                      value={college}
-                      onChange={(e) => setCollege(e.target.value)}
-                      variant="outlined"
-                    >
-                      {colleges.map((option) => (
-                        <MenuItem key={option} value={option}>
-                          {option}
-                        </MenuItem>
-                      ))}
-                      error = {collegeError}
-                      helperText = {collegeError ? 'Error Email' : null}
-                    </TextField>
-                  </Grid>
-                  <Grid item xs={12} key="type">
-                    <TextField
-                      className={classes.field}
-                      id="type"
-                      color="primary"
-                      fullWidth
-                      select
-                      label="Account Type"
-                      value={type}
-                      onChange={(e) => setType(e.target.value)}
-                      variant="outlined"
-                    >
-                      {accountTypes.map((option) => (
-                        <MenuItem key={option} value={option}>
-                          {option}
-                        </MenuItem>
-                      ))}
-                      error = {typeError}
-                      helperText = {typeError ? 'Error Email' : null}
+                      error = {false}
+                      helperText = {false ? "Error Email" : null}
                     </TextField>
                   </Grid>
                   <Grid item xs={12} key="email">
@@ -178,8 +127,8 @@ function SignUpPage() {
                       variant="outlined"
                       color="primary"
                       fullWidth
-                      error={emailError}
-                      helperText = {emailError ? 'Error Email' : null}
+                      error={false}
+                      helperText={false ? "Error Email" : null}
                       value={email}
                     />
                   </Grid>
@@ -191,12 +140,12 @@ function SignUpPage() {
                       variant="outlined"
                       color="primary"
                       fullWidth
-                      error={passwordError}
-                      helperText = {passwordError ? 'Error Email' : null}
+                      error={false}
+                      helperText={false ? "Error Email" : null}
                       value={password}
                       type="password"
                     />
-                    </Grid>
+                  </Grid>
                   <Grid item xs={12} key="confirm password">
                     <TextField
                       onChange={(e) => setConfirmPassword(e.target.value)}
@@ -205,8 +154,8 @@ function SignUpPage() {
                       variant="outlined"
                       color="primary"
                       fullWidth
-                      error={passwordError}
-                      helperText = {passwordError ? 'Error Password' : null}
+                      error={false}
+                      helperText={false ? "Error Password" : null}
                       value={confirmpassword}
                       type="password"
                     />
@@ -227,15 +176,16 @@ function SignUpPage() {
             </CardContent>
           </Card>
         </Grid>
-        <Grid item xs={12} md={4} key="description">
+        <Grid item xs={12} md={4}>
           <Typography variant="h2">BulSU PIPs</Typography>
           <Divider />
-          <typography variant="h3">BulSU-PDO Investment Program System</typography>
-        </Grid>  
-      </Grid>    
+          <Typography variant="h3">
+            BulSU-PDO Investment Program System
+          </Typography>
+        </Grid>
+      </Grid>
     </Container>
   );
 }
-
 
 export default SignUpPage;

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 24.1.3, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 1080 3000" style="enable-background:new 0 0 1080 3000;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#800000;}
+	.st1{fill:url(#SVGID_1_);}
+	.st2{fill:url(#SVGID_2_);}
+</style>
+<g>
+	<rect class="st0" width="1080" height="3000"/>
+</g>
+<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="540" y1="3000" x2="540" y2="1917.09">
+	<stop  offset="0" style="stop-color:#FFFFFF;stop-opacity:0"/>
+	<stop  offset="0.1102" style="stop-color:#F8CBCB;stop-opacity:0.1102"/>
+	<stop  offset="0.239" style="stop-color:#F19696;stop-opacity:0.239"/>
+	<stop  offset="0.3696" style="stop-color:#EA6868;stop-opacity:0.3696"/>
+	<stop  offset="0.4992" style="stop-color:#E54343;stop-opacity:0.4992"/>
+	<stop  offset="0.6276" style="stop-color:#E12525;stop-opacity:0.6276"/>
+	<stop  offset="0.7546" style="stop-color:#DE1111;stop-opacity:0.7546"/>
+	<stop  offset="0.8795" style="stop-color:#DD0404;stop-opacity:0.8795"/>
+	<stop  offset="1" style="stop-color:#DC0000"/>
+</linearGradient>
+<polygon class="st1" points="1080,1917.1 1080,3000 0,3000 0,2997.1 634.6,2362.5 "/>
+<linearGradient id="SVGID_2_" gradientUnits="userSpaceOnUse" x1="540" y1="3000" x2="540" y2="1727.84">
+	<stop  offset="0" style="stop-color:#FF0000;stop-opacity:0"/>
+	<stop  offset="3.107369e-03" style="stop-color:#FE0000;stop-opacity:3.107369e-03"/>
+	<stop  offset="0.2064" style="stop-color:#D90000;stop-opacity:0.2064"/>
+	<stop  offset="0.4098" style="stop-color:#BC0000;stop-opacity:0.4098"/>
+	<stop  offset="0.611" style="stop-color:#A80000;stop-opacity:0.611"/>
+	<stop  offset="0.8089" style="stop-color:#9B0000;stop-opacity:0.8089"/>
+	<stop  offset="1" style="stop-color:#970000"/>
+</linearGradient>
+<polygon class="st2" points="1080,2807.8 1080,3000 0,3000 0,1727.8 "/>
+</svg>

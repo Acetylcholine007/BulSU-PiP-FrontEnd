@@ -3,120 +3,177 @@ import {
   AccountTreeOutlined,
   NotificationsNoneOutlined,
   SupervisorAccountOutlined,
-  AccountCircleOutlined,
+  DomainOutlined,
 } from "@material-ui/icons";
 
-export const SUCs = ["Main", "Bustos", "Hagonoy", "Meneses"];
-
-export const colleges = ["COE", "COED", "CHTM", "CIT", "CICT", "CBA", "CS", "CSER", "CSSP", "CAL", "CAFA", "CCJE", "CON"];
-
-export const institutes = [
-  "Satellite - Bustos Campus",
-  "Satellite - Meneses Campus",
-  "Satellite - Sarmiento Campus",
-  "Satellite - Hagonoy Campus",
-  "College of Architecture and Fine Arts",
-  "College of Arts and Letters",
-  "College of Business Administration",
-  "College of Criminal Justice Education",
-  "College of Hospitality and Tourism Management",
-  "College of Information and Communications Technology",
-  "College of Industrial Technology",
-  "College of Law",
-  "College of Nursing",
-  "College of Engineering",
-  "College of Education",
-  "College of Science",
-  "College of Sports, Exercise and Recreation",
-  "College of Social Sciences and Philosophy",
-  "Graduate School",
-  "Editor",
-  "Administrator",
-  "Other",
+export const months = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
 ];
 
-export const proponents = [
+export const institutes = [
   {
     institute: "Satellite - Bustos Campus",
+    abbv: "S-BuC",
     proponents: [],
+    type: 0,
+    address: 'Bustos, Bulacan'
   },
   {
     institute: "Satellite - Meneses Campus",
+    abbv: "S-MeC",
     proponents: [],
+    type: 0,
+    address: 'Meneses, Bulacan'
   },
   {
     institute: "Satellite - Sarmiento Campus",
+    abbv: "S-SaC",
     proponents: [],
+    type: 0,
+    address: 'Sarmiento, Bulacan'
   },
   {
     institute: "Satellite - Hagonoy Campus",
+    abbv: "S-HaC",
     proponents: [],
+    type: 0,
+    address: 'Hagonoy, Bulacan'
   },
   {
     institute: "College of Architecture and Fine Arts",
+    abbv: "CAFA",
     proponents: [],
+    type: 0,
+    address: 'Malolos, Bulacan'
   },
   {
     institute: "College of Arts and Letters",
+    abbv: "CAL",
     proponents: [],
+    type: 0,
+    address: 'Malolos, Bulacan'
   },
   {
     institute: "College of Business Administration",
+    abbv: "CBA",
     proponents: [],
+    type: 0,
+    address: 'Malolos, Bulacan'
   },
   {
     institute: "College of Criminal Justice Education",
+    abbv: "CCJE",
     proponents: [],
+    type: 0,
+    address: 'Malolos, Bulacan'
   },
   {
     institute: "College of Hospitality and Tourism Management",
+    abbv: "CHTM",
     proponents: [],
+    type: 0,
+    address: 'Malolos, Bulacan'
   },
   {
     institute: "College of Information and Communications Technology",
+    abbv: "CICT",
     proponents: [],
+    type: 0,
+    address: 'Malolos, Bulacan'
   },
   {
     institute: "College of Industrial Technology",
+    abbv: "CIT",
     proponents: [],
+    type: 0,
+    address: 'Malolos, Bulacan'
   },
   {
     institute: "College of Law",
+    abbv: "COL",
     proponents: [],
+    type: 0,
+    address: 'Malolos, Bulacan'
   },
   {
     institute: "College of Nursing",
+    abbv: "CON",
     proponents: [],
+    type: 0,
+    address: 'Malolos, Bulacan'
   },
   {
     institute: "College of Engineering",
+    abbv: "COE",
     proponents: ["Civil Engineering", "Computer Engineering"],
+    type: 0,
+    address: 'Malolos, Bulacan'
   },
   {
     institute: "College of Education",
+    abbv: "COED",
     proponents: [],
+    type: 0,
+    address: 'Malolos, Bulacan'
   },
   {
     institute: "College of Science",
+    abbv: "CS",
     proponents: [],
+    type: 0,
+    address: 'Malolos, Bulacan'
   },
   {
     institute: "College of Sports, Exercise and Recreation",
+    abbv: "CSER",
     proponents: [],
+    type: 0,
+    address: 'Malolos, Bulacan'
   },
   {
     institute: "College of Social Sciences and Philosophy",
+    abbv: "CSSP",
     proponents: [],
+    type: 0,
+    address: 'Malolos, Bulacan'
   },
   {
     institute: "Graduate School",
+    abbv: "GRAD",
     proponents: [],
+    type: 0,
+    address: 'Malolos, Bulacan'
+  },
+  {
+    institute: "Editor",
+    abbv: "EDITOR",
+    type: 1,
+  },
+  {
+    institute: "Administrator",
+    abbv: "ADMIN",
+    type: 2,
   },
 ];
 
-export const accountTypes = ["Admin", "Client"];
+export const accountTypes = [
+  { value: 0, label: "User" },
+  { value: 1, label: "Editor" },
+  { value: 2, label: "Administrator" },
+];
 
-export const obligationTypes = ["OO", "MYO"];
+export const obligationTypes = ["One-Year Obligation", "Multi-Year Obligation"];
 
 export const papLevels = [
   {
@@ -489,30 +546,30 @@ export const menuItems = [
     text: "Dashboard",
     icon: <HomeOutlined />,
     path: "/dashboard",
-    for: ["Admin", "Client"],
+    for: [0, 1],
   },
   {
     text: "Projects",
     icon: <AccountTreeOutlined />,
     path: "/projects",
-    for: ["Admin", "Client"],
+    for: [0],
+  },
+  {
+    text: "Institutes",
+    icon: <DomainOutlined />,
+    path: "/institutes",
+    for: [1],
   },
   {
     text: "Notifications",
     icon: <NotificationsNoneOutlined />,
     path: "/notifications",
-    for: ["Admin", "Client"],
+    for: [0, 1],
   },
   {
     text: "Accounts",
     icon: <SupervisorAccountOutlined />,
     path: "/accounts",
-    for: ["Admin"],
-  },
-  {
-    text: "My Account",
-    icon: <AccountCircleOutlined />,
-    path: "/myaccount",
-    for: ["Admin", "Client"],
-  },
+    for: [1],
+  }
 ];

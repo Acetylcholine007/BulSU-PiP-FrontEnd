@@ -43,12 +43,12 @@ function CommentModal({ open, setOpen, comment }) {
           <Container>
             <Grid container>
               <Grid item xs={12}>
-                <Typography variant="h4">{comment}</Typography>
-                <Typography variant="body1">{comment}</Typography>
+                <Typography variant="h5">{comment.header}</Typography>
+                <Typography variant="body1">{`${comment.author} — ${(new Date(comment.datetime)).toDateString()}`}</Typography>
                 <Divider />
               </Grid>
               <Grid item xs={12}>
-                <Typography variant="body1">{comment}</Typography>
+                <Typography variant="body1">{comment.message}</Typography>
               </Grid>
             </Grid>
           </Container>

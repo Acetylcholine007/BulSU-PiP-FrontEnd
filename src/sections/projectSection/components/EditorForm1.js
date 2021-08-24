@@ -11,18 +11,18 @@ import {
   Typography,
 } from "@material-ui/core";
 import { DatePicker, KeyboardDatePicker } from "@material-ui/pickers";
-
 import { useContext, useState } from "react";
 import { AuthContext } from "../../../contexts/AuthContext";
+
 import {
   obligationTypes,
   papLevels,
-  proponents,
+  institutes,
   readinessLevels,
 } from "../../../utils/constants";
-import GSPTab from "./GSPTab";
+import GSPPicker from "./GSPPicker";
 
-function Form1({ form1Data, setForm1Data }) {
+function EditorForm1({ form1Data, setForm1Data }) {
   const useStyles = makeStyles((theme) => ({
     field: {
       marginTop: 10,
@@ -44,6 +44,12 @@ function Form1({ form1Data, setForm1Data }) {
   const [tabIndex, setTabIndex] = useState(0);
   const classes = useStyles();
   const { user } = useContext(AuthContext);
+
+  const getSum = () => {
+    var sum = 0;
+    form1Data.investmentReq.forEach((item) => sum += parseFloat(item.value === '' ? '0' : item.value));
+    return `Sum: ${sum}`
+  }
 
   return (
     <form>
@@ -80,7 +86,7 @@ function Form1({ form1Data, setForm1Data }) {
             <Tab label="4th" />
             <Tab label="5th" />
           </Tabs>
-          <GSPTab index={tabIndex} form1Data= {form1Data} setForm1Data = {setForm1Data}/>
+          <GSPPicker index={tabIndex} form1Data= {form1Data} setForm1Data = {setForm1Data}/>
         </Grid>
         <Grid item xs={12}>
           <Divider className={classes.divider} />
@@ -122,8 +128,8 @@ function Form1({ form1Data, setForm1Data }) {
             className={classes.field}
             helperText={false ? "Error Password" : null}
           >
-            {proponents
-              .filter((proponent) => proponent.institute === user.institute)[0]
+            {institutes
+              .find((institute) => institute.abbv === user.institute.abbv)
               .proponents.map((type) => (
                 <MenuItem key={type} value={type}>
                   {type}
@@ -179,6 +185,9 @@ function Form1({ form1Data, setForm1Data }) {
         <Grid item xs={12}>
           <Typography variant="h5" display="inline">
             Investment Requirement
+          </Typography>
+          <Typography variant="h5" display="inline" style = {{marginLeft: 20}}>
+            {getSum()}
           </Typography>
         </Grid>
         <Grid item xs={12}>
@@ -279,4 +288,4 @@ function Form1({ form1Data, setForm1Data }) {
   );
 }
 
-export default Form1;
+export default EditorForm1;

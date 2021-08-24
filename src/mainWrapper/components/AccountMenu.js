@@ -9,13 +9,23 @@ import {
   Popover,
   Typography,
   makeStyles,
+  Divider,
 } from "@material-ui/core";
+import { Edit, ExitToApp } from "@material-ui/icons";
 import { useContext } from "react";
 import { useHistory } from "react-router-dom";
 
 import { AuthContext } from "../../contexts/AuthContext";
+import { accountTypes } from "../../utils/constants";
+import { serverUrl } from "../../utils/serverUrl";
 
-function AccountMenu({ showDialog, anchorEl, setShowDialog, setAnchorEl, setOpen }) {
+function AccountMenu({
+  showDialog,
+  anchorEl,
+  setShowDialog,
+  setAnchorEl,
+  setOpen,
+}) {
   const useStyles = makeStyles((theme) => {
     return {
       cardHeader: {
@@ -48,15 +58,21 @@ function AccountMenu({ showDialog, anchorEl, setShowDialog, setAnchorEl, setOpen
     >
       <Card style={{ minimumWidth: "250px" }}>
         <CardHeader
-          avatar={<Avatar></Avatar>}
+          avatar={<Avatar src={`${serverUrl}logos/${user.uri}`}/>}
           title={
-            <Typography variant="h6">{`${user.suc} ${user.college}`}</Typography>
+            <Typography variant="h6">
+              {accountTypes[user.type].label}
+            </Typography>
           }
           subheader={<Typography variant="body2">{user.email}</Typography>}
           className={classes.cardHeader}
         />
-        <CardContent style={{ padding: "0px" }}>
+        <CardContent style={{ padding: 4 }}>
           <List>
+            <ListItem>
+              <Typography variant = 'h5'>{user.institute.institute}</Typography>
+            </ListItem>
+            <Divider />
             <ListItem>
               <Button
                 color="secondary"
@@ -67,6 +83,7 @@ function AccountMenu({ showDialog, anchorEl, setShowDialog, setAnchorEl, setOpen
                 }}
                 className={classes.button}
                 fullWidth
+                startIcon={<Edit />}
               >
                 Edit Account
               </Button>
@@ -82,6 +99,7 @@ function AccountMenu({ showDialog, anchorEl, setShowDialog, setAnchorEl, setOpen
                 }}
                 className={classes.button}
                 fullWidth
+                startIcon={<ExitToApp />}
               >
                 Log Out
               </Button>

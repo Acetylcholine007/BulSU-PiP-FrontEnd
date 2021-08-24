@@ -9,14 +9,16 @@ import {
   Typography,
   makeStyles,
   CardActions,
+  Toolbar,
 } from "@material-ui/core";
 import React, { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 
-import Form1 from "../components/Form1";
-import Form2 from "../components/Form2";
+import EditorForm1 from "../components/EditorForm1";
+import EditorForm2 from "../components/EditorForm2";
 import { serverUrl } from "../../../utils/serverUrl";
 import { AuthContext } from "../../../contexts/AuthContext";
+import { institutes } from "../../../utils/constants";
 
 function ProjectEditor({ isNew, project }) {
   const [page, setPage] = useState(1);
@@ -36,6 +38,7 @@ function ProjectEditor({ isNew, project }) {
   }));
 
   const classes = useStyles();
+  const currentDate = new Date();
 
   const [form1Data, setForm1Data] = useState(
     isNew
@@ -45,16 +48,16 @@ function ProjectEditor({ isNew, project }) {
           obligationType: "",
           proponent: "",
           investmentReq: [
-            { year: "2021", value: "0" },
-            { year: "2021", value: "0" },
-            { year: "2021", value: "0" },
-            { year: "2021", value: "0" },
-            { year: "2021", value: "0" },
+            { year: currentDate.getFullYear().toString(), value: "" },
+            { year: (currentDate.getFullYear() + 1).toString(), value: "" },
+            { year: (currentDate.getFullYear() + 2).toString(), value: "" },
+            { year: (currentDate.getFullYear() + 3).toString(), value: "" },
+            { year: (currentDate.getFullYear() + 4).toString(), value: "" },
           ],
-          implementationPeriod: { start: "2021", end: "2025" },
+          implementationPeriod: { start: null, end: null },
           PAPLevel: 1,
           readiness: 1,
-          status: "",
+          status: 1,
           remarks: "",
         }
       : {
@@ -73,6 +76,8 @@ function ProjectEditor({ isNew, project }) {
   const [form2Data, setForm2Data] = useState(
     isNew
       ? {
+          suc: "Bulacan State University",
+          institute: user.institute,
           address: "",
           projectLocation: "",
           categorization: {
@@ -89,10 +94,15 @@ function ProjectEditor({ isNew, project }) {
             { year: "2021", cost: "0" },
             { year: "2021", cost: "0" },
           ],
-          proponentName: {surname: '', firstName: '', middleInitial: ''},
+          proponentName: { surname: "", firstName: "", middleInitial: "" },
           designation: "",
-          contactInformation: {telNumber: '', email: '', phoneNumber: '', others: ''},
-          dateAccomplished: "",
+          contactInformation: {
+            telNumber: "",
+            email: "",
+            phoneNumber: "",
+            others: "",
+          },
+          dateAccomplished: new Date().toISOString(),
           signature: "",
           fileList: [],
         }
@@ -103,6 +113,7 @@ function ProjectEditor({ isNew, project }) {
           description: project.description,
           purpose: project.purpose,
           beneficiary: project.beneficiary,
+          proposedProjectCost: project.proposedProjectCost,
           proponentName: project.proponentName,
           designation: project.designation,
           contactInformation: project.contactInformation,
@@ -122,6 +133,13 @@ function ProjectEditor({ isNew, project }) {
           ...form2Data,
           commentList: [],
           ownerId: user.id,
+          priority: user.projectList.length + 1,
+          address: institutes.find((institute) => institute.institute === user.institute.institute).address,
+          recievedBy: "",
+          recieverDesignation: "",
+          designation: "",
+          dateRecieved: "",
+          pdoSignature: "",
         }),
       }).then(() => {
         history.push("/projects");
@@ -144,24 +162,34 @@ function ProjectEditor({ isNew, project }) {
   const formSelector = () => {
     switch (page) {
       case 1:
-        return <Form1 form1Data={form1Data} setForm1Data={setForm1Data} />;
+        return (
+          <EditorForm1 form1Data={form1Data} setForm1Data={setForm1Data} />
+        );
       case 2:
-        return <Form2 form2Data={form2Data} setForm2Data={setForm2Data} />;
+        return (
+          <EditorForm2 form2Data={form2Data} setForm2Data={setForm2Data} />
+        );
+      default:
+        return null;
     }
   };
 
   return (
     <React.Fragment>
-      <Typography variant="h3">
-        {isNew ? "New Project" : "Edit Project"}
-      </Typography>
+      <Toolbar>
+        <Typography variant="h4">
+          {isNew ? "New Project" : "Edit Project"}
+        </Typography>
+      </Toolbar>
       <Divider />
       <Container>
         <Grid container>
           <Grid item xs={12}>
             <Card className={classes.card}>
               <CardHeader
-                title={page == 1 ? "Investment Programming" : "Form 2"}
+                title={
+                  page === 1 ? "Investment Program Form" : "Preparation Form"
+                }
                 subheader={`Page ${page} of 2`}
                 className={classes.cardHeader}
               />

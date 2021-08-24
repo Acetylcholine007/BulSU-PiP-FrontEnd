@@ -1,15 +1,15 @@
 {
   "users": [
     {
-      "id": 1,
-      "suc": "Main",
-      "college": "COE",
+      "institute": {
+        "institute": "College of Engineering",
+        "abbv": "COE"
+      },
       "email": "root",
       "password": "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4",
-      "uri": "",
-      "type": "Client",
-      "institute": "College of Engineering",
+      "uri": "COE.png",
       "verified": true,
+      "type": 0,
       "notificationList": [
         {
           "id": 1,
@@ -26,170 +26,198 @@
           "datetime": "2021-08-15T06:01:45Z"
         }
       ],
-      "projectList": []
+      "projectList": [],
+      "id": 1
     },
     {
-      "id": 2,
-      "suc": "Main",
-      "college": "COE",
+      "institute": {
+        "institute": "Editor",
+        "abbv": "EDITOR"
+      },
       "email": "root2",
       "password": "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4",
-      "uri": "",
-      "type": "Admin",
+      "uri": "EDITOR.png",
       "verified": true,
+      "type": 1,
       "notificationList": [],
-      "projectList": []
+      "projectList": [],
+      "id": 2
     }
   ],
   "projects": [
     {
-      "title": "Project 1",
-      "GSP": "asdasd",
-      "obligationType": "asdasd",
-      "proponent": "asdasd",
-      "investmentReq": "asdasd",
-      "implementationPeriod": "asdf",
-      "PAPLevel": "asda",
-      "readiness": "asdada",
-      "status": "asdasd",
-      "remarks": "asdasd",
-      "address": "asdasd",
-      "projectLocation": "asdda",
-      "categorization": "dsdasda",
-      "description": "sdasda",
-      "purpose": "sdasdad",
-      "beneficiary": "sdasdad",
-      "proponentName": "sdasd",
-      "designation": "asdasd",
-      "contactInformation": "asdf",
-      "dateAccomplished": "sdads",
-      "signature": "",
-      "fileList": [],
-      "commentList": [
-        "Too Bad",
-        "Revise it 10x"
+      "title": "FloodSafe",
+      "GSP": [
+        null,
+        [
+          [
+            true,
+            true,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ],
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        [
+          [
+            true,
+            false,
+            false,
+            false
+          ],
+          null,
+          null,
+          [
+            true
+          ]
+        ],
+        null,
+        [
+          [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            true
+          ],
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
       ],
-      "id": 1,
-      "ownerId": 1
-    },
-    {
-      "title": "Project 2",
-      "GSP": "test",
-      "obligationType": "test",
-      "proponent": "test",
-      "investmentReq": "test",
-      "implementationPeriod": "test",
-      "PAPLevel": "test",
-      "readiness": "test",
-      "status": "test",
-      "remarks": "test",
-      "address": "test",
-      "projectLocation": "test",
-      "categorization": "test",
-      "description": "test",
-      "purpose": "test",
-      "beneficiary": "test",
-      "proponentName": "test",
-      "designation": "test",
-      "contactInformation": "test",
-      "dateAccomplished": "test",
-      "signature": "",
-      "fileList": [],
-      "commentList": [
-        "Not so good",
-        "Check spelling"
+      "obligationType": "Multi-Year Obligation",
+      "proponent": "Computer Engineering",
+      "investmentReq": [
+        {
+          "year": "2021",
+          "value": "50"
+        },
+        {
+          "year": "2022",
+          "value": "100"
+        },
+        {
+          "year": "2023",
+          "value": "200"
+        },
+        {
+          "year": "2024",
+          "value": "500"
+        },
+        {
+          "year": "2025",
+          "value": "1000"
+        }
       ],
-      "ownerId": 1,
-      "id": 2
-    },
-    {
-      "title": "asdf",
-      "GSP": "asdf",
-      "obligationType": "asdf",
-      "proponent": "asdf",
-      "investmentReq": "asdf",
-      "implementationPeriod": "asdf",
-      "PAPLevel": "asdf",
-      "readiness": "asdf",
-      "status": "asdf",
-      "remarks": "asdf",
-      "address": "asdf",
-      "projectLocation": "asdf",
-      "categorization": "asdf",
-      "description": "asdf",
-      "purpose": "asdf",
-      "beneficiary": "asdf",
-      "proponentName": "asdf",
-      "designation": "asdf",
-      "contactInformation": "asdf",
-      "dateAccomplished": "asdf",
-      "signature": "",
-      "fileList": [],
-      "commentList": [],
-      "ownerId": 2,
-      "id": 3
-    },
-    {
-      "title": "asdf",
-      "GSP": "asdf",
-      "obligationType": "asdf",
-      "proponent": "asdf",
-      "investmentReq": "asdf",
-      "implementationPeriod": "asdf",
-      "PAPLevel": "asdf",
-      "readiness": "asdf",
-      "status": "asdf",
-      "remarks": "asdf",
-      "address": "asdf",
-      "projectLocation": "asdf",
-      "categorization": "asdf",
-      "description": "asdf",
-      "purpose": "asdf",
-      "beneficiary": "asdf",
-      "proponentName": "asdf",
-      "designation": "asdf",
-      "contactInformation": "asdf",
-      "dateAccomplished": "asdf",
-      "signature": "",
-      "fileList": [],
-      "commentList": [],
-      "ownerId": 1,
-      "id": 4
-    },
-    {
-      "title": "Project3",
-      "GSP": "",
-      "obligationType": "",
-      "proponent": "",
-      "investmentReq": "",
       "implementationPeriod": {
-        "start": "2021",
-        "end": "2025"
+        "start": "2021-08-22T01:59:00.000Z",
+        "end": "2023-08-22T01:59:00.000Z"
       },
-      "PAPLevel": 1,
+      "PAPLevel": 2,
       "readiness": 1,
-      "status": "",
+      "status": 2,
       "remarks": "",
+      "suc": "Bulacan State University",
+      "institute": {
+        "institute": "College of Engineering",
+        "abbv": "COE"
+      },
       "address": "",
-      "projectLocation": "",
+      "projectLocation": "Bulacan Region",
       "categorization": {
-        "new": false,
+        "new": true,
         "expanded": false,
-        "infrastructure": false,
+        "infrastructure": true,
         "nonInfrastructure": false
       },
-      "description": "",
-      "purpose": "",
-      "beneficiary": "",
-      "proponentName": "",
-      "designation": "",
-      "contactInformation": "",
-      "dateAccomplished": "",
+      "description": "Flood sensing system for forecasting and monitoring",
+      "purpose": "To help local residents prepare for potential flood risks",
+      "beneficiary": "Local Residents",
+      "proposedProjectCost": [
+        {
+          "year": "2021",
+          "cost": "150"
+        },
+        {
+          "year": "2022",
+          "cost": "700"
+        },
+        {
+          "year": "2023",
+          "cost": "1000"
+        }
+      ],
+      "proponentName": {
+        "surname": "Sins",
+        "firstName": "Johnny",
+        "middleInitial": "X"
+      },
+      "designation": "Eng",
+      "contactInformation": {
+        "telNumber": "1234",
+        "email": "test@gmail.com",
+        "phoneNumber": "1234",
+        "others": "facebook"
+      },
+      "dateAccomplished": "2021-08-22T01:59:44.448Z",
       "signature": "",
       "fileList": [],
-      "commentList": [],
+      "commentList": [
+        {
+          "author": "Admin",
+          "header": "Comment",
+          "message": "Too bad",
+          "datetime": "2021-08-22T01:59:44.448Z"
+        },
+        {
+          "id": null,
+          "author": "PDO Officer",
+          "header": "Yow",
+          "message": "Very Good",
+          "datetime": "2021-08-24T00:20:51.690Z"
+        }
+      ],
       "ownerId": 1,
-      "id": 5
+      "priority": 0,
+      "recievedBy": "Kim Jong Un",
+      "recieverDesignation": "Dictator",
+      "dateRecieved": "2021-08-24T00:20:40.916Z",
+      "pdoSignature": "",
+      "id": 1,
+      "comments": [
+        {
+          "author": "Admin",
+          "header": "Comment",
+          "message": "Too bad",
+          "datetime": "2021-08-22T01:59:44.448Z"
+        },
+        {
+          "id": null,
+          "author": "PDO Officer",
+          "header": "Yow",
+          "message": "Very Good",
+          "datetime": "2021-08-24T00:16:30.439Z"
+        }
+      ]
     }
   ]
 }

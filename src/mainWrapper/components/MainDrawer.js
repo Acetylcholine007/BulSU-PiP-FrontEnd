@@ -10,7 +10,7 @@ import {
   useTheme,
   Container,
 } from "@material-ui/core";
-import { useContext } from "react";
+import React, { useContext } from "react";
 import MuiListItem from "@material-ui/core/ListItem";
 import { ChevronLeft, ChevronRight } from "@material-ui/icons";
 import { useHistory, useLocation } from "react-router";
@@ -33,7 +33,8 @@ function MainDrawer({ drawerWidth, open, handleDrawerClose }) {
       },
       drawerPaper: {
         width: drawerWidth,
-        backgroundColor: theme.palette.primary.light,
+        backgroundImage: `url("images/drawerBackground.svg")`,
+        backgroundSize: 'cover',
       },
       drawerHeader: {
         display: "flex",
@@ -42,13 +43,16 @@ function MainDrawer({ drawerWidth, open, handleDrawerClose }) {
         // necessary for content to be below app bar
         ...theme.mixins.toolbar,
         justifyContent: "flex-end",
-        backgroundColor: "#CDCECB",
+        position: "fixed",
+        bottom: 0,
+        left: 170,
       },
       drawerSubHeader: {
         display: "block",
         alignItems: "center",
         backgroundColor: "#CDCECB",
         borderRadius: "0px 0px 15px 15px",
+        padding: 15,
       },
 
       active: {
@@ -80,7 +84,7 @@ function MainDrawer({ drawerWidth, open, handleDrawerClose }) {
   const history = useHistory();
   const location = useLocation();
   const theme = useTheme();
-  const {user} = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
 
   return (
     <Drawer
@@ -109,29 +113,28 @@ function MainDrawer({ drawerWidth, open, handleDrawerClose }) {
         <Typography variant="h5">BULACAN STATE UNIVERSITY</Typography>
       </Container>
       <List>
-        {menuItems
-          .filter((item) => item.for.includes(user.type))
-          .map((item) => (
-            <ListItem
-              button
-              key={item.text}
-              onClick={() => history.push(item.path)}
-              className={
-                location.pathname === item.path ? classes.active : null
-              }
-              className={`${
-                location.pathname.includes(item.path) ? classes.active : ""
-              } ${classes.listItem}`}
-            >
-              <ListItemIcon className={classes.listItemContent}>
-                {item.icon}
-              </ListItemIcon>
-              <ListItemText
-                primary={item.text}
-                classes={{ primary: classes.listItemContent }}
-              />
-            </ListItem>
-          ))}
+        <React.Fragment>
+          {menuItems
+            .filter((item) => item.for.includes(user.type))
+            .map((item) => (
+              <ListItem
+                button
+                key={item.text}
+                onClick={() => history.push(item.path)}
+                className={`${
+                  location.pathname.includes(item.path) ? classes.active : ""
+                } ${classes.listItem}`}
+              >
+                <ListItemIcon className={classes.listItemContent}>
+                  {item.icon}
+                </ListItemIcon>
+                <ListItemText
+                  primary={item.text}
+                  classes={{ primary: classes.listItemContent }}
+                />
+              </ListItem>
+            ))}
+        </React.Fragment>
       </List>
     </Drawer>
   );

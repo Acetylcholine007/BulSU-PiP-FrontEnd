@@ -11,7 +11,7 @@ import {
 import React from "react";
 import { GSPs } from "../../../utils/constants";
 
-function GSPTab({ index, form1Data, setForm1Data }) {
+function GSPPicker({ index, form1Data, setForm1Data }) {
   const useStyles = makeStyles(() => ({
     card: {
       margin: "10px 0px 10px 0px",
@@ -101,4 +101,4 @@ function GSPTab({ index, form1Data, setForm1Data }) {
   );
 }
 
-export default GSPTab;
+export default GSPPicker;

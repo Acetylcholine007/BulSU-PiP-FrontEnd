@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 
 import DashboardNotificationCard from "./DashboardNotificationCard";
 import { AuthContext } from "../../../contexts/AuthContext";
+import { ViewList } from "@material-ui/icons";
 
 const useStyles = makeStyles({
   btn: {
@@ -32,6 +33,7 @@ function DashboardNotifSection({ notifications }) {
           variant="contained"
           color="primary"
           onClick={() => history.push("/notifications")}
+          startIcon={<ViewList />}
         >
           View All
         </Button>
