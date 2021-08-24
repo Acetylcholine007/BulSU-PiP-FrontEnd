@@ -1,8 +1,4 @@
-import { Card, Divider, Grid, Typography, makeStyles, Container } from "@material-ui/core";
-import { blue } from "@material-ui/core/colors";
-import React from "react";
-
-
+import { Divider, Grid, Typography, makeStyles } from "@material-ui/core";
 
 function DashboardNotificationCard({ notification }) {
   const useStyles = makeStyles({

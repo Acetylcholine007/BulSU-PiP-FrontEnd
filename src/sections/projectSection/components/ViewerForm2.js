@@ -9,24 +9,29 @@ import {
   makeStyles,
   Checkbox,
   Divider,
+  TextField,
 } from "@material-ui/core";
 import { months } from "../../../utils/constants";
-import React from "react";
+import React, { useContext } from "react";
+import { AuthContext } from "../../../contexts/AuthContext";
 
-function ViewerForm2({ project }) {
+function ViewerForm2({ project, proposedProjectCost, setProposedProjectCost }) {
   const useStyles = makeStyles(() => ({
     table: {
       minWidth: 700,
     },
     divider: {
-        margin: '20px 0px 20px 0px'
-    }
+      margin: "20px 0px 20px 0px",
+    },
   }));
   const classes = useStyles();
   const startDate = new Date(project.implementationPeriod.start);
   const finishDate = new Date(project.implementationPeriod.end);
   const accomplishedDate = new Date(project.dateAccomplished);
-  const totalCost = project.proposedProjectCost
+  const { user } = useContext(AuthContext);
+  const totalCost = (
+    user.type === 0 ? project.proposedProjectCost : proposedProjectCost
+  )
     .map((project) => parseFloat(project.cost))
     .reduce((a, b) => a + b, 0);
 
@@ -52,7 +57,7 @@ function ViewerForm2({ project }) {
             <TableRow>
               <TableCell align="center">College/Campus/Office</TableCell>
               <TableCell align="center" colSpan={4}>
-                {project.institute}
+                {project.institute.institute}
               </TableCell>
             </TableRow>
             <TableRow>
@@ -155,21 +160,48 @@ function ViewerForm2({ project }) {
               <TableCell align="center">TOTAL</TableCell>
             </TableRow>
             <TableRow>
-              <TableCell align="center">
-                {`Php ${project.proposedProjectCost[0].cost}`}
-              </TableCell>
-              <TableCell align="center">
-                {`Php ${project.proposedProjectCost[1].cost}`}
-              </TableCell>
-              <TableCell align="center">
-                {`Php ${project.proposedProjectCost[2].cost}`}
-              </TableCell>
-              <TableCell align="center">{`Php ${totalCost}`}</TableCell>
+              {user.type === 0 && (
+                <React.Fragment>
+                  <TableCell align="center">
+                    {`Php ${project.proposedProjectCost[0].cost}`}
+                  </TableCell>
+                  <TableCell align="center">
+                    {`Php ${project.proposedProjectCost[1].cost}`}
+                  </TableCell>
+                  <TableCell align="center">
+                    {`Php ${project.proposedProjectCost[2].cost}`}
+                  </TableCell>
+                  <TableCell align="center">{`Php ${totalCost}`}</TableCell>
+                </React.Fragment>
+              )}
+              {user.type === 1 && (
+                <React.Fragment>
+                  {proposedProjectCost.map((yearCost, index) => (
+                    <TableCell align="center" key = {yearCost.year}>
+                      <TextField
+                        onChange={(e) => {
+                          setProposedProjectCost(() => {
+                            var newData = [...proposedProjectCost]
+                            newData[index].cost = e.target.value;
+                            return newData;
+                          });
+                        }}
+                        label="Value"
+                        variant="outlined"
+                        fullWidth
+                        error={false}
+                        value={yearCost.cost}
+                      />
+                    </TableCell>
+                  ))}
+                  <TableCell align="center">{`Php ${totalCost}`}</TableCell>
+                </React.Fragment>
+              )}
             </TableRow>
           </TableBody>
         </Table>
       </TableContainer>
-      <Divider classes={{root: classes.divider}}/>
+      <Divider classes={{ root: classes.divider }} />
       <TableContainer component={Paper}>
         <Table classname={classes.table} aria-label="spanning table">
           <TableBody>
@@ -192,7 +224,9 @@ function ViewerForm2({ project }) {
               </TableCell>
             </TableRow>
             <TableRow>
-              <TableCell align="center" rowSpan={2}>Contact Information</TableCell>
+              <TableCell align="center" rowSpan={2}>
+                Contact Information
+              </TableCell>
               <TableCell align="center">
                 {project.contactInformation.telNumber}
               </TableCell>

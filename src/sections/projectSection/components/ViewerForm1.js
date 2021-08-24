@@ -7,12 +7,15 @@ import {
   TableRow,
   TableCell,
   makeStyles,
+  TextField,
 } from "@material-ui/core";
-import React from "react";
-import { papLevels, readinessLevels, statuses, months } from "../../../utils/constants";
+import React, { useContext } from "react";
+
+import { AuthContext } from "../../../contexts/AuthContext";
+import { papLevels, readinessLevels, statuses } from "../../../utils/constants";
 import GSPViewer from "./GSPViewer";
 
-function ViewerForm1({ project }) {
+function ViewerForm1({ project, investmentReq, setInvestmentReq, status }) {
   const useStyles = makeStyles(() => ({
     table: {
       minWidth: 700,
@@ -21,10 +24,11 @@ function ViewerForm1({ project }) {
   const classes = useStyles();
   const startDate = new Date(project.implementationPeriod.start);
   const finishDate = new Date(project.implementationPeriod.end);
+  const { user } = useContext(AuthContext);
 
   return (
     <TableContainer component={Paper}>
-      <Table classname={classes.table} aria-label="spanning table">
+      <Table className={classes.table} aria-label="spanning table">
         <TableHead>
           <TableRow>
             <TableCell align="center">Item</TableCell>
@@ -34,6 +38,7 @@ function ViewerForm1({ project }) {
           </TableRow>
         </TableHead>
         <TableBody>
+          <TableRow></TableRow>
           <TableRow>
             <TableCell align="center">Project/Activity/Program Title</TableCell>
             <TableCell align="center" colSpan={5}>
@@ -43,7 +48,7 @@ function ViewerForm1({ project }) {
           <TableRow>
             <TableCell align="center">GSPs</TableCell>
             <TableCell align="center" colSpan={5}>
-              <GSPViewer GSP = {project.GSP} />
+              <GSPViewer GSP={project.GSP} />
             </TableCell>
           </TableRow>
           <TableRow>
@@ -65,7 +70,9 @@ function ViewerForm1({ project }) {
             </TableCell>
           </TableRow>
           <TableRow>
-            <TableCell align="center" rowSpan={2}>Investment Requirement</TableCell>
+            <TableCell align="center" rowSpan={2}>
+              Investment Requirement
+            </TableCell>
             <TableCell align="center">
               {`F.Y. ${project.investmentReq[0].year}`}
             </TableCell>
@@ -83,21 +90,44 @@ function ViewerForm1({ project }) {
             </TableCell>
           </TableRow>
           <TableRow>
-            <TableCell align="center">
-              {`Php ${project.investmentReq[0].value}`}
-            </TableCell>
-            <TableCell align="center">
-              {`Php ${project.investmentReq[1].value}`}
-            </TableCell>
-            <TableCell align="center">
-              {`Php ${project.investmentReq[2].value}`}
-            </TableCell>
-            <TableCell align="center">
-              {`Php ${project.investmentReq[3].value}`}
-            </TableCell>
-            <TableCell align="center">
-              {`Php ${project.investmentReq[4].value}`}
-            </TableCell>
+            {user.type === 0 && (
+              <React.Fragment>
+                <TableCell align="center">
+                  {`Php ${project.investmentReq[0].value}`}
+                </TableCell>
+                <TableCell align="center">
+                  {`Php ${project.investmentReq[1].value}`}
+                </TableCell>
+                <TableCell align="center">
+                  {`Php ${project.investmentReq[2].value}`}
+                </TableCell>
+                <TableCell align="center">
+                  {`Php ${project.investmentReq[3].value}`}
+                </TableCell>
+                <TableCell align="center">
+                  {`Php ${project.investmentReq[4].value}`}
+                </TableCell>
+              </React.Fragment>
+            )}
+            {user.type === 1 &&
+              investmentReq.map((investment, index) => (
+                <TableCell align="center" key={investment.year}>
+                  <TextField
+                    onChange={(e) => {
+                      setInvestmentReq(() => {
+                        var newData = [...investmentReq]
+                        newData[index].value = e.target.value;
+                        return newData;
+                      });
+                    }}
+                    label="Value"
+                    variant="outlined"
+                    fullWidth
+                    error={false}
+                    value={investment.value}
+                  />
+                </TableCell>
+              ))}
           </TableRow>
           <TableRow>
             <TableCell align="center">Implementation Period</TableCell>
@@ -120,7 +150,7 @@ function ViewerForm1({ project }) {
           <TableRow>
             <TableCell align="center">Status of Implementation</TableCell>
             <TableCell align="center" colSpan={5}>
-              {statuses[project.status].label}
+              {statuses[user.type === 0 ? project.status : status].label}
             </TableCell>
           </TableRow>
         </TableBody>

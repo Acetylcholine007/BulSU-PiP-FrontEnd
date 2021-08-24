@@ -1,10 +1,8 @@
 import {
   Card,
-  Checkbox,
   Divider,
   FormControl,
   FormControlLabel,
-  FormGroup,
   FormLabel,
   Grid,
   GridList,

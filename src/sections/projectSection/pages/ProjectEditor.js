@@ -18,6 +18,7 @@ import EditorForm1 from "../components/EditorForm1";
 import EditorForm2 from "../components/EditorForm2";
 import { serverUrl } from "../../../utils/serverUrl";
 import { AuthContext } from "../../../contexts/AuthContext";
+import { institutes } from "../../../utils/constants";
 
 function ProjectEditor({ isNew, project }) {
   const [page, setPage] = useState(1);
@@ -133,6 +134,7 @@ function ProjectEditor({ isNew, project }) {
           commentList: [],
           ownerId: user.id,
           priority: user.projectList.length + 1,
+          address: institutes.find((institute) => institute.institute === user.institute.institute).address,
           recievedBy: "",
           recieverDesignation: "",
           designation: "",
@@ -167,6 +169,8 @@ function ProjectEditor({ isNew, project }) {
         return (
           <EditorForm2 form2Data={form2Data} setForm2Data={setForm2Data} />
         );
+      default:
+        return null;
     }
   };
 

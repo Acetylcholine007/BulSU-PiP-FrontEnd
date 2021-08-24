@@ -22,7 +22,7 @@ function NotificationPage() {
     <React.Fragment>
       <Toolbar>
         <Typography variant="h4" className={classes.pageTitle}>
-          {"Project Viewer"}
+          {"Notifications"}
         </Typography>
       </Toolbar>
       <Divider />

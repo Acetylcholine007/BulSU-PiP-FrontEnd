@@ -11,6 +11,7 @@ import { useContext } from "react";
 import MenuIcon from "@material-ui/icons/Menu";
 
 import { AuthContext } from "../../contexts/AuthContext";
+import { serverUrl } from "../../utils/serverUrl";
 
 function MainAppBar({
   open,
@@ -50,14 +51,12 @@ function MainAppBar({
       },
       avatar: {
         marginLeft: theme.spacing(2),
-        color: theme.palette.getContrastText(theme.palette.secondary.light),
-        backgroundColor: theme.palette.secondary.light,
       },
     };
   });
 
   const classes = useStyles();
-  const {user} = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
 
   return (
     <AppBar
@@ -86,7 +85,7 @@ function MainAppBar({
             setAnchorEl(e.currentTarget);
             setShowDialog(true);
           }}
-          elevation={2}
+          src={`${serverUrl}logos/${user.uri}`}
         >
           <Typography variant="body1">{`${user.college}`}</Typography>
         </Avatar>

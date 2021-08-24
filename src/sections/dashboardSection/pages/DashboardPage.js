@@ -9,9 +9,9 @@ function DashboardPage() {
   const { user } = useContext(AuthContext);
   
   switch (user.type) {
-    case "Client":
+    case 0:
       return <ClientDashboard />;
-    case "Admin":
+    case 1:
       return <AdminDashboard />;
     default:
       return <Typography variant="h3">Invalid user type</Typography>;

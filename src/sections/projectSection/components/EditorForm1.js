@@ -11,13 +11,13 @@ import {
   Typography,
 } from "@material-ui/core";
 import { DatePicker, KeyboardDatePicker } from "@material-ui/pickers";
-
 import { useContext, useState } from "react";
 import { AuthContext } from "../../../contexts/AuthContext";
+
 import {
   obligationTypes,
   papLevels,
-  proponents,
+  institutes,
   readinessLevels,
 } from "../../../utils/constants";
 import GSPPicker from "./GSPPicker";
@@ -128,8 +128,8 @@ function EditorForm1({ form1Data, setForm1Data }) {
             className={classes.field}
             helperText={false ? "Error Password" : null}
           >
-            {proponents
-              .filter((proponent) => proponent.institute === user.institute)[0]
+            {institutes
+              .find((institute) => institute.abbv === user.institute.abbv)
               .proponents.map((type) => (
                 <MenuItem key={type} value={type}>
                   {type}

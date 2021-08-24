@@ -9,19 +9,19 @@ import LogInPage from "./sections/authenticationSection/pages/LogInPage";
 import SignUpPage from "./sections/authenticationSection/pages/SignUpPage";
 import DashboardPage from "./sections/dashboardSection/pages/DashboardPage";
 import AccountPage from "./sections/accountSection/pages/AccountPage";
-import ProjectPage from "./sections/projectSection/pages/ProjectPage";
 import NotificationPage from "./sections/notificationSection/pages/NotificationPage";
 import NotFound from "./shared/pages/NotFound";
-import ProjectViewer from "./sections/projectSection/pages/ProjectViewer";
 import ProjectEditor from "./sections/projectSection/pages/ProjectEditor";
-import ProjectEditorWrapper from "./sections/projectSection/components/ProjectEditorWrapper";
-import MyAccountPage from "./sections/accountSection/pages/MyAccountPage";
-import AccountEditor from "./sections/accountSection/pages/AccountEditor";
+import ProjectEditorWrapper from "./sections/projectSection/wrappers/ProjectEditorWrapper";
 import { AuthContext } from "./contexts/AuthContext";
 import { ProjectContext } from "./contexts/ProjectContext";
 import LoadingComponent from "./shared/components/LoadingComponent";
-import AdminProjectViewer from "./sections/projectSection/pages/AdminProjectViewer";
 import DateFnsUtils from "@date-io/date-fns";
+import InstitutePage from "./sections/projectSection/pages/InstitutePage";
+import AdminProjectViewer from "./sections/projectSection/wrappers/AdminProjectViewer";
+import ClientProjectViewer from "./sections/projectSection/wrappers/ClientProjectViewer";
+import ClientInstituteViewer from "./sections/projectSection/wrappers/ClientInstituteViewer";
+import AdminInstituteViewer from "./sections/projectSection/wrappers/AdminInstituteViewer";
 
 const theme = createTheme({
   palette: {
@@ -90,32 +90,29 @@ function App() {
                     <Route exact path="/accounts">
                       <AccountPage />
                     </Route>
-                    <Route exact path="/accounts/:id"></Route>
+                    <Route exact path="/projects">
+                      <ClientInstituteViewer />
+                    </Route>
                     <Route exact path="/projects/new">
                       <ProjectEditor isNew={true} />
                     </Route>
-                    <Route exact path="/projects">
-                      <ProjectPage />
-                    </Route>
                     <Route exact path="/projects/:id">
-                      {user.type === "Client" ? (
-                        <ProjectViewer />
-                      ) : (
-                        <AdminProjectViewer />
-                      )}
+                      <ClientProjectViewer />
                     </Route>
                     <Route exact path="/projects/:id/edit">
                       <ProjectEditorWrapper />
                     </Route>
+                    <Route exact path="/institutes">
+                      <InstitutePage />
+                    </Route>
+                    <Route exact path="/institutes/:instituteId">
+                      <AdminInstituteViewer />
+                    </Route>
+                    <Route exact path="/institutes/:instituteId/:projectId">
+                      <AdminProjectViewer />
+                    </Route>
                     <Route exact path="/notifications">
                       <NotificationPage />
-                    </Route>
-                    <Route exact path="/notifications/:id"></Route>
-                    <Route exact path="/myaccount">
-                      <MyAccountPage />
-                    </Route>
-                    <Route exact path="/myaccount/edit">
-                      <AccountEditor />
                     </Route>
                     <Route exact path="*">
                       <NotFound />

@@ -6,10 +6,12 @@ import {
   TableRow,
   TableCell,
   makeStyles,
+  TextField,
+  Button,
 } from "@material-ui/core";
 import React from "react";
 
-function ViewerForm3({ project }) {
+function EditorForm3({ form3Data, setForm3Data }) {
   const useStyles = makeStyles(() => ({
     table: {
       minWidth: 700,
@@ -29,23 +31,41 @@ function ViewerForm3({ project }) {
             <TableRow>
               <TableCell align="center">Recieved By</TableCell>
               <TableCell align="center" colSpan={2}>
-                {project.recievedBy}
+                <TextField
+                  onChange={(e) =>
+                    setForm3Data({...form3Data, recievedBy: e.target.value})
+                  }
+                  label="Reciever Name"
+                  variant="outlined"
+                  fullWidth
+                  error={false}
+                  value={form3Data.recievedBy}
+                  helperText={false ? "Error Password" : null}
+                />
               </TableCell>
             </TableRow>
             <TableRow>
               <TableCell align="center">Designation</TableCell>
               <TableCell align="center" colSpan={2}>
-                {project.recieverDesignation}
+                <TextField
+                  onChange={(e) =>
+                    setForm3Data({...form3Data, recieverDesignation: e.target.value})
+                  }
+                  label="Reciever Designation"
+                  variant="outlined"
+                  fullWidth
+                  error={false}
+                  value={form3Data.recieverDesignation}
+                  helperText={false ? "Error Password" : null}
+                />
               </TableCell>
             </TableRow>
             <TableRow>
               <TableCell align="center">Date Recieved</TableCell>
+              <TableCell align="center">{(new Date(form3Data.dateRecieved)).toDateString()}</TableCell>
               <TableCell align="center">
-                {project.dateRecieved === ""
-                  ? "Not yet recieved"
-                  : new Date(project.dateRecieved).toDateString()}
+                <Button variant="contained">Upload Signature</Button>
               </TableCell>
-              <TableCell align="center">Signature Here</TableCell>
             </TableRow>
           </TableBody>
         </Table>
@@ -54,4 +74,4 @@ function ViewerForm3({ project }) {
   );
 }
 
-export default ViewerForm3;
+export default EditorForm3;

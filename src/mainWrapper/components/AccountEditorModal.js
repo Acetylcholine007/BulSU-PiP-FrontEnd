@@ -6,11 +6,9 @@ import {
   makeStyles,
   Modal,
   Typography,
-  Card,
   TextField,
   Button
 } from "@material-ui/core";
-import { ContactSupportOutlined } from "@material-ui/icons";
 import { useContext, useState } from "react";
 import sjcl from "sjcl";
 
@@ -43,7 +41,7 @@ function AccountEditorModal({ open, setOpen }) {
   }));
 
   const classes = useStyles();
-  const { user, setUser } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState(user.email);
 
@@ -59,7 +57,7 @@ function AccountEditorModal({ open, setOpen }) {
         password: myHash,
       }),
     }).then(() => {
-      ContactSupportOutlined.log('done');
+      console.log('Successfully edited');
     });
   };
 
