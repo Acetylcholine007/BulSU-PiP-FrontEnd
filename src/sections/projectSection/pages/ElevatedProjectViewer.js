@@ -213,7 +213,7 @@ function ElevatedProjectViewer({ instituteId, project }) {
                 title={getTitle()}
                 className={classes.cardHeader}
                 action={
-                  tabIndex === 2 && form3Data.dateRecieved === '' ? (
+                  tabIndex === 2 && form3Data.dateRecieved === '' || (form3Data.dateRecieved !== '' && showForm3Editor) ? (
                     <Button
                       variant="outlined"
                       onClick={() => {

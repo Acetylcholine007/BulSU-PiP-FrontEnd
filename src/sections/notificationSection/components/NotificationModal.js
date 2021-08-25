@@ -41,10 +41,10 @@ function NotificationModal({ open, setOpen, notification }) {
     >
       <Fade in={open}>
         <div className={classes.paper}>
-          <Container>
+          <Container maxWidth='xs'>
             <Grid container>
               <Grid item xs={12}>
-                <Typography variant="h4">{notification.header}</Typography>
+                <Typography variant="h5">{notification.header}</Typography>
                 <Typography>{notificationDate.toDateString()}</Typography>
                 <Divider />
                 <Typography variant="body1">{notification.message}</Typography>

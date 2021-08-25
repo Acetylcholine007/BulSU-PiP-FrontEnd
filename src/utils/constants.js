@@ -27,133 +27,205 @@ export const institutes = [
     abbv: "S-BuC",
     proponents: [],
     type: 0,
-    address: 'Bustos, Bulacan'
+    address: "Bustos, Bulacan",
   },
   {
     institute: "Satellite - Meneses Campus",
     abbv: "S-MeC",
     proponents: [],
     type: 0,
-    address: 'Meneses, Bulacan'
+    address: "Meneses, Bulacan",
   },
   {
     institute: "Satellite - Sarmiento Campus",
     abbv: "S-SaC",
     proponents: [],
     type: 0,
-    address: 'Sarmiento, Bulacan'
+    address: "Sarmiento, Bulacan",
   },
   {
     institute: "Satellite - Hagonoy Campus",
     abbv: "S-HaC",
     proponents: [],
     type: 0,
-    address: 'Hagonoy, Bulacan'
+    address: "Hagonoy, Bulacan",
   },
   {
     institute: "College of Architecture and Fine Arts",
     abbv: "CAFA",
-    proponents: [],
+    proponents: [
+      "Architecture",
+      "Landscape Architecture",
+      "Fine Arts Major in Visual Communication",
+    ],
     type: 0,
-    address: 'Malolos, Bulacan'
+    address: "Malolos, Bulacan",
   },
   {
     institute: "College of Arts and Letters",
     abbv: "CAL",
-    proponents: [],
+    proponents: [
+      "Broadcasting",
+      "Journalism",
+      "erforming Arts",
+      "Sining sa Malikhaing Pagsulat",
+    ],
     type: 0,
-    address: 'Malolos, Bulacan'
+    address: "Malolos, Bulacan",
   },
   {
     institute: "College of Business Administration",
     abbv: "CBA",
-    proponents: [],
+    proponents: [
+      "Business Economics",
+      "Financial Management",
+      "Marketing Management",
+      "Entrepreneurship",
+      "Accountancy",
+      "Accounting Information System",
+    ],
     type: 0,
-    address: 'Malolos, Bulacan'
+    address: "Malolos, Bulacan",
   },
   {
     institute: "College of Criminal Justice Education",
     abbv: "CCJE",
-    proponents: [],
+    proponents: ["Legal Management", "Criminology"],
     type: 0,
-    address: 'Malolos, Bulacan'
+    address: "Malolos, Bulacan",
   },
   {
     institute: "College of Hospitality and Tourism Management",
     abbv: "CHTM",
-    proponents: [],
+    proponents: ["Hospitality Management", "Tourism Management"],
     type: 0,
-    address: 'Malolos, Bulacan'
+    address: "Malolos, Bulacan",
   },
   {
     institute: "College of Information and Communications Technology",
     abbv: "CICT",
-    proponents: [],
+    proponents: ["Information Technology", "Information Science"],
     type: 0,
-    address: 'Malolos, Bulacan'
+    address: "Malolos, Bulacan",
   },
   {
     institute: "College of Industrial Technology",
     abbv: "CIT",
-    proponents: [],
+    proponents: [
+      "Automotive",
+      "Computer",
+      "Drafting",
+      "Electrical",
+      "Electronics",
+      "Mechanical",
+      "Foods",
+      "Welding and Fabrication",
+      "Heating, Ventilation & Air-Conditioning",
+    ],
     type: 0,
-    address: 'Malolos, Bulacan'
+    address: "Malolos, Bulacan",
   },
   {
     institute: "College of Law",
-    abbv: "COL",
-    proponents: [],
+    abbv: "CLAW",
+    proponents: ["Bachelor of Laws", "Juris Doctor"],
     type: 0,
-    address: 'Malolos, Bulacan'
+    address: "Malolos, Bulacan",
   },
   {
     institute: "College of Nursing",
     abbv: "CON",
-    proponents: [],
+    proponents: ["Nursing"],
     type: 0,
-    address: 'Malolos, Bulacan'
+    address: "Malolos, Bulacan",
   },
   {
     institute: "College of Engineering",
     abbv: "COE",
-    proponents: ["Civil Engineering", "Computer Engineering"],
+    proponents: [
+      "Civil Engineering",
+      "Computer Engineering",
+      "Electrical Engineering",
+      "Electronics Engineering",
+      "Industrial Engineering",
+      "Manufacturing Engineering",
+      "Mechanical Engineering",
+      "Mechatronics Engineering",
+    ],
     type: 0,
-    address: 'Malolos, Bulacan'
+    address: "Malolos, Bulacan",
   },
   {
     institute: "College of Education",
     abbv: "COED",
-    proponents: [],
+    proponents: [
+      "Elementary Education",
+      "Early Childhood Education",
+      "Secondary Education Major in English minor in Mandarin",
+      "Secondary Education Major in Filipino",
+      "Secondary Education Major in Sciences",
+      "Secondary Education Major in Mathematics",
+      "Secondary Education Major in Social Studies",
+      "Secondary Education Major in Values Education",
+      "Technical Vocational Teacher Education with specialization in Foods and Service Management",
+      "Technical Vocational Teacher Education with specialization in Garments, Fashion and Design",
+      "Physical Education",
+    ],
     type: 0,
-    address: 'Malolos, Bulacan'
+    address: "Malolos, Bulacan",
   },
   {
     institute: "College of Science",
     abbv: "CS",
-    proponents: [],
+    proponents: [
+      "Biology",
+      "Environmental Science",
+      "Food Technology",
+      "Computer Science",
+      "Applied Statistics",
+      "Business Applications",
+    ],
     type: 0,
-    address: 'Malolos, Bulacan'
+    address: "Malolos, Bulacan",
   },
   {
     institute: "College of Sports, Exercise and Recreation",
     abbv: "CSER",
-    proponents: [],
+    proponents: [
+      "Fitness and Sports Coaching",
+      "Fitness and Sports Management",
+    ],
     type: 0,
-    address: 'Malolos, Bulacan'
+    address: "Malolos, Bulacan",
   },
   {
     institute: "College of Social Sciences and Philosophy",
     abbv: "CSSP",
-    proponents: [],
+    proponents: ["Public Administration", "Social Work", "Psychology"],
     type: 0,
-    address: 'Malolos, Bulacan'
+    address: "Malolos, Bulacan",
   },
   {
     institute: "Graduate School",
     abbv: "GRAD",
-    proponents: [],
+    proponents: [
+      "Doctor of Education",
+      "Doctor of Philosophy",
+      "Doctor of Public Administration",
+      "Master in Physical Education",
+      "Master in Business Administration",
+      "Master in Public Administration",
+      "Master of Arts in Education",
+      "Master of Engineering Program",
+      "Master of Industrial Technology Management",
+      "Master of Science in Civil Engineering",
+      "Master of Science in Computer Engineering",
+      "Master of Science in Electronics and Communications Engineering",
+      "Master of Information Technology",
+      "Master of Manufacturing Engineering",
+    ],
     type: 0,
-    address: 'Malolos, Bulacan'
+    address: "Malolos, Bulacan",
   },
   {
     institute: "Editor",
@@ -212,22 +284,27 @@ export const statuses = [
   {
     value: 0,
     label: "Dropped",
+    color: "#E57373",
   },
   {
     value: 1,
     label: "Proposed",
+    color: "#FFF176",
   },
   {
     value: 2,
     label: "Revision",
+    color: "#FFB74D",
   },
   {
     value: 3,
     label: "On-going",
+    color: "#81C784",
   },
   {
     value: 4,
     label: "Completed",
+    color: "#64B5F6",
   },
 ];
 
@@ -571,5 +648,5 @@ export const menuItems = [
     icon: <SupervisorAccountOutlined />,
     path: "/accounts",
     for: [1],
-  }
+  },
 ];

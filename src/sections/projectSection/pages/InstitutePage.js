@@ -13,27 +13,19 @@ import {
   TableRow,
   TextField,
   InputAdornment,
+  Avatar,
 } from "@material-ui/core";
 import { Search } from "@material-ui/icons";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 
-import { ProjectContext } from "../../../contexts/ProjectContext";
 import { institutes } from "../../../utils/constants";
+import { serverUrl } from "../../../utils/serverUrl";
 
 function InstitutePage() {
-  const { projects } = useContext(ProjectContext);
+  const history = useHistory();
   const [filter, setFilter] = useState({ search: "" });
-  const [filteredProject, setFilteredProject] = useState(projects);
-  useEffect(() => {
-    setFilteredProject(
-      filter.search === ""
-        ? projects
-        : projects.filter((project) =>
-            project.title.toLowerCase().includes(filter.search.toLowerCase())
-          )
-    );
-  }, [filter, projects]);
+
   const useStyles = makeStyles((theme) => ({
     noBorder: {
       border: "none",
@@ -41,7 +33,28 @@ function InstitutePage() {
   }));
 
   const classes = useStyles();
-  const history = useHistory();
+
+  const filterLogic = (institute) => {
+    var searchFilterPassed = true;
+
+    if (filter.search !== "") {
+      searchFilterPassed = institute.institute
+        .toLowerCase()
+        .includes(filter.search.toLowerCase());
+    }
+
+    return searchFilterPassed;
+  };
+
+  const [filteredInstitute, setFilteredInstitute] = useState(
+    institutes.slice(0, institutes.length - 2).filter(filterLogic)
+  );
+
+  useEffect(() => {
+    setFilteredInstitute(
+      institutes.slice(0, institutes.length - 2).filter(filterLogic)
+    );
+  }, [filter]);
 
   return (
     <React.Fragment>
@@ -52,44 +65,55 @@ function InstitutePage() {
       </Toolbar>
       <Divider />
       <Container>
-        <TableContainer component={Paper}>
-          <Table className={classes.table} aria-label="spanning table">
-            <TableHead style={{backgroundColor: '#535353'}}>
-              <TextField
-                placeholder="Search"
-                fullWidth
-                value={filter.search}
-                onChange={(e) =>
-                  setFilter({ ...filter, search: e.target.value })
-                }
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <Search />
-                    </InputAdornment>
-                  ),
-                  classes: { notchedOutline: classes.noBorder },
-                }}
-                variant="outlined"
-                className={classes.searchBox}
-                color="secondary"
-              />
-            </TableHead>
-            <TableBody>
-              {institutes.slice(0, institutes.length - 2).map((institute) => (
-                <TableRow
-                  hover
-                  onClick={(e) => {
-                    history.push(`/institutes/${institute.abbv}`);
-                  }}
-                  key={institute.abbv}
-                >
-                  <TableCell>{institute.institute}</TableCell>
+        <Paper>
+          <Toolbar>
+            <TextField
+              placeholder="Search"
+              fullWidth
+              value={filter.search}
+              onChange={(e) => setFilter({ ...filter, search: e.target.value })}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <Search />
+                  </InputAdornment>
+                ),
+                classes: { notchedOutline: classes.noBorder },
+              }}
+              variant="outlined"
+              className={classes.searchBox}
+              color="secondary"
+            />
+          </Toolbar>
+          <TableContainer>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Logo</TableCell>
+                  <TableCell>Institute</TableCell>
+                  <TableCell align="center">Projects</TableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+              </TableHead>
+              <TableBody>
+                {filteredInstitute.map((institute) => (
+                  <TableRow
+                    hover
+                    onClick={(e) => {
+                      history.push(`/institutes/${institute.abbv}`);
+                    }}
+                    key={institute.abbv}
+                  >
+                    <TableCell>
+                      <Avatar src={`${serverUrl}logos/${institute.abbv}.png`} />
+                    </TableCell>
+                    <TableCell>{institute.institute}</TableCell>
+                    <TableCell align="center">{0}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Paper>
       </Container>
     </React.Fragment>
   );
