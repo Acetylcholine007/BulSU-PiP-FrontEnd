@@ -218,6 +218,299 @@
           "datetime": "2021-08-24T00:16:30.439Z"
         }
       ]
+    },
+    {
+      "title": "Project MK-Ultra",
+      "GSP": [
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "obligationType": "",
+      "proponent": "Computer Engineering",
+      "investmentReq": [
+        {
+          "year": "2021",
+          "value": "10000"
+        },
+        {
+          "year": "2022",
+          "value": "10000"
+        },
+        {
+          "year": "2023",
+          "value": "10000"
+        },
+        {
+          "year": "2024",
+          "value": "10000"
+        },
+        {
+          "year": "2025",
+          "value": "100000"
+        }
+      ],
+      "implementationPeriod": {
+        "start": null,
+        "end": null
+      },
+      "PAPLevel": 1,
+      "readiness": 1,
+      "status": 0,
+      "remarks": "",
+      "suc": "Bulacan State University",
+      "institute": {
+        "institute": "College of Engineering",
+        "abbv": "COE"
+      },
+      "address": "Malolos, Bulacan",
+      "projectLocation": "",
+      "categorization": {
+        "new": true,
+        "expanded": false,
+        "infrastructure": true,
+        "nonInfrastructure": false
+      },
+      "description": "",
+      "purpose": "",
+      "beneficiary": "",
+      "proposedProjectCost": [
+        {
+          "year": "2021",
+          "cost": "0"
+        },
+        {
+          "year": "2021",
+          "cost": "0"
+        },
+        {
+          "year": "2021",
+          "cost": "0"
+        }
+      ],
+      "proponentName": {
+        "surname": "",
+        "firstName": "",
+        "middleInitial": ""
+      },
+      "designation": "",
+      "contactInformation": {
+        "telNumber": "",
+        "email": "",
+        "phoneNumber": "",
+        "others": ""
+      },
+      "dateAccomplished": "2021-08-24T05:50:10.931Z",
+      "signature": "",
+      "fileList": [],
+      "commentList": [
+        {
+          "id": null,
+          "author": "PDO Officer",
+          "header": "Comment",
+          "message": "Too Evil",
+          "datetime": "2021-08-25T03:09:18.681Z"
+        }
+      ],
+      "ownerId": 1,
+      "priority": 1,
+      "recievedBy": "John F Kennedy",
+      "recieverDesignation": "President",
+      "dateRecieved": "2021-08-25T03:09:26.346Z",
+      "pdoSignature": "",
+      "id": 2
+    },
+    {
+      "title": "Operation Neptune Spear",
+      "GSP": [
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "obligationType": "",
+      "proponent": "Electronics Engineering",
+      "investmentReq": [
+        {
+          "year": "2021",
+          "value": "20000"
+        },
+        {
+          "year": "2022",
+          "value": "20000"
+        },
+        {
+          "year": "2023",
+          "value": "20000"
+        },
+        {
+          "year": "2024",
+          "value": "20000"
+        },
+        {
+          "year": "2025",
+          "value": "20000"
+        }
+      ],
+      "implementationPeriod": {
+        "start": null,
+        "end": null
+      },
+      "PAPLevel": 1,
+      "readiness": 1,
+      "status": 1,
+      "remarks": "",
+      "suc": "Bulacan State University",
+      "institute": {
+        "institute": "College of Engineering",
+        "abbv": "COE"
+      },
+      "address": "Malolos, Bulacan",
+      "projectLocation": "",
+      "categorization": {
+        "new": true,
+        "expanded": false,
+        "infrastructure": true,
+        "nonInfrastructure": false
+      },
+      "description": "",
+      "purpose": "",
+      "beneficiary": "",
+      "proposedProjectCost": [
+        {
+          "year": "2021",
+          "cost": "0"
+        },
+        {
+          "year": "2021",
+          "cost": "0"
+        },
+        {
+          "year": "2021",
+          "cost": "0"
+        }
+      ],
+      "proponentName": {
+        "surname": "",
+        "firstName": "",
+        "middleInitial": ""
+      },
+      "designation": "",
+      "contactInformation": {
+        "telNumber": "",
+        "email": "",
+        "phoneNumber": "",
+        "others": ""
+      },
+      "dateAccomplished": "2021-08-24T05:51:26.046Z",
+      "signature": "",
+      "fileList": [],
+      "commentList": [],
+      "ownerId": 1,
+      "priority": 1,
+      "recievedBy": "",
+      "recieverDesignation": "",
+      "dateRecieved": "",
+      "pdoSignature": "",
+      "id": 3
+    },
+    {
+      "title": "Tree Planting",
+      "GSP": [
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "obligationType": "",
+      "proponent": "Industrial Engineering",
+      "investmentReq": [
+        {
+          "year": "2021",
+          "value": "500000"
+        },
+        {
+          "year": "2022",
+          "value": "500000"
+        },
+        {
+          "year": "2023",
+          "value": "500000"
+        },
+        {
+          "year": "2024",
+          "value": "500000"
+        },
+        {
+          "year": "2025",
+          "value": "500000"
+        }
+      ],
+      "implementationPeriod": {
+        "start": null,
+        "end": null
+      },
+      "PAPLevel": 1,
+      "readiness": 1,
+      "status": 3,
+      "remarks": "",
+      "suc": "Bulacan State University",
+      "institute": {
+        "institute": "College of Engineering",
+        "abbv": "COE"
+      },
+      "address": "Malolos, Bulacan",
+      "projectLocation": "",
+      "categorization": {
+        "new": true,
+        "expanded": false,
+        "infrastructure": true,
+        "nonInfrastructure": false
+      },
+      "description": "",
+      "purpose": "",
+      "beneficiary": "",
+      "proposedProjectCost": [
+        {
+          "year": "2021",
+          "cost": "0"
+        },
+        {
+          "year": "2021",
+          "cost": "0"
+        },
+        {
+          "year": "2021",
+          "cost": "0"
+        }
+      ],
+      "proponentName": {
+        "surname": "",
+        "firstName": "",
+        "middleInitial": ""
+      },
+      "designation": "",
+      "contactInformation": {
+        "telNumber": "",
+        "email": "",
+        "phoneNumber": "",
+        "others": ""
+      },
+      "dateAccomplished": "2021-08-24T06:01:15.889Z",
+      "signature": "",
+      "fileList": [],
+      "commentList": [],
+      "ownerId": 1,
+      "priority": 1,
+      "recievedBy": "Theodor Seuss Geisel",
+      "recieverDesignation": "Author",
+      "dateRecieved": "2021-08-25T03:19:43.787Z",
+      "pdoSignature": "",
+      "id": 4
     }
   ]
 }

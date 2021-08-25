@@ -1,31 +1,65 @@
-import { Grid } from "@material-ui/core";
+import {
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+} from "@material-ui/core";
 import { useContext, useState } from "react";
-import NotificationCard from "./NotificationCard";
 import NotificationModal from "./NotificationModal";
 
 import { AuthContext } from "../../../contexts/AuthContext";
 
 function NotificationList() {
-  const {user: {notificationList}} = useContext(AuthContext);
+  const {
+    user: { notificationList },
+  } = useContext(AuthContext);
   const [open, setOpen] = useState(false);
   const [notification, setNotification] = useState(null);
 
   const selectNotification = (notification) => {
     setNotification(notification);
     setOpen(true);
-  }
+  };
 
   return (
-    <div>
-      <Grid container spacing={1}>
-      {notificationList.map((notification) => (
-        <Grid item xs={12} key = {notification.id}>
-          <NotificationCard notification={notification} selectNotification = {selectNotification} />
-        </Grid>
-      ))}
-    </Grid>
-    {notification && (<NotificationModal open = {open} setOpen = {setOpen} notification = {notification} />)}
-    </div>
+    <Paper>
+      <TableContainer>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Header</TableCell>
+              <TableCell>Author</TableCell>
+              <TableCell>Date and Time</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {notificationList.map((notification) => (
+              <TableRow
+                hover
+                onClick={(e) => {
+                  selectNotification(notification);
+                }}
+                key={notification.id}
+              >
+                <TableCell>{notification.header}</TableCell>
+                <TableCell>{notification.author}</TableCell>
+                <TableCell>{(new Date(notification.datetime)).toDateString()}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      {notification && (
+        <NotificationModal
+          open={open}
+          setOpen={setOpen}
+          notification={notification}
+        />
+      )}
+    </Paper>
   );
 }
 

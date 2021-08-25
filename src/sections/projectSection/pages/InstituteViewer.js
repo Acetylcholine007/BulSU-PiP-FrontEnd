@@ -5,24 +5,39 @@ import {
   Grid,
   Toolbar,
   Typography,
-  makeStyles
+  makeStyles,
 } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import React, { useContext, useState } from "react";
-import { Add, Save } from "@material-ui/icons";
+import { Add, GetApp, Save } from "@material-ui/icons";
 
-import ProjectFilter from "../components/ProjectFilter";
 import ProjectList from "../components/ProjectList";
 import { serverUrl } from "../../../utils/serverUrl";
 import useFetch from "../../../hooks/useFetch";
 import ErrorComponent from "../../../shared/components/ErrorComponent";
 import LoadingComponent from "../../../shared/components/LoadingComponent";
 import { AuthContext } from "../../../contexts/AuthContext";
+import ProjectFilterDialog from "../components/ProjectFilterDialog";
 
-function InstituteViewer({instituteId}) {
+function InstituteViewer({ instituteId }) {
   const history = useHistory();
   const { user } = useContext(AuthContext);
-  const [filter, setFilter] = useState("");
+  const [open, setOpen] = useState(false);
+  const [filter, setFilter] = useState({
+    search: '',
+    investmentReq: {
+      enabled: false,
+      value: [0, 100]
+    },
+    projectCost: {
+      enabled: false,
+      value: [0, 100]
+    },
+    status: {
+      enabled: false,
+      values: [false, false, false, false, false]
+    }
+  });
   const {
     error,
     isPending,
@@ -31,11 +46,11 @@ function InstituteViewer({instituteId}) {
 
   const useStyles = makeStyles(() => ({
     pageTitle: {
-      flexGrow: 10
+      flexGrow: 10,
     },
     button: {
-      margin: '0px 5px 0px 5px'
-    }
+      marginLeft: 10,
+    },
   }));
 
   const classes = useStyles();
@@ -47,30 +62,50 @@ function InstituteViewer({instituteId}) {
       {projects && (
         <React.Fragment>
           <Toolbar>
-            <Typography variant="h4" className = {classes.pageTitle}>Project List</Typography>
-            {user.type === 0 && <Button
-              className = {classes.button}
+            <Typography variant="h4" className={classes.pageTitle}>
+              Project List
+            </Typography>
+            {user.type === 0 && (
+              <Button
+                className={classes.button}
+                variant="contained"
+                startIcon={<Add />}
+                onClick={() => {
+                  history.push("/projects/new");
+                }}
+              >
+                Create New
+              </Button>
+            )}
+            <Button
+              className={classes.button}
               variant="contained"
-              startIcon={<Add />}
-              onClick={() => {
-                history.push("/projects/new");
-              }}
+              startIcon={<GetApp />}
             >
-              Create New
-            </Button>}
-            <Button 
-              className = {classes.button} variant="contained" startIcon={<Save />}>Save Changes</Button>
+              Export Data
+            </Button>
+            <Button
+              className={classes.button}
+              variant="contained"
+              startIcon={<Save />}
+            >
+              Save Changes
+            </Button>
           </Toolbar>
           <Divider />
           <Container>
             <Grid container>
-              <Grid item md={9} xs={12}>
-                <ProjectList projects={projects} instituteId = {instituteId}/>
-              </Grid>
-              <Grid item md={3} xs={12}>
-                <ProjectFilter filter={filter} setFilter={setFilter} />
+              <Grid item xs={12}>
+                <ProjectList
+                  projects={projects}
+                  instituteId={instituteId}
+                  filter={filter}
+                  setFilter={setFilter}
+                  setOpen={setOpen}
+                />
               </Grid>
             </Grid>
+            <ProjectFilterDialog open = {open} setOpen = {setOpen} filter = {filter} setFilter = {setFilter} />
           </Container>
         </React.Fragment>
       )}
