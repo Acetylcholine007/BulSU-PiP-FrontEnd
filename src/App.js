@@ -94,13 +94,13 @@ function App() {
                       <ClientInstituteViewer />
                     </Route>
                     <Route exact path="/projects/new">
-                      <ProjectEditor isNew={true} />
+                      <ProjectEditorWrapper isNew = {true} />
                     </Route>
                     <Route exact path="/projects/:id">
                       <ClientProjectViewer />
                     </Route>
                     <Route exact path="/projects/:id/edit">
-                      <ProjectEditorWrapper />
+                      <ProjectEditorWrapper isNew = {false} />
                     </Route>
                     <Route exact path="/institutes">
                       <InstitutePage />

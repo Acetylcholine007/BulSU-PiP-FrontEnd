@@ -83,8 +83,8 @@ function LogInPage() {
             setUser(match[0]);
             fetch(
               match[0].type === 0
-                ? `${serverUrl}projects?ownerId=${match[0].id}`
-                : `${serverUrl}projects`,
+                ? `${serverUrl}institutes?id=${match[0].institute.abbv}`
+                : `${serverUrl}institutes`,
               {
                 signal: abortCont.signal,
               }

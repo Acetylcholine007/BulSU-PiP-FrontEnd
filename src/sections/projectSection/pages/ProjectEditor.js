@@ -20,7 +20,7 @@ import { serverUrl } from "../../../utils/serverUrl";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { institutes } from "../../../utils/constants";
 
-function ProjectEditor({ isNew, project }) {
+function ProjectEditor({ isNew, project, institute, priority }) {
   const [page, setPage] = useState(1);
   const history = useHistory();
   const { user } = useContext(AuthContext);
@@ -125,34 +125,43 @@ function ProjectEditor({ isNew, project }) {
 
   const handleSubmit = () => {
     if (isNew) {
-      fetch(`${serverUrl}projects`, {
-        method: "POST",
+      var newId = Math.max.apply(null, institute.projects.map((project) => project.id)) + 1;
+      var newInstitute = { ...institute };
+      newInstitute.projects.push({
+        ...form1Data,
+        ...form2Data,
+        commentList: [],
+        ownerId: user.id,
+        address: institutes.find(
+          (institute) => institute.institute === user.institute.institute
+        ).address,
+        recievedBy: "",
+        recieverDesignation: "",
+        designation: "",
+        dateRecieved: "",
+        pdoSignature: "",
+        id: newId,
+      });
+      newInstitute.priority.push(newId);
+      fetch(`${serverUrl}institutes/${institute.id}`, {
+        method: "PUT",
         headers: { "Content-type": "application/json" },
-        body: JSON.stringify({
-          ...form1Data,
-          ...form2Data,
-          commentList: [],
-          ownerId: user.id,
-          priority: user.projectList.length + 1,
-          address: institutes.find((institute) => institute.institute === user.institute.institute).address,
-          recievedBy: "",
-          recieverDesignation: "",
-          designation: "",
-          dateRecieved: "",
-          pdoSignature: "",
-        }),
+        body: JSON.stringify(newInstitute),
       }).then(() => {
         history.push("/projects");
       });
     } else {
-      fetch(`${serverUrl}projects/${project.id}`, {
+      var newInstitute = { ...institute };
+      var projectIndex = newInstitute.projects.indexOf(project)
+      newInstitute.projects[projectIndex] = {
+        ...newInstitute.projects[projectIndex],
+        ...form1Data,
+        ...form2Data,
+      };
+      fetch(`${serverUrl}institutes/${institute.id}`, {
         method: "PUT",
         headers: { "Content-type": "application/json" },
-        body: JSON.stringify({
-          ...project,
-          ...form1Data,
-          ...form2Data,
-        }),
+        body: JSON.stringify(newInstitute),
       }).then(() => {
         history.push("/projects");
       });

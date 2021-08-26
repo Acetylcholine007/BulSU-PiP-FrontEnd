@@ -20,7 +20,7 @@ import { useHistory } from "react-router-dom";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { statuses } from "../../../utils/constants";
 
-function ProjectList({ projects, instituteId, filter, setFilter, setOpen }) {
+function ProjectList({ institute, instituteId, filter, setFilter, setOpen }) {
   const { user } = useContext(AuthContext);
 
   const useStyles = makeStyles(() => ({
@@ -91,10 +91,10 @@ function ProjectList({ projects, instituteId, filter, setFilter, setOpen }) {
   const classes = useStyles();
   const history = useHistory();
   const [filteredProject, setFilteredProject] = useState(
-    projects.filter(filterLogic)
+    institute.projects.filter(filterLogic)
   );
   useEffect(() => {
-    setFilteredProject(projects.filter(filterLogic));
+    setFilteredProject(institute.projects.filter(filterLogic));
   }, [filter]);
 
   const onDragEnd = (result) => {
@@ -184,7 +184,7 @@ function ProjectList({ projects, instituteId, filter, setFilter, setOpen }) {
                             key={project.id}
                             onClick={() => handleClick(project)}
                           >
-                            <TableCell>{project.priority}</TableCell>
+                            <TableCell>{institute.priority.indexOf(project.id) + 1}</TableCell>
                             <TableCell>{project.title}</TableCell>
                             <TableCell>{project.proponent}</TableCell>
                             <TableCell>{`Php ${project.investmentReq

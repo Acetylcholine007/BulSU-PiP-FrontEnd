@@ -59,7 +59,7 @@ const useStyles = makeStyles({
   },
 });
 
-function ElevatedProjectViewer({ instituteId, project }) {
+function ElevatedProjectViewer({ instituteId, project, institute, projectId, priority }) {
   const classes = useStyles();
   const history = useHistory();
 
@@ -88,16 +88,19 @@ function ElevatedProjectViewer({ instituteId, project }) {
   };
 
   const handleSubmit = () => {
-    fetch(`${serverUrl}projects/${project.id}`, {
+    var newInstitute = { ...institute };
+    var projectIndex = newInstitute.projects.indexOf(project);
+    newInstitute.projects[projectIndex] = {
+      ...newInstitute.projects[projectIndex],
+      investmentReq,
+      status,
+      commentList: comments,
+      ...form3Data,
+    };
+    fetch(`${serverUrl}institutes/${institute.id}`, {
       method: "PUT",
       headers: { "Content-type": "application/json" },
-      body: JSON.stringify({
-        ...project,
-        investmentReq,
-        status,
-        commentList: comments,
-        ...form3Data,
-      }),
+      body: JSON.stringify(newInstitute),
     }).then(() => {
       console.log("Successfully edited");
     });
@@ -120,6 +123,7 @@ function ElevatedProjectViewer({ instituteId, project }) {
             project={project}
             proposedProjectCost={proposedProjectCost}
             setProposedProjectCost={setProposedProjectCost}
+            priority={priority}
           />
         );
       case 2:
@@ -213,7 +217,8 @@ function ElevatedProjectViewer({ instituteId, project }) {
                 title={getTitle()}
                 className={classes.cardHeader}
                 action={
-                  tabIndex === 2 && form3Data.dateRecieved === '' || (form3Data.dateRecieved !== '' && showForm3Editor) ? (
+                  (tabIndex === 2 && form3Data.dateRecieved === "") ||
+                  (form3Data.dateRecieved !== "" && showForm3Editor) ? (
                     <Button
                       variant="outlined"
                       onClick={() => {
@@ -253,7 +258,10 @@ function ElevatedProjectViewer({ instituteId, project }) {
                 }
               />
               <CardContent>
-                  <CommentList comments = {comments} selectComment = {selectComment} />
+                <CommentList
+                  comments={comments}
+                  selectComment={selectComment}
+                />
               </CardContent>
             </Card>
           </Grid>
