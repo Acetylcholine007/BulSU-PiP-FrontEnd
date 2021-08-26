@@ -26,6 +26,9 @@ function ProjectList({ projects, instituteId, filter, setFilter, setOpen }) {
     noBorder: {
       border: "none",
     },
+    searchBox: {
+      background: "#D3D3D3"
+    }
   }));
 
   const handleClick = (project) => {
@@ -91,10 +94,12 @@ function ProjectList({ projects, instituteId, filter, setFilter, setOpen }) {
               </InputAdornment>
             ),
             classes: { notchedOutline: classes.noBorder },
+            className: classes.searchBox
           }}
           variant="outlined"
-          className={classes.searchBox}
           color="secondary"
+          size='small'
+          margin='dense'
         />
         <IconButton onClick = {() => setOpen(true)}>
           <FilterList />

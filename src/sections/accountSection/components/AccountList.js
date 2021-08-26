@@ -25,6 +25,9 @@ function AccountList({ users, filter, setFilter, setOpen, setDataChanged }) {
     noBorder: {
       border: "none",
     },
+    searchBox: {
+      background: "#D3D3D3"
+    }
   }));
 
   const filterLogic = (user) => {
@@ -92,10 +95,12 @@ function AccountList({ users, filter, setFilter, setOpen, setDataChanged }) {
               </InputAdornment>
             ),
             classes: { notchedOutline: classes.noBorder },
+            className: classes.searchBox
           }}
           variant="outlined"
-          className={classes.searchBox}
           color="secondary"
+          size='small'
+          margin='dense'
         />
         <IconButton onClick={() => setOpen(true)}>
           <FilterList />

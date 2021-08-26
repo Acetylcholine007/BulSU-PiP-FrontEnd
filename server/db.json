@@ -39,7 +39,22 @@
       "uri": "EDITOR.png",
       "verified": true,
       "type": 1,
-      "notificationList": [],
+      "notificationList": [
+        {
+          "id": 1,
+          "author": "Server",
+          "header": "Notif 1",
+          "message": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas laboriosam obcaecati ullam, iste deleniti voluptatibus veniam provident animi enim error temporibus, est ad hic neque dolorum blanditiis ratione excepturi sequi.",
+          "datetime": "2021-08-15T06:01:45Z"
+        },
+        {
+          "id": 2,
+          "author": "Server",
+          "header": "Notif 2",
+          "message": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas laboriosam obcaecati ullam, iste deleniti voluptatibus veniam provident animi enim error temporibus, est ad hic neque dolorum blanditiis ratione excepturi sequi.",
+          "datetime": "2021-08-15T06:01:45Z"
+        }
+      ],
       "projectList": [],
       "id": 2
     }
@@ -512,5 +527,61 @@
       "pdoSignature": "",
       "id": 4
     }
-  ]
+  ],
+  "editorDashboard": {
+    "projects": [
+      {"institute": "S-BuC", "tally": [4, 5, 6, 3, 2]},
+      {"institute": "S-MeC", "tally": [4, 5, 6, 3, 2]},
+      {"institute": "S-SaC", "tally": [4, 5, 6, 3, 2]},
+      {"institute": "S-HaC", "tally": [4, 5, 6, 3, 2]},
+      {"institute": "CAFA", "tally": [4, 5, 6, 3, 2]},
+      {"institute": "CAL", "tally": [4, 5, 6, 3, 2]},
+      {"institute": "CBA", "tally": [4, 5, 6, 3, 2]},
+      {"institute": "CCJE", "tally": [4, 5, 6, 3, 2]},
+      {"institute": "CHTM", "tally": [4, 5, 6, 3, 2]},
+      {"institute": "CICT", "tally": [4, 5, 6, 3, 2]},
+      {"institute": "CIT", "tally": [4, 5, 6, 3, 2]},
+      {"institute": "CLAW", "tally": [4, 5, 6, 3, 2]},
+      {"institute": "CON", "tally": [4, 5, 6, 3, 2]},
+      {"institute": "COE", "tally": [4, 5, 6, 3, 2]},
+      {"institute": "COED", "tally": [4, 5, 6, 3, 2]},
+      {"institute": "CS", "tally": [4, 5, 6, 3, 2]},
+      {"institute": "CSER", "tally": [4, 5, 6, 3, 2]},
+      {"institute": "CSSP", "tally": [4, 5, 6, 3, 2]},
+      {"institute": "GRAD", "tally": [4, 5, 6, 3, 2]}
+    ],
+    "investmentCosts": [
+      {"label": "Dropped", "value": 30000},
+      {"label": "Proposed", "value": 30000},
+      {"label": "Revision", "value": 30000},
+      {"label": "On-going", "value": 30000},
+      {"label": "Completed", "value": 30000}
+    ],
+    "projectCost": [
+      {"label": "Dropped", "value": 30000},
+      {"label": "Proposed", "value": 30000},
+      {"label": "Revision", "value": 30000},
+      {"label": "On-going", "value": 30000},
+      {"label": "Completed", "value": 30000}
+    ]
+  },
+  "userDashboard": {
+    "projects": {
+      "institute": "COE", "tally": [4, 5, 6, 3, 2]
+    },
+    "investmentCosts": [
+      {"label": "Dropped", "value": 3000},
+      {"label": "Proposed", "value": 3000},
+      {"label": "Revision", "value": 3000},
+      {"label": "On-going", "value": 3000},
+      {"label": "Completed", "value": 3000}
+    ],
+    "projectCost": [
+      {"label": "Dropped", "value": 3000},
+      {"label": "Proposed", "value": 3000},
+      {"label": "Revision", "value": 3000},
+      {"label": "On-going", "value": 3000},
+      {"label": "Completed", "value": 3000}
+    ]
+  }
 }
