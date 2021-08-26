@@ -12,9 +12,10 @@ import {
   TableCell,
   TableBody,
 } from "@material-ui/core";
-import { FilterList, Search } from "@material-ui/icons";
+import { FilterList, Reorder, Search } from "@material-ui/icons";
 import React, { useEffect, useState } from "react";
 import { useContext } from "react";
+import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { useHistory } from "react-router-dom";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { statuses } from "../../../utils/constants";
@@ -27,8 +28,8 @@ function ProjectList({ projects, instituteId, filter, setFilter, setOpen }) {
       border: "none",
     },
     searchBox: {
-      background: "#D3D3D3"
-    }
+      background: "#D3D3D3",
+    },
   }));
 
   const handleClick = (project) => {
@@ -51,33 +52,72 @@ function ProjectList({ projects, instituteId, filter, setFilter, setOpen }) {
     var statusFilterPassed = true;
     var searchFilterPassed = true;
 
-    if(filter.investmentReq.enabled) {
-      var sum = project.investmentReq.map((item) => parseFloat(item.value)).reduce((a, b) => a + b, 0)
-      investmentFilterPassed = sum >= filter.investmentReq.value[0] * 1000000 && sum <= filter.investmentReq.value[1] * 1000000;
+    if (filter.investmentReq.enabled) {
+      var sum = project.investmentReq
+        .map((item) => parseFloat(item.value))
+        .reduce((a, b) => a + b, 0);
+      investmentFilterPassed =
+        sum >= filter.investmentReq.value[0] * 1000000 &&
+        sum <= filter.investmentReq.value[1] * 1000000;
     }
 
-    if(filter.projectCost.enabled) {
-      var sum = project.proposedProjectCost.map((item) => parseFloat(item.cost)).reduce((a, b) => a + b, 0)
-      projectCostFilterPassed = sum >= filter.projectCost.value[0] * 1000000 && sum <= filter.projectCost.value[1] * 1000000;
+    if (filter.projectCost.enabled) {
+      var sum = project.proposedProjectCost
+        .map((item) => parseFloat(item.cost))
+        .reduce((a, b) => a + b, 0);
+      projectCostFilterPassed =
+        sum >= filter.projectCost.value[0] * 1000000 &&
+        sum <= filter.projectCost.value[1] * 1000000;
     }
 
-    if(filter.status.enabled) {
+    if (filter.status.enabled) {
       statusFilterPassed = filter.status.values[project.status];
     }
 
-    if(filter.search !== '') {
-      searchFilterPassed = project.title.toLowerCase().includes(filter.search.toLowerCase())
+    if (filter.search !== "") {
+      searchFilterPassed = project.title
+        .toLowerCase()
+        .includes(filter.search.toLowerCase());
     }
 
-    return investmentFilterPassed && projectCostFilterPassed && statusFilterPassed && searchFilterPassed;
-  }
+    return (
+      investmentFilterPassed &&
+      projectCostFilterPassed &&
+      statusFilterPassed &&
+      searchFilterPassed
+    );
+  };
 
   const classes = useStyles();
   const history = useHistory();
-  const [filteredProject, setFilteredProject] = useState(projects.filter(filterLogic))
+  const [filteredProject, setFilteredProject] = useState(
+    projects.filter(filterLogic)
+  );
   useEffect(() => {
     setFilteredProject(projects.filter(filterLogic));
-  }, [filter])
+  }, [filter]);
+
+  const onDragEnd = (result) => {
+    const {destination, source, draggableId} = result;
+
+    if(!destination) {
+      return;
+    }
+
+    if(
+      destination.droppableId === source.droppableId &&
+      destination.index === source.index
+    ) {
+      return;
+    }
+
+    setFilteredProject(() => {
+      const newData = [...filteredProject];
+      const target = newData.splice(source.index, 1)[0];
+      newData.splice(destination.index, 0, target);
+      return newData;
+    })
+  };
 
   return (
     <Paper>
@@ -94,14 +134,14 @@ function ProjectList({ projects, instituteId, filter, setFilter, setOpen }) {
               </InputAdornment>
             ),
             classes: { notchedOutline: classes.noBorder },
-            className: classes.searchBox
+            className: classes.searchBox,
           }}
           variant="outlined"
           color="secondary"
-          size='small'
-          margin='dense'
+          size="small"
+          margin="dense"
         />
-        <IconButton onClick = {() => setOpen(true)}>
+        <IconButton onClick={() => setOpen(true)}>
           <FilterList />
         </IconButton>
       </Toolbar>
@@ -117,27 +157,55 @@ function ProjectList({ projects, instituteId, filter, setFilter, setOpen }) {
               <TableCell>Status</TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
-            {filteredProject.map((project) => (
-              <TableRow
-                hover
-                style={{ backgroundColor: statuses[project.status].color }}
-                key={project.id}
-                onClick={() => handleClick(project)}
-              >
-                <TableCell>{project.priority}</TableCell>
-                <TableCell>{project.title}</TableCell>
-                <TableCell>{project.proponent}</TableCell>
-                <TableCell>{`Php ${project.investmentReq
-                  .map((item) => parseFloat(item.value))
-                  .reduce((a, b) => a + b, 0)}`}</TableCell>
-                <TableCell>{`Php ${project.proposedProjectCost
-                  .map((item) => parseFloat(item.cost))
-                  .reduce((a, b) => a + b, 0)}`}</TableCell>
-                <TableCell>{statuses[project.status].label}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
+          <DragDropContext onDragEnd={onDragEnd}>
+            <Droppable droppableId="droppable" direction="vertical">
+              {(provided) => (
+                <TableBody
+                  innerRef={provided.innerRef}
+                  {...provided.droppableProps}
+                >
+                  {filteredProject.map((project, index) => (
+                    <Draggable
+                      key={project.id.toString()}
+                      draggableId={project.id.toString()}
+                      index={index}
+                    >
+                      {(provided) => {
+                        return (
+                          <TableRow
+                            innerRef={provided.innerRef}
+                            {...provided.draggableProps}
+                            {...provided.dragHandleProps}
+                            hover
+                            style={{
+                              ...provided.draggableProps.style,
+                              backgroundColor: statuses[project.status].color,
+                            }}
+                            key={project.id}
+                            onClick={() => handleClick(project)}
+                          >
+                            <TableCell>{project.priority}</TableCell>
+                            <TableCell>{project.title}</TableCell>
+                            <TableCell>{project.proponent}</TableCell>
+                            <TableCell>{`Php ${project.investmentReq
+                              .map((item) => parseFloat(item.value))
+                              .reduce((a, b) => a + b, 0)}`}</TableCell>
+                            <TableCell>{`Php ${project.proposedProjectCost
+                              .map((item) => parseFloat(item.cost))
+                              .reduce((a, b) => a + b, 0)}`}</TableCell>
+                            <TableCell>
+                              {statuses[project.status].label}
+                            </TableCell>
+                          </TableRow>
+                        );
+                      }}
+                    </Draggable>
+                  ))}
+                  {provided.placeholder}
+                </TableBody>
+              )}
+            </Droppable>
+          </DragDropContext>
         </Table>
       </TableContainer>
     </Paper>
