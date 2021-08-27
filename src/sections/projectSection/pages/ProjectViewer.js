@@ -23,7 +23,7 @@ import ViewerForm3 from "../components/ViewerForm3";
 import { Delete, Edit } from "@material-ui/icons";
 import CommentList from "../components/CommentList";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   txt: {
     padding: "10px",
   },
@@ -34,8 +34,11 @@ const useStyles = makeStyles({
     boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
     color: "white",
   },
+  card: {
+    marginBottom: 15
+  },
   cardHeader: {
-    backgroundColor: "#d3d3d3",
+    backgroundColor: theme.palette.tertiary.main,
   },
   pageTitle: {
     flexGrow: 11,
@@ -43,10 +46,16 @@ const useStyles = makeStyles({
   pageAction: {
     flexGrow: 1,
   },
-  divider: {
+  subDivider: {
     margin: "20px 0px 20px 0px",
   },
-});
+  button: {
+    marginLeft: 10
+  },
+  divider: {
+    marginBottom: 15
+  }
+}));
 
 function ProjectViewer({ project, projectId, priority, institute }) {
   const classes = useStyles();
@@ -125,6 +134,7 @@ function ProjectViewer({ project, projectId, priority, institute }) {
           onClick={() => {
             history.push(`/projects/${projectId}/edit`);
           }}
+          className={classes.button}
         >
           Edit Project
         </Button>
@@ -132,11 +142,12 @@ function ProjectViewer({ project, projectId, priority, institute }) {
           variant="contained"
           startIcon={<Delete />}
           onClick={handleDelete}
+          className={classes.button}
         >
           Delete Project
         </Button>
       </Toolbar>
-      <Divider />
+      <Divider classes={{ root: classes.divider }} />
       <Container>
         <Grid container>
           <Grid item xs={12}>
@@ -158,10 +169,10 @@ function ProjectViewer({ project, projectId, priority, institute }) {
           </Grid>
         </Grid>
         <Grid item xs={12}>
-          <Divider classes={{ root: classes.divider }} />
+          <Divider classes={{ root: classes.subDivider }} />
         </Grid>
         <Grid item xs={12}>
-          <Card>
+          <Card className = {classes.card}>
             <CardHeader title="Comments" className={classes.cardHeader} />
             <CardContent>
               <CommentList

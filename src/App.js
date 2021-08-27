@@ -37,6 +37,12 @@ const theme = createTheme({
       dark: "#F7CC00",
       contrastText: "#000000",
     },
+    tertiary: {
+      light: "#E0E0E0",
+      main: "#9E9E9E",
+      dark: "#616161",
+      contrastText: "#000000",
+    }
   },
   typography: {
     fontFamily: "Quicksand",

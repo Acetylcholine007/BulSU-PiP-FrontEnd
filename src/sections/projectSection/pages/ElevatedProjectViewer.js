@@ -11,9 +11,6 @@ import {
   Tab,
   CardContent,
   Toolbar,
-  List,
-  ListItem,
-  ListItemText,
   ButtonGroup,
 } from "@material-ui/core";
 import {
@@ -35,7 +32,7 @@ import CreateCommentDialog from "../components/CreateCommentDialog";
 import { serverUrl } from "../../../utils/serverUrl";
 import CommentList from "../components/CommentList";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   txt: {
     padding: "10px",
   },
@@ -46,8 +43,11 @@ const useStyles = makeStyles({
     boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
     color: "white",
   },
+  card: {
+    marginBottom: 15,
+  },
   cardHeader: {
-    backgroundColor: "#d3d3d3",
+    backgroundColor: theme.palette.tertiary.main,
   },
   pageTitle: {
     flexGrow: 11,
@@ -55,13 +55,16 @@ const useStyles = makeStyles({
   pageAction: {
     flexGrow: 1,
   },
-  divider: {
+  subDivider: {
     margin: "20px 0px 20px 0px",
   },
   button: {
-    marginLeft: 10
-  }
-});
+    marginLeft: 10,
+  },
+  divider: {
+    marginBottom: 15,
+  },
+}));
 
 function ElevatedProjectViewer({
   instituteId,
@@ -169,7 +172,7 @@ function ElevatedProjectViewer({
         <Typography variant="h4" className={classes.pageTitle}>
           {"Project Viewer"}
         </Typography>
-        <ButtonGroup className = {classes.button}>
+        <ButtonGroup className={classes.button}>
           <Button
             variant={status == 3 ? "contained" : "outlined"}
             startIcon={<CheckCircle />}
@@ -205,12 +208,12 @@ function ElevatedProjectViewer({
             handleSubmit();
             history.push(`/institutes/${instituteId}`);
           }}
-          className = {classes.button}
+          className={classes.button}
         >
           Save Changes
         </Button>
       </Toolbar>
-      <Divider />
+      <Divider classes={{ root: classes.divider }} />
       <Container>
         <Grid container>
           <Grid item xs={12}>
@@ -251,10 +254,10 @@ function ElevatedProjectViewer({
             </Card>
           </Grid>
           <Grid item xs={12}>
-            <Divider classes={{ root: classes.divider }} />
+            <Divider classes={{ root: classes.subDivider }} />
           </Grid>
           <Grid item xs={12}>
-            <Card>
+            <Card className = {classes.card}>
               <CardHeader
                 title="Comments"
                 className={classes.cardHeader}

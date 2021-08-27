@@ -12,12 +12,12 @@ import React from "react";
 import { GSPs } from "../../../utils/constants";
 
 function GSPPicker({ index, form1Data, setForm1Data }) {
-  const useStyles = makeStyles(() => ({
+  const useStyles = makeStyles((theme) => ({
     card: {
       margin: "10px 0px 10px 0px",
     },
     cardHeader: {
-      backgroundColor: "#d3d3d3",
+      background: theme.palette.tertiary.light,
     },
   }));
 

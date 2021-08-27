@@ -32,6 +32,9 @@ function AccountPage() {
     pageTitle: {
       flexGrow: 11,
     },
+    divider: {
+      marginBottom: 15
+    }
   });
 
   const classes = useStyles();
@@ -47,7 +50,7 @@ function AccountPage() {
               User Account List
             </Typography>
           </Toolbar>
-          <Divider />
+          <Divider classes={{root: classes.divider}}/>
           <Container>
             <Grid container>
               <Grid item xs={12}>

@@ -14,6 +14,9 @@ function NotificationPage() {
     pageTitle: {
       flexGrow: 11,
     },
+    divider: {
+      marginBottom: 15
+    }
   });
 
   const classes = useStyles();
@@ -25,7 +28,7 @@ function NotificationPage() {
           {"Notifications"}
         </Typography>
       </Toolbar>
-      <Divider />
+      <Divider classes={{root: classes.divider}}/>
       <Container>
         <NotificationList />
       </Container>

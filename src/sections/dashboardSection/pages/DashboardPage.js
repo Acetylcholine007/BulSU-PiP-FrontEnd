@@ -42,9 +42,9 @@ function DashboardPage() {
     setOpen(true);
   };
 
-  const useStyles = makeStyles(() => ({
+  const useStyles = makeStyles((theme) => ({
     cardHeader: {
-      backgroundColor: "#D3D3D3",
+      backgroundColor: theme.palette.tertiary.main,
     },
   }));
 

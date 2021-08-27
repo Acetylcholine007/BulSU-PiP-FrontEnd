@@ -1,0 +1,829 @@
+{
+  "users": [
+    {
+      "institute": {
+        "institute": "College of Engineering",
+        "abbv": "COE"
+      },
+      "email": "root",
+      "password": "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4",
+      "uri": "COE.png",
+      "verified": true,
+      "type": 0,
+      "notificationList": [
+        {
+          "id": 1,
+          "author": "Server",
+          "header": "Notif 1",
+          "message": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas laboriosam obcaecati ullam, iste deleniti voluptatibus veniam provident animi enim error temporibus, est ad hic neque dolorum blanditiis ratione excepturi sequi.",
+          "datetime": "2021-08-15T06:01:45Z"
+        },
+        {
+          "id": 2,
+          "author": "Server",
+          "header": "Notif 2",
+          "message": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas laboriosam obcaecati ullam, iste deleniti voluptatibus veniam provident animi enim error temporibus, est ad hic neque dolorum blanditiis ratione excepturi sequi.",
+          "datetime": "2021-08-15T06:01:45Z"
+        }
+      ],
+      "projectList": [],
+      "id": 1
+    },
+    {
+      "institute": {
+        "institute": "Editor",
+        "abbv": "EDITOR"
+      },
+      "email": "root2",
+      "password": "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4",
+      "uri": "EDITOR.png",
+      "verified": true,
+      "type": 1,
+      "notificationList": [
+        {
+          "id": 1,
+          "author": "Server",
+          "header": "Notif 1",
+          "message": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas laboriosam obcaecati ullam, iste deleniti voluptatibus veniam provident animi enim error temporibus, est ad hic neque dolorum blanditiis ratione excepturi sequi.",
+          "datetime": "2021-08-15T06:01:45Z"
+        },
+        {
+          "id": 2,
+          "author": "Server",
+          "header": "Notif 2",
+          "message": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas laboriosam obcaecati ullam, iste deleniti voluptatibus veniam provident animi enim error temporibus, est ad hic neque dolorum blanditiis ratione excepturi sequi.",
+          "datetime": "2021-08-15T06:01:45Z"
+        }
+      ],
+      "projectList": [],
+      "id": 2
+    }
+  ],
+  "institutes": [
+    {
+      "id": "COE",
+      "priority": [
+        1,
+        4,
+        2,
+        3
+      ],
+      "projects": [
+        {
+          "title": "FloodSafe",
+          "GSP": [
+            null,
+            [
+              [
+                true,
+                true,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false
+              ],
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            [
+              [
+                true,
+                false,
+                false,
+                false
+              ],
+              null,
+              null,
+              [
+                true
+              ]
+            ],
+            null,
+            [
+              [
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                true
+              ],
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          ],
+          "obligationType": "Multi-Year Obligation",
+          "proponent": "Computer Engineering",
+          "investmentReq": [
+            {
+              "year": "2021",
+              "value": "50"
+            },
+            {
+              "year": "2022",
+              "value": "100"
+            },
+            {
+              "year": "2023",
+              "value": "200"
+            },
+            {
+              "year": "2024",
+              "value": "500"
+            },
+            {
+              "year": "2025",
+              "value": "1000"
+            }
+          ],
+          "implementationPeriod": {
+            "start": "2021-08-22T01:59:00.000Z",
+            "end": "2023-08-22T01:59:00.000Z"
+          },
+          "PAPLevel": 2,
+          "readiness": 1,
+          "status": 2,
+          "remarks": "",
+          "suc": "Bulacan State University",
+          "institute": {
+            "institute": "College of Engineering",
+            "abbv": "COE"
+          },
+          "address": "",
+          "projectLocation": "Bulacan Region",
+          "categorization": {
+            "new": true,
+            "expanded": false,
+            "infrastructure": true,
+            "nonInfrastructure": false
+          },
+          "description": "Flood sensing system for forecasting and monitoring",
+          "purpose": "To help local residents prepare for potential flood risks",
+          "beneficiary": "Local Residents",
+          "proposedProjectCost": [
+            {
+              "year": "2021",
+              "cost": "150"
+            },
+            {
+              "year": "2022",
+              "cost": "700"
+            },
+            {
+              "year": "2023",
+              "cost": "1000"
+            }
+          ],
+          "proponentName": {
+            "surname": "Sins",
+            "firstName": "Johnny",
+            "middleInitial": "X"
+          },
+          "designation": "Eng",
+          "contactInformation": {
+            "telNumber": "1234",
+            "email": "test@gmail.com",
+            "phoneNumber": "1234",
+            "others": "facebook"
+          },
+          "dateAccomplished": "2021-08-22T01:59:44.448Z",
+          "signature": "",
+          "fileList": [],
+          "commentList": [
+            {
+              "author": "Admin",
+              "header": "Comment",
+              "message": "Too bad",
+              "datetime": "2021-08-22T01:59:44.448Z"
+            },
+            {
+              "id": null,
+              "author": "PDO Officer",
+              "header": "Yow",
+              "message": "Very Good",
+              "datetime": "2021-08-24T00:20:51.690Z"
+            }
+          ],
+          "ownerId": 1,
+          "priority": 0,
+          "recievedBy": "Kim Jong Un",
+          "recieverDesignation": "Dictator",
+          "dateRecieved": "2021-08-24T00:20:40.916Z",
+          "pdoSignature": "",
+          "id": 1
+        },
+        {
+          "title": "Project MK-Ultra",
+          "GSP": [
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "obligationType": "",
+          "proponent": "Computer Engineering",
+          "investmentReq": [
+            {
+              "year": "2021",
+              "value": "10000"
+            },
+            {
+              "year": "2022",
+              "value": "10000"
+            },
+            {
+              "year": "2023",
+              "value": "10000"
+            },
+            {
+              "year": "2024",
+              "value": "10000"
+            },
+            {
+              "year": "2025",
+              "value": "100000"
+            }
+          ],
+          "implementationPeriod": {
+            "start": null,
+            "end": null
+          },
+          "PAPLevel": 1,
+          "readiness": 1,
+          "status": 0,
+          "remarks": "",
+          "suc": "Bulacan State University",
+          "institute": {
+            "institute": "College of Engineering",
+            "abbv": "COE"
+          },
+          "address": "Malolos, Bulacan",
+          "projectLocation": "",
+          "categorization": {
+            "new": true,
+            "expanded": false,
+            "infrastructure": true,
+            "nonInfrastructure": false
+          },
+          "description": "",
+          "purpose": "",
+          "beneficiary": "",
+          "proposedProjectCost": [
+            {
+              "year": "2021",
+              "cost": "0"
+            },
+            {
+              "year": "2021",
+              "cost": "0"
+            },
+            {
+              "year": "2021",
+              "cost": "0"
+            }
+          ],
+          "proponentName": {
+            "surname": "",
+            "firstName": "",
+            "middleInitial": ""
+          },
+          "designation": "",
+          "contactInformation": {
+            "telNumber": "",
+            "email": "",
+            "phoneNumber": "",
+            "others": ""
+          },
+          "dateAccomplished": "2021-08-24T05:50:10.931Z",
+          "signature": "",
+          "fileList": [],
+          "commentList": [
+            {
+              "id": null,
+              "author": "PDO Officer",
+              "header": "Comment",
+              "message": "Too Evil",
+              "datetime": "2021-08-25T03:09:18.681Z"
+            }
+          ],
+          "ownerId": 1,
+          "priority": 1,
+          "recievedBy": "John F Kennedy",
+          "recieverDesignation": "President",
+          "dateRecieved": "2021-08-25T03:09:26.346Z",
+          "pdoSignature": "",
+          "id": 2
+        },
+        {
+          "title": "Operation Neptune Spear",
+          "GSP": [
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "obligationType": "",
+          "proponent": "Electronics Engineering",
+          "investmentReq": [
+            {
+              "year": "2021",
+              "value": "20000"
+            },
+            {
+              "year": "2022",
+              "value": "20000"
+            },
+            {
+              "year": "2023",
+              "value": "20000"
+            },
+            {
+              "year": "2024",
+              "value": "20000"
+            },
+            {
+              "year": "2025",
+              "value": "20000"
+            }
+          ],
+          "implementationPeriod": {
+            "start": null,
+            "end": null
+          },
+          "PAPLevel": 1,
+          "readiness": 1,
+          "status": 1,
+          "remarks": "",
+          "suc": "Bulacan State University",
+          "institute": {
+            "institute": "College of Engineering",
+            "abbv": "COE"
+          },
+          "address": "Malolos, Bulacan",
+          "projectLocation": "",
+          "categorization": {
+            "new": true,
+            "expanded": false,
+            "infrastructure": true,
+            "nonInfrastructure": false
+          },
+          "description": "",
+          "purpose": "",
+          "beneficiary": "",
+          "proposedProjectCost": [
+            {
+              "year": "2021",
+              "cost": "0"
+            },
+            {
+              "year": "2021",
+              "cost": "0"
+            },
+            {
+              "year": "2021",
+              "cost": "0"
+            }
+          ],
+          "proponentName": {
+            "surname": "",
+            "firstName": "",
+            "middleInitial": ""
+          },
+          "designation": "",
+          "contactInformation": {
+            "telNumber": "",
+            "email": "",
+            "phoneNumber": "",
+            "others": ""
+          },
+          "dateAccomplished": "2021-08-24T05:51:26.046Z",
+          "signature": "",
+          "fileList": [],
+          "commentList": [],
+          "ownerId": 1,
+          "priority": 1,
+          "recievedBy": "",
+          "recieverDesignation": "",
+          "dateRecieved": "",
+          "pdoSignature": "",
+          "id": 3
+        },
+        {
+          "title": "Tree Planting",
+          "GSP": [
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "obligationType": "",
+          "proponent": "Industrial Engineering",
+          "investmentReq": [
+            {
+              "year": "2021",
+              "value": "500000"
+            },
+            {
+              "year": "2022",
+              "value": "500000"
+            },
+            {
+              "year": "2023",
+              "value": "500000"
+            },
+            {
+              "year": "2024",
+              "value": "500000"
+            },
+            {
+              "year": "2025",
+              "value": "500000"
+            }
+          ],
+          "implementationPeriod": {
+            "start": null,
+            "end": null
+          },
+          "PAPLevel": 1,
+          "readiness": 1,
+          "status": 3,
+          "remarks": "",
+          "suc": "Bulacan State University",
+          "institute": {
+            "institute": "College of Engineering",
+            "abbv": "COE"
+          },
+          "address": "Malolos, Bulacan",
+          "projectLocation": "",
+          "categorization": {
+            "new": true,
+            "expanded": false,
+            "infrastructure": true,
+            "nonInfrastructure": false
+          },
+          "description": "",
+          "purpose": "",
+          "beneficiary": "",
+          "proposedProjectCost": [
+            {
+              "year": "2021",
+              "cost": "5"
+            },
+            {
+              "year": "2021",
+              "cost": "5"
+            },
+            {
+              "year": "2021",
+              "cost": "5"
+            }
+          ],
+          "proponentName": {
+            "surname": "",
+            "firstName": "",
+            "middleInitial": ""
+          },
+          "designation": "",
+          "contactInformation": {
+            "telNumber": "",
+            "email": "",
+            "phoneNumber": "",
+            "others": ""
+          },
+          "dateAccomplished": "2021-08-24T06:01:15.889Z",
+          "signature": "",
+          "fileList": [],
+          "commentList": [
+            {
+              "id": null,
+              "author": "PDO Officer",
+              "header": "Comment",
+              "message": "Awesome",
+              "datetime": "2021-08-26T14:47:12.097Z"
+            }
+          ],
+          "ownerId": 1,
+          "priority": 1,
+          "recievedBy": "Theodor Seuss Geisel",
+          "recieverDesignation": "Author",
+          "dateRecieved": "2021-08-25T03:19:43.787Z",
+          "pdoSignature": "",
+          "id": 4
+        }
+      ]
+    }
+  ],
+  "editorDashboard": {
+    "projects": [
+      {
+        "institute": "S-BuC",
+        "tally": [
+          4,
+          5,
+          6,
+          3,
+          2
+        ]
+      },
+      {
+        "institute": "S-MeC",
+        "tally": [
+          4,
+          5,
+          6,
+          3,
+          2
+        ]
+      },
+      {
+        "institute": "S-SaC",
+        "tally": [
+          4,
+          5,
+          6,
+          3,
+          2
+        ]
+      },
+      {
+        "institute": "S-HaC",
+        "tally": [
+          4,
+          5,
+          6,
+          3,
+          2
+        ]
+      },
+      {
+        "institute": "CAFA",
+        "tally": [
+          4,
+          5,
+          6,
+          3,
+          2
+        ]
+      },
+      {
+        "institute": "CAL",
+        "tally": [
+          4,
+          5,
+          6,
+          3,
+          2
+        ]
+      },
+      {
+        "institute": "CBA",
+        "tally": [
+          4,
+          5,
+          6,
+          3,
+          2
+        ]
+      },
+      {
+        "institute": "CCJE",
+        "tally": [
+          4,
+          5,
+          6,
+          3,
+          2
+        ]
+      },
+      {
+        "institute": "CHTM",
+        "tally": [
+          4,
+          5,
+          6,
+          3,
+          2
+        ]
+      },
+      {
+        "institute": "CICT",
+        "tally": [
+          4,
+          5,
+          6,
+          3,
+          2
+        ]
+      },
+      {
+        "institute": "CIT",
+        "tally": [
+          4,
+          5,
+          6,
+          3,
+          2
+        ]
+      },
+      {
+        "institute": "CLAW",
+        "tally": [
+          4,
+          5,
+          6,
+          3,
+          2
+        ]
+      },
+      {
+        "institute": "CON",
+        "tally": [
+          4,
+          5,
+          6,
+          3,
+          2
+        ]
+      },
+      {
+        "institute": "COE",
+        "tally": [
+          4,
+          5,
+          6,
+          3,
+          2
+        ]
+      },
+      {
+        "institute": "COED",
+        "tally": [
+          4,
+          5,
+          6,
+          3,
+          2
+        ]
+      },
+      {
+        "institute": "CS",
+        "tally": [
+          4,
+          5,
+          6,
+          3,
+          2
+        ]
+      },
+      {
+        "institute": "CSER",
+        "tally": [
+          4,
+          5,
+          6,
+          3,
+          2
+        ]
+      },
+      {
+        "institute": "CSSP",
+        "tally": [
+          4,
+          5,
+          6,
+          3,
+          2
+        ]
+      },
+      {
+        "institute": "GRAD",
+        "tally": [
+          4,
+          5,
+          6,
+          3,
+          2
+        ]
+      }
+    ],
+    "investmentCosts": [
+      {
+        "label": "Dropped",
+        "value": 30000
+      },
+      {
+        "label": "Proposed",
+        "value": 30000
+      },
+      {
+        "label": "Revision",
+        "value": 30000
+      },
+      {
+        "label": "On-going",
+        "value": 30000
+      },
+      {
+        "label": "Completed",
+        "value": 30000
+      }
+    ],
+    "projectCost": [
+      {
+        "label": "Dropped",
+        "value": 30000
+      },
+      {
+        "label": "Proposed",
+        "value": 30000
+      },
+      {
+        "label": "Revision",
+        "value": 30000
+      },
+      {
+        "label": "On-going",
+        "value": 30000
+      },
+      {
+        "label": "Completed",
+        "value": 30000
+      }
+    ]
+  },
+  "userDashboard": {
+    "projects": {
+      "institute": "COE",
+      "tally": [
+        4,
+        5,
+        6,
+        3,
+        2
+      ]
+    },
+    "investmentCosts": [
+      {
+        "label": "Dropped",
+        "value": 3000
+      },
+      {
+        "label": "Proposed",
+        "value": 3000
+      },
+      {
+        "label": "Revision",
+        "value": 3000
+      },
+      {
+        "label": "On-going",
+        "value": 3000
+      },
+      {
+        "label": "Completed",
+        "value": 3000
+      }
+    ],
+    "projectCost": [
+      {
+        "label": "Dropped",
+        "value": 3000
+      },
+      {
+        "label": "Proposed",
+        "value": 3000
+      },
+      {
+        "label": "Revision",
+        "value": 3000
+      },
+      {
+        "label": "On-going",
+        "value": 3000
+      },
+      {
+        "label": "Completed",
+        "value": 3000
+      }
+    ]
+  }
+}

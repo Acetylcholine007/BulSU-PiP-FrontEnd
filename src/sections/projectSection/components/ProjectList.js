@@ -6,11 +6,11 @@ import {
   TextField,
   IconButton,
   makeStyles,
-  Paper,
   TableHead,
   TableRow,
   TableCell,
   TableBody,
+  Card,
 } from "@material-ui/core";
 import { FilterList, Search } from "@material-ui/icons";
 import React, { useEffect, useState } from "react";
@@ -25,7 +25,6 @@ function ProjectList({
   filter,
   setFilter,
   setOpen,
-  priority,
   projects,
   setProject,
   localPrio,
@@ -33,13 +32,25 @@ function ProjectList({
 }) {
   const { user } = useContext(AuthContext);
 
-  const useStyles = makeStyles(() => ({
+  const useStyles = makeStyles((theme) => ({
     noBorder: {
       border: "none",
     },
     searchBox: {
-      background: "#D3D3D3",
+      background: theme.palette.tertiary.light,
     },
+    toolbar: {
+      background: theme.palette.tertiary.main,
+    },
+    tableHead: {
+      background: theme.palette.tertiary.main,
+    },
+    card: {
+      marginBottom: 15
+    },
+    statusCell: {
+      borderRadius: '10px 0px 0px 10px'
+    }
   }));
 
   const handleClick = (project) => {
@@ -149,8 +160,8 @@ function ProjectList({
   };
 
   return (
-    <Paper>
-      <Toolbar>
+    <Card className = {classes.card}>
+      <Toolbar className={classes.toolbar}>
         <TextField
           placeholder="Search"
           fullWidth
@@ -176,7 +187,7 @@ function ProjectList({
       </Toolbar>
       <TableContainer>
         <Table>
-          <TableHead>
+          <TableHead className={classes.tableHead}>
             <TableRow>
               <TableCell>Priority</TableCell>
               <TableCell>Title</TableCell>
@@ -208,7 +219,6 @@ function ProjectList({
                             hover
                             style={{
                               ...provided.draggableProps.style,
-                              //backgroundColor: statuses[project.status].color,
                             }}
                             key={project.id}
                             onClick={() => handleClick(project)}
@@ -229,6 +239,7 @@ function ProjectList({
                               style={{
                                 backgroundColor: statuses[project.status].color,
                               }}
+                              className={classes.statusCell}
                             >
                               {statuses[project.status].label}
                             </TableCell>
@@ -244,7 +255,7 @@ function ProjectList({
           </DragDropContext>
         </Table>
       </TableContainer>
-    </Paper>
+    </Card>
   );
 }
 

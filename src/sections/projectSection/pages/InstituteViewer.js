@@ -46,6 +46,9 @@ function InstituteViewer({ institute, instituteId, priority }) {
     button: {
       marginLeft: 10,
     },
+    divider: {
+      marginBottom: 15
+    }
   }));
 
   const compareArray = (array1, array2) => {
@@ -117,7 +120,7 @@ function InstituteViewer({ institute, instituteId, priority }) {
           </Button>
         )}
       </Toolbar>
-      <Divider />
+      <Divider classes={{root: classes.divider}}/>
       <Container>
         <Grid container>
           <Grid item xs={12}>

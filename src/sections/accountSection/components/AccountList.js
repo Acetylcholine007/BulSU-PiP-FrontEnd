@@ -1,8 +1,8 @@
 import {
+  Card,
   IconButton,
   InputAdornment,
   makeStyles,
-  Paper,
   Table,
   TableBody,
   TableCell,
@@ -21,13 +21,19 @@ function AccountList({ users, filter, setFilter, setOpen, setDataChanged }) {
   const [user, setUser] = useState(null);
   const [openUserModal, setOpenUserModal] = useState(false);
   
-  const useStyles = makeStyles(() => ({
+  const useStyles = makeStyles((theme) => ({
     noBorder: {
       border: "none",
     },
     searchBox: {
-      background: "#D3D3D3"
-    }
+      background: theme.palette.tertiary.light,
+    },
+    toolbar: {
+      background: theme.palette.tertiary.main,
+    },
+    tableHead: {
+      background: theme.palette.tertiary.main,
+    },
   }));
 
   const filterLogic = (user) => {
@@ -81,8 +87,8 @@ function AccountList({ users, filter, setFilter, setOpen, setDataChanged }) {
   }
 
   return (
-    <Paper>
-      <Toolbar>
+    <Card>
+      <Toolbar className={classes.toolbar}>
         <TextField
           placeholder="Search"
           fullWidth
@@ -108,7 +114,7 @@ function AccountList({ users, filter, setFilter, setOpen, setDataChanged }) {
       </Toolbar>
       <TableContainer>
         <Table>
-          <TableHead>
+          <TableHead className={classes.tableHead}>
             <TableRow>
               <TableCell>User Institute</TableCell>
               <TableCell>Email Address</TableCell>
@@ -141,7 +147,7 @@ function AccountList({ users, filter, setFilter, setOpen, setDataChanged }) {
           handleDelete={handleDelete}
         />
       )}
-    </Paper>
+    </Card>
   );
 }
 

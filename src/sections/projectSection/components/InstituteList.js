@@ -11,6 +11,7 @@ import {
   TableCell,
   TextField,
   Toolbar,
+  Card,
 } from "@material-ui/core";
 import { Search } from "@material-ui/icons";
 import React, { useEffect, useState } from "react";
@@ -25,8 +26,14 @@ function InstituteList({ filter, setFilter }) {
       border: "none",
     },
     searchBox: {
-      background: "#D3D3D3"
-    }
+      background: theme.palette.tertiary.light,
+    },
+    toolbar: {
+      background: theme.palette.tertiary.main,
+    },
+    tableHead: {
+      background: theme.palette.tertiary.main,
+    },
   }));
 
   const classes = useStyles();
@@ -55,8 +62,8 @@ function InstituteList({ filter, setFilter }) {
   }, [filter]);
 
   return (
-    <Paper>
-      <Toolbar>
+    <Card>
+      <Toolbar className={classes.toolbar}>
         <TextField
           placeholder="Search"
           fullWidth
@@ -79,7 +86,7 @@ function InstituteList({ filter, setFilter }) {
       </Toolbar>
       <TableContainer>
         <Table>
-          <TableHead>
+          <TableHead className={classes.tableHead}>
             <TableRow>
               <TableCell>Logo</TableCell>
               <TableCell>Institute</TableCell>
@@ -105,7 +112,7 @@ function InstituteList({ filter, setFilter }) {
           </TableBody>
         </Table>
       </TableContainer>
-    </Paper>
+    </Card>
   );
 }
 

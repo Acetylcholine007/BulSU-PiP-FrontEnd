@@ -22,21 +22,25 @@ import { institutes } from "../../../utils/constants";
 import { form1Validator } from "../../../utils/form1Validator";
 import form2Validator from "../../../utils/form2Validator";
 
-function ProjectEditor({ isNew, project, institute, priority }) {
+function ProjectEditor({ isNew, project, institute }) {
   const [page, setPage] = useState(1);
   const history = useHistory();
   const { user } = useContext(AuthContext);
   const useStyles = makeStyles((theme) => ({
-    card: {
-      margin: 20,
-    },
     cardHeader: {
-      backgroundColor: "#d3d3d3",
+      backgroundColor: theme.palette.tertiary.main,
     },
     cardActions: {
-      backgroundColor: "#d3d3d3",
-      alignItems: "center",
+      backgroundColor: theme.palette.tertiary.main,
+      display: "flex",
+      justifyContent: "space-evenly",
     },
+    divider: {
+      marginBottom: 15
+    },
+    card: {
+      marginBottom: 15
+    }
   }));
 
   const classes = useStyles();
@@ -290,7 +294,7 @@ function ProjectEditor({ isNew, project, institute, priority }) {
           {isNew ? "New Project" : "Edit Project"}
         </Typography>
       </Toolbar>
-      <Divider />
+      <Divider className={classes.divider} />
       <Container>
         <Grid container>
           <Grid item xs={12}>
@@ -314,14 +318,16 @@ function ProjectEditor({ isNew, project, institute, priority }) {
                     variant="contained"
                     onClick={() => {
                       var checker = form1Validator(form1Data);
-                      console.log(checker)
+                      console.log(checker);
                       if (
                         !checker.title.error &&
                         !checker.obligationType.error &&
                         !checker.proponent.error &&
                         !checker.startYear.error &&
                         !checker.endYear.error &&
-                        (checker.investmentReq.map((item) => !item.error).reduce((a, b) => a && b))
+                        checker.investmentReq
+                          .map((item) => !item.error)
+                          .reduce((a, b) => a && b)
                       ) {
                         setPage(2);
                       }
@@ -335,7 +341,7 @@ function ProjectEditor({ isNew, project, institute, priority }) {
                     variant="contained"
                     onClick={() => {
                       var checker = form2Validator(form2Data);
-                      console.log(checker)
+                      console.log(checker);
                       if (
                         !checkerForm2.projectLocation.error &&
                         !checkerForm2.description.error &&
@@ -346,7 +352,9 @@ function ProjectEditor({ isNew, project, institute, priority }) {
                         !checkerForm2.telephoneNumber.error &&
                         !checkerForm2.email.error &&
                         !checkerForm2.phoneNumber.error &&
-                        (checkerForm2.proposedProjectCost.map((item) => !item.error).reduce((a, b) => a && b))
+                        checkerForm2.proposedProjectCost
+                          .map((item) => !item.error)
+                          .reduce((a, b) => a && b)
                       ) {
                         handleSubmit();
                       }

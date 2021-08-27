@@ -1,11 +1,12 @@
 import {
-  Paper,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
+  makeStyles,
+  Card
 } from "@material-ui/core";
 import { useContext, useState } from "react";
 import NotificationModal from "./NotificationModal";
@@ -24,11 +25,23 @@ function NotificationList() {
     setOpen(true);
   };
 
+  const useStyles = makeStyles((theme) => ({
+    tableHead: {
+      background: theme.palette.tertiary.main,
+      borderRadius: '5px 5px 0px 0px',
+    },
+    card: {
+      marginBottom: 15
+    }
+  }));
+
+  const classes = useStyles();
+
   return (
-    <Paper>
+    <Card className={classes.card}>
       <TableContainer>
         <Table>
-          <TableHead>
+          <TableHead className={classes.tableHead}>
             <TableRow>
               <TableCell>Header</TableCell>
               <TableCell>Author</TableCell>
@@ -59,7 +72,7 @@ function NotificationList() {
           notification={notification}
         />
       )}
-    </Paper>
+    </Card>
   );
 }
 
