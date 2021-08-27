@@ -20,7 +20,11 @@ function AdminInstituteViewer() {
       {error && <ErrorComponent message="Failed to fetch projects" />}
       {isPending && <LoadingComponent />}
       {institute && (
-        <InstituteViewer institute={institute} instituteId={instituteId} />
+        <InstituteViewer
+          institute={institute[0]}
+          instituteId={instituteId}
+          priority={institute[0].priority}
+        />
       )}
     </React.Fragment>
   );

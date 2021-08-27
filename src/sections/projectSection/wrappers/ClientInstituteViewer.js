@@ -22,8 +22,9 @@ function ClientInstituteViewer() {
       {isPending && <LoadingComponent />}
       {institute && (
         <InstituteViewer
-          institute={institute}
+          institute={institute[0]}
           instituteId={user.institute.abbv}
+          priority={institute[0].priority}
         />
       )}
     </React.Fragment>

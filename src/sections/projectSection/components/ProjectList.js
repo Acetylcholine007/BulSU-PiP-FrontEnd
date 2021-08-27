@@ -12,7 +12,7 @@ import {
   TableCell,
   TableBody,
 } from "@material-ui/core";
-import { FilterList, Reorder, Search } from "@material-ui/icons";
+import { FilterList, Search } from "@material-ui/icons";
 import React, { useEffect, useState } from "react";
 import { useContext } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
@@ -20,7 +20,17 @@ import { useHistory } from "react-router-dom";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { statuses } from "../../../utils/constants";
 
-function ProjectList({ institute, instituteId, filter, setFilter, setOpen }) {
+function ProjectList({
+  instituteId,
+  filter,
+  setFilter,
+  setOpen,
+  priority,
+  projects,
+  setProject,
+  localPrio,
+  setLocalPrio,
+}) {
   const { user } = useContext(AuthContext);
 
   const useStyles = makeStyles(() => ({
@@ -88,35 +98,54 @@ function ProjectList({ institute, instituteId, filter, setFilter, setOpen }) {
     );
   };
 
+  const sortingLogic = (projectId) =>
+    projects.find((project) => project.id == projectId);
+
   const classes = useStyles();
   const history = useHistory();
   const [filteredProject, setFilteredProject] = useState(
-    institute.projects.filter(filterLogic)
+    localPrio.map(sortingLogic).filter(filterLogic)
   );
   useEffect(() => {
-    setFilteredProject(institute.projects.filter(filterLogic));
-  }, [filter]);
+    setFilteredProject(localPrio.map(sortingLogic).filter(filterLogic));
+  }, [filter, projects]);
 
   const onDragEnd = (result) => {
-    const {destination, source, draggableId} = result;
+    const { destination, source, draggableId } = result;
 
-    if(!destination) {
+    if (!destination) {
       return;
     }
 
-    if(
+    if (
       destination.droppableId === source.droppableId &&
       destination.index === source.index
     ) {
       return;
     }
 
-    setFilteredProject(() => {
-      const newData = [...filteredProject];
-      const target = newData.splice(source.index, 1)[0];
-      newData.splice(destination.index, 0, target);
+    setProject(() => {
+      const newData = [...projects];
+      const target = newData.splice(
+        newData.indexOf(filteredProject[source.index]),
+        1
+      )[0];
+      if (source.index < destination.index) {
+        newData.splice(
+          newData.indexOf(filteredProject[destination.index]) + 1,
+          0,
+          target
+        );
+      } else {
+        newData.splice(
+          newData.indexOf(filteredProject[destination.index]),
+          0,
+          target
+        );
+      }
+      setLocalPrio(newData.map((project) => project.id))
       return newData;
-    })
+    });
   };
 
   return (
@@ -184,7 +213,9 @@ function ProjectList({ institute, instituteId, filter, setFilter, setOpen }) {
                             key={project.id}
                             onClick={() => handleClick(project)}
                           >
-                            <TableCell>{institute.priority.indexOf(project.id) + 1}</TableCell>
+                            <TableCell>
+                              {localPrio.indexOf(project.id) + 1}
+                            </TableCell>
                             <TableCell>{project.title}</TableCell>
                             <TableCell>{project.proponent}</TableCell>
                             <TableCell>{`Php ${project.investmentReq
