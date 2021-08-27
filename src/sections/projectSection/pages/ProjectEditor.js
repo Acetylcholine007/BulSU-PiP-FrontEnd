@@ -19,6 +19,8 @@ import EditorForm2 from "../components/EditorForm2";
 import { serverUrl } from "../../../utils/serverUrl";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { institutes } from "../../../utils/constants";
+import { form1Validator } from "../../../utils/form1Validator";
+import form2Validator from "../../../utils/form2Validator";
 
 function ProjectEditor({ isNew, project, institute, priority }) {
   const [page, setPage] = useState(1);
@@ -123,9 +125,99 @@ function ProjectEditor({ isNew, project, institute, priority }) {
         }
   );
 
+  const [checkerForm1, setCheckerForm1] = useState({
+    title: {
+      error: false,
+      messages: [],
+    },
+    obligationType: {
+      error: false,
+      messages: [],
+    },
+    proponent: {
+      error: false,
+      messages: [],
+    },
+    investmentReq: [
+      { error: false, messages: [] },
+      { error: false, messages: [] },
+      { error: false, messages: [] },
+      { error: false, messages: [] },
+      { error: false, messages: [] },
+    ],
+    startYear: {
+      error: false,
+      messages: [],
+    },
+    endYear: {
+      error: false,
+      messages: [],
+    },
+  });
+
+  const [checkerForm2, setCheckerForm2] = useState({
+    email: {
+      error: false,
+      messages: [],
+    },
+    projectLocation: {
+      error: false,
+      messages: [],
+    },
+    description: {
+      error: false,
+      messages: [],
+    },
+
+    purpose: {
+      error: false,
+      messages: [],
+    },
+
+    beneficiary: {
+      error: false,
+      messages: [],
+    },
+
+    proposedProjectCost: [
+      { error: false, messages: [] },
+      { error: false, messages: [] },
+      { error: false, messages: [] },
+    ],
+
+    surName: {
+      error: false,
+      messages: [],
+    },
+
+    firstName: {
+      error: false,
+      messages: [],
+    },
+
+    designation: {
+      error: false,
+      messages: [],
+    },
+
+    telephoneNumber: {
+      error: false,
+      messages: [],
+    },
+
+    phoneNumber: {
+      error: false,
+      messages: [],
+    },
+  });
+
   const handleSubmit = () => {
     if (isNew) {
-      var newId = Math.max.apply(null, institute.projects.map((project) => project.id)) + 1;
+      var newId =
+        Math.max.apply(
+          null,
+          institute.projects.map((project) => project.id)
+        ) + 1;
       var newInstitute = { ...institute };
       newInstitute.projects.push({
         ...form1Data,
@@ -152,7 +244,7 @@ function ProjectEditor({ isNew, project, institute, priority }) {
       });
     } else {
       var newInstitute = { ...institute };
-      var projectIndex = newInstitute.projects.indexOf(project)
+      var projectIndex = newInstitute.projects.indexOf(project);
       newInstitute.projects[projectIndex] = {
         ...newInstitute.projects[projectIndex],
         ...form1Data,
@@ -172,11 +264,19 @@ function ProjectEditor({ isNew, project, institute, priority }) {
     switch (page) {
       case 1:
         return (
-          <EditorForm1 form1Data={form1Data} setForm1Data={setForm1Data} />
+          <EditorForm1
+            form1Data={form1Data}
+            setForm1Data={setForm1Data}
+            checkerForm1={checkerForm1}
+          />
         );
       case 2:
         return (
-          <EditorForm2 form2Data={form2Data} setForm2Data={setForm2Data} />
+          <EditorForm2
+            form2Data={form2Data}
+            setForm2Data={setForm2Data}
+            checkerForm2={checkerForm2}
+          />
         );
       default:
         return null;
@@ -213,8 +313,19 @@ function ProjectEditor({ isNew, project, institute, priority }) {
                   <Button
                     variant="contained"
                     onClick={() => {
-                      //perform form1 validation
-                      setPage(2);
+                      var checker = form1Validator(form1Data);
+                      console.log(checker)
+                      if (
+                        !checker.title.error &&
+                        !checker.obligationType.error &&
+                        !checker.proponent.error &&
+                        !checker.startYear.error &&
+                        !checker.endYear.error &&
+                        (checker.investmentReq.map((item) => !item.error).reduce((a, b) => a && b))
+                      ) {
+                        setPage(2);
+                      }
+                      setCheckerForm1(checker);
                     }}
                   >
                     Next
@@ -223,8 +334,23 @@ function ProjectEditor({ isNew, project, institute, priority }) {
                   <Button
                     variant="contained"
                     onClick={() => {
-                      //perform form2 validation
-                      handleSubmit();
+                      var checker = form2Validator(form2Data);
+                      console.log(checker)
+                      if (
+                        !checkerForm2.projectLocation.error &&
+                        !checkerForm2.description.error &&
+                        !checkerForm2.purpose.error &&
+                        !checkerForm2.beneficiary.error &&
+                        !checkerForm2.surName.error &&
+                        !checkerForm2.firstName.error &&
+                        !checkerForm2.telephoneNumber.error &&
+                        !checkerForm2.email.error &&
+                        !checkerForm2.phoneNumber.error &&
+                        (checkerForm2.proposedProjectCost.map((item) => !item.error).reduce((a, b) => a && b))
+                      ) {
+                        handleSubmit();
+                      }
+                      setCheckerForm2(checker);
                     }}
                   >
                     Submit

@@ -1,90 +1,80 @@
-//form1 valditation (page1)//
-const form1validator = (Title, Value, Obligation, Proponent,StartYear, EndYear, PAP, Readiness  ) => {
-    var result = {
-          Title: {
-            error:false,
-          messages:[]
-        },
-        value: {
-            error:false,
-          messages:[]
-        },
-         Obligation: {
-            error:false,
-          messages:[]
-        },
-         Proponent: {
-            error:false,
-          messages:[]
-        },
-         StartYear: {
-            error:false,
-          messages:[]
-        },
-         EndYear: {
-            error:false,
-          messages:[]
-        },
-         PAP: {
-            error:false,
-          messages:[]
-        },
-         Readiness: {
-            error:false,
-          messages:[]
-        },
-      }
-    
-     if(!Title.length > 20){
-     result.Title.error = true;
-     result.Title.message.push("too long")
-     } 
-      if(!Title.length < 5){
-     result.Title.error = true;
-     result.Title.message.push("too short")
-     } 
-     if(!Title === ''){
-     result.Title.error = true;
-     result.Title.message.push("please put your Title")
-     }
-     if(!Value.includes('numbers')){
-     result.Value.error = true;
-     result.Value.message.push("it must be a number")
-     }
-     if(!Value.includes('-')){
-     result.Value.error = false
-     result.Value.message.push("- is invalid")
-     }
-     if(!Value.length >= 9 ){
-     result.Value.error = true;
-     result.Value.message.push("too much value")
-     }
-     if(!Value === ''){
-     result.Value.error = true;
-     result.Value.message.push("please put your amount")
-     }
-      if(!Obligation ===''){
-     result.Obligation.error = true
-     result.Obligation.message.push("please put your Obligation type")
-     }
-     if(!Proponent ===''){
-     result.Proponent.error = true
-     result.Proponent.message.push("Proponent section is required")
-     }
-     if(!StartYear ===''){
-     result.StartYear.error = true
-     result.StartYear.message.push("implementation of year is required")
-     }
-     if(!EndYear ===''){
-     result.EndYear.error = true
-     result.EndYear.message.push("implementation of year is required")
-     }
-     if(!PAP ===''){
-     result.PAP.error = true
-     result.PAP.message.push("please indicate your PAP level")
-     }
-     if(!Readiness ===''){
-     result.Readiness.error = true
-     result.Readiness.message.push("Please indicate your Readiness level")
-     }
-     } 
+export const form1Validator = ({
+  title,
+  obligationType,
+  proponent,
+  investmentReq,
+  implementationPeriod: { start: startYear, end: endYear },
+}) => {
+  var result = {
+    title: {
+      error: false,
+      messages: [],
+    },
+    obligationType: {
+      error: false,
+      messages: [],
+    },
+    proponent: {
+      error: false,
+      messages: [],
+    },
+    investmentReq: [
+      { error: false, messages: [] },
+      { error: false, messages: [] },
+      { error: false, messages: [] },
+      { error: false, messages: [] },
+      { error: false, messages: [] },
+    ],
+    startYear: {
+      error: false,
+      messages: [],
+    },
+    endYear: {
+      error: false,
+      messages: [],
+    },
+  };
+
+  if (title.length > 20) {
+    result.title.error = true;
+    result.title.messages.push("too long");
+  }
+  if (title.length < 5) {
+    result.title.error = true;
+    result.title.messages.push("too short");
+  }
+  if (title === "") {
+    result.title.error = true;
+    result.title.messages.push("please put your Title");
+  }
+  if (obligationType === "") {
+    result.obligationType.error = true;
+    result.obligationType.messages.push("please put your Obligation type");
+  }
+  if (proponent === "") {
+    result.proponent.error = true;
+    result.proponent.messages.push("Proponent section is required");
+  }
+  if (startYear === null) {
+    result.startYear.error = true;
+    result.startYear.messages.push("implementation of year is required");
+  }
+  if (endYear === null) {
+    result.endYear.error = true;
+    result.endYear.messages.push("implementation of year is required");
+  }
+
+  //Weird looking function input syntax is javascript destructuring, nakalimutan
+  //kong iexplain kanina kasi lately ko lang rin narealize hahaha, eexplain ko sa
+  //next meeting pero di bale, ala namang malaking nabago sa code logic nyo, 
+  //ganun parin sya as is, sinunod ko lang sa naming convention saka
+  //inalis ko yung negation sa if-expressions kasi nagfefailed yung validator 
+  //na magscreen kapag may naviolate na input.
+
+  //Inalis ko na rin pala yung validator for PAP at readiness, ngayon
+  //ko lang rin narealize na di naman sya matatampered kasi menu na sya
+
+  //TODO: Insert investmentReq validation code here
+
+  return result;
+};

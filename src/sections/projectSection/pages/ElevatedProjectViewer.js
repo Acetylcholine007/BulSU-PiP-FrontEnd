@@ -14,6 +14,7 @@ import {
   List,
   ListItem,
   ListItemText,
+  ButtonGroup,
 } from "@material-ui/core";
 import {
   AddCircleOutline,
@@ -57,9 +58,18 @@ const useStyles = makeStyles({
   divider: {
     margin: "20px 0px 20px 0px",
   },
+  button: {
+    marginLeft: 10
+  }
 });
 
-function ElevatedProjectViewer({ instituteId, project, institute, projectId, priority }) {
+function ElevatedProjectViewer({
+  instituteId,
+  project,
+  institute,
+  projectId,
+  priority,
+}) {
   const classes = useStyles();
   const history = useHistory();
 
@@ -159,33 +169,35 @@ function ElevatedProjectViewer({ instituteId, project, institute, projectId, pri
         <Typography variant="h4" className={classes.pageTitle}>
           {"Project Viewer"}
         </Typography>
-        <Button
-          variant="contained"
-          startIcon={<CheckCircle />}
-          onClick={() => {
-            setStatus(3);
-          }}
-        >
-          Approve
-        </Button>
-        <Button
-          variant="contained"
-          startIcon={<Edit />}
-          onClick={() => {
-            setStatus(2);
-          }}
-        >
-          Revise
-        </Button>
-        <Button
-          variant="contained"
-          startIcon={<Cancel />}
-          onClick={() => {
-            setStatus(0);
-          }}
-        >
-          Reject
-        </Button>
+        <ButtonGroup className = {classes.button}>
+          <Button
+            variant={status == 3 ? "contained" : "outlined"}
+            startIcon={<CheckCircle />}
+            onClick={() => {
+              setStatus(3);
+            }}
+          >
+            Approve
+          </Button>
+          <Button
+            variant={status == 2 ? "contained" : "outlined"}
+            startIcon={<Edit />}
+            onClick={() => {
+              setStatus(2);
+            }}
+          >
+            Revise
+          </Button>
+          <Button
+            variant={status == 0 ? "contained" : "outlined"}
+            startIcon={<Cancel />}
+            onClick={() => {
+              setStatus(0);
+            }}
+          >
+            Reject
+          </Button>
+        </ButtonGroup>
         <Button
           variant="contained"
           startIcon={<Save />}
@@ -193,6 +205,7 @@ function ElevatedProjectViewer({ instituteId, project, institute, projectId, pri
             handleSubmit();
             history.push(`/institutes/${instituteId}`);
           }}
+          className = {classes.button}
         >
           Save Changes
         </Button>

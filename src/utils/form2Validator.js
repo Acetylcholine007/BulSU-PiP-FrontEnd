@@ -1,15 +1,13 @@
-function form2Validator(
-  email,
+function form2Validator({
   projectLocation,
   description,
   purpose,
   beneficiary,
-  surName,
-  firstName,
+  proposedProjectCost,
+  proponentName: { surname: surName, firstName },
   designation,
-  telephoneNumber,
-  phoneNumber
-) {
+  contactInformation: { telNumber: telephoneNumber, email, phoneNumber },
+}) {
   const result = {
     email: {
       error: false,
@@ -33,6 +31,12 @@ function form2Validator(
       error: false,
       messages: [],
     },
+
+    proposedProjectCost: [
+      { error: false, messages: [] },
+      { error: false, messages: [] },
+      { error: false, messages: [] },
+    ],
 
     surName: {
       error: false,
@@ -126,31 +130,14 @@ function form2Validator(
     }
   }
 
+  //Weird looking function input syntax is javascript destructuring, nakalimutan
+  //kong iexplain kanina kasi lately ko lang rin narealize hahaha, eexplain ko sa
+  //next meeting pero di bale, ala namang nabago sa code logic nyo, ganun parin sya
+  //as is pati kung pano nyo tawagin yung variable
+
+  //TODO: Insert proposedProjectCost validation here
+
   return result;
 }
 
-var email = "123@123";
-var projectLocation = "asdf";
-var description = "COE";
-var purpose = "asdf";
-var beneficiary = "";
-var surName = "";
-var firstName = "";
-var designation = "";
-var telephoneNumber = "";
-var phoneNumber = "1234";
-
-console.log(
-  form2Validator(
-    email,
-    projectLocation,
-    description,
-    purpose,
-    beneficiary,
-    surName,
-    firstName,
-    designation,
-    telephoneNumber,
-    phoneNumber
-  )
-);
+export default form2Validator;

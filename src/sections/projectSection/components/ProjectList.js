@@ -143,7 +143,7 @@ function ProjectList({
           target
         );
       }
-      setLocalPrio(newData.map((project) => project.id))
+      setLocalPrio(newData.map((project) => project.id));
       return newData;
     });
   };
@@ -183,7 +183,7 @@ function ProjectList({
               <TableCell>Proponent</TableCell>
               <TableCell>Total Investment Requirement</TableCell>
               <TableCell>Total Project Cost</TableCell>
-              <TableCell>Status</TableCell>
+              <TableCell align='center'>Status</TableCell>
             </TableRow>
           </TableHead>
           <DragDropContext onDragEnd={onDragEnd}>
@@ -208,7 +208,7 @@ function ProjectList({
                             hover
                             style={{
                               ...provided.draggableProps.style,
-                              backgroundColor: statuses[project.status].color,
+                              //backgroundColor: statuses[project.status].color,
                             }}
                             key={project.id}
                             onClick={() => handleClick(project)}
@@ -224,7 +224,12 @@ function ProjectList({
                             <TableCell>{`Php ${project.proposedProjectCost
                               .map((item) => parseFloat(item.cost))
                               .reduce((a, b) => a + b, 0)}`}</TableCell>
-                            <TableCell>
+                            <TableCell
+                              align='center'
+                              style={{
+                                backgroundColor: statuses[project.status].color,
+                              }}
+                            >
                               {statuses[project.status].label}
                             </TableCell>
                           </TableRow>
