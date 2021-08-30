@@ -3,40 +3,67 @@ import {
   Card,
   CardContent,
   Container,
-  MenuItem,
+  Divider,
   Grid,
   makeStyles,
   TextField,
   Typography,
-  Divider,
+  MenuItem
 } from "@material-ui/core";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useHistory } from "react-router";
 import sjcl from "sjcl";
-import React from "react";
+
+import { serverUrl } from "../../../utils/serverUrl";
 
 import { institutes } from "../../../utils/constants";
-import { serverUrl } from "../../../utils/serverUrl";
 import Avatar from "@material-ui/core/Avatar";
 
-const useStyles = makeStyles(() => ({
+
+import PDO from "./pdo.png"
+
+const useStyles = makeStyles((theme) => ({
+  motherPane: {
+    padding: 0,
+    margin: 0,
+  },
   container: {
-    marginTop: 50,
+    height: "100vh",
+    maxWidth: "100vw",
+    width: "100vw",
+    padding: 0,
+    margin: 0,
+    //background: "linear-gradient(264deg, rgba(255,115,0,1) 26%, rgba(253,255,0,1) 100%)",
+    background: "url('https://iadmissions.bulsu.edu.ph/assets/images/parallax-bg2.jpg')",
+    backgroundSize: 'cover',
+    backgroundPosition: 'center'
+  },
+  background: {
+  },
+  formPane: {
+    padding: "10%",
+    paddingTop: "-3rem",
+    background: "rgba(255,255,255,0.95)",
+    height: "100%",
+    textAlign: "center",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
   },
   field: {
-    marginTop: 20,
-    marginBottom: 20,
-    display: "block",
+    marginBottom: "0.5rem",
   },
   button: {
-    marginTop: 20,
-    marginBottom: 20,
-    display: "block",
+    marginTop: "0.5rem",
+    marginBottom: "0.7rem"
   },
   avtr: {
-    width: 180,
-    height: 180,
-    marginTop: 50,
+    height: 50,
+    margin: "0 auto",
+  },
+  avtr2: {
+    height: 50,
+    margin: "0 auto",
   },
 }));
 
@@ -62,44 +89,62 @@ function SignUpPage() {
     }
   };
 
+
   return (
-    <Container className={classes.container}>
-      <Grid container>
-        <Grid item xs={12} md={3}>
-          <Avatar className={classes.avtr} src="bsuLogo.png"></Avatar>
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <Typography variant="h2">Planning and Development Office</Typography>
-          <Typography variant="h5">BULACAN STATE UNIVERSITY</Typography>
-        </Grid>
-        <Grid item xs={12} md={3}>
-          <Avatar className={classes.avtr} src="bsuLogo.png"></Avatar>
-        </Grid>
-        <Grid item xs={12} md={8} offset={1} key="form">
-          <Card>
+    <Container className={classes.motherPane}>
+      <Grid className={classes.container} container>
+        <Grid item xs={12} sm={6}>
+          <Card className={classes.formPane}>
             <CardContent>
-              <form
-                noValidate
-                autoComplete="off"
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  const myBitArray = sjcl.hash.sha256.hash(password);
-                  const myHash = sjcl.codec.hex.fromBits(myBitArray);
-                  handleSignUp(e, {
-                    institute: {institute: institute.institute, abbv: institute.abbv},
-                    email,
-                    password: myHash,
-                    uri: `${institute.abbv}.png`,
-                    verified: true,
-                    type: institute.type,
-                    notificationList: [],
-                    projectList: [],
-                  });
-                }}
-              >
-                <Grid container>
-                  <Grid item xs={12} key="institute">
-                    <TextField
+              <div className={`animate__animated animate__fadeInDown`}>
+                <p>
+                  <img className={classes.avtr} src="favicon.ico" alt="BulSU Icon"></img>
+                  <img className={classes.avtr2} src={PDO} alt="PDO Icon"></img>
+                </p>
+                <p>BulSU PIPS - ver 0.1</p>
+                <Typography variant="h4" component="h1">Account Request Form</Typography>
+                <br/>
+                <form noValidate
+                  autoComplete="off"
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    const myBitArray = sjcl.hash.sha256.hash(password);
+                    const myHash = sjcl.codec.hex.fromBits(myBitArray);
+                    handleSignUp(e, {
+                      institute: {institute: institute.institute, abbv: institute.abbv},
+                      email,
+                      password: myHash,
+                      uri: `${institute.abbv}.png`,
+                      verified: true,
+                      type: institute.type,
+                      notificationList: [],
+                      projectList: [],
+                    });
+                  }}>
+                  <TextField
+                    onChange={(e) => setEmail(e.target.value)}
+                    className={classes.field}
+                    label="Email"
+                    variant="outlined"
+                    color="primary"
+                    fullWidth
+                    error = {false}
+                    helperText = {false ? "Error Email" : null}
+                    value={email}
+                  />
+                  <TextField
+                    onChange={(e) => setPassword(e.target.value)}
+                    className={classes.field}
+                    label="Password"
+                    variant="outlined"
+                    color="primary"
+                    fullWidth
+                    error={false}
+                    value={password}
+                    type="password"
+                    helperText={false ? "Error Password" : null}
+                  />
+                  <TextField
                       className={classes.field}
                       id="institute"
                       color="primary"
@@ -117,71 +162,31 @@ function SignUpPage() {
                       ))}
                       error = {false}
                       helperText = {false ? "Error Email" : null}
-                    </TextField>
-                  </Grid>
-                  <Grid item xs={12} key="email">
-                    <TextField
-                      onChange={(e) => setEmail(e.target.value)}
-                      className={classes.field}
-                      label="Email Address"
-                      variant="outlined"
-                      color="primary"
-                      fullWidth
-                      error={false}
-                      helperText={false ? "Error Email" : null}
-                      value={email}
-                    />
-                  </Grid>
-                  <Grid item xs={12} key="password">
-                    <TextField
-                      onChange={(e) => setPassword(e.target.value)}
-                      className={classes.field}
-                      label="Password"
-                      variant="outlined"
-                      color="primary"
-                      fullWidth
-                      error={false}
-                      helperText={false ? "Error Email" : null}
-                      value={password}
-                      type="password"
-                    />
-                  </Grid>
-                  <Grid item xs={12} key="confirm password">
-                    <TextField
-                      onChange={(e) => setConfirmPassword(e.target.value)}
-                      className={classes.field}
-                      label="Confirm Password"
-                      variant="outlined"
-                      color="primary"
-                      fullWidth
-                      error={false}
-                      helperText={false ? "Error Password" : null}
-                      value={confirmpassword}
-                      type="password"
-                    />
-                  </Grid>
-                  <Grid item xs={12} key="submit">
-                    <Button
-                      type="submit"
-                      color="primary"
-                      variant="contained"
-                      className={classes.button}
-                      fullWidth
-                    >
-                      SIGN UP
-                    </Button>
-                  </Grid>
-                </Grid>
-              </form>
+                  </TextField>
+                  <Button
+                    type="submit"
+                    color="secondary"
+                    variant="contained"
+                    className={classes.button}
+                    size="medium"
+                  >
+                    SIGN UP
+                  </Button>
+                  <Divider />
+                  <Button
+                    color="primary"
+                    onClick={() => {
+                      history.push("/");
+                    }}
+                    size="medium"
+                  >
+                    Already have an Account? Login Here!
+                  </Button>
+                </form>
+              </div>
+              
             </CardContent>
           </Card>
-        </Grid>
-        <Grid item xs={12} md={4}>
-          <Typography variant="h2">BulSU PIPs</Typography>
-          <Divider />
-          <Typography variant="h3">
-            BulSU-PDO Investment Program System
-          </Typography>
         </Grid>
       </Grid>
     </Container>
