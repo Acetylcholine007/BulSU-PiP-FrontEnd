@@ -3,6 +3,7 @@ import { createTheme, ThemeProvider } from "@material-ui/core";
 import { useState } from "react";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 
+import "animate.css"
 import "./App.css";
 import MainWrapper from "./mainWrapper/pages/MainWrapper";
 import LogInPage from "./sections/authenticationSection/pages/LogInPage";

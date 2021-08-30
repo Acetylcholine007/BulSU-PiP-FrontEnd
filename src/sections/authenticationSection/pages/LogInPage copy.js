@@ -8,8 +8,6 @@ import {
   makeStyles,
   TextField,
   Typography,
-  Input,
-  CardHeader
 } from "@material-ui/core";
 import { useState, useContext } from "react";
 import { useHistory } from "react-router";
@@ -23,52 +21,33 @@ import Toolbar from "@material-ui/core/Toolbar";
 import { ProjectContext } from "../../../contexts/ProjectContext";
 import LoginDialog from "../components/LoginDialog";
 
-import PDO from "./pdo.png"
-
 const useStyles = makeStyles((theme) => ({
-  motherPane: {
-    padding: 0,
-    margin: 0,
-  },
   container: {
-    height: "100vh",
-    maxWidth: "100vw",
-    width: "100vw",
-    padding: 0,
-    margin: 0,
-    //background: "linear-gradient(264deg, rgba(255,115,0,1) 26%, rgba(253,255,0,1) 100%)",
-    background: "url('https://iadmissions.bulsu.edu.ph/assets/images/parallax-bg2.jpg')",
-    backgroundSize: 'cover',
-    backgroundPosition: 'center'
-  },
-  background: {
-  },
-  formPane: {
-    padding: "10%",
-    paddingTop: "-3rem",
-    background: "rgba(255,255,255,0.95)",
-    height: "100%",
-    textAlign: "center",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
+    marginTop: 250,
   },
   field: {
-    marginBottom: "0.5rem",
+    marginTop: 20,
+    marginBottom: 20,
+    display: "block",
   },
   button: {
-    marginTop: "0.5rem",
-  },
-  button2: {
-    marginBottom: "0.7rem"
+    marginTop: 20,
+    marginBottom: 20,
+    display: "block",
   },
   avtr: {
-    height: 50,
-    margin: "0 auto",
+    width: 180,
+    height: 180,
+    marginTop: theme.spacing(5),
+    marginRight: theme.spacing(10),
   },
-  avtr2: {
-    height: 50,
-    margin: "0 auto",
+
+  toolbar: theme.mixins.toolbar,
+  date: {
+    flexGrow: 1,
+  },
+  title: {
+    marginTop: 40,
   },
 }));
 
@@ -86,8 +65,6 @@ function LogInPage() {
 
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
-
-  console.log(PDO)
 
   const login = (email, password) => {
     const abortCont = new AbortController();
@@ -171,72 +148,95 @@ function LogInPage() {
   };
 
   return (
-    <Container className={classes.motherPane}>
-      <Grid className={classes.container} container>
-        <Grid item xs={12} sm={6}>
-          <Card className={classes.formPane}>
+    <Container className={classes.container}>
+      <AppBar className={classes.appbar} elevation={0} color="transparent">
+        <Toolbar>
+          <Avatar className={classes.avtr} src="favicon.ico"></Avatar>
+          <Typography className={classes.date} variant="h2" align="left">
+            Planning and Development Office
+          </Typography>
+          <Typography></Typography>
+          <Avatar className={classes.avtr} src="favicon.ico"></Avatar>
+        </Toolbar>
+      </AppBar>
+      <Grid container>
+        <Grid item xs={12} md={5}>
+          <Typography variant="h2" align="left"></Typography>
+          <Typography variant="h5" align="left"></Typography>
+        </Grid>
+        <Grid item xs={12} md={5}></Grid>
+        <Grid item xs={12} md={5} offset={1} key="form">
+          <Card>
             <CardContent>
-              <div className={`animate__animated animate__fadeInDown`}>
-                <p>
-                  <img className={classes.avtr} src="favicon.ico" alt="BulSU Icon"></img>
-                  <img className={classes.avtr2} src={PDO} alt="PDO Icon"></img>
-                </p>
-                <p>BulSU PIPS - ver 0.1</p>
-                <Typography variant="h4" component="h1">Sign In</Typography>
-                <br/>
-                <form noValidate autoComplete="off" onSubmit={handleLogin}>
-                  <TextField
-                    onChange={(e) => setEmail(e.target.value)}
-                    className={classes.field}
-                    label="Email"
-                    variant="outlined"
-                    color="primary"
-                    fullWidth
-                    error={emailError}
-                    value={email}
-                    helperText={passwordError ? "Error Email" : null}
-                  />
-                  <TextField
-                    onChange={(e) => setPassword(e.target.value)}
-                    className={classes.field}
-                    label="Password"
-                    variant="outlined"
-                    color="primary"
-                    fullWidth
-                    error={passwordError}
-                    value={password}
-                    type="password"
-                    helperText={passwordError ? "Error Password" : null}
-                  />
-                  <Button
-                    type="submit"
-                    color="secondary"
-                    variant="contained"
-                    className={classes.button}
-                    size="medium"
-                  >
-                    LOGIN
-                  </Button>
-                  <br/>
-                  <Button size="small"
-                    className={classes.button2}>forgot password?</Button>
-                  <Divider />
-                  <Button
-                    color="primary"
-                    onClick={() => {
-                      history.push("/signup");
-                    }}
-                    size="medium"
-                  >
-                    Request for an Account Here!
-                  </Button>
-                </form>
-              </div>
-              
+              <form noValidate autoComplete="off" onSubmit={handleLogin}>
+                <TextField
+                  onChange={(e) => setEmail(e.target.value)}
+                  className={classes.field}
+                  label="Email"
+                  variant="outlined"
+                  color="primary"
+                  fullWidth
+                  error={emailError}
+                  value={email}
+                  helperText={passwordError ? "Error Email" : null}
+                />
+                <TextField
+                  onChange={(e) => setPassword(e.target.value)}
+                  className={classes.field}
+                  label="Password"
+                  variant="outlined"
+                  color="primary"
+                  fullWidth
+                  error={passwordError}
+                  value={password}
+                  type="password"
+                  helperText={passwordError ? "Error Password" : null}
+                />
+                <Button
+                  type="submit"
+                  color="secondary"
+                  variant="contained"
+                  className={classes.button}
+                  size="medium"
+                >
+                  LOGIN
+                </Button>
+                <Divider />
+                <Button
+                  color="secondary"
+                  variant="contained"
+                  onClick={() => {
+                    history.push("/signup");
+                  }}
+                  className={classes.button}
+                  size="medium"
+                >
+                  Sign-Up
+                </Button>
+                <Button size="small">forgot password?</Button>
+              </form>
             </CardContent>
           </Card>
         </Grid>
+        <Grid item xs={12} md={5} key="description">
+          <Typography className={classes.title} variant="h2" align="right">
+            BulSU PiPs
+          </Typography>
+          <Typography variant="h4" align="right">
+            BulSU-PDO
+          </Typography>
+          <Typography variant="h4" align="right">
+            Investment
+          </Typography>
+          <Typography variant="h4" align="right">
+            Program
+          </Typography>
+          <Typography variant="h4" align="right">
+            System
+          </Typography>
+        </Grid>
       </Grid>
+      <LoginDialog open={open} setOpen={setOpen} message={message} />
     </Container>
   );
 }
