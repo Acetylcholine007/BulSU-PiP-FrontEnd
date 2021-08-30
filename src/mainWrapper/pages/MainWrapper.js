@@ -86,7 +86,7 @@ function MainWrapper({ children }) {
       />
       <div className={clsx(classes.content, { [classes.contentShift]: openDrawer })}>
         <div className={classes.drawerHeader} />
-        <Box height="88vh" display="flex" flexDirection="column">
+        <Box display="flex" flexDirection="column">
         {children}
         </Box>
       </div>

@@ -1,8 +1,7 @@
 import {
-    Avatar,
+  Avatar,
   InputAdornment,
   makeStyles,
-  Paper,
   Table,
   TableBody,
   TableContainer,
@@ -20,7 +19,9 @@ import { useHistory } from "react-router-dom";
 import { institutes } from "../../../utils/constants";
 import { serverUrl } from "../../../utils/serverUrl";
 
-function InstituteList({ filter, setFilter }) {
+function InstituteList({ filter, setFilter, dabaseInstitutes }) {
+  const newInstitutes = dabaseInstitutes.map((item, index) => ({...item, institute: institutes[index].institute}))
+
   const useStyles = makeStyles((theme) => ({
     noBorder: {
       border: "none",
@@ -52,12 +53,12 @@ function InstituteList({ filter, setFilter }) {
   };
 
   const [filteredInstitute, setFilteredInstitute] = useState(
-    institutes.slice(0, institutes.length - 2).filter(filterLogic)
+    newInstitutes.slice(0, newInstitutes.length - 2).filter(filterLogic)
   );
 
   useEffect(() => {
     setFilteredInstitute(
-      institutes.slice(0, institutes.length - 2).filter(filterLogic)
+      newInstitutes.slice(0, newInstitutes.length - 2).filter(filterLogic)
     );
   }, [filter]);
 
@@ -76,12 +77,12 @@ function InstituteList({ filter, setFilter }) {
               </InputAdornment>
             ),
             classes: { notchedOutline: classes.noBorder },
-            className: classes.searchBox
+            className: classes.searchBox,
           }}
           variant="outlined"
           color="secondary"
-          size='small'
-          margin='dense'
+          size="small"
+          margin="dense"
         />
       </Toolbar>
       <TableContainer>
@@ -98,15 +99,15 @@ function InstituteList({ filter, setFilter }) {
               <TableRow
                 hover
                 onClick={(e) => {
-                  history.push(`/institutes/${institute.abbv}`);
+                  history.push(`/institutes/${institute.id}`);
                 }}
                 key={institute.abbv}
               >
                 <TableCell>
-                  <Avatar src={`${serverUrl}logos/${institute.abbv}.png`} />
+                  <Avatar src={`${serverUrl}logos/${institute.id}.png`} />
                 </TableCell>
                 <TableCell>{institute.institute}</TableCell>
-                <TableCell align="center">{0}</TableCell>
+                <TableCell align="center">{institute.projects.length}</TableCell>
               </TableRow>
             ))}
           </TableBody>

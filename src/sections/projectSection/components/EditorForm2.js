@@ -1,4 +1,5 @@
 import {
+  Button,
   Card,
   Divider,
   FormControl,
@@ -11,7 +12,9 @@ import {
   RadioGroup,
   TextField,
   Typography,
+  Paper,
 } from "@material-ui/core";
+import { AddCircleOutline } from "@material-ui/icons";
 import { DatePicker } from "@material-ui/pickers";
 
 function EditorForm2({ form2Data, setForm2Data }) {
@@ -25,6 +28,9 @@ function EditorForm2({ form2Data, setForm2Data }) {
       marginTop: 20,
       marginBottom: 20,
       display: "block",
+    },
+    paper: {
+      padding: 50,
     },
   }));
 
@@ -56,22 +62,20 @@ function EditorForm2({ form2Data, setForm2Data }) {
                 aria-label="new"
                 name="cat1"
                 value={form2Data.categorization.new ? "new" : "expanded"}
-                onChange={(e) => setForm2Data(() => {
-                  if(e.target.value === "new") {
-                    form2Data.categorization.new = true;
-                    form2Data.categorization.expanded = false
-                  } else {
-                    form2Data.categorization.new = false;
-                    form2Data.categorization.expanded = true
-                  }
-                  return {...form2Data}
-                })}
+                onChange={(e) =>
+                  setForm2Data(() => {
+                    if (e.target.value === "new") {
+                      form2Data.categorization.new = true;
+                      form2Data.categorization.expanded = false;
+                    } else {
+                      form2Data.categorization.new = false;
+                      form2Data.categorization.expanded = true;
+                    }
+                    return { ...form2Data };
+                  })
+                }
               >
-                <FormControlLabel
-                  value="new"
-                  control={<Radio />}
-                  label="New"
-                />
+                <FormControlLabel value="new" control={<Radio />} label="New" />
                 <FormControlLabel
                   value="expanded"
                   control={<Radio />}
@@ -81,17 +85,23 @@ function EditorForm2({ form2Data, setForm2Data }) {
               <RadioGroup
                 aria-label="infrastructure"
                 name="cat2"
-                value={form2Data.categorization.infrastructure ? "infrastructure" : "nonInfrastructure"}
-                onChange={(e) => setForm2Data(() => {
-                  if(e.target.value === "infrastructure") {
-                    form2Data.categorization.infrastructure = true;
-                    form2Data.categorization.nonInfrastructure = false
-                  } else {
-                    form2Data.categorization.infrastructure = false;
-                    form2Data.categorization.nonInfrastructure = true
-                  }
-                  return {...form2Data}
-                })}
+                value={
+                  form2Data.categorization.infrastructure
+                    ? "infrastructure"
+                    : "nonInfrastructure"
+                }
+                onChange={(e) =>
+                  setForm2Data(() => {
+                    if (e.target.value === "infrastructure") {
+                      form2Data.categorization.infrastructure = true;
+                      form2Data.categorization.nonInfrastructure = false;
+                    } else {
+                      form2Data.categorization.infrastructure = false;
+                      form2Data.categorization.nonInfrastructure = true;
+                    }
+                    return { ...form2Data };
+                  })
+                }
               >
                 <FormControlLabel
                   value="infrastructure"
@@ -221,7 +231,13 @@ function EditorForm2({ form2Data, setForm2Data }) {
         <Grid item xs={12} md={3}>
           <TextField
             onChange={(e) =>
-              setForm2Data({ ...form2Data, proponentName: {...form2Data.proponentName, surname: e.target.value}})
+              setForm2Data({
+                ...form2Data,
+                proponentName: {
+                  ...form2Data.proponentName,
+                  surname: e.target.value,
+                },
+              })
             }
             className={classes.field}
             label="Proponent Surname"
@@ -236,7 +252,13 @@ function EditorForm2({ form2Data, setForm2Data }) {
         <Grid item xs={12} md={3}>
           <TextField
             onChange={(e) =>
-              setForm2Data({ ...form2Data, proponentName: {...form2Data.proponentName, firstName: e.target.value}})
+              setForm2Data({
+                ...form2Data,
+                proponentName: {
+                  ...form2Data.proponentName,
+                  firstName: e.target.value,
+                },
+              })
             }
             className={classes.field}
             label="Proponent First Name"
@@ -251,7 +273,13 @@ function EditorForm2({ form2Data, setForm2Data }) {
         <Grid item xs={12} md={3}>
           <TextField
             onChange={(e) =>
-              setForm2Data({ ...form2Data, proponentName: {...form2Data.proponentName, middleInitial: e.target.value}})
+              setForm2Data({
+                ...form2Data,
+                proponentName: {
+                  ...form2Data.proponentName,
+                  middleInitial: e.target.value,
+                },
+              })
             }
             className={classes.field}
             label="Proponent Middle Initial"
@@ -283,7 +311,10 @@ function EditorForm2({ form2Data, setForm2Data }) {
             onChange={(e) =>
               setForm2Data({
                 ...form2Data,
-                contactInformation: {...form2Data.contactInformation, telNumber: e.target.value},
+                contactInformation: {
+                  ...form2Data.contactInformation,
+                  telNumber: e.target.value,
+                },
               })
             }
             className={classes.field}
@@ -301,7 +332,10 @@ function EditorForm2({ form2Data, setForm2Data }) {
             onChange={(e) =>
               setForm2Data({
                 ...form2Data,
-                contactInformation: {...form2Data.contactInformation, email: e.target.value},
+                contactInformation: {
+                  ...form2Data.contactInformation,
+                  email: e.target.value,
+                },
               })
             }
             className={classes.field}
@@ -319,7 +353,10 @@ function EditorForm2({ form2Data, setForm2Data }) {
             onChange={(e) =>
               setForm2Data({
                 ...form2Data,
-                contactInformation: {...form2Data.contactInformation, phoneNumber: e.target.value},
+                contactInformation: {
+                  ...form2Data.contactInformation,
+                  phoneNumber: e.target.value,
+                },
               })
             }
             className={classes.field}
@@ -337,7 +374,10 @@ function EditorForm2({ form2Data, setForm2Data }) {
             onChange={(e) =>
               setForm2Data({
                 ...form2Data,
-                contactInformation: {...form2Data.contactInformation, others: e.target.value},
+                contactInformation: {
+                  ...form2Data.contactInformation,
+                  others: e.target.value,
+                },
               })
             }
             className={classes.field}
@@ -349,6 +389,54 @@ function EditorForm2({ form2Data, setForm2Data }) {
             value={form2Data.contactInformation.others}
             helperText={false ? "Error Password" : null}
           />
+        </Grid>
+        <Grid item xs={12}>
+          <Divider className={classes.divider} />
+        </Grid>
+        <Grid item xs={6} align="center">
+          <Typography variant="h5" align="left">
+            Attatched Files
+          </Typography>
+          <Paper className={classes.paper}>
+            <input
+              style={{ display: "none" }}
+              id="fileUpload"
+              multiple
+              type="file"
+            />
+            <label htmlFor="fileUpload">
+              <Button
+                variant="contained"
+                component="span"
+                startIcon={<AddCircleOutline />}
+              >
+                Upload Files
+              </Button>
+            </label>
+          </Paper>
+        </Grid>
+        <Grid item xs={6} align="center">
+          <Typography variant="h5" align="left">
+            Signature
+          </Typography>
+          <Paper className={classes.paper}>
+            <input
+              accept="image/*"
+              style={{ display: "none" }}
+              id="userSignature"
+              multiple
+              type="file"
+            />
+            <label htmlFor="userSignature">
+              <Button
+                variant="contained"
+                component="span"
+                startIcon={<AddCircleOutline />}
+              >
+                Upload Signature
+              </Button>
+            </label>
+          </Paper>
         </Grid>
       </Grid>
     </form>

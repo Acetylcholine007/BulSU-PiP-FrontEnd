@@ -301,7 +301,7 @@ function ProjectEditor({ isNew, project, institute }) {
             <Card className={classes.card}>
               <CardHeader
                 title={
-                  page === 1 ? "Investment Program Form" : "Preparation Form"
+                  page === 1 ? "Investment Programming Entry" : "PAPs Form"
                 }
                 subheader={`Page ${page} of 2`}
                 className={classes.cardHeader}

@@ -47,7 +47,7 @@ function ViewerForm1({ project, investmentReq, setInvestmentReq, status }) {
           </TableRow>
           <TableRow>
             <TableCell align="center">GSPs</TableCell>
-            <TableCell align="center" colSpan={5}>
+            <TableCell align="left" colSpan={5}>
               <GSPViewer GSP={project.GSP} />
             </TableCell>
           </TableRow>
@@ -66,7 +66,7 @@ function ViewerForm1({ project, investmentReq, setInvestmentReq, status }) {
           <TableRow>
             <TableCell align="center">Total Estimated Cost</TableCell>
             <TableCell align="center" colSpan={5}>
-              {project.title}
+              {`Php ${project.investmentReq.map(item => parseFloat(item.value)).reduce((a,b) => a+b)}`}
             </TableCell>
           </TableRow>
           <TableRow>

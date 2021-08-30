@@ -9,12 +9,14 @@ import {
 } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import React, { useContext, useState } from "react";
-import { Add, GetApp, Save } from "@material-ui/icons";
+import { Add, Save } from "@material-ui/icons";
 
 import ProjectList from "../components/ProjectList";
 import { AuthContext } from "../../../contexts/AuthContext";
 import ProjectFilterDialog from "../components/ProjectFilterDialog";
 import { serverUrl } from "../../../utils/serverUrl";
+import SheetExport from "../../../shared/components/SheetExport";
+import PDFExport from "../../../shared/components/PDFExport";
 
 function InstituteViewer({ institute, instituteId, priority }) {
   const history = useHistory();
@@ -47,8 +49,8 @@ function InstituteViewer({ institute, instituteId, priority }) {
       marginLeft: 10,
     },
     divider: {
-      marginBottom: 15
-    }
+      marginBottom: 15,
+    },
   }));
 
   const compareArray = (array1, array2) => {
@@ -81,13 +83,12 @@ function InstituteViewer({ institute, instituteId, priority }) {
             Create New
           </Button>
         )}
-        <Button
-          className={classes.button}
-          variant="contained"
-          startIcon={<GetApp />}
-        >
-          Export Data
-        </Button>
+        <SheetExport
+          institutes={[institute]}
+          filename={instituteId}
+          buttonLabel="Export Investment Sheet"
+        />
+        <PDFExport projects={institute.projects} filename={instituteId} priority = {priority}/>
         {!compareArray(priority, localPrio) && (
           <Button
             className={classes.button}
@@ -101,7 +102,7 @@ function InstituteViewer({ institute, instituteId, priority }) {
                 headers: { "Content-type": "application/json" },
                 body: JSON.stringify(newInstitute),
               }).then(() => {
-                console.log('Priority Saved')
+                console.log("Priority Saved");
                 switch (user.type) {
                   case 0:
                     history.push("/projects");
@@ -120,7 +121,7 @@ function InstituteViewer({ institute, instituteId, priority }) {
           </Button>
         )}
       </Toolbar>
-      <Divider classes={{root: classes.divider}}/>
+      <Divider classes={{ root: classes.divider }} />
       <Container>
         <Grid container>
           <Grid item xs={12}>

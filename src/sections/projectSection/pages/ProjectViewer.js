@@ -22,6 +22,7 @@ import ViewerForm2 from "../components/ViewerForm2";
 import ViewerForm3 from "../components/ViewerForm3";
 import { Delete, Edit } from "@material-ui/icons";
 import CommentList from "../components/CommentList";
+import PDFExport from "../../../shared/components/PDFExport";
 
 const useStyles = makeStyles((theme) => ({
   txt: {
@@ -112,9 +113,9 @@ function ProjectViewer({ project, projectId, priority, institute }) {
   const getTitle = () => {
     switch (tabIndex) {
       case 0:
-        return "Investment Program Form";
+        return "Investment Programming Entry";
       case 1:
-        return "Preparation Form";
+        return "PAPs Form";
       case 2:
         return "PDO Personnel Feedback";
       default:
@@ -146,6 +147,7 @@ function ProjectViewer({ project, projectId, priority, institute }) {
         >
           Delete Project
         </Button>
+        <PDFExport projects={[project]} filename={project.title} priority={priority}/>
       </Toolbar>
       <Divider classes={{ root: classes.divider }} />
       <Container>
@@ -158,8 +160,8 @@ function ProjectViewer({ project, projectId, priority, institute }) {
               textColor="primary"
               variant="fullWidth"
             >
-              <Tab label="Investment Program Form" />
-              <Tab label="Preparation Form" />
+              <Tab label="Investment Programming Entry" />
+              <Tab label="PAPs Form" />
               <Tab label="PDO Personnel Feedback" />
             </Tabs>
             <Card>

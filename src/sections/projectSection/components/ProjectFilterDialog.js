@@ -30,7 +30,7 @@ function ProjectFilterDialog({ open, setOpen, filter, setFilter }) {
         <Grid container>
           <Grid item xs={11}>
             <DialogContentText>
-              Total Investment Requirement Range (per Million)
+              Total Investment Requirement Range (per 100,000)
             </DialogContentText>
           </Grid>
           <Grid item xs={1}>
@@ -61,7 +61,9 @@ function ProjectFilterDialog({ open, setOpen, filter, setFilter }) {
             />
           </Grid>
           <Grid item xs={11}>
-            <DialogContentText>Total Project Cost Range (per Million)</DialogContentText>
+            <DialogContentText>
+              Total Project Cost Range (per 100,000)
+            </DialogContentText>
           </Grid>
           <Grid item xs={1}>
             <Switch

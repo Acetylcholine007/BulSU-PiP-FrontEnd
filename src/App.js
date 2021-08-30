@@ -10,8 +10,6 @@ import SignUpPage from "./sections/authenticationSection/pages/SignUpPage";
 import DashboardPage from "./sections/dashboardSection/pages/DashboardPage";
 import AccountPage from "./sections/accountSection/pages/AccountPage";
 import NotificationPage from "./sections/notificationSection/pages/NotificationPage";
-import NotFound from "./shared/pages/NotFound";
-import ProjectEditor from "./sections/projectSection/pages/ProjectEditor";
 import ProjectEditorWrapper from "./sections/projectSection/wrappers/ProjectEditorWrapper";
 import { AuthContext } from "./contexts/AuthContext";
 import { ProjectContext } from "./contexts/ProjectContext";
@@ -22,6 +20,7 @@ import AdminProjectViewer from "./sections/projectSection/wrappers/AdminProjectV
 import ClientProjectViewer from "./sections/projectSection/wrappers/ClientProjectViewer";
 import ClientInstituteViewer from "./sections/projectSection/wrappers/ClientInstituteViewer";
 import AdminInstituteViewer from "./sections/projectSection/wrappers/AdminInstituteViewer";
+import NotFound from "./shared/pages/NotFound";
 
 const theme = createTheme({
   palette: {

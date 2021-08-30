@@ -9,6 +9,7 @@ import {
   TextField,
   Button,
 } from "@material-ui/core";
+import { AddCircleOutline } from "@material-ui/icons";
 import React from "react";
 
 function EditorForm3({ form3Data, setForm3Data }) {
@@ -33,7 +34,7 @@ function EditorForm3({ form3Data, setForm3Data }) {
               <TableCell align="center" colSpan={2}>
                 <TextField
                   onChange={(e) =>
-                    setForm3Data({...form3Data, recievedBy: e.target.value})
+                    setForm3Data({ ...form3Data, recievedBy: e.target.value })
                   }
                   label="Reciever Name"
                   variant="outlined"
@@ -49,7 +50,10 @@ function EditorForm3({ form3Data, setForm3Data }) {
               <TableCell align="center" colSpan={2}>
                 <TextField
                   onChange={(e) =>
-                    setForm3Data({...form3Data, recieverDesignation: e.target.value})
+                    setForm3Data({
+                      ...form3Data,
+                      recieverDesignation: e.target.value,
+                    })
                   }
                   label="Reciever Designation"
                   variant="outlined"
@@ -62,9 +66,26 @@ function EditorForm3({ form3Data, setForm3Data }) {
             </TableRow>
             <TableRow>
               <TableCell align="center">Date Recieved</TableCell>
-              <TableCell align="center">{(new Date(form3Data.dateRecieved)).toDateString()}</TableCell>
               <TableCell align="center">
-                <Button variant="contained">Upload Signature</Button>
+                {new Date(form3Data.dateRecieved).toDateString()}
+              </TableCell>
+              <TableCell align="center">
+                <input
+                  accept="image/*"
+                  style={{ display: "none" }}
+                  id="pdoSignature"
+                  multiple
+                  type="file"
+                />
+                <label htmlFor="pdoSignature">
+                  <Button
+                    variant="contained"
+                    component="span"
+                    startIcon={<AddCircleOutline />}
+                  >
+                    Upload Signature
+                  </Button>
+                </label>
               </TableCell>
             </TableRow>
           </TableBody>

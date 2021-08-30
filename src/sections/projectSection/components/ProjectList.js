@@ -78,8 +78,8 @@ function ProjectList({
         .map((item) => parseFloat(item.value))
         .reduce((a, b) => a + b, 0);
       investmentFilterPassed =
-        sum >= filter.investmentReq.value[0] * 1000000 &&
-        sum <= filter.investmentReq.value[1] * 1000000;
+        sum >= filter.investmentReq.value[0] * 100000 &&
+        sum <= filter.investmentReq.value[1] * 100000;
     }
 
     if (filter.projectCost.enabled) {
@@ -87,8 +87,8 @@ function ProjectList({
         .map((item) => parseFloat(item.cost))
         .reduce((a, b) => a + b, 0);
       projectCostFilterPassed =
-        sum >= filter.projectCost.value[0] * 1000000 &&
-        sum <= filter.projectCost.value[1] * 1000000;
+        sum >= filter.projectCost.value[0] * 100000 &&
+        sum <= filter.projectCost.value[1] * 100000;
     }
 
     if (filter.status.enabled) {
@@ -137,10 +137,13 @@ function ProjectList({
 
     setProject(() => {
       const newData = [...projects];
+      //console.log(filteredProject);
       const target = newData.splice(
         newData.indexOf(filteredProject[source.index]),
         1
       )[0];
+      console.log(target);
+      console.log(filteredProject[destination.index]);
       if (source.index < destination.index) {
         newData.splice(
           newData.indexOf(filteredProject[destination.index]) + 1,
@@ -154,6 +157,7 @@ function ProjectList({
           target
         );
       }
+      console.log(newData);
       setLocalPrio(newData.map((project) => project.id));
       return newData;
     });

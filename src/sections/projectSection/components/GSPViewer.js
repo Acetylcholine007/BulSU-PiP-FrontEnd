@@ -1,49 +1,54 @@
-import { Container, Tab, Tabs, Typography } from "@material-ui/core";
-import React, { useState } from "react";
+import { Container, Typography } from "@material-ui/core";
+import React from "react";
 import { GSPs } from "../../../utils/constants";
 
 function GSPViewer({ GSP }) {
-  const [tabIndex, setTabIndex] = useState(0);
   return (
-    <React.Fragment>
-      <Tabs
-        value={tabIndex}
-        onChange={(event, index) => setTabIndex(index)}
-        indicatorColor="primary"
-        textColor="primary"
-        variant="fullWidth"
-      >
-        <Tab label="1st" />
-        <Tab label="2nd" />
-        <Tab label="3rd" />
-        <Tab label="4th" />
-        <Tab label="5th" />
-      </Tabs>
-      <Container>
-        {GSP[tabIndex] &&
-          GSP[tabIndex].map((subgoal, subgoalIndex) => {
-            return subgoal ? (
-              <React.Fragment>
-                <Typography variant="h6">
-                  {GSPs[tabIndex].contents[subgoalIndex].value}
-                </Typography>
-                {subgoal &&
-                  subgoal.map((indicator, indicatorIndex) => {
-                    return indicator ? (
-                      <Typography variant="body2">
-                        {
-                          GSPs[tabIndex].contents[subgoalIndex].contents[
-                            indicatorIndex
-                          ]
+    <Container>
+      {GSP.map((goal, goalIndex) => {
+        if (goal) {
+          return (
+            <React.Fragment>
+              <Typography variant="h6">{`${goalIndex + 1}. ${
+                GSPs[goalIndex].value
+              }`}</Typography>
+              {goal.map((subgoal, subgoalIndex) => {
+                if (subgoal) {
+                  return (
+                    <React.Fragment>
+                      <Typography variant="body1">{`${goalIndex + 1}.${
+                        subgoalIndex + 1
+                      }. ${
+                        GSPs[goalIndex].contents[subgoalIndex].value
+                      }`}</Typography>
+                      {subgoal.map((indicator, indicatorIndex) => {
+                        if (indicator) {
+                          return (
+                            <Typography variant="body2">{`${goalIndex + 1}.${
+                              subgoalIndex + 1
+                            }.${indicatorIndex + 1}. ${
+                              GSPs[goalIndex].contents[subgoalIndex].contents[
+                                indicatorIndex
+                              ]
+                            }`}</Typography>
+                          );
+                        } else {
+                          return null;
                         }
-                      </Typography>
-                    ) : null;
-                  })}
-              </React.Fragment>
-            ) : null;
-          })}
-      </Container>
-    </React.Fragment>
+                      })}
+                    </React.Fragment>
+                  );
+                } else {
+                  return null;
+                }
+              })}
+            </React.Fragment>
+          );
+        } else {
+          return null;
+        }
+      })}
+    </Container>
   );
 }
 

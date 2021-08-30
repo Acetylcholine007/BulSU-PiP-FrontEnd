@@ -61,6 +61,71 @@
   ],
   "institutes": [
     {
+      "id": "S-BuC",
+      "priority": [],
+      "projects": []
+    },
+    {
+      "id": "S-MeC",
+      "priority": [],
+      "projects": []
+    },
+    {
+      "id": "S-SaC",
+      "priority": [],
+      "projects": []
+    },
+    {
+      "id": "S-HaC",
+      "priority": [],
+      "projects": []
+    },
+    {
+      "id": "CAFA",
+      "priority": [],
+      "projects": []
+    },
+    {
+      "id": "CAL",
+      "priority": [],
+      "projects": []
+    },
+    {
+      "id": "CBA",
+      "priority": [],
+      "projects": []
+    },
+    {
+      "id": "CCJE",
+      "priority": [],
+      "projects": []
+    },
+    {
+      "id": "CHTM",
+      "priority": [],
+      "projects": []
+    },
+    {
+      "id": "CICT",
+      "priority": [],
+      "projects": []
+    },
+    {
+      "id": "CIT",
+      "priority": [],
+      "projects": []
+    },
+    {
+      "id": "CLAW",
+      "priority": [],
+      "projects": []
+    },
+    {
+      "id": "CON",
+      "priority": [],
+      "projects": []
+    },
+    {
       "id": "COE",
       "priority": [
         1,
@@ -237,7 +302,7 @@
             null,
             null
           ],
-          "obligationType": "",
+          "obligationType": "One-Year Obligation",
           "proponent": "Computer Engineering",
           "investmentReq": [
             {
@@ -340,7 +405,7 @@
             null,
             null
           ],
-          "obligationType": "",
+          "obligationType": "Multi-Year Obligation",
           "proponent": "Electronics Engineering",
           "investmentReq": [
             {
@@ -435,7 +500,7 @@
             null,
             null
           ],
-          "obligationType": "",
+          "obligationType": "Multi-Year Obligation",
           "proponent": "Industrial Engineering",
           "investmentReq": [
             {
@@ -530,6 +595,31 @@
           "id": 4
         }
       ]
+    },
+    {
+      "id": "COED",
+      "priority": [],
+      "projects": []
+    },
+    {
+      "id": "CS",
+      "priority": [],
+      "projects": []
+    },
+    {
+      "id": "CSER",
+      "priority": [],
+      "projects": []
+    },
+    {
+      "id": "CSSP",
+      "priority": [],
+      "projects": []
+    },
+    {
+      "id": "GRAD",
+      "priority": [],
+      "projects": []
     }
   ],
   "editorDashboard": {
