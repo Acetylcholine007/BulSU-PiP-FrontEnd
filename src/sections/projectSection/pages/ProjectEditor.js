@@ -343,20 +343,21 @@ function ProjectEditor({ isNew, project, institute }) {
                       var checker = form2Validator(form2Data);
                       console.log(checker);
                       if (
-                        !checkerForm2.projectLocation.error &&
-                        !checkerForm2.description.error &&
-                        !checkerForm2.purpose.error &&
-                        !checkerForm2.beneficiary.error &&
-                        !checkerForm2.surName.error &&
-                        !checkerForm2.firstName.error &&
-                        !checkerForm2.telephoneNumber.error &&
-                        !checkerForm2.email.error &&
-                        !checkerForm2.phoneNumber.error &&
-                        checkerForm2.proposedProjectCost
+                        !checker.projectLocation.error &&
+                        !checker.description.error &&
+                        !checker.purpose.error &&
+                        !checker.beneficiary.error &&
+                        !checker.surName.error &&
+                        !checker.firstName.error &&
+                        !checker.telephoneNumber.error &&
+                        !checker.email.error &&
+                        !checker.phoneNumber.error &&
+                        checker.proposedProjectCost
                           .map((item) => !item.error)
                           .reduce((a, b) => a && b)
                       ) {
-                        handleSubmit();
+                        console.log('submitted')
+                        //handleSubmit();
                       }
                       setCheckerForm2(checker);
                     }}

@@ -75,6 +75,11 @@ function form2Validator({
       result.email.messages.push("Invalid email format");
     }
   }
+  
+  if (projectLocation == "") {
+    result.projectLocation.error = true;
+    result.projectLocation.messages.push("Project Location cannot be blank");
+  }
 
   if (description == "") {
     result.description.error = true;
