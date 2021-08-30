@@ -9,6 +9,12 @@ function form2Validator({
   contactInformation: { telNumber: telephoneNumber, email, phoneNumber },
 }) {
   const result = {
+    proposedProjectCost: [
+      {error: false, messages: []},
+      {error: false, messages: []},
+      {error: false, messages: []},
+    ],
+
     email: {
       error: false,
       messages: [],
@@ -31,12 +37,6 @@ function form2Validator({
       error: false,
       messages: [],
     },
-
-    proposedProjectCost: [
-      { error: false, messages: [] },
-      { error: false, messages: [] },
-      { error: false, messages: [] },
-    ],
 
     surName: {
       error: false,
@@ -134,6 +134,13 @@ function form2Validator({
       result.phoneNumber.messages.push("Invalid Phone Number");
     }
   }
+
+  proposedProjectCost.forEach((item, index) => {
+    if(item.cost==='') {
+      result.proposedProjectCost[index].error = true;
+      result.proposedProjectCost[index].messages.push('Not Null')
+    }
+    })
 
   //Weird looking function input syntax is javascript destructuring, nakalimutan
   //kong iexplain kanina kasi lately ko lang rin narealize hahaha, eexplain ko sa
