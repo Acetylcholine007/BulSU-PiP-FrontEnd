@@ -45,7 +45,7 @@ export const form1Validator = ({
   }
   if (title === "") {
     result.title.error = true;
-    result.title.messages.push("please put your Title");
+    result.title.messages.push("Title cannot be blank");
   }
   if (obligationType === "") {
     result.obligationType.error = true;
@@ -53,16 +53,35 @@ export const form1Validator = ({
   }
   if (proponent === "") {
     result.proponent.error = true;
-    result.proponent.messages.push("Proponent section is required");
+    result.proponent.messages.push("Proponent section cannot be blank");
   }
   if (startYear === null) {
     result.startYear.error = true;
-    result.startYear.messages.push("implementation of year is required");
+    result.startYear.messages.push("implementation of year cannot be blank");
   }
   if (endYear === null) {
     result.endYear.error = true;
-    result.endYear.messages.push("implementation of year is required");
+    result.endYear.messages.push("implementation of year cannot be blank");
   }
+
+  investmentReq.forEach((item, index) => {
+  if(item.value === '') {
+    result.investmentReq[index].error = true;
+    result.investmentReq[index].messages.push('please put a value');
+  } else {
+    var exactValue = /^\d[0-9]$/;
+    if (!item.value.match(exactValue)) {
+      result.investmentReq[index].error = true;
+      result.investmentReq[index].messages.push("invalid value");
+    }
+  }
+ 
+  if(item.value.length >= 9) {
+    result.investmentReq[index].error = true;
+    result.investmentReq[index].messages.push('it must not exceeded by 100M')
+  }
+  })
+  
 
   //Weird looking function input syntax is javascript destructuring, nakalimutan
   //kong iexplain kanina kasi lately ko lang rin narealize hahaha, eexplain ko sa
