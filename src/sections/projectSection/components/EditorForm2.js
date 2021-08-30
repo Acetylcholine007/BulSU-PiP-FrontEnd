@@ -17,7 +17,7 @@ import {
 import { AddCircleOutline } from "@material-ui/icons";
 import { DatePicker } from "@material-ui/pickers";
 
-function EditorForm2({ form2Data, setForm2Data }) {
+function EditorForm2({ form2Data, setForm2Data, checkerForm2, index }) {
   const useStyles = makeStyles(() => ({
     field: {
       marginTop: 10,
@@ -49,9 +49,9 @@ function EditorForm2({ form2Data, setForm2Data }) {
             variant="outlined"
             color="primary"
             fullWidth
-            error={false}
+            error={checkerForm2.projectLocation[index].error}
             value={form2Data.projectLocation}
-            helperText={false ? "Error Password" : null}
+            helperText={checkerForm2.projectLocation[index].error ? checkerForm2.projectProposalCost[index].messages[0] : null}
           />
         </Grid>
         <Grid item xs={12}>
@@ -127,9 +127,9 @@ function EditorForm2({ form2Data, setForm2Data }) {
             variant="outlined"
             color="primary"
             fullWidth
-            error={false}
+            error={checkerForm2.description[index].error}
             value={form2Data.description}
-            helperText={false ? "Error Password" : null}
+            helperText={checkerForm2.description[index].error ? checkerForm2.description[index].messages[0] : null}
             multiline
             minRows={5}
           />
@@ -144,9 +144,9 @@ function EditorForm2({ form2Data, setForm2Data }) {
             variant="outlined"
             color="primary"
             fullWidth
-            error={false}
+            error={checkerForm2.purpose[index].error}
             value={form2Data.purpose}
-            helperText={false ? "Error Password" : null}
+            helperText={checkerForm2.purpose[index].error ? checkerForm2.purpose[index].messages[0] : null}
             multiline
             minRows={5}
           />
@@ -161,9 +161,9 @@ function EditorForm2({ form2Data, setForm2Data }) {
             variant="outlined"
             color="primary"
             fullWidth
-            error={false}
+            error={checkerForm2.beneficiary[index].error}
             value={form2Data.beneficiary}
-            helperText={false ? "Error Password" : null}
+            helperText={checkerForm2.beneficiary[index].error ? checkerForm2.beneficiary[index].messages[0] : null}
             multiline
             minRows={3}
           />
@@ -213,9 +213,9 @@ function EditorForm2({ form2Data, setForm2Data }) {
                 variant="outlined"
                 color="primary"
                 fullWidth
-                error={false}
+                error={checkerForm2.proposedProjectCost[index].error}
                 value={item.cost}
-                helperText={false ? "Error Password" : null}
+                helperText={checkerForm2.proposedProjectCost[index].error ? checkerForm2.proposedProjectCost[index].messages[0] : null}
               />
             </Card>
           </Grid>
@@ -244,9 +244,9 @@ function EditorForm2({ form2Data, setForm2Data }) {
             variant="outlined"
             color="primary"
             fullWidth
-            error={false}
+            error={checkerForm2.proponentName.surname[index].error}
             value={form2Data.proponentName.surname}
-            helperText={false ? "Error Password" : null}
+            helperText={checkerForm2.proponentName.surname[index].error ? checkerForm2.proponentName.surname[index].messages[0] : null}
           />
         </Grid>
         <Grid item xs={12} md={3}>
@@ -265,9 +265,9 @@ function EditorForm2({ form2Data, setForm2Data }) {
             variant="outlined"
             color="primary"
             fullWidth
-            error={false}
+            error={checkerForm2.proponentName.firstName[index].error}
             value={form2Data.proponentName.firstName}
-            helperText={false ? "Error Password" : null}
+            helperText={checkerForm2.proponentName.firstName[index].error ? checkerForm2.proponentName.firstName[index].messages[0] : null}
           />
         </Grid>
         <Grid item xs={12} md={3}>
@@ -286,9 +286,9 @@ function EditorForm2({ form2Data, setForm2Data }) {
             variant="outlined"
             color="primary"
             fullWidth
-            error={false}
+            error={checkerForm2.proponentName.middleInitial[index].error}
             value={form2Data.proponentName.middleInitial}
-            helperText={false ? "Error Password" : null}
+            helperText={checkerForm2.proponentName.middleInitial[index].error ? checkerForm2.proponentName.middleInitial[index].messages[0] : null}
           />
         </Grid>
         <Grid item xs={12} md={3}>
@@ -301,9 +301,9 @@ function EditorForm2({ form2Data, setForm2Data }) {
             variant="outlined"
             color="primary"
             fullWidth
-            error={false}
+            error={checkerForm2.designation[index].error}
             value={form2Data.designation}
-            helperText={false ? "Error Password" : null}
+            helperText={checkerForm2.designation[index].error ? checkerForm2.designation[index].messages[0] : null}
           />
         </Grid>
         <Grid item xs={12} md={6}>
@@ -322,9 +322,9 @@ function EditorForm2({ form2Data, setForm2Data }) {
             variant="outlined"
             color="primary"
             fullWidth
-            error={false}
+            error={checkerForm2.telephoneNumber[index].error}
             value={form2Data.contactInformation.telNumber}
-            helperText={false ? "Error Password" : null}
+            helperText={checkerForm2.telephoneNumber[index].error ? checkerForm2.telephoneNumber[index].messages[0] : null}
           />
         </Grid>
         <Grid item xs={12} md={6}>
@@ -343,9 +343,9 @@ function EditorForm2({ form2Data, setForm2Data }) {
             variant="outlined"
             color="primary"
             fullWidth
-            error={false}
+            error={checkerForm2.email[index].error}
             value={form2Data.contactInformation.email}
-            helperText={false ? "Error Password" : null}
+            helperText={checkerForm2.email[index].error ? checkerForm2.email[index].messages[0] : null}
           />
         </Grid>
         <Grid item xs={12} md={6}>
@@ -364,9 +364,9 @@ function EditorForm2({ form2Data, setForm2Data }) {
             variant="outlined"
             color="primary"
             fullWidth
-            error={false}
+            error={checkerForm2.phoneNumber[index].error}
             value={form2Data.contactInformation.phoneNumber}
-            helperText={false ? "Error Password" : null}
+            helperText={checkerForm2.phoneNumber[index].error ? checkerForm2.phoneNumber[index].messages[0] : null}
           />
         </Grid>
         <Grid item xs={12} md={6}>
