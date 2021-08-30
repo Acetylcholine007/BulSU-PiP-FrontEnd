@@ -1,4 +1,4 @@
-function LoginValidator(email, password, institute, confirmPassword) {
+function SignupValidator(email, password, institute, confirmPassword) {
   const result = {
     email: {
       error: false,
@@ -51,9 +51,14 @@ function LoginValidator(email, password, institute, confirmPassword) {
     }
   }
 
+  if (confirmPassword == "") {
+    result.confirmPassword.error = true;
+    result.confirmPassword.messages.push("Password cannot be blank");
+  } else {
   if (password != confirmPassword) {
     result.confirmPassword.error = true;
     result.confirmPassword.messages.push("Password did not match!");
+  }
   }
 
   return result;
@@ -65,4 +70,4 @@ function LoginValidator(email, password, institute, confirmPassword) {
 // var confirmPassword = "2567";
 
 // console.log(LoginValidator(email, password, institute, confirmPassword));
-export default LoginValidator;
+export default SignupValidator;
