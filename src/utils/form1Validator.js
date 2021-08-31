@@ -81,19 +81,6 @@ export const form1Validator = ({
     result.investmentReq[index].messages.push('it must not exceeded by 100M')
   }
   })
-  
-
-  //Weird looking function input syntax is javascript destructuring, nakalimutan
-  //kong iexplain kanina kasi lately ko lang rin narealize hahaha, eexplain ko sa
-  //next meeting pero di bale, ala namang malaking nabago sa code logic nyo, 
-  //ganun parin sya as is, sinunod ko lang sa naming convention saka
-  //inalis ko yung negation sa if-expressions kasi nagfefailed yung validator 
-  //na magscreen kapag may naviolate na input.
-
-  //Inalis ko na rin pala yung validator for PAP at readiness, ngayon
-  //ko lang rin narealize na di naman sya matatampered kasi menu na sya
-
-  //TODO: Insert investmentReq validation code here
 
   return result;
 };

@@ -23,7 +23,7 @@ import {
 } from "../../../utils/constants";
 import GSPPicker from "./GSPPicker";
 
-function EditorForm1({ form1Data, setForm1Data, CheckerForm1}) {
+function EditorForm1({ form1Data, setForm1Data, checkerForm1}) {
   const useStyles = makeStyles((theme) => ({
     field: {
       marginTop: 10,
@@ -45,35 +45,6 @@ function EditorForm1({ form1Data, setForm1Data, CheckerForm1}) {
   const [tabIndex, setTabIndex] = useState(0);
   const classes = useStyles();
   const { user } = useContext(AuthContext);
-  const [checkerForm1, setcheckerForm1] = useState({
-    title: {
-      error: false,
-      messages: [],
-    },
-    obligationType: {
-      error: false,
-      messages: [],
-    },
-    proponent: {
-      error: false,
-      messages: [],
-    },
-    investmentReq: [
-      { error: false, messages: [] },
-      { error: false, messages: [] },
-      { error: false, messages: [] },
-      { error: false, messages: [] },
-      { error: false, messages: [] },
-    ],
-    startYear: {
-      error: false,
-      messages: [],
-    },
-    endYear: {
-      error: false,
-      messages: [],
-    },
-  });
 
   const getSum = () => {
     var sum = 0;
@@ -96,7 +67,7 @@ function EditorForm1({ form1Data, setForm1Data, CheckerForm1}) {
             fullWidth
             error={checkerForm1.title.error}
             value={form1Data.title}
-            helperText={checkerForm1.title.error ? checkerForm1.title.messages [0] : null}
+            helperText={checkerForm1.title.error ? checkerForm1.title.messages[0] : null}
           />
         </Grid>
         <Grid item xs={12}>
@@ -134,7 +105,7 @@ function EditorForm1({ form1Data, setForm1Data, CheckerForm1}) {
             label="Obligation Type"
             error={checkerForm1.obligationType.error}
             className={classes.field}
-            helperText={checkerForm1.obligationType.error ? checkerForm1.obligationType.messages [0] : null}
+            helperText={checkerForm1.obligationType.error ? checkerForm1.obligationType.messages[0] : null}
           >
             {obligationTypes.map((type) => (
               <MenuItem key={type} value={type}>
@@ -156,7 +127,7 @@ function EditorForm1({ form1Data, setForm1Data, CheckerForm1}) {
             label="Proponent"
             error={checkerForm1.proponent.error}
             className={classes.field}
-            helperText={checkerForm1.proponent.error ? checkerForm1.proponent.messages [0] : null}
+            helperText={checkerForm1.proponent.error ? checkerForm1.proponent.messages[0] : null}
           >
             {institutes
               .find((institute) => institute.abbv === user.institute.abbv)
@@ -176,7 +147,7 @@ function EditorForm1({ form1Data, setForm1Data, CheckerForm1}) {
             className={classes.field}
             label="Implementation Start Year"
             error={checkerForm1.startYear.error}
-            helperText={checkerForm1.startYear.error ? checkerForm1.startYear.messages [0] : null}
+            helperText={checkerForm1.startYear.error ? checkerForm1.startYear.messages[0] : null}
             value={form1Data.implementationPeriod.start}
             onChange={(e) =>
               setForm1Data({
@@ -199,7 +170,7 @@ function EditorForm1({ form1Data, setForm1Data, CheckerForm1}) {
             className={classes.field}
             label="Implementation End Year"
             error={checkerForm1.endYear.error}
-            helperText={checkerForm1.endYear.error ? checkerForm1.endYear.messages [0] : null}
+            helperText={checkerForm1.endYear.error ? checkerForm1.endYear.messages[0] : null}
             value={form1Data.implementationPeriod.end}
             onChange={(e) =>
               setForm1Data({
@@ -264,7 +235,7 @@ function EditorForm1({ form1Data, setForm1Data, CheckerForm1}) {
                   fullWidth
                   error={checkerForm1.investmentReq[index].error}
                   value={investment.value}
-                  helperText={checkerForm1.investmentReq[index].error ? checkerForm1.investment.messages[0]: null}
+                  helperText={checkerForm1.investmentReq[index].error ? checkerForm1.investmentReq[index].messages[0]: null}
                 />
               </Card>
             ))}

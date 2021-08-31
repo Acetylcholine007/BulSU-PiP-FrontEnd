@@ -142,11 +142,6 @@ function form2Validator({
     }
     })
 
-  //Weird looking function input syntax is javascript destructuring, nakalimutan
-  //kong iexplain kanina kasi lately ko lang rin narealize hahaha, eexplain ko sa
-  //next meeting pero di bale, ala namang nabago sa code logic nyo, ganun parin sya
-  //as is pati kung pano nyo tawagin yung variable
-
   //TODO: Insert proposedProjectCost validation here
 
   return result;
