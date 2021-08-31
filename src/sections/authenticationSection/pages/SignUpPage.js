@@ -17,7 +17,7 @@ import sjcl from "sjcl";
 import { serverUrl } from "../../../utils/serverUrl";
 
 import { institutes } from "../../../utils/constants";
-import Avatar from "@material-ui/core/Avatar";
+import SignupValidator from "../../../utils/SignupValidator";
 
 
 import PDO from "./pdo.png"
@@ -74,7 +74,28 @@ function SignUpPage() {
   const [institute, setInstitute] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmpassword, setConfirmPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [SignupChecker, setSignupChecker] = useState(
+    {
+      email: {
+        error: false,
+        messages: [],
+      },
+      password: {
+        error: false,
+        messages: [],
+      },
+      institute: {
+        error: false,
+        messages: [],
+      },
+  
+      confirmPassword: {
+        error: false,
+        messages: [],
+      },
+    }
+  )
 
   const handleSignUp = (e, newUser) => {
     e.preventDefault();
@@ -118,7 +139,7 @@ function SignUpPage() {
                       verified: true,
                       type: institute.type,
                       notificationList: [],
-                      projectList: [],
+                      
                     });
                   }}>
                   <TextField
@@ -128,8 +149,8 @@ function SignUpPage() {
                     variant="outlined"
                     color="primary"
                     fullWidth
-                    error = {false}
-                    helperText = {false ? "Error Email" : null}
+                    error = {SignupChecker.email.error}
+                    helperText = {SignupChecker.email.error ? SignupChecker.email.messages : null}
                     value={email}
                   />
                   <TextField
@@ -139,10 +160,22 @@ function SignUpPage() {
                     variant="outlined"
                     color="primary"
                     fullWidth
-                    error={false}
+                    error={SignupChecker.password.error}
                     value={password}
                     type="password"
-                    helperText={false ? "Error Password" : null}
+                    helperText={SignupChecker.password.error ? SignupChecker.password.messages : null}
+                  />
+                  <TextField
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    className={classes.field}
+                    label="Confirm Password"
+                    variant="outlined"
+                    color="primary"
+                    fullWidth
+                    error={SignupChecker.confirmPassword.error}
+                    value={confirmPassword}
+                    type="password"
+                    helperText={SignupChecker.confirmPassword.error ? SignupChecker.confirmPassword.messages : null}
                   />
                   <TextField
                       className={classes.field}
@@ -160,8 +193,8 @@ function SignUpPage() {
                           {institute.institute}
                         </MenuItem>
                       ))}
-                      error = {false}
-                      helperText = {false ? "Error Email" : null}
+                      error = {SignupChecker.institute.error}
+                      helperText = {SignupChecker.institute.error ? SignupChecker.institute.error : null}
                   </TextField>
                   <Button
                     type="submit"
@@ -169,6 +202,19 @@ function SignUpPage() {
                     variant="contained"
                     className={classes.button}
                     size="medium"
+                    onClick={() => {
+                      var checker = SignupValidator(email, password, confirmPassword, institute);
+                      console.log(checker);
+                      if (
+                        !checker.email.error &&
+                        !checker.password.error &&
+                        !checker.institute.error &&
+                        !checker.confirmPassword.error
+                      ) {
+                        console.log('submitted')
+                      }
+                      setSignupChecker(checker);
+                    }}
                   >
                     SIGN UP
                   </Button>
