@@ -99,7 +99,16 @@ function ElevatedProjectViewer({
 
   const [checkerForm1, setCheckerForm1] = useState();
   const [checkerForm2, setCheckerForm2] = useState();
-  const [checkerForm3, setCheckerForm3] = useState();
+  const [checkerForm3, setCheckerForm3] = useState({
+    recievedBy: {
+      error: false,
+      messages: [],
+    },
+    recievedDesignation: {
+      error: false,
+      messages: [],
+    },
+  });
 
   const selectComment = (comment) => {
     setComment(comment);
