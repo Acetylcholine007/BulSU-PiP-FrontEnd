@@ -1,4 +1,4 @@
-function LoginValidator(email, password, institute, confirmPassword) {
+function SignupValidator(email, password, institute, confirmPassword) {
   const result = {
     email: {
       error: false,
@@ -49,12 +49,13 @@ function LoginValidator(email, password, institute, confirmPassword) {
       result.password.error = true;
       result.password.messages.push("Password must not exceed 20 characters");
     }
-  }
-
-  if (password != confirmPassword) {
+    if (!(password === confirmPassword)) {
     result.confirmPassword.error = true;
     result.confirmPassword.messages.push("Password did not match!");
   }
+  }
+
+  
 
   return result;
 }
@@ -64,5 +65,5 @@ function LoginValidator(email, password, institute, confirmPassword) {
 // var institute = "";
 // var confirmPassword = "2567";
 
-// console.log(LoginValidator(email, password, institute, confirmPassword));
-export default LoginValidator;
+// console.log(SignupValidator(email, password, institute, confirmPassword));
+export default SignupValidator;
