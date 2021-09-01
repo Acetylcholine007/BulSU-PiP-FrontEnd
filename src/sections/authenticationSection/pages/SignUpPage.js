@@ -8,19 +8,18 @@ import {
   makeStyles,
   TextField,
   Typography,
-  MenuItem
+  MenuItem,
 } from "@material-ui/core";
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { useHistory } from "react-router";
 import sjcl from "sjcl";
 
 import { serverUrl } from "../../../utils/serverUrl";
 
 import { institutes } from "../../../utils/constants";
-import SignupValidator from "../../../utils/SignupValidator";
+import signupValidator from "../../../utils/signupValidator";
 
-
-import PDO from "./pdo.png"
+import PDO from "./pdo.png";
 
 const useStyles = makeStyles((theme) => ({
   motherPane: {
@@ -34,12 +33,12 @@ const useStyles = makeStyles((theme) => ({
     padding: 0,
     margin: 0,
     //background: "linear-gradient(264deg, rgba(255,115,0,1) 26%, rgba(253,255,0,1) 100%)",
-    background: "url('https://iadmissions.bulsu.edu.ph/assets/images/parallax-bg2.jpg')",
-    backgroundSize: 'cover',
-    backgroundPosition: 'center'
+    background:
+      "url('https://iadmissions.bulsu.edu.ph/assets/images/parallax-bg2.jpg')",
+    backgroundSize: "cover",
+    backgroundPosition: "center",
   },
-  background: {
-  },
+  background: {},
   formPane: {
     padding: "10%",
     paddingTop: "-3rem",
@@ -55,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
   },
   button: {
     marginTop: "0.5rem",
-    marginBottom: "0.7rem"
+    marginBottom: "0.7rem",
   },
   avtr: {
     height: 50,
@@ -75,27 +74,25 @@ function SignUpPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [SignupChecker, setSignupChecker] = useState(
-    {
-      email: {
-        error: false,
-        messages: [],
-      },
-      password: {
-        error: false,
-        messages: [],
-      },
-      institute: {
-        error: false,
-        messages: [],
-      },
-  
-      confirmPassword: {
-        error: false,
-        messages: [],
-      },
-    }
-  )
+  const [signupChecker, setSignupChecker] = useState({
+    email: {
+      error: false,
+      messages: [],
+    },
+    password: {
+      error: false,
+      messages: [],
+    },
+    institute: {
+      error: false,
+      messages: [],
+    },
+
+    confirmPassword: {
+      error: false,
+      messages: [],
+    },
+  });
 
   const handleSignUp = (e, newUser) => {
     e.preventDefault();
@@ -110,7 +107,6 @@ function SignUpPage() {
     }
   };
 
-
   return (
     <Container className={classes.motherPane}>
       <Grid className={classes.container} container>
@@ -119,29 +115,53 @@ function SignUpPage() {
             <CardContent>
               <div className={`animate__animated animate__fadeInDown`}>
                 <p>
-                  <img className={classes.avtr} src="favicon.ico" alt="BulSU Icon"></img>
+                  <img
+                    className={classes.avtr}
+                    src="favicon.ico"
+                    alt="BulSU Icon"
+                  ></img>
                   <img className={classes.avtr2} src={PDO} alt="PDO Icon"></img>
                 </p>
                 <p>BulSU PIPS - ver 0.1</p>
-                <Typography variant="h4" component="h1">Account Request Form</Typography>
-                <br/>
-                <form noValidate
+                <Typography variant="h4" component="h1">
+                  Account Request Form
+                </Typography>
+                <br />
+                <form
+                  noValidate
                   autoComplete="off"
                   onSubmit={(e) => {
                     e.preventDefault();
-                    const myBitArray = sjcl.hash.sha256.hash(password);
-                    const myHash = sjcl.codec.hex.fromBits(myBitArray);
-                    handleSignUp(e, {
-                      institute: {institute: institute.institute, abbv: institute.abbv},
+                    var checker = signupValidator(
                       email,
-                      password: myHash,
-                      uri: `${institute.abbv}.png`,
-                      verified: true,
-                      type: institute.type,
-                      notificationList: [],
-                      
-                    });
-                  }}>
+                      password,
+                      institute,
+                      confirmPassword
+                    );
+                    if (
+                      !checker.email.error &&
+                      !checker.password.error &&
+                      !checker.institute.error &&
+                      !checker.confirmPassword.error
+                    ) {
+                      const myBitArray = sjcl.hash.sha256.hash(password);
+                      const myHash = sjcl.codec.hex.fromBits(myBitArray);
+                      handleSignUp(e, {
+                        institute: {
+                          institute: institute.institute,
+                          abbv: institute.abbv,
+                        },
+                        email,
+                        password: myHash,
+                        uri: `${institute.abbv}.png`,
+                        verified: true,
+                        type: institute.type,
+                        notificationList: [],
+                      });
+                    }
+                    setSignupChecker(checker);
+                  }}
+                >
                   <TextField
                     onChange={(e) => setEmail(e.target.value)}
                     className={classes.field}
@@ -149,8 +169,12 @@ function SignUpPage() {
                     variant="outlined"
                     color="primary"
                     fullWidth
-                    error = {SignupChecker.email.error}
-                    helperText = {SignupChecker.email.error ? SignupChecker.email.messages : null}
+                    error={signupChecker.email.error}
+                    helperText={
+                      signupChecker.email.error
+                        ? signupChecker.email.messages
+                        : null
+                    }
                     value={email}
                   />
                   <TextField
@@ -160,10 +184,14 @@ function SignUpPage() {
                     variant="outlined"
                     color="primary"
                     fullWidth
-                    error={SignupChecker.password.error}
+                    error={signupChecker.password.error}
                     value={password}
                     type="password"
-                    helperText={SignupChecker.password.error ? SignupChecker.password.messages : null}
+                    helperText={
+                      signupChecker.password.error
+                        ? signupChecker.password.messages
+                        : null
+                    }
                   />
                   <TextField
                     onChange={(e) => setConfirmPassword(e.target.value)}
@@ -172,29 +200,37 @@ function SignUpPage() {
                     variant="outlined"
                     color="primary"
                     fullWidth
-                    error={SignupChecker.confirmPassword.error}
+                    error={signupChecker.confirmPassword.error}
                     value={confirmPassword}
                     type="password"
-                    helperText={SignupChecker.confirmPassword.error ? SignupChecker.confirmPassword.messages : null}
+                    helperText={
+                      signupChecker.confirmPassword.error
+                        ? signupChecker.confirmPassword.messages
+                        : null
+                    }
                   />
                   <TextField
-                      className={classes.field}
-                      id="institute"
-                      color="primary"
-                      fullWidth
-                      select
-                      label="Institute"
-                      value={institute}
-                      onChange={(e) => setInstitute(e.target.value)}
-                      variant="outlined"
-                    >
-                      {institutes.map((institute) => (
-                        <MenuItem key={institute.abbv} value={institute}>
-                          {institute.institute}
-                        </MenuItem>
-                      ))}
-                      error = {SignupChecker.institute.error}
-                      helperText = {SignupChecker.institute.error ? SignupChecker.institute.error : null}
+                    className={classes.field}
+                    id="institute"
+                    color="primary"
+                    fullWidth
+                    select
+                    label="Institute"
+                    value={institute}
+                    onChange={(e) => setInstitute(e.target.value)}
+                    variant="outlined"
+                    error={signupChecker.institute.error}
+                    helperText={
+                      signupChecker.institute.error
+                        ? signupChecker.institute.messages[0]
+                        : null
+                    }
+                  >
+                    {institutes.map((institute) => (
+                      <MenuItem key={institute.abbv} value={institute}>
+                        {institute.institute}
+                      </MenuItem>
+                    ))}
                   </TextField>
                   <Button
                     type="submit"
@@ -202,19 +238,6 @@ function SignUpPage() {
                     variant="contained"
                     className={classes.button}
                     size="medium"
-                    onClick={() => {
-                      var checker = SignupValidator(email, password, confirmPassword, institute);
-                      console.log(checker);
-                      if (
-                        !checker.email.error &&
-                        !checker.password.error &&
-                        !checker.institute.error &&
-                        !checker.confirmPassword.error
-                      ) {
-                        console.log('submitted')
-                      }
-                      setSignupChecker(checker);
-                    }}
                   >
                     SIGN UP
                   </Button>
@@ -230,7 +253,6 @@ function SignUpPage() {
                   </Button>
                 </form>
               </div>
-              
             </CardContent>
           </Card>
         </Grid>

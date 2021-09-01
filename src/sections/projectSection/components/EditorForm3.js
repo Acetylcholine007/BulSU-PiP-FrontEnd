@@ -8,11 +8,24 @@ import {
   makeStyles,
   TextField,
   Button,
+  ListItem,
+  ListItemAvatar,
+  Avatar,
+  ListItemText,
+  IconButton,
+  ListItemSecondaryAction,
+  Card,
+  List,
 } from "@material-ui/core";
-import { AddCircleOutline } from "@material-ui/icons";
+import { AddCircleOutline, Delete, Folder } from "@material-ui/icons";
 import React from "react";
 
-function EditorForm3({ form3Data, setForm3Data }) {
+function EditorForm3({
+  form3Data,
+  setForm3Data,
+  PDOSignature,
+  setPDOSignature,
+}) {
   const useStyles = makeStyles(() => ({
     table: {
       minWidth: 700,
@@ -70,22 +83,56 @@ function EditorForm3({ form3Data, setForm3Data }) {
                 {new Date(form3Data.dateRecieved).toDateString()}
               </TableCell>
               <TableCell align="center">
-                <input
-                  accept="image/*"
-                  style={{ display: "none" }}
-                  id="pdoSignature"
-                  multiple
-                  type="file"
-                />
-                <label htmlFor="pdoSignature">
-                  <Button
-                    variant="contained"
-                    component="span"
-                    startIcon={<AddCircleOutline />}
-                  >
-                    Upload Signature
-                  </Button>
-                </label>
+                {PDOSignature.length == 0 ? (
+                  <React.Fragment>
+                    <input
+                      accept="image/*"
+                      style={{ display: "none" }}
+                      id="pdoSignature"
+                      multiple
+                      type="file"
+                      onChange={(e) =>
+                        setPDOSignature(Object.values(e.target.files))
+                      }
+                    />
+                    <label htmlFor="pdoSignature">
+                      <Button
+                        variant="contained"
+                        component="span"
+                        startIcon={<AddCircleOutline />}
+                      >
+                        Upload Signature
+                      </Button>
+                    </label>
+                  </React.Fragment>
+                ) : (
+                  <List>
+                    <Card>
+                      <ListItem>
+                        <ListItemAvatar>
+                          <Avatar>
+                            <Folder />
+                          </Avatar>
+                        </ListItemAvatar>
+                        <ListItemText primary={PDOSignature[0].name} />
+                        <ListItemSecondaryAction>
+                          <IconButton
+                            edge="end"
+                            onClick={() =>
+                              setPDOSignature(() => {
+                                var newList = [...PDOSignature];
+                                newList.splice(0, 1);
+                                return newList;
+                              })
+                            }
+                          >
+                            <Delete />
+                          </IconButton>
+                        </ListItemSecondaryAction>
+                      </ListItem>
+                    </Card>
+                  </List>
+                )}
               </TableCell>
             </TableRow>
           </TableBody>

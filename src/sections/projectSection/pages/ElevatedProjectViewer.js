@@ -95,6 +95,7 @@ function ElevatedProjectViewer({
     pdoSignature: project.pdoSignature,
   });
   const [comments, setComments] = useState(project.commentList);
+  const [PDOSignature, setPDOSignature] = useState([]);
 
   const selectComment = (comment) => {
     setComment(comment);
@@ -142,7 +143,12 @@ function ElevatedProjectViewer({
         );
       case 2:
         return showForm3Editor ? (
-          <EditorForm3 form3Data={form3Data} setForm3Data={setForm3Data} />
+          <EditorForm3
+            form3Data={form3Data}
+            setForm3Data={setForm3Data}
+            PDOSignature={PDOSignature}
+            setPDOSignature={setPDOSignature}
+          />
         ) : (
           <ViewerForm3
             project={{ ...project, ...form3Data }}
@@ -213,7 +219,11 @@ function ElevatedProjectViewer({
         >
           Save Changes
         </Button>
-        <PDFExport projects={[project]} filename={project.title} priority={priority}/>
+        <PDFExport
+          projects={[project]}
+          filename={project.title}
+          priority={priority}
+        />
       </Toolbar>
       <Divider classes={{ root: classes.divider }} />
       <Container>
@@ -259,7 +269,7 @@ function ElevatedProjectViewer({
             <Divider classes={{ root: classes.subDivider }} />
           </Grid>
           <Grid item xs={12}>
-            <Card className = {classes.card}>
+            <Card className={classes.card}>
               <CardHeader
                 title="Comments"
                 className={classes.cardHeader}

@@ -79,6 +79,7 @@ function ProjectEditor({ isNew, project, institute }) {
           remarks: project.remarks,
         }
   );
+
   const [form2Data, setForm2Data] = useState(
     isNew
       ? {
@@ -128,6 +129,10 @@ function ProjectEditor({ isNew, project, institute }) {
           fileList: project.fileList,
         }
   );
+
+  const [fileList, setFileList] = useState([]);
+
+  const [signature, setSignature] = useState([]);
 
   const [checkerForm1, setCheckerForm1] = useState({
     title: {
@@ -280,6 +285,10 @@ function ProjectEditor({ isNew, project, institute }) {
             form2Data={form2Data}
             setForm2Data={setForm2Data}
             checkerForm2={checkerForm2}
+            fileList={fileList}
+            setFileList={setFileList}
+            signature={signature}
+            setSignature={setSignature}
           />
         );
       default:
@@ -319,7 +328,7 @@ function ProjectEditor({ isNew, project, institute }) {
                     onClick={() => {
                       var checker = form1Validator(form1Data);
                       console.log(checker);
-                      if (
+                      if (true || 
                         !checker.title.error &&
                         !checker.obligationType.error &&
                         !checker.proponent.error &&
@@ -357,7 +366,7 @@ function ProjectEditor({ isNew, project, institute }) {
                           .reduce((a, b) => a && b)
                       ) {
                         console.log('submitted')
-                        //handleSubmit();
+                        handleSubmit();
                       }
                       setCheckerForm2(checker);
                     }}

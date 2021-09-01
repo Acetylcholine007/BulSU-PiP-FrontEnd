@@ -13,11 +13,26 @@ import {
   TextField,
   Typography,
   Paper,
+  ListItem,
+  Avatar,
+  IconButton,
+  List,
+  ListItemAvatar,
+  ListItemText,
+  ListItemSecondaryAction,
 } from "@material-ui/core";
-import { AddCircleOutline } from "@material-ui/icons";
+import { AddCircleOutline, Delete, Folder } from "@material-ui/icons";
 import { DatePicker } from "@material-ui/pickers";
 
-function EditorForm2({ form2Data, setForm2Data, checkerForm2, index }) {
+function EditorForm2({
+  form2Data,
+  setForm2Data,
+  checkerForm2,
+  fileList,
+  setFileList,
+  signature,
+  setSignature,
+}) {
   const useStyles = makeStyles(() => ({
     field: {
       marginTop: 10,
@@ -30,7 +45,7 @@ function EditorForm2({ form2Data, setForm2Data, checkerForm2, index }) {
       display: "block",
     },
     paper: {
-      padding: 50,
+      padding: 0,
     },
   }));
 
@@ -51,7 +66,11 @@ function EditorForm2({ form2Data, setForm2Data, checkerForm2, index }) {
             fullWidth
             error={checkerForm2.projectLocation.error}
             value={form2Data.projectLocation}
-            helperText={checkerForm2.projectLocation.error ? checkerForm2.projectLocation.messages[0] : null}
+            helperText={
+              checkerForm2.projectLocation.error
+                ? checkerForm2.projectLocation.messages[0]
+                : null
+            }
           />
         </Grid>
         <Grid item xs={12}>
@@ -129,7 +148,11 @@ function EditorForm2({ form2Data, setForm2Data, checkerForm2, index }) {
             fullWidth
             error={checkerForm2.description.error}
             value={form2Data.description}
-            helperText={checkerForm2.description.error ? checkerForm2.description.messages[0] : null}
+            helperText={
+              checkerForm2.description.error
+                ? checkerForm2.description.messages[0]
+                : null
+            }
             multiline
             minRows={5}
           />
@@ -146,7 +169,11 @@ function EditorForm2({ form2Data, setForm2Data, checkerForm2, index }) {
             fullWidth
             error={checkerForm2.purpose.error}
             value={form2Data.purpose}
-            helperText={checkerForm2.purpose.error ? checkerForm2.purpose.messages[0] : null}
+            helperText={
+              checkerForm2.purpose.error
+                ? checkerForm2.purpose.messages[0]
+                : null
+            }
             multiline
             minRows={5}
           />
@@ -163,7 +190,11 @@ function EditorForm2({ form2Data, setForm2Data, checkerForm2, index }) {
             fullWidth
             error={checkerForm2.beneficiary.error}
             value={form2Data.beneficiary}
-            helperText={checkerForm2.beneficiary.error ? checkerForm2.beneficiary.messages[0] : null}
+            helperText={
+              checkerForm2.beneficiary.error
+                ? checkerForm2.beneficiary.messages[0]
+                : null
+            }
             multiline
             minRows={3}
           />
@@ -215,7 +246,11 @@ function EditorForm2({ form2Data, setForm2Data, checkerForm2, index }) {
                 fullWidth
                 error={checkerForm2.proposedProjectCost[index].error}
                 value={item.cost}
-                helperText={checkerForm2.proposedProjectCost[index].error ? checkerForm2.proposedProjectCost[index].messages[0] : null}
+                helperText={
+                  checkerForm2.proposedProjectCost[index].error
+                    ? checkerForm2.proposedProjectCost[index].messages[0]
+                    : null
+                }
               />
             </Card>
           </Grid>
@@ -246,7 +281,11 @@ function EditorForm2({ form2Data, setForm2Data, checkerForm2, index }) {
             fullWidth
             error={checkerForm2.surName.error}
             value={form2Data.proponentName.surname}
-            helperText={checkerForm2.surName.error ? checkerForm2.surName.messages[0] : null}
+            helperText={
+              checkerForm2.surName.error
+                ? checkerForm2.surName.messages[0]
+                : null
+            }
           />
         </Grid>
         <Grid item xs={12} md={3}>
@@ -267,7 +306,11 @@ function EditorForm2({ form2Data, setForm2Data, checkerForm2, index }) {
             fullWidth
             error={checkerForm2.firstName.error}
             value={form2Data.proponentName.firstName}
-            helperText={checkerForm2.firstName.error ? checkerForm2.firstName.messages[0] : null}
+            helperText={
+              checkerForm2.firstName.error
+                ? checkerForm2.firstName.messages[0]
+                : null
+            }
           />
         </Grid>
         <Grid item xs={12} md={3}>
@@ -301,7 +344,11 @@ function EditorForm2({ form2Data, setForm2Data, checkerForm2, index }) {
             fullWidth
             error={checkerForm2.designation.error}
             value={form2Data.designation}
-            helperText={checkerForm2.designation.error ? checkerForm2.designation.messages[0] : null}
+            helperText={
+              checkerForm2.designation.error
+                ? checkerForm2.designation.messages[0]
+                : null
+            }
           />
         </Grid>
         <Grid item xs={12} md={6}>
@@ -322,7 +369,11 @@ function EditorForm2({ form2Data, setForm2Data, checkerForm2, index }) {
             fullWidth
             error={checkerForm2.telephoneNumber.error}
             value={form2Data.contactInformation.telNumber}
-            helperText={checkerForm2.telephoneNumber.error ? checkerForm2.telephoneNumber.messages[0] : null}
+            helperText={
+              checkerForm2.telephoneNumber.error
+                ? checkerForm2.telephoneNumber.messages[0]
+                : null
+            }
           />
         </Grid>
         <Grid item xs={12} md={6}>
@@ -343,7 +394,9 @@ function EditorForm2({ form2Data, setForm2Data, checkerForm2, index }) {
             fullWidth
             error={checkerForm2.email.error}
             value={form2Data.contactInformation.email}
-            helperText={checkerForm2.email.error ? checkerForm2.email.messages[0] : null}
+            helperText={
+              checkerForm2.email.error ? checkerForm2.email.messages[0] : null
+            }
           />
         </Grid>
         <Grid item xs={12} md={6}>
@@ -364,7 +417,11 @@ function EditorForm2({ form2Data, setForm2Data, checkerForm2, index }) {
             fullWidth
             error={checkerForm2.phoneNumber.error}
             value={form2Data.contactInformation.phoneNumber}
-            helperText={checkerForm2.phoneNumber.error ? checkerForm2.phoneNumber.messages[0] : null}
+            helperText={
+              checkerForm2.phoneNumber.error
+                ? checkerForm2.phoneNumber.messages[0]
+                : null
+            }
           />
         </Grid>
         <Grid item xs={12} md={6}>
@@ -392,48 +449,99 @@ function EditorForm2({ form2Data, setForm2Data, checkerForm2, index }) {
           <Divider className={classes.divider} />
         </Grid>
         <Grid item xs={6} align="center">
-          <Typography variant="h5" align="left">
-            Attatched Files
+          <Typography variant="h5" align="left" display="inline">
+            Upload Files
           </Typography>
+          <input
+            style={{ display: "none" }}
+            id="fileUpload"
+            multiple
+            type="file"
+            onChange={(e) => setFileList(Object.values(e.target.files))}
+          />
+          <label htmlFor="fileUpload">
+            <Button
+              variant="contained"
+              component="span"
+              startIcon={<AddCircleOutline />}
+            >
+              Upload Files
+            </Button>
+          </label>
           <Paper className={classes.paper}>
-            <input
-              style={{ display: "none" }}
-              id="fileUpload"
-              multiple
-              type="file"
-            />
-            <label htmlFor="fileUpload">
-              <Button
-                variant="contained"
-                component="span"
-                startIcon={<AddCircleOutline />}
-              >
-                Upload Files
-              </Button>
-            </label>
+            <List>
+              {fileList.map((file, index) => (
+                <ListItem key={index}>
+                  <ListItemAvatar>
+                    <Avatar>
+                      <Folder />
+                    </Avatar>
+                  </ListItemAvatar>
+                  <ListItemText primary={file.name} />
+                  <ListItemSecondaryAction>
+                    <IconButton
+                      edge="end"
+                      onClick={() =>
+                        setFileList(() => {
+                          var newList = [...fileList];
+                          newList.splice(index, 1);
+                          return newList;
+                        })
+                      }
+                    >
+                      <Delete />
+                    </IconButton>
+                  </ListItemSecondaryAction>
+                </ListItem>
+              ))}
+            </List>
           </Paper>
         </Grid>
         <Grid item xs={6} align="center">
-          <Typography variant="h5" align="left">
+          <Typography variant="h5" align="left" display="inline">
             Signature
           </Typography>
+          <input
+            accept="image/*"
+            style={{ display: "none" }}
+            id="userSignature"
+            type="file"
+            onChange={(e) => setSignature(Object.values(e.target.files))}
+          />
+          <label htmlFor="userSignature">
+            <Button
+              variant="contained"
+              component="span"
+              startIcon={<AddCircleOutline />}
+            >
+              Upload Signature
+            </Button>
+          </label>
           <Paper className={classes.paper}>
-            <input
-              accept="image/*"
-              style={{ display: "none" }}
-              id="userSignature"
-              multiple
-              type="file"
-            />
-            <label htmlFor="userSignature">
-              <Button
-                variant="contained"
-                component="span"
-                startIcon={<AddCircleOutline />}
-              >
-                Upload Signature
-              </Button>
-            </label>
+            <List>
+              {signature.map((file, index) => (
+                <ListItem key={index}>
+                  <ListItemAvatar>
+                    <Avatar>
+                      <Folder />
+                    </Avatar>
+                  </ListItemAvatar>
+                  <ListItemText primary={file.name} />
+                  <ListItemSecondaryAction>
+                    <IconButton
+                      edge="end"
+                      onClick={() => setSignature(() => {
+                        var newList = [...signature];
+                        newList.splice(index, 1);
+                        return newList;
+                      })}
+                    >
+                      <Delete />
+                    </IconButton>
+                  </ListItemSecondaryAction>
+                </ListItem>
+              ))}
+            </List>
           </Paper>
         </Grid>
       </Grid>
