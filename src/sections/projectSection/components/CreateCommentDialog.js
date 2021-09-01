@@ -31,18 +31,6 @@ function CreateCommentDialog({
       <DialogTitle id="form-dialog-title">Add Comment</DialogTitle>
       <DialogContent>
         <TextField
-          autoFocus
-          margin="dense"
-          id="header"
-          label="Header"
-          fullWidth
-          value={comment.header}
-          onChange={(e) => {
-            setLocalComment({ ...comment, header: e.target.value });
-          }}
-          variant="outlined"
-        />
-        <TextField
           margin="dense"
           id="message"
           label="Message"

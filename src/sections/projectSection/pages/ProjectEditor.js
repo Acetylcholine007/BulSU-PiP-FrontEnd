@@ -328,7 +328,7 @@ function ProjectEditor({ isNew, project, institute }) {
                     onClick={() => {
                       var checker = form1Validator(form1Data);
                       console.log(checker);
-                      if (true || 
+                      if (
                         !checker.title.error &&
                         !checker.obligationType.error &&
                         !checker.proponent.error &&

@@ -97,6 +97,10 @@ function ElevatedProjectViewer({
   const [comments, setComments] = useState(project.commentList);
   const [PDOSignature, setPDOSignature] = useState([]);
 
+  const [checkerForm1, setCheckerForm1] = useState();
+  const [checkerForm2, setCheckerForm2] = useState();
+  const [checkerForm3, setCheckerForm3] = useState();
+
   const selectComment = (comment) => {
     setComment(comment);
     setOpen(true);
@@ -130,6 +134,7 @@ function ElevatedProjectViewer({
             investmentReq={investmentReq}
             setInvestmentReq={setInvestmentReq}
             status={status}
+            checkerForm1={checkerForm1}
           />
         );
       case 1:
@@ -139,6 +144,7 @@ function ElevatedProjectViewer({
             proposedProjectCost={proposedProjectCost}
             setProposedProjectCost={setProposedProjectCost}
             priority={priority}
+            checkerForm2={checkerForm2}
           />
         );
       case 2:
@@ -148,6 +154,7 @@ function ElevatedProjectViewer({
             setForm3Data={setForm3Data}
             PDOSignature={PDOSignature}
             setPDOSignature={setPDOSignature}
+            checkerForm3={checkerForm3}
           />
         ) : (
           <ViewerForm3
@@ -231,7 +238,31 @@ function ElevatedProjectViewer({
           <Grid item xs={12}>
             <Tabs
               value={tabIndex}
-              onChange={(event, index) => setTabIndex(index)}
+              onChange={(event, index) => {
+                switch (tabIndex) {
+                  case 0:
+                    var checker = null;
+                    if (true) {
+                      setTabIndex(index);
+                    }
+                    setCheckerForm1({});
+                    break;
+                  case 1:
+                    var checker = null;
+                    if (true) {
+                      setTabIndex(index);
+                    }
+                    setCheckerForm2({});
+                    break;
+                  case 2:
+                    var checker = null;
+                    if (true) {
+                      setTabIndex(index);
+                    }
+                    setCheckerForm3({});
+                    break;
+                }
+              }}
               indicatorColor="primary"
               textColor="primary"
               variant="fullWidth"
