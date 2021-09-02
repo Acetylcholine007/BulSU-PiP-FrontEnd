@@ -97,7 +97,15 @@ function ElevatedProjectViewer({
   const [comments, setComments] = useState(project.commentList);
   const [PDOSignature, setPDOSignature] = useState([]);
 
-  const [checkerForm1, setCheckerForm1] = useState();
+  const [checkerForm1, setCheckerForm1] = useState({
+      investmentReq: [
+          { error: false, messages: [] },
+          { error: false, messages: [] },
+          { error: false, messages: [] },
+          { error: false, messages: [] },
+          { error: false, messages: [] },
+      ],
+  });
   const [checkerForm2, setCheckerForm2] = useState();
   const [checkerForm3, setCheckerForm3] = useState();
 
