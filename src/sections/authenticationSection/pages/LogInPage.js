@@ -9,7 +9,7 @@ import {
   TextField,
   Typography,
   Input,
-  CardHeader
+  CardHeader,
 } from "@material-ui/core";
 import { useState, useContext } from "react";
 import { useHistory } from "react-router";
@@ -22,8 +22,9 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import { ProjectContext } from "../../../contexts/ProjectContext";
 import LoginDialog from "../components/LoginDialog";
+import loginValidator from "../../../utils/loginValidator";
 
-import PDO from "./pdo.png"
+import PDO from "./pdo.png";
 
 const useStyles = makeStyles((theme) => ({
   motherPane: {
@@ -37,12 +38,12 @@ const useStyles = makeStyles((theme) => ({
     padding: 0,
     margin: 0,
     //background: "linear-gradient(264deg, rgba(255,115,0,1) 26%, rgba(253,255,0,1) 100%)",
-    background: "url('https://iadmissions.bulsu.edu.ph/assets/images/parallax-bg2.jpg')",
-    backgroundSize: 'cover',
-    backgroundPosition: 'center'
+    background:
+      "url('https://iadmissions.bulsu.edu.ph/assets/images/parallax-bg2.jpg')",
+    backgroundSize: "cover",
+    backgroundPosition: "center",
   },
-  background: {
-  },
+  background: {},
   formPane: {
     padding: "10%",
     paddingTop: "-3rem",
@@ -60,7 +61,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: "0.5rem",
   },
   button2: {
-    marginBottom: "0.7rem"
+    marginBottom: "0.7rem",
   },
   avtr: {
     height: 50,
@@ -86,8 +87,17 @@ function LogInPage() {
 
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
-
-  console.log(PDO)
+  const [loginChecker, setLoginChecker] = useState({
+    email: {
+      error: false,
+      messages: [],
+    },
+    password: {
+      error: false,
+      messages: [],
+    },
+  });
+  console.log(PDO);
 
   const login = (email, password) => {
     const abortCont = new AbortController();
@@ -156,18 +166,13 @@ function LogInPage() {
     setEmailError(false);
     setPasswordError(false);
 
-    if (email === "") {
-      setEmailError(true);
-    }
-    if (password === "") {
-      setPasswordError(true);
-    }
-
-    if (!emailError && !passwordError) {
+    var checker = loginValidator(email, password);
+    if (!checker.email.error && !checker.password.error) {
       const myBitArray = sjcl.hash.sha256.hash(password);
       const myHash = sjcl.codec.hex.fromBits(myBitArray);
       login(email, myHash);
     }
+    setLoginChecker(checker)
   };
 
   return (
@@ -178,12 +183,18 @@ function LogInPage() {
             <CardContent>
               <div className={`animate__animated animate__fadeInDown`}>
                 <p>
-                  <img className={classes.avtr} src="favicon.ico" alt="BulSU Icon"></img>
+                  <img
+                    className={classes.avtr}
+                    src="favicon.ico"
+                    alt="BulSU Icon"
+                  ></img>
                   <img className={classes.avtr2} src={PDO} alt="PDO Icon"></img>
                 </p>
                 <p>BulSU PIPS - ver 0.1</p>
-                <Typography variant="h4" component="h1">Sign In</Typography>
-                <br/>
+                <Typography variant="h4" component="h1">
+                  Sign In
+                </Typography>
+                <br />
                 <form noValidate autoComplete="off" onSubmit={handleLogin}>
                   <TextField
                     onChange={(e) => setEmail(e.target.value)}
@@ -192,9 +203,13 @@ function LogInPage() {
                     variant="outlined"
                     color="primary"
                     fullWidth
-                    error={emailError}
+                    error={loginChecker.email.error}
+                    helperText={
+                      loginChecker.email.error
+                        ? loginChecker.email.messages
+                        : null
+                    }
                     value={email}
-                    helperText={passwordError ? "Error Email" : null}
                   />
                   <TextField
                     onChange={(e) => setPassword(e.target.value)}
@@ -203,10 +218,14 @@ function LogInPage() {
                     variant="outlined"
                     color="primary"
                     fullWidth
-                    error={passwordError}
+                    error={loginChecker.password.error}
                     value={password}
                     type="password"
-                    helperText={passwordError ? "Error Password" : null}
+                    helperText={
+                      loginChecker.password.error
+                        ? loginChecker.password.messages
+                        : null
+                    }
                   />
                   <Button
                     type="submit"
@@ -217,9 +236,10 @@ function LogInPage() {
                   >
                     LOGIN
                   </Button>
-                  <br/>
-                  <Button size="small"
-                    className={classes.button2}>forgot password?</Button>
+                  <br />
+                  <Button size="small" className={classes.button2}>
+                    forgot password?
+                  </Button>
                   <Divider />
                   <Button
                     color="primary"
@@ -232,7 +252,6 @@ function LogInPage() {
                   </Button>
                 </form>
               </div>
-              
             </CardContent>
           </Card>
         </Grid>
