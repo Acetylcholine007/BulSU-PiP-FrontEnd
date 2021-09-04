@@ -136,9 +136,13 @@ function form2Validator({
   }
 
   proposedProjectCost.forEach((item, index) => {
-    if(item.cost==='') {
+    if(item.cost.length == "") {
       result.proposedProjectCost[index].error = true;
       result.proposedProjectCost[index].messages.push('Not Null')
+    } 
+    if(item.cost==='0') {
+      result.proposedProjectCost[index].error = true;
+      result.proposedProjectCost[index].messages.push('Not Valid')
     }
     })
 

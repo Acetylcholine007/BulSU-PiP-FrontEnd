@@ -25,6 +25,7 @@ function EditorForm3({
   setForm3Data,
   PDOSignature,
   setPDOSignature,
+  checkerForm3
 }) {
   const useStyles = makeStyles(() => ({
     table: {
@@ -52,9 +53,9 @@ function EditorForm3({
                   label="Reciever Name"
                   variant="outlined"
                   fullWidth
-                  error={false}
+                  error={checkerForm3.recievedBy.error}
                   value={form3Data.recievedBy}
-                  helperText={false ? "Error Password" : null}
+                  helperText={checkerForm3.recievedBy.error ? checkerForm3.recievedBy.messages[0] : null}
                 />
               </TableCell>
             </TableRow>
@@ -71,9 +72,9 @@ function EditorForm3({
                   label="Reciever Designation"
                   variant="outlined"
                   fullWidth
-                  error={false}
+                  error={checkerForm3.recieverDesignation.error}
                   value={form3Data.recieverDesignation}
-                  helperText={false ? "Error Password" : null}
+                  helperText={checkerForm3.recieverDesignation.error ? checkerForm3.recieverDesignation.messages[0] : null}
                 />
               </TableCell>
             </TableRow>

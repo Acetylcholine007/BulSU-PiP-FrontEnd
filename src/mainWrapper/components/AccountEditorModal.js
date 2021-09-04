@@ -14,6 +14,7 @@ import sjcl from "sjcl";
 
 import { AuthContext } from "../../contexts/AuthContext";
 import { serverUrl } from "../../utils/serverUrl";
+import accountEditorValidator from "../../utils/accountEditorValidator";
 
 function AccountEditorModal({ open, setOpen }) {
   const useStyles = makeStyles((theme) => ({
@@ -44,8 +45,21 @@ function AccountEditorModal({ open, setOpen }) {
   const { user } = useContext(AuthContext);
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState(user.email);
+  const [accountEditorChecker, setaccountEditorChecker] = useState(
+    { 
+      password: {
+        error: false,
+        messages: [],
+      }
+    }
+  )
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => 
+  {
+    e.preventDefault();
+    var checker = accountEditorValidator(password);
+    if (!checker.password.error) 
+    {
     const myBitArray = sjcl.hash.sha256.hash(password);
     const myHash = sjcl.codec.hex.fromBits(myBitArray);
     fetch(`${serverUrl}users/${user.id}`, {
@@ -58,7 +72,9 @@ function AccountEditorModal({ open, setOpen }) {
       }),
     }).then(() => {
       console.log('Successfully edited');
-    });
+    });  
+    }
+    setaccountEditorChecker(checker);
   };
 
   return (
@@ -102,9 +118,13 @@ function AccountEditorModal({ open, setOpen }) {
                             variant="outlined"
                             color="primary"
                             fullWidth
-                            error={false}
+                            error={accountEditorChecker.password.error}
                             value={password}
-                            helperText={false ? "Error Email" : null}
+                            helperText={
+                              accountEditorChecker.password.error
+                                ? accountEditorChecker.password.messages
+                                : null
+                            }
                             type="password"
                           />
                         </Grid>
