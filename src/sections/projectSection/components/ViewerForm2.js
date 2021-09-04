@@ -15,7 +15,7 @@ import { months } from "../../../utils/constants";
 import React, { useContext } from "react";
 import { AuthContext } from "../../../contexts/AuthContext";
 
-function ViewerForm2({ project, proposedProjectCost, setProposedProjectCost, priority }) {
+function ViewerForm2({ project, proposedProjectCost, setProposedProjectCost, priority, checkerForm2 }) {
   const useStyles = makeStyles(() => ({
     table: {
       minWidth: 700,
@@ -189,7 +189,8 @@ function ViewerForm2({ project, proposedProjectCost, setProposedProjectCost, pri
                         label="Value"
                         variant="outlined"
                         fullWidth
-                        error={false}
+                        error={checkerForm2.proposedProjectCost[index].error}
+                        helperText={checkerForm2.proposedProjectCost[index].error ? checkerForm2.proposedProjectCost[index].messages[0] : null}
                         value={yearCost.cost}
                       />
                     </TableCell>
