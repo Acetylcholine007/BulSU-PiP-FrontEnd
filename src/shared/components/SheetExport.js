@@ -24,7 +24,7 @@ function SheetExport({ institutes, filename, buttonLabel }) {
     >
       {institutes.map((institute) => {
         var sortedProjects = institute.priority.map((projectId) =>
-          institute.projects.find((project) => project.id == projectId)
+          institute.projectList.find((project) => project.id == projectId)
         );
 
         var newProjects = sortedProjects.map((project, index) => ({

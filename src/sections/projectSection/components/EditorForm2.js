@@ -181,18 +181,18 @@ function EditorForm2({
         <Grid item xs={12}>
           <TextField
             onChange={(e) =>
-              setForm2Data({ ...form2Data, beneficiary: e.target.value })
+              setForm2Data({ ...form2Data, beneficiaries: e.target.value })
             }
             className={classes.field}
-            label="Beneficiary"
+            label="Beneficiaries"
             variant="outlined"
             color="primary"
             fullWidth
-            error={checkerForm2.beneficiary.error}
-            value={form2Data.beneficiary}
+            error={checkerForm2.beneficiaries.error}
+            value={form2Data.beneficiaries}
             helperText={
-              checkerForm2.beneficiary.error
-                ? checkerForm2.beneficiary.messages[0]
+              checkerForm2.beneficiaries.error
+                ? checkerForm2.beneficiaries.messages[0]
                 : null
             }
             multiline

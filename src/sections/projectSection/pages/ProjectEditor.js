@@ -21,6 +21,7 @@ import { AuthContext } from "../../../contexts/AuthContext";
 import { institutes } from "../../../utils/constants";
 import { form1Validator } from "../../../utils/form1Validator";
 import form2Validator from "../../../utils/form2Validator";
+import { Projects } from "../../../utils/bulsupis_mw";
 
 function ProjectEditor({ isNew, project, institute }) {
   const [page, setPage] = useState(1);
@@ -36,11 +37,11 @@ function ProjectEditor({ isNew, project, institute }) {
       justifyContent: "space-evenly",
     },
     divider: {
-      marginBottom: 15
+      marginBottom: 15,
     },
     card: {
-      marginBottom: 15
-    }
+      marginBottom: 15,
+    },
   }));
 
   const classes = useStyles();
@@ -64,7 +65,6 @@ function ProjectEditor({ isNew, project, institute }) {
           PAPLevel: 1,
           readiness: 1,
           status: 1,
-          remarks: "",
         }
       : {
           title: project.title,
@@ -76,7 +76,6 @@ function ProjectEditor({ isNew, project, institute }) {
           PAPLevel: project.PAPLevel,
           readiness: project.readiness,
           status: project.status,
-          remarks: project.remarks,
         }
   );
 
@@ -84,7 +83,6 @@ function ProjectEditor({ isNew, project, institute }) {
     isNew
       ? {
           suc: "Bulacan State University",
-          institute: user.institute,
           address: "",
           projectLocation: "",
           categorization: {
@@ -95,7 +93,7 @@ function ProjectEditor({ isNew, project, institute }) {
           },
           description: "",
           purpose: "",
-          beneficiary: "",
+          beneficiaries: "",
           proposedProjectCost: [
             { year: "2021", cost: "0" },
             { year: "2021", cost: "0" },
@@ -110,8 +108,6 @@ function ProjectEditor({ isNew, project, institute }) {
             others: "",
           },
           dateAccomplished: new Date().toISOString(),
-          signature: "",
-          fileList: [],
         }
       : {
           address: project.address,
@@ -183,7 +179,7 @@ function ProjectEditor({ isNew, project, institute }) {
       messages: [],
     },
 
-    beneficiary: {
+    beneficiaries: {
       error: false,
       messages: [],
     },
@@ -222,35 +218,38 @@ function ProjectEditor({ isNew, project, institute }) {
 
   const handleSubmit = () => {
     if (isNew) {
-      var newId =
-        Math.max.apply(
-          null,
-          institute.projects.map((project) => project.id)
-        ) + 1;
-      var newInstitute = { ...institute };
-      newInstitute.projects.push({
+      console.log("New Project >>>>>>>>>");
+      console.log({
         ...form1Data,
         ...form2Data,
-        commentList: [],
-        ownerId: user.id,
         address: institutes.find(
-          (institute) => institute.institute === user.institute.institute
+          (institute) => institute.abbv === user.institute.abbv
         ).address,
-        recievedBy: "",
-        recieverDesignation: "",
-        designation: "",
-        dateRecieved: "",
-        pdoSignature: "",
-        id: newId,
+        recievedBy: undefined,
+        recieverDesignation: undefined,
+        dateRecieved: undefined,
       });
-      newInstitute.priority.push(newId);
-      fetch(`${serverUrl}institutes/${institute.id}`, {
-        method: "PUT",
-        headers: { "Content-type": "application/json" },
-        body: JSON.stringify(newInstitute),
-      }).then(() => {
-        history.push("/projects");
-      });
+      Projects.create(
+        {
+          ...form1Data,
+          ...form2Data,
+          address: institutes.find(
+            (institute) => institute.abbv === user.institute.abbv
+          ).address,
+          recievedBy: undefined,
+          recieverDesignation: undefined,
+          dateRecieved: undefined,
+        },
+        fileList,
+        signature.length == 0 ? undefined : signature[0]
+      )
+        .then((res) => {
+          console.log(res);
+          history.push("/projects");
+        })
+        .catch((err) => {
+          console.log(err.message);
+        });
     } else {
       var newInstitute = { ...institute };
       var projectIndex = newInstitute.projects.indexOf(project);
@@ -329,14 +328,15 @@ function ProjectEditor({ isNew, project, institute }) {
                       var checker = form1Validator(form1Data);
                       console.log(checker);
                       if (
-                        !checker.title.error &&
-                        !checker.obligationType.error &&
-                        !checker.proponent.error &&
-                        !checker.startYear.error &&
-                        !checker.endYear.error &&
-                        checker.investmentReq
-                          .map((item) => !item.error)
-                          .reduce((a, b) => a && b)
+                        true ||
+                        (!checker.title.error &&
+                          !checker.obligationType.error &&
+                          !checker.proponent.error &&
+                          !checker.startYear.error &&
+                          !checker.endYear.error &&
+                          checker.investmentReq
+                            .map((item) => !item.error)
+                            .reduce((a, b) => a && b))
                       ) {
                         setPage(2);
                       }
@@ -352,20 +352,21 @@ function ProjectEditor({ isNew, project, institute }) {
                       var checker = form2Validator(form2Data);
                       console.log(checker);
                       if (
-                        !checker.projectLocation.error &&
-                        !checker.description.error &&
-                        !checker.purpose.error &&
-                        !checker.beneficiary.error &&
-                        !checker.surName.error &&
-                        !checker.firstName.error &&
-                        !checker.telephoneNumber.error &&
-                        !checker.email.error &&
-                        !checker.phoneNumber.error &&
-                        checker.proposedProjectCost
-                          .map((item) => !item.error)
-                          .reduce((a, b) => a && b)
+                        true ||
+                        (!checker.projectLocation.error &&
+                          !checker.description.error &&
+                          !checker.purpose.error &&
+                          !checker.beneficiaries.error &&
+                          !checker.surName.error &&
+                          !checker.firstName.error &&
+                          !checker.telephoneNumber.error &&
+                          !checker.email.error &&
+                          !checker.phoneNumber.error &&
+                          checker.proposedProjectCost
+                            .map((item) => !item.error)
+                            .reduce((a, b) => a && b))
                       ) {
-                        console.log('submitted')
+                        console.log("submitted");
                         handleSubmit();
                       }
                       setCheckerForm2(checker);

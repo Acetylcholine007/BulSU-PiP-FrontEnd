@@ -8,7 +8,7 @@ import {
   makeStyles,
 } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Add, Save } from "@material-ui/icons";
 
 import ProjectList from "../components/ProjectList";
@@ -18,12 +18,12 @@ import { serverUrl } from "../../../utils/serverUrl";
 import SheetExport from "../../../shared/components/SheetExport";
 import PDFExport from "../../../shared/components/PDFExport";
 
-function InstituteViewer({ institute, instituteId, priority }) {
+function InstituteViewer({ institute }) {
   const history = useHistory();
   const { user } = useContext(AuthContext);
   const [open, setOpen] = useState(false);
-  const [projects, setProject] = useState(institute.projects);
-  const [localPrio, setLocalPrio] = useState([...priority]);
+  const [projects, setProject] = useState(institute.projectList);
+  const [localPrio, setLocalPrio] = useState([...institute.priority]);
 
   const [filter, setFilter] = useState({
     search: "",
@@ -83,13 +83,13 @@ function InstituteViewer({ institute, instituteId, priority }) {
             Create New
           </Button>
         )}
-        <SheetExport
+        {/* <SheetExport
           institutes={[institute]}
-          filename={instituteId}
+          filename={institute.instituteId}
           buttonLabel="Export Investment Sheet"
-        />
-        <PDFExport projects={institute.projects} filename={instituteId} priority = {priority}/>
-        {!compareArray(priority, localPrio) && (
+        /> */}
+        <PDFExport projects={institute.projects} filename={institute.instituteId} priority = {institute.priority}/>
+        {!compareArray(institute.priority, localPrio) && (
           <Button
             className={classes.button}
             variant="contained"
@@ -108,10 +108,10 @@ function InstituteViewer({ institute, instituteId, priority }) {
                     history.push("/projects");
                     break;
                   case 1:
-                    history.push(`/institutes/${instituteId}`);
+                    history.push(`/institutes/${institute.instituteId}`);
                     break;
                   case 2:
-                    history.push(`/institutes/${instituteId}`);
+                    history.push(`/institutes/${institute.instituteId}`);
                     break;
                 }
               });
@@ -126,11 +126,11 @@ function InstituteViewer({ institute, instituteId, priority }) {
         <Grid container>
           <Grid item xs={12}>
             <ProjectList
-              instituteId={instituteId}
+              instituteId={institute.instituteId}
               filter={filter}
               setFilter={setFilter}
               setOpen={setOpen}
-              priority={priority}
+              priority={institute.priority}
               projects={projects}
               setProject={setProject}
               localPrio={localPrio}

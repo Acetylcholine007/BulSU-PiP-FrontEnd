@@ -215,6 +215,7 @@ function ProjectList({
                       index={index}
                     >
                       {(provided) => {
+                        console.log(project.title)
                         return (
                           <TableRow
                             innerRef={provided.innerRef}
@@ -241,11 +242,11 @@ function ProjectList({
                             <TableCell
                               align='center'
                               style={{
-                                backgroundColor: statuses[project.status].color,
+                                backgroundColor: statuses[project.status ? project.status : 0].color,
                               }}
                               className={classes.statusCell}
                             >
-                              {statuses[project.status].label}
+                              {statuses[project.status ? project.status : 0].label}
                             </TableCell>
                           </TableRow>
                         );

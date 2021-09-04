@@ -1,19 +1,18 @@
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@material-ui/core";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 
-import "animate.css"
+import "animate.css";
 import "./App.css";
 import MainWrapper from "./mainWrapper/pages/MainWrapper";
 import LogInPage from "./sections/authenticationSection/pages/LogInPage";
 import SignUpPage from "./sections/authenticationSection/pages/SignUpPage";
-import DashboardPage from "./sections/dashboardSection/pages/DashboardPage";
 import AccountPage from "./sections/accountSection/pages/AccountPage";
 import NotificationPage from "./sections/notificationSection/pages/NotificationPage";
 import ProjectEditorWrapper from "./sections/projectSection/wrappers/ProjectEditorWrapper";
 import { AuthContext } from "./contexts/AuthContext";
-import { ProjectContext } from "./contexts/ProjectContext";
+import { InstituteContext } from "./contexts/InstituteContext";
 import LoadingComponent from "./shared/components/LoadingComponent";
 import DateFnsUtils from "@date-io/date-fns";
 import InstitutePage from "./sections/projectSection/pages/InstitutePage";
@@ -22,6 +21,9 @@ import ClientProjectViewer from "./sections/projectSection/wrappers/ClientProjec
 import ClientInstituteViewer from "./sections/projectSection/wrappers/ClientInstituteViewer";
 import AdminInstituteViewer from "./sections/projectSection/wrappers/AdminInstituteViewer";
 import NotFound from "./shared/pages/NotFound";
+import { Account } from "./utils/bulsupis_mw";
+import ClientDashboard from "./sections/dashboardSection/wrappers/ClientDashboard";
+import AdminDashboard from "./sections/dashboardSection/wrappers/AdminDashboard";
 
 const theme = createTheme({
   palette: {
@@ -42,7 +44,7 @@ const theme = createTheme({
       main: "#9E9E9E",
       dark: "#616161",
       contrastText: "#000000",
-    }
+    },
   },
   typography: {
     fontFamily: "Quicksand",
@@ -55,19 +57,40 @@ const theme = createTheme({
 
 function App() {
   const [user, setUser] = useState(null);
-  const [projects, setProjects] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(Account.isLoggedIn());
+  const [institute, setInstitute] = useState(null);
 
-  if (user) {
-  }
+  const getUserData = async () =>
+    await Account.getInfo()
+      .then((res) => {
+        setUser(res.data);
+      })
+      .catch((err) => {
+        console.log(err.message);
+        setUser(null);
+      });
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      getUserData();
+    }
+  }, []);
 
   return (
-    <AuthContext.Provider value={{ user: user, setUser: setUser }}>
-      <ProjectContext.Provider
-        value={{ projects: projects, setProjects: setProjects }}
+    <AuthContext.Provider
+      value={{
+        user: user,
+        setUser: setUser,
+        isLoggedIn: isLoggedIn,
+        setIsLoggedIn: setIsLoggedIn,
+      }}
+    >
+      <InstituteContext.Provider
+        value={{ institute: institute, setInstitute: setInstitute }}
       >
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
           <ThemeProvider theme={theme}>
-            {!user && (
+            {!Account.isLoggedIn() && (
               <Router>
                 <Switch>
                   <Route exact path="/signup">
@@ -82,16 +105,16 @@ function App() {
                 </Switch>
               </Router>
             )}
-            {user && !projects && <LoadingComponent />}
-            {user && projects && (
+            {user == null && <LoadingComponent />}
+            {Account.isLoggedIn() && user && (
               <Router>
                 <MainWrapper>
                   <Switch>
                     <Route exact path="/">
-                      <DashboardPage />
+                      {user.type == 0 ? <ClientDashboard /> : <AdminDashboard />}
                     </Route>
                     <Route exact path="/dashboard">
-                      <DashboardPage />
+                      {user.type == 0 ? <ClientDashboard /> : <AdminDashboard />}
                     </Route>
                     <Route exact path="/accounts">
                       <AccountPage />
@@ -100,13 +123,13 @@ function App() {
                       <ClientInstituteViewer />
                     </Route>
                     <Route exact path="/projects/new">
-                      <ProjectEditorWrapper isNew = {true} />
+                      <ProjectEditorWrapper isNew={true} />
                     </Route>
                     <Route exact path="/projects/:id">
                       <ClientProjectViewer />
                     </Route>
                     <Route exact path="/projects/:id/edit">
-                      <ProjectEditorWrapper isNew = {false} />
+                      <ProjectEditorWrapper isNew={false} />
                     </Route>
                     <Route exact path="/institutes">
                       <InstitutePage />
@@ -129,7 +152,7 @@ function App() {
             )}
           </ThemeProvider>
         </MuiPickersUtilsProvider>
-      </ProjectContext.Provider>
+      </InstituteContext.Provider>
     </AuthContext.Provider>
   );
 }

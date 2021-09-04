@@ -15,7 +15,6 @@ import {
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 
-import { serverUrl } from "../../../utils/serverUrl";
 import CommentModal from "../components/CommentModal";
 import ViewerForm1 from "../components/ViewerForm1";
 import ViewerForm2 from "../components/ViewerForm2";
@@ -23,6 +22,7 @@ import ViewerForm3 from "../components/ViewerForm3";
 import { Delete, Edit } from "@material-ui/icons";
 import CommentList from "../components/CommentList";
 import PDFExport from "../../../shared/components/PDFExport";
+import { Projects } from "../../../utils/bulsupis_mw";
 
 const useStyles = makeStyles((theme) => ({
   txt: {
@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function ProjectViewer({ project, projectId, priority, institute }) {
+function ProjectViewer({ project, priority }) {
   const classes = useStyles();
   const history = useHistory();
   const [open, setOpen] = useState(false);
@@ -66,16 +66,11 @@ function ProjectViewer({ project, projectId, priority, institute }) {
   const [tabIndex, setTabIndex] = useState(0);
 
   const handleDelete = () => {
-    var newInstitute = { ...institute };
-    newInstitute.projects.splice(newInstitute.projects.indexOf(project), 1);
-    newInstitute.priority.splice(newInstitute.priority.indexOf(projectId), 1);
-    fetch(`${serverUrl}institutes/${institute.id}`, {
-      method: "PUT",
-      headers: { "Content-type": "application/json" },
-      body: JSON.stringify(newInstitute),
-    }).then(() => {
+    Projects.delete(project.id)
+    .then((res) => {
+      console.log(res);
       history.push("/projects");
-    });
+    })
   };
 
   const selectComment = (comment) => {
@@ -133,7 +128,7 @@ function ProjectViewer({ project, projectId, priority, institute }) {
           variant="contained"
           startIcon={<Edit />}
           onClick={() => {
-            history.push(`/projects/${projectId}/edit`);
+            history.push(`/projects/${project.projectId}/edit`);
           }}
           className={classes.button}
         >

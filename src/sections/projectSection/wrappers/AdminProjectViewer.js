@@ -1,34 +1,47 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import ElevatedProjectViewer from "../pages/ElevatedProjectViewer";
 
-import useFetch from "../../../hooks/useFetch";
-import ErrorComponent from "../../../shared/components/ErrorComponent";
 import LoadingComponent from "../../../shared/components/LoadingComponent";
-import { serverUrl } from "../../../utils/serverUrl";
+import { Admin, Projects } from "../../../utils/bulsupis_mw";
+import { InstituteContext } from "../../../contexts/InstituteContext";
+import { projectTranslator } from "../../../utils/translators";
 
 function AdminProjectViewer() {
   const { instituteId, projectId } = useParams();
+  const [project, setProject] = useState(null);
+  const { institute } = useContext(InstituteContext);
 
-  const {
-    error,
-    isPending,
-    data: institute,
-  } = useFetch(`${serverUrl}institutes?id=${instituteId}`);
+  useEffect(() => {
+    console.log(institute);
+    Admin.Projects.get(projectId)
+      .then((res) => {
+        console.log({
+          ...res.data,
+        })
+        setProject({
+          ...res.data,
+          institute: institute,
+          proponentName: { surname: "", firstName: "", middleInitial: "" },
+          implementationPeriod: {start: '', end: ''},
+        });
+      })
+      .catch((err) => {
+        console.log(err.message);
+        setProject(null);
+      });
+  }, []);
 
   return (
     <React.Fragment>
-      {error && <ErrorComponent message="Can't view project" />}
-      {isPending && <LoadingComponent />}
-      {institute && (
+      {!project && <LoadingComponent />}
+      {project && (
         <ElevatedProjectViewer
           instituteId={instituteId}
-          project={institute[0].projects.find(
-            (project) => project.id == parseInt(projectId)
-          )}
-          institute={institute[0]}
-          projectId={parseInt(projectId)}
-          priority={institute[0].priority}
+          project={project}
+          institute={institute}
+          projectId={projectId}
+          priority={1}
         />
       )}
     </React.Fragment>

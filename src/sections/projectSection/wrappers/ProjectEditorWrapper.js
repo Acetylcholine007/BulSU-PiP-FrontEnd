@@ -12,27 +12,20 @@ function ProjectEditorWrapper({isNew}) {
   const { id } = useParams();
   const { user } = useContext(AuthContext);
 
-  const {
-    error,
-    isPending,
-    data: institute,
-  } = useFetch(`${serverUrl}institutes?id=${user.institute.abbv}`);
-
   return (
     <React.Fragment>
-      {error && <ErrorComponent message="Can't load project" />}
-      {isPending && <LoadingComponent />}
-      {institute && (
+      {false && <LoadingComponent />}
+      {true && (
         isNew ? <ProjectEditor
           isNew={true}
-          priority={institute[0].priority}
-          institute={institute[0]}
+          priority={1}
+          institute={null}
         /> : 
         <ProjectEditor
           isNew={false}
-          project={institute[0].projects.find((project) => project.id == parseInt(id))}
-          priority={institute[0].priority}
-          institute={institute[0]}
+          project={null}
+          priority={1}
+          institute={null}
         />
       )}
     </React.Fragment>

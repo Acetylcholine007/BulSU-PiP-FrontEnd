@@ -6,11 +6,12 @@ import {
   Toolbar,
   Typography,
 } from "@material-ui/core";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import useFetch from "../../../hooks/useFetch";
 import ErrorComponent from "../../../shared/components/ErrorComponent";
 import LoadingComponent from "../../../shared/components/LoadingComponent";
+import { Admin } from "../../../utils/bulsupis_mw";
 import { serverUrl } from "../../../utils/serverUrl";
 import AccountFilterDialog from "../components/AccountFilterDialog";
 import AccountList from "../components/AccountList";
@@ -18,15 +19,16 @@ import AccountList from "../components/AccountList";
 function AccountPage() {
   const [open, setOpen] = useState(false);
   const [dataChanged, setDataChanged] = useState(false);
+  const [users, setUsers] = useState(null);
   const [filter, setFilter] = useState({
     search: "",
     verified: { enabled: false, value: 1 },
   });
-  const {
-    accountError,
-    isAccountPending,
-    data: users,
-  } = useFetch(`${serverUrl}users?type=0`);
+  // const {
+  //   accountError,
+  //   isAccountPending,
+  //   data: users,
+  // } = useFetch(`${serverUrl}users?type=0`);
 
   const useStyles = makeStyles({
     pageTitle: {
@@ -39,10 +41,20 @@ function AccountPage() {
 
   const classes = useStyles();
 
+  useEffect(() => {
+    Admin.Account.getAll()
+    .then((res) => {
+      console.log(res.data)
+      setUsers(res.data)
+    })
+    .catch((err) => {
+      console.log(err.message)
+    })
+  }, [])
+
   return (
     <React.Fragment>
-      {accountError && <ErrorComponent message="Failed to fetch Accounts" />}
-      {isAccountPending && <LoadingComponent />}
+      {!users && <LoadingComponent />}
       {users && (
         <React.Fragment>
           <Toolbar>

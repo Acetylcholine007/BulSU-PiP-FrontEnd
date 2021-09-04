@@ -15,7 +15,7 @@ import { months } from "../../../utils/constants";
 import React, { useContext } from "react";
 import { AuthContext } from "../../../contexts/AuthContext";
 
-function ViewerForm2({ project, proposedProjectCost, setProposedProjectCost, priority }) {
+function ViewerForm2({ project, proposedProjectCost, setProposedProjectCost }) {
   const useStyles = makeStyles(() => ({
     table: {
       minWidth: 700,
@@ -81,7 +81,7 @@ function ViewerForm2({ project, proposedProjectCost, setProposedProjectCost, pri
             <TableRow>
               <TableCell align="center">Priority Ranking</TableCell>
               <TableCell align="center" colSpan={4}>
-                {priority.indexOf(project.id) + 1}
+                {project.priority}
               </TableCell>
             </TableRow>
             <TableRow>
@@ -122,7 +122,7 @@ function ViewerForm2({ project, proposedProjectCost, setProposedProjectCost, pri
             <TableRow>
               <TableCell align="center">Beneficiaries</TableCell>
               <TableCell align="center" colSpan={5}>
-                {project.beneficiary}
+                {project.beneficiaries}
               </TableCell>
             </TableRow>
             <TableRow>
