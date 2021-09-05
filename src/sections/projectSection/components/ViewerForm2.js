@@ -23,7 +23,8 @@ import React, { useContext } from "react";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { Folder, GetApp } from "@material-ui/icons";
 
-function ViewerForm2({ project, proposedProjectCost, setProposedProjectCost }) {
+
+function ViewerForm2({ project, proposedProjectCost, setProposedProjectCost, checkerForm2 }) {
   const useStyles = makeStyles(() => ({
     table: {
       minWidth: 700,
@@ -197,7 +198,8 @@ function ViewerForm2({ project, proposedProjectCost, setProposedProjectCost }) {
                         label="Value"
                         variant="outlined"
                         fullWidth
-                        error={false}
+                        error={checkerForm2.proposedProjectCost[index].error}
+                        helperText={checkerForm2.proposedProjectCost[index].error ? checkerForm2.proposedProjectCost[index].messages[0] : null}
                         value={yearCost.cost}
                       />
                     </TableCell>
