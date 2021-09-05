@@ -22,6 +22,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import { ProjectContext } from "../../../contexts/ProjectContext";
 import LoginDialog from "../components/LoginDialog";
+import loginValidator from "../../../utils/loginValidator";
 import { Account } from "../../../utils/bulsupis_mw";
 
 import PDO from "./pdo.png";
@@ -82,6 +83,17 @@ function LogInPage() {
 
   const history = useHistory();
   const classes = useStyles();
+  const [loginChecker, setLoginChecker] = useState({
+    email: {
+      error: false,
+      messages: [],
+    },
+    password: {
+      error: false,
+      messages: [],
+    },
+  });
+  console.log(PDO);
   const { setIsLoggedIn } = useContext(AuthContext);
 
   const login = (email, password) => {
@@ -151,17 +163,21 @@ function LogInPage() {
     setEmailError(false);
     setPasswordError(false);
 
-    if (!emailError && !passwordError) {
-      let result = await Account.login(email, password);
-      if (result) {
-        console.log("Successful Login");
-        setIsLoggedIn(Account.isLoggedIn());
-      } else {
-        console.log("Invalid Email or Password");
-        setEmailError(true);
-        setPasswordError(true);
+    var checker = loginValidator(email, password);
+    if (!checker.email.error && !checker.password.error) {
+      if (!emailError && !passwordError) {
+        let result = await Account.login(email, password);
+        if (result) {
+          console.log("Successful Login");
+          setIsLoggedIn(Account.isLoggedIn());
+        } else {
+          console.log("Invalid Email or Password");
+          setEmailError(true);
+          setPasswordError(true);
+        }
       }
     }
+    setLoginChecker(checker)
   };
 
   return (
@@ -192,9 +208,13 @@ function LogInPage() {
                     variant="outlined"
                     color="primary"
                     fullWidth
-                    error={emailError}
+                    error={loginChecker.email.error}
+                    helperText={
+                      loginChecker.email.error
+                        ? loginChecker.email.messages
+                        : null
+                    }
                     value={email}
-                    helperText={passwordError ? "Error Email" : null}
                   />
                   <TextField
                     onChange={(e) => setPassword(e.target.value)}
@@ -203,10 +223,14 @@ function LogInPage() {
                     variant="outlined"
                     color="primary"
                     fullWidth
-                    error={passwordError}
+                    error={loginChecker.password.error}
                     value={password}
                     type="password"
-                    helperText={passwordError ? "Error Password" : null}
+                    helperText={
+                      loginChecker.password.error
+                        ? loginChecker.password.messages
+                        : null
+                    }
                   />
                   <Button
                     type="submit"
