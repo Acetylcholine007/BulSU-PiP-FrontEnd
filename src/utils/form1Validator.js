@@ -68,8 +68,24 @@ export const form1Validator = ({
   if(item.value === '') {
     result.investmentReq[index].error = true;
     result.investmentReq[index].messages.push('please put a value');
-  } 
-  if(item.value > 100000000) {
+  } else {
+    let isNumber = !isNaN(item.value)
+    console.log(isNumber)
+    if (isNumber) {
+      let number = parseFloat(item.value);
+      if(number < 0) {
+        result.investmentReq[index].error = true;
+        result.investmentReq[index].messages.push("Smaller than 0");
+      } else if(number > 10000000)
+      result.investmentReq[index].error = true;
+      result.investmentReq[index].messages.push("Larger than 10,000,000");
+    } else {
+      result.investmentReq[index].error = true;
+      result.investmentReq[index].messages.push("Not a number");
+    }
+  }
+ 
+  if(item.value.length >= 9) {
     result.investmentReq[index].error = true;
     result.investmentReq[index].messages.push('it must not exceeded by 100M')
   }

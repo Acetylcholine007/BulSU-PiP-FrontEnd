@@ -9,7 +9,7 @@ import {
   TextField,
   Typography,
   Input,
-  CardHeader
+  CardHeader,
 } from "@material-ui/core";
 import { useState, useContext } from "react";
 import { useHistory } from "react-router";
@@ -22,8 +22,10 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import { ProjectContext } from "../../../contexts/ProjectContext";
 import LoginDialog from "../components/LoginDialog";
+import loginValidator from "../../../utils/loginValidator";
+import { Account } from "../../../utils/bulsupis_mw";
 
-import PDO from "./pdo.png"
+import PDO from "./pdo.png";
 
 const useStyles = makeStyles((theme) => ({
   motherPane: {
@@ -37,12 +39,12 @@ const useStyles = makeStyles((theme) => ({
     padding: 0,
     margin: 0,
     //background: "linear-gradient(264deg, rgba(255,115,0,1) 26%, rgba(253,255,0,1) 100%)",
-    background: "url('https://iadmissions.bulsu.edu.ph/assets/images/parallax-bg2.jpg')",
-    backgroundSize: 'cover',
-    backgroundPosition: 'center'
+    background:
+      "url('https://iadmissions.bulsu.edu.ph/assets/images/parallax-bg2.jpg')",
+    backgroundSize: "cover",
+    backgroundPosition: "center",
   },
-  background: {
-  },
+  background: {},
   formPane: {
     padding: "10%",
     paddingTop: "-3rem",
@@ -60,7 +62,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: "0.5rem",
   },
   button2: {
-    marginBottom: "0.7rem"
+    marginBottom: "0.7rem",
   },
   avtr: {
     height: 50,
@@ -81,93 +83,101 @@ function LogInPage() {
 
   const history = useHistory();
   const classes = useStyles();
-  const { setUser } = useContext(AuthContext);
-  const { setProjects } = useContext(ProjectContext);
-
-  const [open, setOpen] = useState(false);
-  const [message, setMessage] = useState("");
-
-  console.log(PDO)
+  const [loginChecker, setLoginChecker] = useState({
+    email: {
+      error: false,
+      messages: [],
+    },
+    password: {
+      error: false,
+      messages: [],
+    },
+  });
+  console.log(PDO);
+  const { setIsLoggedIn } = useContext(AuthContext);
 
   const login = (email, password) => {
-    const abortCont = new AbortController();
-    fetch(`${serverUrl}users?password=${password}&&email=${email}`, {
-      signal: abortCont.signal,
-    })
-      .then((res) => {
-        if (!res.ok) {
-          throw Error("App can't perform verification");
-        }
-        return res.json();
-      })
-      .then((match) => {
-        if (match.length === 1) {
-          if (match[0].verified) {
-            setUser(match[0]);
-            fetch(
-              match[0].type === 0
-                ? `${serverUrl}institutes?id=${match[0].institute.abbv}`
-                : `${serverUrl}institutes`,
-              {
-                signal: abortCont.signal,
-              }
-            )
-              .then((res) => {
-                if (!res.ok) {
-                  // error coming back from server
-                  throw Error("could not fetch the data for that resource");
-                }
-                return res.json();
-              })
-              .then((data) => {
-                setProjects(data);
-                history.push("/");
-              })
-              .catch((err) => {
-                if (err.name === "AbortError") {
-                  console.log("fetch aborted");
-                } else {
-                  console.log(err.message);
-                }
-              });
-          } else {
-            setMessage(
-              "Your account is either unverified or has been suspended. Contact system admin to verify your account."
-            );
-            setOpen(true);
-          }
-        } else {
-          setEmailError(true);
-          setPasswordError(true);
-          console.log("Incorrect Credentials");
-        }
-      })
-      .catch((err) => {
-        if (err.name === "AbortError") {
-          console.log("fetch aborted");
-        } else {
-          console.log(err.message);
-        }
-      });
+    // const abortCont = new AbortController();
+    // fetch(`${serverUrl}users?password=${password}&&email=${email}`, {
+    //   signal: abortCont.signal,
+    // })
+    //   .then((res) => {
+    //     if (!res.ok) {
+    //       throw Error("App can't perform verification");
+    //     }
+    //     return res.json();
+    //   })
+    //   .then((match) => {
+    //     if (match.length === 1) {
+    //       if (match[0].verified) {
+    //         setUser(match[0]);
+    //         fetch(
+    //           match[0].type === 0
+    //             ? `${serverUrl}institutes?id=${match[0].institute.abbv}`
+    //             : `${serverUrl}institutes`,
+    //           {
+    //             signal: abortCont.signal,
+    //           }
+    //         )
+    //           .then((res) => {
+    //             if (!res.ok) {
+    //               // error coming back from server
+    //               throw Error("could not fetch the data for that resource");
+    //             }
+    //             return res.json();
+    //           })
+    //           .then((data) => {
+    //             setProjects(data);
+    //             history.push("/");
+    //           })
+    //           .catch((err) => {
+    //             if (err.name === "AbortError") {
+    //               console.log("fetch aborted");
+    //             } else {
+    //               console.log(err.message);
+    //             }
+    //           });
+    //       } else {
+    //         setMessage(
+    //           "Your account is either unverified or has been suspended. Contact system admin to verify your account."
+    //         );
+    //         setOpen(true);
+    //       }
+    //     } else {
+    //       setEmailError(true);
+    //       setPasswordError(true);
+    //       console.log("Incorrect Credentials");
+    //     }
+    //   })
+    //   .catch((err) => {
+    //     if (err.name === "AbortError") {
+    //       console.log("fetch aborted");
+    //     } else {
+    //       console.log(err.message);
+    //     }
+    //   });
   };
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     setEmailError(false);
     setPasswordError(false);
 
-    if (email === "") {
-      setEmailError(true);
+    var checker = loginValidator(email, password);
+    if (!checker.email.error && !checker.password.error) {
+      if (!emailError && !passwordError) {
+        let result = await Account.login(email, password);
+        if (result) {
+          console.log("Successful Login");
+          setIsLoggedIn(Account.isLoggedIn());
+        } else {
+          console.log("Invalid Email or Password");
+          setEmailError(true);
+          setPasswordError(true);
+        }
+      }
     }
-    if (password === "") {
-      setPasswordError(true);
-    }
-
-    if (!emailError && !passwordError) {
-      const myBitArray = sjcl.hash.sha256.hash(password);
-      const myHash = sjcl.codec.hex.fromBits(myBitArray);
-      login(email, myHash);
-    }
+    setLoginChecker(checker)
   };
 
   return (
@@ -178,12 +188,18 @@ function LogInPage() {
             <CardContent>
               <div className={`animate__animated animate__fadeInDown`}>
                 <p>
-                  <img className={classes.avtr} src="favicon.ico" alt="BulSU Icon"></img>
+                  <img
+                    className={classes.avtr}
+                    src="favicon.ico"
+                    alt="BulSU Icon"
+                  ></img>
                   <img className={classes.avtr2} src={PDO} alt="PDO Icon"></img>
                 </p>
                 <p>BulSU PIPS - ver 0.1</p>
-                <Typography variant="h4" component="h1">Sign In</Typography>
-                <br/>
+                <Typography variant="h4" component="h1">
+                  Sign In
+                </Typography>
+                <br />
                 <form noValidate autoComplete="off" onSubmit={handleLogin}>
                   <TextField
                     onChange={(e) => setEmail(e.target.value)}
@@ -192,9 +208,13 @@ function LogInPage() {
                     variant="outlined"
                     color="primary"
                     fullWidth
-                    error={emailError}
+                    error={loginChecker.email.error}
+                    helperText={
+                      loginChecker.email.error
+                        ? loginChecker.email.messages
+                        : null
+                    }
                     value={email}
-                    helperText={passwordError ? "Error Email" : null}
                   />
                   <TextField
                     onChange={(e) => setPassword(e.target.value)}
@@ -203,10 +223,14 @@ function LogInPage() {
                     variant="outlined"
                     color="primary"
                     fullWidth
-                    error={passwordError}
+                    error={loginChecker.password.error}
                     value={password}
                     type="password"
-                    helperText={passwordError ? "Error Password" : null}
+                    helperText={
+                      loginChecker.password.error
+                        ? loginChecker.password.messages
+                        : null
+                    }
                   />
                   <Button
                     type="submit"
@@ -217,9 +241,19 @@ function LogInPage() {
                   >
                     LOGIN
                   </Button>
-                  <br/>
-                  <Button size="small"
-                    className={classes.button2}>forgot password?</Button>
+                  <br />
+                  <Button
+                    size="small"
+                    className={classes.button2}
+                    onClick={() =>
+                      window.open(
+                        "https://haiku-test-leo.herokuapp.com/test/reset?fbclid=IwAR12a723__oaymbbfXtf1bR8-HDDVSkMWcQERTPiLuPTm8QeUic7hqydPoo",
+                        "_blank"
+                      )
+                    }
+                  >
+                    forgot password?
+                  </Button>
                   <Divider />
                   <Button
                     color="primary"
@@ -232,7 +266,6 @@ function LogInPage() {
                   </Button>
                 </form>
               </div>
-              
             </CardContent>
           </Card>
         </Grid>

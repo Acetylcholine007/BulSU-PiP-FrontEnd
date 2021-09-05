@@ -16,13 +16,13 @@ import { useHistory } from "react-router-dom";
 
 import EditorForm1 from "../components/EditorForm1";
 import EditorForm2 from "../components/EditorForm2";
-import { serverUrl } from "../../../utils/serverUrl";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { institutes } from "../../../utils/constants";
 import { form1Validator } from "../../../utils/form1Validator";
 import form2Validator from "../../../utils/form2Validator";
+import { Projects } from "../../../utils/bulsupis_mw";
 
-function ProjectEditor({ isNew, project, institute }) {
+function ProjectEditor({ isNew, project }) {
   const [page, setPage] = useState(1);
   const history = useHistory();
   const { user } = useContext(AuthContext);
@@ -36,11 +36,11 @@ function ProjectEditor({ isNew, project, institute }) {
       justifyContent: "space-evenly",
     },
     divider: {
-      marginBottom: 15
+      marginBottom: 15,
     },
     card: {
-      marginBottom: 15
-    }
+      marginBottom: 15,
+    },
   }));
 
   const classes = useStyles();
@@ -64,7 +64,6 @@ function ProjectEditor({ isNew, project, institute }) {
           PAPLevel: 1,
           readiness: 1,
           status: 1,
-          remarks: "",
         }
       : {
           title: project.title,
@@ -76,7 +75,6 @@ function ProjectEditor({ isNew, project, institute }) {
           PAPLevel: project.PAPLevel,
           readiness: project.readiness,
           status: project.status,
-          remarks: project.remarks,
         }
   );
 
@@ -84,7 +82,6 @@ function ProjectEditor({ isNew, project, institute }) {
     isNew
       ? {
           suc: "Bulacan State University",
-          institute: user.institute,
           address: "",
           projectLocation: "",
           categorization: {
@@ -95,7 +92,7 @@ function ProjectEditor({ isNew, project, institute }) {
           },
           description: "",
           purpose: "",
-          beneficiary: "",
+          beneficiaries: "",
           proposedProjectCost: [
             { year: "2021", cost: "0" },
             { year: "2021", cost: "0" },
@@ -110,8 +107,6 @@ function ProjectEditor({ isNew, project, institute }) {
             others: "",
           },
           dateAccomplished: new Date().toISOString(),
-          signature: "",
-          fileList: [],
         }
       : {
           address: project.address,
@@ -119,18 +114,23 @@ function ProjectEditor({ isNew, project, institute }) {
           categorization: project.categorization,
           description: project.description,
           purpose: project.purpose,
-          beneficiary: project.beneficiary,
+          beneficiaries: project.beneficiaries,
           proposedProjectCost: project.proposedProjectCost,
           proponentName: project.proponentName,
           designation: project.designation,
           contactInformation: project.contactInformation,
           dateAccomplished: project.dateAccomplished,
           signature: project.signature,
-          fileList: project.fileList,
         }
   );
 
+  const [oldFileList, setOldFileList] = useState(project.fileList);
+
   const [fileList, setFileList] = useState([]);
+
+  const [oldSignature, setOldSignature] = useState(
+    project.signature ? [project.signature] : []
+  );
 
   const [signature, setSignature] = useState([]);
 
@@ -183,7 +183,7 @@ function ProjectEditor({ isNew, project, institute }) {
       messages: [],
     },
 
-    beneficiary: {
+    beneficiaries: {
       error: false,
       messages: [],
     },
@@ -222,50 +222,51 @@ function ProjectEditor({ isNew, project, institute }) {
 
   const handleSubmit = () => {
     if (isNew) {
-      var newId =
-        Math.max.apply(
-          null,
-          institute.projects.map((project) => project.id)
-        ) + 1;
-      var newInstitute = { ...institute };
-      newInstitute.projects.push({
-        ...form1Data,
-        ...form2Data,
-        commentList: [],
-        ownerId: user.id,
-        address: institutes.find(
-          (institute) => institute.institute === user.institute.institute
-        ).address,
-        recievedBy: "",
-        recieverDesignation: "",
-        designation: "",
-        dateRecieved: "",
-        pdoSignature: "",
-        id: newId,
-      });
-      newInstitute.priority.push(newId);
-      fetch(`${serverUrl}institutes/${institute.id}`, {
-        method: "PUT",
-        headers: { "Content-type": "application/json" },
-        body: JSON.stringify(newInstitute),
-      }).then(() => {
-        history.push("/projects");
-      });
+      Projects.create(
+        {
+          ...form1Data,
+          ...form2Data,
+          address: institutes.find(
+            (institute) => institute.abbv === user.institute.abbv
+          ).address,
+          recievedBy: undefined,
+          recieverDesignation: undefined,
+          dateRecieved: undefined,
+        },
+        fileList,
+        signature.length == 0 ? undefined : signature
+      )
+        .then((res) => {
+          history.push("/projects");
+        })
+        .catch((err) => {
+          console.log(err.message);
+        });
     } else {
-      var newInstitute = { ...institute };
-      var projectIndex = newInstitute.projects.indexOf(project);
-      newInstitute.projects[projectIndex] = {
-        ...newInstitute.projects[projectIndex],
+      console.log({
+        ...project,
         ...form1Data,
         ...form2Data,
-      };
-      fetch(`${serverUrl}institutes/${institute.id}`, {
-        method: "PUT",
-        headers: { "Content-type": "application/json" },
-        body: JSON.stringify(newInstitute),
-      }).then(() => {
-        history.push("/projects");
+        fileList: oldFileList,
+        signature: oldSignature,
       });
+      Projects.edit(
+        {
+          ...project,
+          ...form1Data,
+          ...form2Data,
+          fileList: oldFileList,
+          signature: oldSignature,
+        },
+        fileList,
+        signature.length == 0 ? undefined : signature
+      )
+        .then(() => {
+          history.push("/projects");
+        })
+        .catch((err) => {
+          console.log(err.message);
+        });
     }
   };
 
@@ -289,6 +290,10 @@ function ProjectEditor({ isNew, project, institute }) {
             setFileList={setFileList}
             signature={signature}
             setSignature={setSignature}
+            oldFileList={oldFileList}
+            setOldFileList={setOldFileList}
+            oldSignature={oldSignature}
+            setOldSignature={setOldSignature}
           />
         );
       default:
@@ -327,16 +332,16 @@ function ProjectEditor({ isNew, project, institute }) {
                     variant="contained"
                     onClick={() => {
                       var checker = form1Validator(form1Data);
-                      console.log(checker);
                       if (
-                        !checker.title.error &&
-                        !checker.obligationType.error &&
-                        !checker.proponent.error &&
-                        !checker.startYear.error &&
-                        !checker.endYear.error &&
-                        checker.investmentReq
-                          .map((item) => !item.error)
-                          .reduce((a, b) => a && b)
+                        true ||
+                        (!checker.title.error &&
+                          !checker.obligationType.error &&
+                          !checker.proponent.error &&
+                          !checker.startYear.error &&
+                          !checker.endYear.error &&
+                          checker.investmentReq
+                            .map((item) => !item.error)
+                            .reduce((a, b) => a && b))
                       ) {
                         setPage(2);
                       }
@@ -350,22 +355,21 @@ function ProjectEditor({ isNew, project, institute }) {
                     variant="contained"
                     onClick={() => {
                       var checker = form2Validator(form2Data);
-                      console.log(checker);
                       if (
-                        !checker.projectLocation.error &&
-                        !checker.description.error &&
-                        !checker.purpose.error &&
-                        !checker.beneficiary.error &&
-                        !checker.surName.error &&
-                        !checker.firstName.error &&
-                        !checker.telephoneNumber.error &&
-                        !checker.email.error &&
-                        !checker.phoneNumber.error &&
-                        checker.proposedProjectCost
-                          .map((item) => !item.error)
-                          .reduce((a, b) => a && b)
+                        true ||
+                        (!checker.projectLocation.error &&
+                          !checker.description.error &&
+                          !checker.purpose.error &&
+                          !checker.beneficiaries.error &&
+                          !checker.surName.error &&
+                          !checker.firstName.error &&
+                          !checker.telephoneNumber.error &&
+                          !checker.email.error &&
+                          !checker.phoneNumber.error &&
+                          checker.proposedProjectCost
+                            .map((item) => !item.error)
+                            .reduce((a, b) => a && b))
                       ) {
-                        console.log('submitted')
                         handleSubmit();
                       }
                       setCheckerForm2(checker);

@@ -6,10 +6,19 @@ import {
   TableRow,
   TableCell,
   makeStyles,
+  List,
+  ListItem,
+  ListItemAvatar,
+  Avatar,
+  ListItemText,
+  ListItemSecondaryAction,
+  IconButton,
+  Card,
 } from "@material-ui/core";
+import { Folder } from "@material-ui/icons";
 import React from "react";
 
-function ViewerForm3({ project }) {
+function ViewerForm3({ project, PDOSignature }) {
   const useStyles = makeStyles(() => ({
     table: {
       minWidth: 700,
@@ -41,11 +50,31 @@ function ViewerForm3({ project }) {
             <TableRow>
               <TableCell align="center">Date Recieved</TableCell>
               <TableCell align="center">
-                {project.dateRecieved === ""
+                {project.dateRecieved === "" || !project.dateRecieved
                   ? "Not yet recieved"
                   : new Date(project.dateRecieved).toDateString()}
               </TableCell>
-              <TableCell align="center">Signature Here</TableCell>
+              <TableCell align="center">
+                {PDOSignature.length == 0 && project.pdoSignature && (
+                  <img src={project.pdoSignature.src} height={100} />
+                )}
+                {PDOSignature.length !== 0 && (
+                  <List>
+                    {PDOSignature.map((file, index) => (
+                      <ListItem key={`${index}-new`} component={Card}>
+                        {console.log(file)}
+                        <ListItemAvatar>
+                          <Avatar>
+                            <Folder />
+                          </Avatar>
+                        </ListItemAvatar>
+                        <ListItemText primary={file.name} />
+                      </ListItem>
+                    ))}
+                  </List>
+                )}
+                {PDOSignature.length == 0 && !project.pdoSignature && 'No PDO Signature'}
+              </TableCell>
             </TableRow>
           </TableBody>
         </Table>

@@ -2,7 +2,7 @@ function form2Validator({
   projectLocation,
   description,
   purpose,
-  beneficiary,
+  beneficiaries,
   proposedProjectCost,
   proponentName: { surname: surName, firstName },
   designation,
@@ -33,7 +33,7 @@ function form2Validator({
       messages: [],
     },
 
-    beneficiary: {
+    beneficiaries: {
       error: false,
       messages: [],
     },
@@ -91,9 +91,9 @@ function form2Validator({
     result.purpose.messages.push("Purpose cannot be blank");
   }
 
-  if (beneficiary == "") {
-    result.beneficiary.error = true;
-    result.beneficiary.messages.push("Beneficiary cannot be blank");
+  if (beneficiaries == "") {
+    result.beneficiaries.error = true;
+    result.beneficiaries.messages.push("Beneficiary cannot be blank");
   }
 
   if (surName == "") {
@@ -136,9 +136,13 @@ function form2Validator({
   }
 
   proposedProjectCost.forEach((item, index) => {
-    if(item.cost==='') {
+    if(item.cost.length == "") {
       result.proposedProjectCost[index].error = true;
       result.proposedProjectCost[index].messages.push('Not Null')
+    } 
+    if(item.cost==='0') {
+      result.proposedProjectCost[index].error = true;
+      result.proposedProjectCost[index].messages.push('Not Valid')
     }
     })
 

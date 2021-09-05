@@ -1,32 +1,36 @@
-import React from "react";
-import { useContext } from "react";
-import { AuthContext } from "../../../contexts/AuthContext";
-import useFetch from "../../../hooks/useFetch";
-import ErrorComponent from "../../../shared/components/ErrorComponent";
+import React, { useEffect, useState } from "react";
+
 import LoadingComponent from "../../../shared/components/LoadingComponent";
-import { serverUrl } from "../../../utils/serverUrl";
+import { Account, Projects } from "../../../utils/bulsupis_mw";
+import { projectListTranslator } from "../../../utils/translators";
 import InstituteViewer from "../pages/InstituteViewer";
 
 function ClientInstituteViewer() {
-  const { user } = useContext(AuthContext);
+  const [institute, setInstitute] = useState(null);
+  const [user, setUser] = useState(null);
 
-  const {
-    error,
-    isPending,
-    data: institute,
-  } = useFetch(`${serverUrl}institutes?id=${user.institute.abbv}`);
+  useEffect(() => {
+    Account.getInfo()
+    .then((accountRes) => {
+      setUser(accountRes.data);
+      Projects.getInstitute(accountRes.data.institute.id)
+      .then((projectRes) => {
+        let institute = projectRes.data;
+        setInstitute({
+          abbv: institute.abbv,
+          instituteId: institute.id,
+          projectList: projectListTranslator(institute.project_list),
+          priority: institute.project_list.map((project) => project.id)
+        });
+      })
+    })
+    .catch((err) => console.log(err.message))
+  }, []);
 
   return (
     <React.Fragment>
-      {error && <ErrorComponent message="Failed to fetch projects" />}
-      {isPending && <LoadingComponent />}
-      {institute && (
-        <InstituteViewer
-          institute={institute[0]}
-          instituteId={user.institute.abbv}
-          priority={institute[0].priority}
-        />
-      )}
+      {(!institute || !user) && <LoadingComponent />}
+      {institute && user && <InstituteViewer institute={institute} user={user}/>}
     </React.Fragment>
   );
 }

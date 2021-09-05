@@ -29,9 +29,9 @@ import ViewerForm2 from "../components/ViewerForm2";
 import ViewerForm3 from "../components/ViewerForm3";
 import EditorForm3 from "../components/EditorForm3";
 import CreateCommentDialog from "../components/CreateCommentDialog";
-import { serverUrl } from "../../../utils/serverUrl";
 import CommentList from "../components/CommentList";
 import PDFExport from "../../../shared/components/PDFExport";
+import { Admin, Projects } from "../../../utils/bulsupis_mw";
 
 const useStyles = makeStyles((theme) => ({
   txt: {
@@ -67,13 +67,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function ElevatedProjectViewer({
-  instituteId,
-  project,
-  institute,
-  projectId,
-  priority,
-}) {
+function ElevatedProjectViewer({ project, priority, instituteId }) {
   const classes = useStyles();
   const history = useHistory();
 
@@ -92,10 +86,12 @@ function ElevatedProjectViewer({
     recievedBy: project.recievedBy,
     recieverDesignation: project.recieverDesignation,
     dateRecieved: project.dateRecieved,
-    pdoSignature: project.pdoSignature,
   });
-  const [comments, setComments] = useState(project.commentList);
+  const [newComments, setNewComments] = useState([]);
   const [PDOSignature, setPDOSignature] = useState([]);
+  const [oldPDOSignature, setOldPDOSignature] = useState(
+    project.pdoSignature ? [project.pdoSignature] : []
+  );
 
   const [checkerForm1, setCheckerForm1] = useState({
       investmentReq: [
@@ -107,30 +103,51 @@ function ElevatedProjectViewer({
       ],
   });
   const [checkerForm2, setCheckerForm2] = useState();
-  const [checkerForm3, setCheckerForm3] = useState();
+  const [checkerForm3, setCheckerForm3] = useState({
+    recievedBy: {
+      error: false,
+      messages: [],
+    },
+    recieverDesignation: {
+      error: false,
+      messages: [],
+    },
+  });
 
   const selectComment = (comment) => {
     setComment(comment);
     setOpen(true);
   };
 
+  const saveComments = async (comments) => {
+    for(var i = 0; i < comments.length; i++) {
+      await Projects.comment(project.id, comments[i].message)
+    }
+  }
+
   const handleSubmit = () => {
-    var newInstitute = { ...institute };
-    var projectIndex = newInstitute.projects.indexOf(project);
-    newInstitute.projects[projectIndex] = {
-      ...newInstitute.projects[projectIndex],
-      investmentReq,
-      status,
-      commentList: comments,
-      ...form3Data,
-    };
-    fetch(`${serverUrl}institutes/${institute.id}`, {
-      method: "PUT",
-      headers: { "Content-type": "application/json" },
-      body: JSON.stringify(newInstitute),
-    }).then(() => {
-      console.log("Successfully edited");
-    });
+    Admin.Projects.edit(
+      {
+        ...project,
+        proposedProjectCost,
+        investmentReq,
+        status,
+        ...form3Data,
+        pdoSignature: oldPDOSignature.length ? oldPDOSignature[0] : null,
+      },
+      PDOSignature
+    )
+      .then(() => {
+        if(newComments.length) {
+          saveComments(newComments)
+          .then(() => {
+            history.push(`/institutes/${instituteId}`);
+          })
+        } else {
+          history.push(`/institutes/${instituteId}`);
+        }
+      })
+      .catch((err) => console.log(err.message));
   };
 
   const selectForm = (project) => {
@@ -162,12 +179,18 @@ function ElevatedProjectViewer({
             setForm3Data={setForm3Data}
             PDOSignature={PDOSignature}
             setPDOSignature={setPDOSignature}
+            oldPDOSignature={oldPDOSignature ? oldPDOSignature : []}
+            setOldPDOSignature={setOldPDOSignature}
             checkerForm3={checkerForm3}
           />
         ) : (
           <ViewerForm3
-            project={{ ...project, ...form3Data }}
-            selectComment={selectComment}
+            project={{
+              ...project,
+              ...form3Data,
+              pdoSignature: oldPDOSignature[0],
+            }}
+            PDOSignature={PDOSignature}
           />
         );
       default:
@@ -228,7 +251,6 @@ function ElevatedProjectViewer({
           startIcon={<Save />}
           onClick={() => {
             handleSubmit();
-            history.push(`/institutes/${instituteId}`);
           }}
           className={classes.button}
         >
@@ -253,21 +275,21 @@ function ElevatedProjectViewer({
                     if (true) {
                       setTabIndex(index);
                     }
-                    setCheckerForm1({});
+                    //setCheckerForm1({});
                     break;
                   case 1:
                     var checker = null;
                     if (true) {
                       setTabIndex(index);
                     }
-                    setCheckerForm2({});
+                    //setCheckerForm2({});
                     break;
                   case 2:
                     var checker = null;
                     if (true) {
                       setTabIndex(index);
                     }
-                    setCheckerForm3({});
+                    //setCheckerForm3({});
                     break;
                 }
               }}
@@ -284,8 +306,7 @@ function ElevatedProjectViewer({
                 title={getTitle()}
                 className={classes.cardHeader}
                 action={
-                  (tabIndex === 2 && form3Data.dateRecieved === "") ||
-                  (form3Data.dateRecieved !== "" && showForm3Editor) ? (
+                  tabIndex === 2 && project.dateRecieved === undefined ? (
                     <Button
                       variant="outlined"
                       onClick={() => {
@@ -326,7 +347,8 @@ function ElevatedProjectViewer({
               />
               <CardContent>
                 <CommentList
-                  comments={comments}
+                  comments={project.commentList}
+                  newComments={newComments}
                   selectComment={selectComment}
                 />
               </CardContent>
@@ -340,8 +362,8 @@ function ElevatedProjectViewer({
         <CreateCommentDialog
           open={addCommentOpen}
           setAddCommentOpen={setAddCommentOpen}
-          comments={comments}
-          setComments={setComments}
+          comments={newComments}
+          setComments={setNewComments}
         />
       </Container>
     </React.Fragment>

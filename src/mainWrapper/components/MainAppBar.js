@@ -85,7 +85,7 @@ function MainAppBar({
             setAnchorEl(e.currentTarget);
             setShowDialog(true);
           }}
-          src={`${serverUrl}logos/${user.uri}`}
+          src={user.institute.profile_img.src}
         >
           <Typography variant="body1">{`${user.college}`}</Typography>
         </Avatar>

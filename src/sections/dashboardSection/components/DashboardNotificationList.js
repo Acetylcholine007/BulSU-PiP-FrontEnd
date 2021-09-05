@@ -6,12 +6,9 @@ import {
   ListItemText,
   Typography,
 } from "@material-ui/core";
-import React, { useContext } from "react";
-import { AuthContext } from "../../../contexts/AuthContext";
+import React from "react";
 
-function DashboardNotificationList({selectNotification}) {
-  const { user } = useContext(AuthContext);
-
+function DashboardNotificationList({ notifications, selectNotification }) {
   const useStyles = makeStyles(() => ({
     item: {
       border: "1px solid #D3D3D3",
@@ -24,7 +21,7 @@ function DashboardNotificationList({selectNotification}) {
 
   return (
     <List dense>
-      {user.notificationList.map((notification) => (
+      {notifications.map((notification) => (
         <div className={classes.item} key={notification.id}>
           <ButtonBase
             focusRipple
@@ -33,7 +30,9 @@ function DashboardNotificationList({selectNotification}) {
           >
             <ListItem alignItems="flex-start" dense button>
               <ListItemText
-                primary={<Typography variant = 'h6'>{notification.header}</Typography>}
+                primary={
+                  <Typography variant="h6">{notification.header}</Typography>
+                }
                 secondary={
                   <React.Fragment>
                     <Typography variant="body1">
