@@ -96,68 +96,6 @@ function LogInPage() {
   console.log(PDO);
   const { setIsLoggedIn } = useContext(AuthContext);
 
-  const login = (email, password) => {
-    // const abortCont = new AbortController();
-    // fetch(`${serverUrl}users?password=${password}&&email=${email}`, {
-    //   signal: abortCont.signal,
-    // })
-    //   .then((res) => {
-    //     if (!res.ok) {
-    //       throw Error("App can't perform verification");
-    //     }
-    //     return res.json();
-    //   })
-    //   .then((match) => {
-    //     if (match.length === 1) {
-    //       if (match[0].verified) {
-    //         setUser(match[0]);
-    //         fetch(
-    //           match[0].type === 0
-    //             ? `${serverUrl}institutes?id=${match[0].institute.abbv}`
-    //             : `${serverUrl}institutes`,
-    //           {
-    //             signal: abortCont.signal,
-    //           }
-    //         )
-    //           .then((res) => {
-    //             if (!res.ok) {
-    //               // error coming back from server
-    //               throw Error("could not fetch the data for that resource");
-    //             }
-    //             return res.json();
-    //           })
-    //           .then((data) => {
-    //             setProjects(data);
-    //             history.push("/");
-    //           })
-    //           .catch((err) => {
-    //             if (err.name === "AbortError") {
-    //               console.log("fetch aborted");
-    //             } else {
-    //               console.log(err.message);
-    //             }
-    //           });
-    //       } else {
-    //         setMessage(
-    //           "Your account is either unverified or has been suspended. Contact system admin to verify your account."
-    //         );
-    //         setOpen(true);
-    //       }
-    //     } else {
-    //       setEmailError(true);
-    //       setPasswordError(true);
-    //       console.log("Incorrect Credentials");
-    //     }
-    //   })
-    //   .catch((err) => {
-    //     if (err.name === "AbortError") {
-    //       console.log("fetch aborted");
-    //     } else {
-    //       console.log(err.message);
-    //     }
-    //   });
-  };
-
   const handleLogin = async (e) => {
     e.preventDefault();
     setEmailError(false);

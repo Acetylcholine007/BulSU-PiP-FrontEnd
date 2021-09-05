@@ -124,12 +124,12 @@ function ProjectEditor({ isNew, project }) {
         }
   );
 
-  const [oldFileList, setOldFileList] = useState(project.fileList);
+  const [oldFileList, setOldFileList] = useState(project ? project.fileList : []);
 
   const [fileList, setFileList] = useState([]);
 
   const [oldSignature, setOldSignature] = useState(
-    project.signature ? [project.signature] : []
+    project ? (project.signature ? [project.signature] : []) : []
   );
 
   const [signature, setSignature] = useState([]);
@@ -333,7 +333,6 @@ function ProjectEditor({ isNew, project }) {
                     onClick={() => {
                       var checker = form1Validator(form1Data);
                       if (
-                        true ||
                         (!checker.title.error &&
                           !checker.obligationType.error &&
                           !checker.proponent.error &&
@@ -356,7 +355,6 @@ function ProjectEditor({ isNew, project }) {
                     onClick={() => {
                       var checker = form2Validator(form2Data);
                       if (
-                        true ||
                         (!checker.projectLocation.error &&
                           !checker.description.error &&
                           !checker.purpose.error &&

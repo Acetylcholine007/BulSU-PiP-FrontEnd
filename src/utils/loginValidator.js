@@ -25,8 +25,4 @@ function loginValidator(email, password) {
   return result;
 }
 
-//var email = "root@example.com";
-// var password = "1234";       
-// var confirmPassword = "2567";
-// console.log(LoginValidator(email, password));
 export default loginValidator;

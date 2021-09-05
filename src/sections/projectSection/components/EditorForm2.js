@@ -367,7 +367,7 @@ function EditorForm2({
               })
             }
             className={classes.field}
-            label="Telephone Number"
+            label="Telephone Number format: XXX-XXXX"
             variant="outlined"
             color="primary"
             fullWidth
@@ -415,7 +415,7 @@ function EditorForm2({
               })
             }
             className={classes.field}
-            label="Phone Number"
+            label="Phone Number format: 09XXXXXXXXX"
             variant="outlined"
             color="primary"
             fullWidth

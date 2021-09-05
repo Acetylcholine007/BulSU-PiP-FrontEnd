@@ -37,7 +37,7 @@ export const form1Validator = ({
 
   if (title.length > 100) {
     result.title.error = true;
-    result.title.messages.push("too long");
+    result.title.messages.push("Too long");
   }
   if (title === "") {
     result.title.error = true;
@@ -45,11 +45,11 @@ export const form1Validator = ({
   }
   if (title.length < 3) {
     result.title.error = true;
-    result.title.messages.push("too short");
+    result.title.messages.push("Too short");
   }
   if (obligationType === "") {
     result.obligationType.error = true;
-    result.obligationType.messages.push("please put your Obligation type");
+    result.obligationType.messages.push("Please put your Obligation type");
   }
   if (proponent === "") {
     result.proponent.error = true;
@@ -57,17 +57,17 @@ export const form1Validator = ({
   }
   if (startYear === null) {
     result.startYear.error = true;
-    result.startYear.messages.push("implementation of year cannot be blank");
+    result.startYear.messages.push("Implementation of year cannot be blank");
   }
   if (endYear === null) {
     result.endYear.error = true;
-    result.endYear.messages.push("implementation of year cannot be blank");
+    result.endYear.messages.push("Implementation of year cannot be blank");
   }
 
   investmentReq.forEach((item, index) => {
   if(item.value === '') {
     result.investmentReq[index].error = true;
-    result.investmentReq[index].messages.push('please put a value');
+    result.investmentReq[index].messages.push('Please put a value');
   } else {
     let isNumber = !isNaN(item.value)
     console.log(isNumber)
@@ -87,11 +87,11 @@ export const form1Validator = ({
  
   if(item.value.length >= 9) {
     result.investmentReq[index].error = true;
-    result.investmentReq[index].messages.push('it must not exceeded by 100M')
+    result.investmentReq[index].messages.push('It must not exceeded by 100M')
   }
   if(isNaN(item.value)) {
     result.investmentReq[index].error = true;
-    result.investmentReq[index].messages.push('numbers only');
+    result.investmentReq[index].messages.push('Numbers only');
   }
   })
 

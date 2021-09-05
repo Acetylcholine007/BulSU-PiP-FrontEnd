@@ -19,7 +19,7 @@ function signupValidator(email, password, institute, confirmPassword) {
     },
   };
 
-  if (email == "") {
+  if (email === "") {
     result.email.error = true;
     result.email.messages.push("Email cannot be blank");
   } else {
@@ -31,12 +31,12 @@ function signupValidator(email, password, institute, confirmPassword) {
     }
   }
 
-  if (institute == "") {
+  if (institute === "") {
     result.institute.error = true;
-    result.institute.messages.push("Invalid Institute");
+    result.institute.messages.push("Institute cannot be blank");
   }
 
-  if (password == "") {
+  if (password === "") {
     result.password.error = true;
     result.password.messages.push("Password cannot be blank");
   } else {
@@ -55,13 +55,12 @@ function signupValidator(email, password, institute, confirmPassword) {
     }
   }
 
+  if (confirmPassword === "") {
+    result.confirmPassword.error = true;
+    result.confirmPassword.messages.push("Password confirmation cannot be blank");
+  }
+
   return result;
 }
 
-// var email = "root@example.com";
-// var password = "1234";
-// var institute = "";
-// var confirmPassword = "2567";
-
-// console.log(SignupValidator(email, password, institute, confirmPassword));
 export default signupValidator;

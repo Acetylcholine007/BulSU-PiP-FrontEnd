@@ -11,7 +11,7 @@ import {
   makeStyles,
   Divider,
 } from "@material-ui/core";
-import { Edit, ExitToApp } from "@material-ui/icons";
+import { Edit, ExitToApp, Lock } from "@material-ui/icons";
 import { useContext } from "react";
 import { useHistory } from "react-router-dom";
 
@@ -71,10 +71,6 @@ function AccountMenu({
         <CardContent style={{ padding: 4 }}>
           <List>
             <ListItem>
-              <Typography variant = 'h5'>{user.institute.institute}</Typography>
-            </ListItem>
-            <Divider />
-            <ListItem>
               <Button
                 color="secondary"
                 variant="contained"
@@ -84,9 +80,9 @@ function AccountMenu({
                 }}
                 className={classes.button}
                 fullWidth
-                startIcon={<Edit />}
+                startIcon={<Lock />}
               >
-                Edit Account
+                Change Password
               </Button>
             </ListItem>
             <ListItem>

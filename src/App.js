@@ -26,6 +26,7 @@ import ClientDashboard from "./sections/dashboardSection/wrappers/ClientDashboar
 import AdminDashboard from "./sections/dashboardSection/wrappers/AdminDashboard";
 import AccountsWrapper from "./sections/accountSection/wrappers/AccountsWrapper";
 import NotificationWrapper from "./sections/notificationSection/wrappers/NotificationWrapper";
+import ProjectEditor from "./sections/projectSection/pages/ProjectEditor";
 
 const theme = createTheme({
   palette: {
@@ -115,10 +116,18 @@ function App() {
                 <MainWrapper>
                   <Switch>
                     <Route exact path="/">
-                      {user.type == 0 ? <ClientDashboard /> : <AdminDashboard />}
+                      {user.type == 0 ? (
+                        <ClientDashboard />
+                      ) : (
+                        <AdminDashboard />
+                      )}
                     </Route>
                     <Route exact path="/dashboard">
-                      {user.type == 0 ? <ClientDashboard /> : <AdminDashboard />}
+                      {user.type == 0 ? (
+                        <ClientDashboard />
+                      ) : (
+                        <AdminDashboard />
+                      )}
                     </Route>
                     <Route exact path="/accounts">
                       <AccountsWrapper />
@@ -127,7 +136,7 @@ function App() {
                       <ClientInstituteViewer />
                     </Route>
                     <Route exact path="/projects/new">
-                      <ProjectEditorWrapper isNew={true} />
+                      <ProjectEditor isNew={true} project={null} />
                     </Route>
                     <Route exact path="/projects/:id">
                       <ClientProjectViewer />

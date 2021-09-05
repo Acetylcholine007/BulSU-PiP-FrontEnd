@@ -10,9 +10,9 @@ function form2Validator({
 }) {
   const result = {
     proposedProjectCost: [
-      {error: false, messages: []},
-      {error: false, messages: []},
-      {error: false, messages: []},
+      { error: false, messages: [] },
+      { error: false, messages: [] },
+      { error: false, messages: [] },
     ],
 
     email: {
@@ -64,7 +64,7 @@ function form2Validator({
     },
   };
 
-  if (email == "") {
+  if (email === "") {
     result.email.error = true;
     result.email.messages.push("Email cannot be blank");
   } else {
@@ -75,54 +75,54 @@ function form2Validator({
       result.email.messages.push("Invalid email format");
     }
   }
-  
-  if (projectLocation == "") {
+
+  if (projectLocation === "") {
     result.projectLocation.error = true;
     result.projectLocation.messages.push("Project Location cannot be blank");
   }
 
-  if (description == "") {
+  if (description === "") {
     result.description.error = true;
     result.description.messages.push("Description cannot be blank");
   }
 
-  if (purpose == "") {
+  if (purpose === "") {
     result.purpose.error = true;
     result.purpose.messages.push("Purpose cannot be blank");
   }
 
-  if (beneficiaries == "") {
+  if (beneficiaries === "") {
     result.beneficiaries.error = true;
     result.beneficiaries.messages.push("Beneficiary cannot be blank");
   }
 
-  if (surName == "") {
+  if (surName === "") {
     result.surName.error = true;
     result.surName.messages.push("Surname cannot be blank");
   }
 
-  if (firstName == "") {
+  if (firstName === "") {
     result.firstName.error = true;
     result.firstName.messages.push("First Name cannot be blank");
   }
 
-  if (designation == "") {
+  if (designation === "") {
     result.designation.error = true;
     result.designation.messages.push("First Name cannot be blank");
   }
 
-  if (telephoneNumber.length < 8) {
+  if (telephoneNumber === "") {
     result.telephoneNumber.error = true;
     result.telephoneNumber.messages.push("Needs a Telephone Number");
   } else {
-    var telephoneNo = /^\d{8}$/;
-    if (!phoneNumber.match(telephoneNo)) {
-      result.phoneNumber.error = true;
-      result.phoneNumber.messages.push("Invalid Phone Number");
+    var telephoneNo = /^\d{3}[-]\d{4}$/;
+    if (!telephoneNumber.match(telephoneNo)) {
+      result.telephoneNumber.error = true;
+      result.telephoneNumber.messages.push("Invalid Telephone Number");
     }
   }
 
-  if (phoneNumber.length == "") {
+  if (phoneNumber.length === "") {
     result.phoneNumber.error = true;
     result.phoneNumber.messages.push(
       "Needs a Phone Number for Contact purposes"
@@ -136,28 +136,32 @@ function form2Validator({
   }
 
   proposedProjectCost.forEach((item, index) => {
-    if(item.cost==="") {
+    if (item.cost === "") {
       result.proposedProjectCost[index].error = true;
-      result.proposedProjectCost[index].messages.push('Please input a value')
+      result.proposedProjectCost[index].messages.push("Please input a value");
     } else {
-      let isNumber = !isNaN(item.cost)
-      console.log(isNumber)
-      if(isNumber) {
+      let isNumber = !isNaN(item.cost);
+      console.log(isNumber);
+      if (isNumber) {
         let number = parseFloat(item.cost);
-        if(number < 0) {
+        if (number < 0) {
           result.proposedProjectCost[index].error = true;
-          result.proposedProjectCost[index].messages.push("The value is smaller than 0")
-        } else if(number > 10000000)
-        result.proposedProjectCost[index].error = true;
-          result.proposedProjectCost[index].messages.push("The value is larger than 10,000,000")
+          result.proposedProjectCost[index].messages.push(
+            "The value is smaller than 0"
+          );
+        } else if (number > 10000000)
+          result.proposedProjectCost[index].error = true;
+        result.proposedProjectCost[index].messages.push(
+          "The value is larger than 10,000,000"
+        );
       } else {
         result.proposedProjectCost[index].error = true;
-          result.proposedProjectCost[index].messages.push("The value is not a number")
+        result.proposedProjectCost[index].messages.push(
+          "The value is not a number"
+        );
       }
     }
-    })
-
-  //TODO: Insert proposedProjectCost validation here
+  });
 
   return result;
 }

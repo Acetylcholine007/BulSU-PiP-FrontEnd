@@ -24,8 +24,5 @@ function accountEditorValidator(password) {
     return result;
   }
   
-  //var password = "testing";
-  //console.log(accountEditorValidator(password))
-  
   export default accountEditorValidator;
   
