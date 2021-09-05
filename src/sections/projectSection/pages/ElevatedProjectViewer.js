@@ -93,7 +93,15 @@ function ElevatedProjectViewer({ project, priority, instituteId }) {
     project.pdoSignature ? [project.pdoSignature] : []
   );
 
-  const [checkerForm1, setCheckerForm1] = useState();
+  const [checkerForm1, setCheckerForm1] = useState({
+      investmentReq: [
+          { error: false, messages: [] },
+          { error: false, messages: [] },
+          { error: false, messages: [] },
+          { error: false, messages: [] },
+          { error: false, messages: [] },
+      ],
+  });
   const [checkerForm2, setCheckerForm2] = useState();
   const [checkerForm3, setCheckerForm3] = useState({
     recievedBy: {

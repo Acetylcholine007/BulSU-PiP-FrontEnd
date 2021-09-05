@@ -12,10 +12,10 @@ import {
 import React, { useContext } from "react";
 
 import { AuthContext } from "../../../contexts/AuthContext";
-import { papLevels, readinessLevels, statuses } from "../../../utils/constants";
+import { papLevels, readinessLevels, statuses, elForm1Validator } from "../../../utils/constants";
 import GSPViewer from "./GSPViewer";
 
-function ViewerForm1({ project, investmentReq, setInvestmentReq, status }) {
+function ViewerForm1({ project, investmentReq, setInvestmentReq, status, checkerForm1 }) {
   const useStyles = makeStyles(() => ({
     table: {
       minWidth: 700,
@@ -123,7 +123,8 @@ function ViewerForm1({ project, investmentReq, setInvestmentReq, status }) {
                     label="Value"
                     variant="outlined"
                     fullWidth
-                    error={false}
+                    error={checkerForm1.investmentReq[index].error}
+                    helperText={checkerForm1.investmentReq[index].error ? checkerForm1.investmentReq[index].messages[0]: null}
                     value={investment.value}
                   />
                 </TableCell>

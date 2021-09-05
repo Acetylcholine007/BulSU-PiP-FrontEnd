@@ -35,17 +35,17 @@ export const form1Validator = ({
     },
   };
 
-  if (title.length > 20) {
+  if (title.length > 100) {
     result.title.error = true;
     result.title.messages.push("too long");
-  }
-  if (title.length < 5) {
-    result.title.error = true;
-    result.title.messages.push("too short");
   }
   if (title === "") {
     result.title.error = true;
     result.title.messages.push("Title cannot be blank");
+  }
+  if (title.length < 3) {
+    result.title.error = true;
+    result.title.messages.push("too short");
   }
   if (obligationType === "") {
     result.obligationType.error = true;
@@ -88,6 +88,10 @@ export const form1Validator = ({
   if(item.value.length >= 9) {
     result.investmentReq[index].error = true;
     result.investmentReq[index].messages.push('it must not exceeded by 100M')
+  }
+  if(isNaN(item.value)) {
+    result.investmentReq[index].error = true;
+    result.investmentReq[index].messages.push('numbers only');
   }
   })
 
