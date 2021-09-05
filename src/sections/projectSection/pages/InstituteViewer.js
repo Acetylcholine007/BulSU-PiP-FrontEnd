@@ -6,24 +6,23 @@ import {
   Toolbar,
   Typography,
   makeStyles,
+  ButtonGroup,
 } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { Add, Save } from "@material-ui/icons";
 
 import ProjectList from "../components/ProjectList";
-import { AuthContext } from "../../../contexts/AuthContext";
 import ProjectFilterDialog from "../components/ProjectFilterDialog";
-import { serverUrl } from "../../../utils/serverUrl";
 import SheetExport from "../../../shared/components/SheetExport";
 import PDFExport from "../../../shared/components/PDFExport";
+import { Projects } from "../../../utils/bulsupis_mw";
+import { institutes } from "../../../utils/constants";
 
-function InstituteViewer({ institute, instituteId, priority }) {
-  const history = useHistory();
-  const { user } = useContext(AuthContext);
+function InstituteViewer({ institute, user }) {
   const [open, setOpen] = useState(false);
-  const [projects, setProject] = useState(institute.projects);
-  const [localPrio, setLocalPrio] = useState([...priority]);
+  const [projects, setProject] = useState(institute.projectList);
+  const [localPrio, setLocalPrio] = useState([...institute.priority]);
 
   const [filter, setFilter] = useState({
     search: "",
@@ -64,6 +63,7 @@ function InstituteViewer({ institute, instituteId, priority }) {
   };
 
   const classes = useStyles();
+  const history = useHistory();
 
   return (
     <React.Fragment>
@@ -85,36 +85,39 @@ function InstituteViewer({ institute, instituteId, priority }) {
         )}
         <SheetExport
           institutes={[institute]}
-          filename={instituteId}
-          buttonLabel="Export Investment Sheet"
+          filename={institutes.find((item) => item.abbv === institute.abbv).institute}
+          buttonLabel="Download Investment Sheet"
         />
-        <PDFExport projects={institute.projects} filename={instituteId} priority = {priority}/>
-        {!compareArray(priority, localPrio) && (
+        <PDFExport
+          filename={institutes.find((item) => item.abbv === institute.abbv).institute}
+          projects={institute.projectList}
+          institute={institutes.find((item) => item.abbv === institute.abbv).institute}
+        />
+        <ButtonGroup
+        orientation="vertical">
+
+        </ButtonGroup>
+        {!compareArray(institute.priority, localPrio) && user.type == 0 && (
           <Button
             className={classes.button}
             variant="contained"
             startIcon={<Save />}
             onClick={() => {
-              var newInstitute = { ...institute };
-              newInstitute.priority = localPrio;
-              fetch(`${serverUrl}institutes/${institute.id}`, {
-                method: "PUT",
-                headers: { "Content-type": "application/json" },
-                body: JSON.stringify(newInstitute),
-              }).then(() => {
-                console.log("Priority Saved");
-                switch (user.type) {
-                  case 0:
-                    history.push("/projects");
-                    break;
-                  case 1:
-                    history.push(`/institutes/${instituteId}`);
-                    break;
-                  case 2:
-                    history.push(`/institutes/${instituteId}`);
-                    break;
-                }
-              });
+              Projects.rearrange(localPrio)
+                .then((res) => {
+                  switch (user.type) {
+                    case 0:
+                      history.push("/projects");
+                      break;
+                    case 1:
+                      history.push(`/institutes/${institute.instituteId}`);
+                      break;
+                    case 2:
+                      history.push(`/institutes/${institute.instituteId}`);
+                      break;
+                  }
+                })
+                .catch((err) => console.log(err.message));
             }}
           >
             Save Changes
@@ -126,11 +129,11 @@ function InstituteViewer({ institute, instituteId, priority }) {
         <Grid container>
           <Grid item xs={12}>
             <ProjectList
-              instituteId={instituteId}
+              instituteId={institute.instituteId}
               filter={filter}
               setFilter={setFilter}
               setOpen={setOpen}
-              priority={priority}
+              priority={institute.priority}
               projects={projects}
               setProject={setProject}
               localPrio={localPrio}

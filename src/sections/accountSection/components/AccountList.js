@@ -14,10 +14,10 @@ import {
 } from "@material-ui/core";
 import { FilterList, Search } from "@material-ui/icons";
 import React, { useState, useEffect } from "react";
-import { serverUrl } from "../../../utils/serverUrl";
+import { Admin } from "../../../utils/bulsupis_mw";
 import AccountModal from "./AccountModal";
 
-function AccountList({ users, filter, setFilter, setOpen, setDataChanged }) {
+function AccountList({ users, setUsers, filter, setFilter, setOpen, setDataChanged }) {
   const [user, setUser] = useState(null);
   const [openUserModal, setOpenUserModal] = useState(false);
   
@@ -63,27 +63,31 @@ function AccountList({ users, filter, setFilter, setOpen, setDataChanged }) {
 
   useEffect(() => {
     setFilteredUser(users.filter(filterLogic));
-  }, [filter]);
+  }, [filter, users]);
 
   const handleToggle = (user) => {
-    fetch(`${serverUrl}users/${user.id}`, {
-      method: "PUT",
-      headers: { "Content-type": "application/json" },
-      body: JSON.stringify({
-        ...user,
-        verified: !user.verified,
-      }),
-    }).then(() => {
-      setDataChanged(true);
-    });
+    Admin.Account.setVerification(user.id, !user.verified)
+    .then((res) => {
+      console.log(res)
+      setUsers(() => {
+        let newUsers = [...users];
+        newUsers.find((item) => item.id === user.id).verified = !user.verified
+        return newUsers;
+      });
+    })
+    .catch((err) => console.log(err.message))
   };
 
   const handleDelete = (user) => {
-    fetch(`${serverUrl}users/${user.id}`, {
-      method: "DELETE"
-    }).then(() => {
-      setDataChanged(true);
-    });
+    Admin.Account.delete(user.id)
+    .then((res) => {
+      setUsers(() => {
+        let newUsers = [...users];
+        newUsers.splice(newUsers.findIndex((item) => item.id === user.id), 1)
+        return newUsers;
+      });
+    })
+    .catch((err) => console.log(err.message))
   }
 
   return (

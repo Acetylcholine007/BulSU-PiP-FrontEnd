@@ -10,7 +10,6 @@ import {
   Modal,
   Typography,
 } from "@material-ui/core";
-import { serverUrl } from "../../../utils/serverUrl";
 
 function AccountModal({ open, setOpen, user, handleToggle, handleDelete }) {
   const useStyles = makeStyles((theme) => ({
@@ -46,10 +45,11 @@ function AccountModal({ open, setOpen, user, handleToggle, handleDelete }) {
     >
       <Fade in={open}>
         <div className={classes.paper}>
-          <Container maxWidth = 'xs'>
+          <Container maxWidth="xs">
             <Grid container>
               <Grid item xs>
-                <Avatar src={`${serverUrl}logos/${user.uri}`} />
+                {console.log(user)}
+                <Avatar src={user.institute.profile_img.src} />
               </Grid>
               <Grid item xs={10}>
                 <Typography variant="h5">{`${user.institute.institute}`}</Typography>
@@ -64,11 +64,27 @@ function AccountModal({ open, setOpen, user, handleToggle, handleDelete }) {
               <Grid item xs={12}>
                 <Divider />
               </Grid>
-              <Grid item xs align = 'center'>
-                <Button variant="contained" onClick = {() => handleToggle(user)}>{user.verified ? 'Suspend' : 'Verify'}</Button>
+              <Grid item xs align="center">
+                <Button
+                  variant="contained"
+                  onClick={() => {
+                    handleToggle(user);
+                    setOpen(false);
+                  }}
+                >
+                  {user.verified ? "Suspend" : "Verify"}
+                </Button>
               </Grid>
-              <Grid item xs align = 'center'>
-                <Button variant="contained" onClick = {() => handleDelete(user)}>Delete</Button>
+              <Grid item xs align="center">
+                <Button
+                  variant="contained"
+                  onClick={() => {
+                    handleDelete(user);
+                    setOpen(false);
+                  }}
+                >
+                  Delete
+                </Button>
               </Grid>
             </Grid>
           </Container>

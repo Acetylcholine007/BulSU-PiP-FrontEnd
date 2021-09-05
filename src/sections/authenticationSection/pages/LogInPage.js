@@ -23,6 +23,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import { ProjectContext } from "../../../contexts/ProjectContext";
 import LoginDialog from "../components/LoginDialog";
 import loginValidator from "../../../utils/loginValidator";
+import { Account } from "../../../utils/bulsupis_mw";
 
 import PDO from "./pdo.png";
 
@@ -82,11 +83,6 @@ function LogInPage() {
 
   const history = useHistory();
   const classes = useStyles();
-  const { setUser } = useContext(AuthContext);
-  const { setProjects } = useContext(ProjectContext);
-
-  const [open, setOpen] = useState(false);
-  const [message, setMessage] = useState("");
   const [loginChecker, setLoginChecker] = useState({
     email: {
       error: false,
@@ -98,79 +94,88 @@ function LogInPage() {
     },
   });
   console.log(PDO);
+  const { setIsLoggedIn } = useContext(AuthContext);
 
   const login = (email, password) => {
-    const abortCont = new AbortController();
-    fetch(`${serverUrl}users?password=${password}&&email=${email}`, {
-      signal: abortCont.signal,
-    })
-      .then((res) => {
-        if (!res.ok) {
-          throw Error("App can't perform verification");
-        }
-        return res.json();
-      })
-      .then((match) => {
-        if (match.length === 1) {
-          if (match[0].verified) {
-            setUser(match[0]);
-            fetch(
-              match[0].type === 0
-                ? `${serverUrl}institutes?id=${match[0].institute.abbv}`
-                : `${serverUrl}institutes`,
-              {
-                signal: abortCont.signal,
-              }
-            )
-              .then((res) => {
-                if (!res.ok) {
-                  // error coming back from server
-                  throw Error("could not fetch the data for that resource");
-                }
-                return res.json();
-              })
-              .then((data) => {
-                setProjects(data);
-                history.push("/");
-              })
-              .catch((err) => {
-                if (err.name === "AbortError") {
-                  console.log("fetch aborted");
-                } else {
-                  console.log(err.message);
-                }
-              });
-          } else {
-            setMessage(
-              "Your account is either unverified or has been suspended. Contact system admin to verify your account."
-            );
-            setOpen(true);
-          }
-        } else {
-          setEmailError(true);
-          setPasswordError(true);
-          console.log("Incorrect Credentials");
-        }
-      })
-      .catch((err) => {
-        if (err.name === "AbortError") {
-          console.log("fetch aborted");
-        } else {
-          console.log(err.message);
-        }
-      });
+    // const abortCont = new AbortController();
+    // fetch(`${serverUrl}users?password=${password}&&email=${email}`, {
+    //   signal: abortCont.signal,
+    // })
+    //   .then((res) => {
+    //     if (!res.ok) {
+    //       throw Error("App can't perform verification");
+    //     }
+    //     return res.json();
+    //   })
+    //   .then((match) => {
+    //     if (match.length === 1) {
+    //       if (match[0].verified) {
+    //         setUser(match[0]);
+    //         fetch(
+    //           match[0].type === 0
+    //             ? `${serverUrl}institutes?id=${match[0].institute.abbv}`
+    //             : `${serverUrl}institutes`,
+    //           {
+    //             signal: abortCont.signal,
+    //           }
+    //         )
+    //           .then((res) => {
+    //             if (!res.ok) {
+    //               // error coming back from server
+    //               throw Error("could not fetch the data for that resource");
+    //             }
+    //             return res.json();
+    //           })
+    //           .then((data) => {
+    //             setProjects(data);
+    //             history.push("/");
+    //           })
+    //           .catch((err) => {
+    //             if (err.name === "AbortError") {
+    //               console.log("fetch aborted");
+    //             } else {
+    //               console.log(err.message);
+    //             }
+    //           });
+    //       } else {
+    //         setMessage(
+    //           "Your account is either unverified or has been suspended. Contact system admin to verify your account."
+    //         );
+    //         setOpen(true);
+    //       }
+    //     } else {
+    //       setEmailError(true);
+    //       setPasswordError(true);
+    //       console.log("Incorrect Credentials");
+    //     }
+    //   })
+    //   .catch((err) => {
+    //     if (err.name === "AbortError") {
+    //       console.log("fetch aborted");
+    //     } else {
+    //       console.log(err.message);
+    //     }
+    //   });
   };
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     setEmailError(false);
     setPasswordError(false);
 
     var checker = loginValidator(email, password);
     if (!checker.email.error && !checker.password.error) {
-      const myBitArray = sjcl.hash.sha256.hash(password);
-      const myHash = sjcl.codec.hex.fromBits(myBitArray);
-      login(email, myHash);
+      if (!emailError && !passwordError) {
+        let result = await Account.login(email, password);
+        if (result) {
+          console.log("Successful Login");
+          setIsLoggedIn(Account.isLoggedIn());
+        } else {
+          console.log("Invalid Email or Password");
+          setEmailError(true);
+          setPasswordError(true);
+        }
+      }
     }
     setLoginChecker(checker)
   };
@@ -237,7 +242,16 @@ function LogInPage() {
                     LOGIN
                   </Button>
                   <br />
-                  <Button size="small" className={classes.button2}>
+                  <Button
+                    size="small"
+                    className={classes.button2}
+                    onClick={() =>
+                      window.open(
+                        "https://haiku-test-leo.herokuapp.com/test/reset?fbclid=IwAR12a723__oaymbbfXtf1bR8-HDDVSkMWcQERTPiLuPTm8QeUic7hqydPoo",
+                        "_blank"
+                      )
+                    }
+                  >
                     forgot password?
                   </Button>
                   <Divider />

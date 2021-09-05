@@ -3,8 +3,9 @@ import { Button } from "@material-ui/core";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import { months } from "../../utils/constants";
+import { GetApp } from "@material-ui/icons";
 
-function PDFExport({ projects, filename, priority }) {
+function PDFExport({ projects, filename, institute }) {
   const exportPDF = () => {
     const unit = "in";
     const size = "A4";
@@ -16,13 +17,7 @@ function PDFExport({ projects, filename, priority }) {
     doc.setFontSize(10);
     doc.deletePage(1);
 
-    var sortedProjects = priority.map((projectId) =>
-      projects.find((project) => project.id == projectId)
-    );
-
-    console.log(sortedProjects);
-
-    sortedProjects.forEach((project, index) => {
+    projects.forEach((project, index) => {
       if (project !== undefined) {
         let startDate = new Date(project.implementationPeriod.start);
         let endDate = new Date(project.implementationPeriod.end);
@@ -48,11 +43,7 @@ function PDFExport({ projects, filename, priority }) {
               "Name of SUC",
               { content: "Bulacan State University", colSpan: 4 },
             ],
-            [
-              "2",
-              "College/Campus/Office",
-              { content: project.institute.institute, colSpan: 4 },
-            ],
+            ["2", "College/Campus/Office", { content: institute, colSpan: 4 }],
             ["3", "Address", { content: project.address, colSpan: 4 }],
             ["4", "Project Title", { content: project.title, colSpan: 4 }],
             [
@@ -238,12 +229,17 @@ function PDFExport({ projects, filename, priority }) {
       }
     });
 
-    doc.save(`${filename}.pdf`);
+    doc.save(`${filename} - PAPs Form.pdf`);
   };
 
   return (
-    <Button variant="contained" onClick={exportPDF} style={{ marginLeft: 10 }}>
-      Export PDF
+    <Button
+      variant="contained"
+      onClick={exportPDF}
+      style={{ marginLeft: 10 }}
+      startIcon={<GetApp />}
+    >
+      Download Prep Form
     </Button>
   );
 }

@@ -1,0 +1,124 @@
+import React, { useEffect, useState } from "react";
+
+import LoadingComponent from "../../../shared/components/LoadingComponent";
+import { Account, Admin } from "../../../utils/bulsupis_mw";
+import { institutes } from "../../../utils/constants";
+import DashboardPage from "../pages/DashboardPage";
+
+function AdminDashboard() {
+  const [data, setData] = useState(null);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+      Admin.Institutes.getAll()
+      .then((res) => {
+          let projects = [];
+          let costs = [
+            {
+              label: "Dropped",
+              value: [0, 0],
+            },
+            {
+              label: "Proposed",
+              value: [0, 0],
+            },
+            {
+              label: "Revision",
+              value: [0, 0],
+            },
+            {
+              label: "On-going",
+              value: [0, 0],
+            },
+            {
+              label: "Completed",
+              value: [0, 0],
+            },
+          ];
+
+          res.data.slice(0, res.data.length - 3).forEach((institute) => {
+            let instituteTally = {
+              institute: institutes.find((item) => item.institute === institute.institute).abbv,
+              tally: [0, 0, 0, 0, 0],
+            }
+
+            institute.project_list.forEach((project) => {
+              switch (project.status) {
+                case 0:
+                  instituteTally.tally[0] += 1;
+                  costs[0].value[0] += project.investment_req
+                    .map((item) => parseFloat(item.value))
+                    .reduce((a, b) => a + b);
+                  costs[0].value[1] += project.proposed_projectcost
+                    .map((item) => parseFloat(item.cost))
+                    .reduce((a, b) => a + b);
+                  break;
+                case 1:
+                  instituteTally.tally[1] += 1;
+                  costs[1].value[0] += project.investment_req
+                    .map((item) => parseFloat(item.value))
+                    .reduce((a, b) => a + b);
+                  costs[1].value[1] += project.proposed_projectcost
+                    .map((item) => parseFloat(item.cost))
+                    .reduce((a, b) => a + b);
+                  break;
+                case 2:
+                  instituteTally.tally[2] += 1;
+                  costs[2].value[0] += project.investment_req
+                    .map((item) => parseFloat(item.value))
+                    .reduce((a, b) => a + b);
+                  costs[2].value[1] += project.proposed_projectcost
+                    .map((item) => parseFloat(item.cost))
+                    .reduce((a, b) => a + b);
+                  break;
+                case 3:
+                  instituteTally.tally[3] += 1;
+                  costs[3].value[0] += project.investment_req
+                    .map((item) => parseFloat(item.value))
+                    .reduce((a, b) => a + b);
+                  costs[3].value[1] += project.proposed_projectcost
+                    .map((item) => parseFloat(item.cost))
+                    .reduce((a, b) => a + b);
+                  break;
+                case 4:
+                  instituteTally.tally[4] += 1;
+                  costs[4].value[0] += project.investment_req
+                    .map((item) => parseFloat(item.value))
+                    .reduce((a, b) => a + b);
+                  costs[4].value[1] += project.proposed_projectcost
+                    .map((item) => parseFloat(item.cost))
+                    .reduce((a, b) => a + b);
+                  break;
+              }
+            });
+
+            projects.push(instituteTally)
+          })
+          setData({
+            projects: projects,
+            costs: costs,
+          });
+      })
+      .then(() => {
+        Account.getInfo()
+        .then((res) => {
+          setUser(res.data);
+        })
+        .catch((err) => {
+          console.log(err.message);
+        })
+      })
+      .catch((err) => {
+          console.log(err.message)
+      })
+  }, []);
+
+  return (
+    <React.Fragment>
+      {(!data || !user) && <LoadingComponent />}
+      {data && user && <DashboardPage data={data} user={user}/>}
+    </React.Fragment>
+  );
+}
+
+export default AdminDashboard;

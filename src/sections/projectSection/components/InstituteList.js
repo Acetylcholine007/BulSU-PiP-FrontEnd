@@ -13,14 +13,17 @@ import {
   Card,
 } from "@material-ui/core";
 import { Search } from "@material-ui/icons";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
+import { InstituteContext } from "../../../contexts/InstituteContext";
 
-import { institutes } from "../../../utils/constants";
-import { serverUrl } from "../../../utils/serverUrl";
+function InstituteList({ filter, setFilter, institutes }) {
+  const { setInstitute } = useContext(InstituteContext);
 
-function InstituteList({ filter, setFilter, dabaseInstitutes }) {
-  const newInstitutes = dabaseInstitutes.map((item, index) => ({...item, institute: institutes[index].institute}))
+  const newInstitutes = institutes.map((item, index) => ({
+    ...item,
+    institute: institutes[index].institute,
+  }));
 
   const useStyles = makeStyles((theme) => ({
     noBorder: {
@@ -57,6 +60,7 @@ function InstituteList({ filter, setFilter, dabaseInstitutes }) {
   );
 
   useEffect(() => {
+    setInstitute(null);
     setFilteredInstitute(
       newInstitutes.slice(0, newInstitutes.length - 2).filter(filterLogic)
     );
@@ -99,15 +103,18 @@ function InstituteList({ filter, setFilter, dabaseInstitutes }) {
               <TableRow
                 hover
                 onClick={(e) => {
+                  setInstitute(institute);
                   history.push(`/institutes/${institute.id}`);
                 }}
                 key={institute.abbv}
               >
                 <TableCell>
-                  <Avatar src={`${serverUrl}logos/${institute.id}.png`} />
+                  <Avatar src={institute.profile_img.src} />
                 </TableCell>
                 <TableCell>{institute.institute}</TableCell>
-                <TableCell align="center">{institute.projects.length}</TableCell>
+                <TableCell align="center">
+                  {institute.project_list.length}
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>

@@ -1,31 +1,39 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import useFetch from "../../../hooks/useFetch";
-import ErrorComponent from "../../../shared/components/ErrorComponent";
+
 import LoadingComponent from "../../../shared/components/LoadingComponent";
-import { serverUrl } from "../../../utils/serverUrl";
+import { Account, Admin } from "../../../utils/bulsupis_mw";
+import { projectListTranslator } from "../../../utils/translators";
 import InstituteViewer from "../pages/InstituteViewer";
 
 function AdminInstituteViewer() {
   const { instituteId } = useParams();
+  const [institute, setInstitute] = useState(null);
+  const [user, setUser] = useState(null);
 
-  const {
-    error,
-    isPending,
-    data: institute,
-  } = useFetch(`${serverUrl}institutes?id=${instituteId}`);
+  useEffect(() => {
+    Admin.Institutes.get(instituteId)
+      .then((res) => {
+        let institute = res.data;
+        setInstitute({
+          abbv: institute.abbv,
+          instituteId: institute.id,
+          projectList: projectListTranslator(institute.project_list),
+          priority: institute.project_list.map((project) => project.id),
+        });
+        Account.getInfo()
+          .then((accountRes) => setUser(accountRes.data))
+          .catch((err) => console.log(err.message));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   return (
     <React.Fragment>
-      {error && <ErrorComponent message="Failed to fetch projects" />}
-      {isPending && <LoadingComponent />}
-      {institute && (
-        <InstituteViewer
-          institute={institute[0]}
-          instituteId={instituteId}
-          priority={institute[0].priority}
-        />
-      )}
+    {(!institute || !user) && <LoadingComponent />}
+    {institute && user && <InstituteViewer institute={institute} user={user}/>}
     </React.Fragment>
   );
 }

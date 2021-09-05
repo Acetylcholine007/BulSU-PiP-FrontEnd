@@ -1,33 +1,42 @@
-import React, { useContext } from "react";
+import React, { useState } from "react";
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 
-import { AuthContext } from "../../../contexts/AuthContext";
-import useFetch from "../../../hooks/useFetch";
-import ErrorComponent from "../../../shared/components/ErrorComponent";
 import LoadingComponent from "../../../shared/components/LoadingComponent";
-import { serverUrl } from "../../../utils/serverUrl";
+import { Account, Projects } from "../../../utils/bulsupis_mw";
 import ProjectViewer from "../pages/ProjectViewer";
 
 function ClientProjectViewer() {
   const { id } = useParams();
-  const { user } = useContext(AuthContext);
+  const [project, setProject] = useState(null);
 
-  const {
-    error,
-    isPending,
-    data: institute,
-  } = useFetch(`${serverUrl}institutes?id=${user.institute.abbv}`);
+  useEffect(() => {
+    Account.getInfo()
+      .then((accountRes) => {
+        Projects.get(id)
+          .then((res) => {
+            console.log(res.data)
+            setProject({
+              ...res.data,
+              institute: accountRes.data.institute,
+              priority: accountRes.data.projectList.findIndex((item) => item.id === id) + 1,
+              suc: 'Bulacan State University'
+            });
+          })
+          .catch((err) => {
+            console.log(err.message);
+            setProject(null);
+          });
+      })
+      .catch((err) => console.log(err.message));
+  }, []);
 
   return (
     <React.Fragment>
-      {error && <ErrorComponent message="Can't view project" />}
-      {isPending && <LoadingComponent />}
-      {institute && (
+      {project == null && <LoadingComponent />}
+      {project && (
         <ProjectViewer
-          project={institute[0].projects.find((project) => project.id == id)}
-          priority={institute[0].priority}
-          projectId={parseInt(id)}
-          institute={institute[0]}
+          project={project}
         />
       )}
     </React.Fragment>

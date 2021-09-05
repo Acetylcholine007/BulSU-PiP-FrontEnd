@@ -6,23 +6,27 @@ import {
   makeStyles,
   Button,
 } from "@material-ui/core";
-import React, { useState } from "react";
-import useFetch from "../../../hooks/useFetch";
+import React, { useEffect, useState } from "react";
 
-import ErrorComponent from "../../../shared/components/ErrorComponent";
 import LoadingComponent from "../../../shared/components/LoadingComponent";
 import SheetExport from "../../../shared/components/SheetExport";
-import { serverUrl } from "../../../utils/serverUrl";
 import InstituteList from "../components/InstituteList";
+import { Admin } from "../../../utils/bulsupis_mw";
+import { institutesTranslator } from "../../../utils/translators";
 
 function InstitutePage() {
   const [filter, setFilter] = useState({ search: "" });
+  const [institutes, setInstitutes] = useState(null);
 
-  const {
-    error,
-    isPending,
-    data: institutes,
-  } = useFetch(`${serverUrl}institutes`);
+  useEffect(() => {
+    Admin.Institutes.getAll()
+    .then((res) => {
+      setInstitutes(res.data.slice(0, res.data.length - 1));
+    })
+    .catch((err) => {
+      console.log(err.message)
+    })
+  }, [])
 
   const useStyles = makeStyles({
     divider: {
@@ -40,8 +44,7 @@ function InstitutePage() {
 
   return (
     <React.Fragment>
-      {error && <ErrorComponent message="Failed to fetch institutes" />}
-      {isPending && <LoadingComponent />}
+      {!institutes && <LoadingComponent />}
       {institutes && (
         <React.Fragment>
           <Toolbar>
@@ -49,14 +52,14 @@ function InstitutePage() {
               {"Institute List"}
             </Typography>
             <SheetExport
-              institutes={institutes}
+              institutes={institutesTranslator(institutes)}
               filename={"BulSU"}
-              buttonLabel="Export Investment Sheet"
+              buttonLabel="Download Investment Sheet"
             />
           </Toolbar>
           <Divider classes={{ root: classes.divider }} />
           <Container>
-            <InstituteList filter={filter} setFilter={setFilter} dabaseInstitutes={institutes}/>
+            <InstituteList filter={filter} setFilter={setFilter} institutes={institutes}/>
           </Container>
         </React.Fragment>
       )}
