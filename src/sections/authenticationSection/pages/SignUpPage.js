@@ -10,7 +10,7 @@ import {
   Typography,
   MenuItem,
 } from "@material-ui/core";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useHistory } from "react-router";
 import sjcl from "sjcl";
 
@@ -20,6 +20,8 @@ import { institutes } from "../../../utils/constants";
 import signupValidator from "../../../utils/signupValidator";
 
 import PDO from "./pdo.png";
+import { Account } from "../../../utils/bulsupis_mw";
+import { AuthContext } from "../../../contexts/AuthContext";
 
 const useStyles = makeStyles((theme) => ({
   motherPane: {
@@ -69,6 +71,7 @@ const useStyles = makeStyles((theme) => ({
 function SignUpPage() {
   const history = useHistory();
   const classes = useStyles();
+  const {setIsLoggedIn} = useContext(AuthContext);
 
   const [institute, setInstitute] = useState("");
   const [email, setEmail] = useState("");
@@ -93,19 +96,6 @@ function SignUpPage() {
       messages: [],
     },
   });
-
-  const handleSignUp = (e, newUser) => {
-    e.preventDefault();
-    if (true) {
-      fetch(`${serverUrl}users`, {
-        method: "POST",
-        headers: { "Content-type": "application/json" },
-        body: JSON.stringify(newUser),
-      }).then(() => {
-        history.push("/");
-      });
-    }
-  };
 
   return (
     <Container className={classes.motherPane}>
@@ -144,20 +134,13 @@ function SignUpPage() {
                       !checker.institute.error &&
                       !checker.confirmPassword.error
                     ) {
-                      const myBitArray = sjcl.hash.sha256.hash(password);
-                      const myHash = sjcl.codec.hex.fromBits(myBitArray);
-                      handleSignUp(e, {
-                        institute: {
-                          institute: institute.institute,
-                          abbv: institute.abbv,
-                        },
-                        email,
-                        password: myHash,
-                        uri: `${institute.abbv}.png`,
-                        verified: true,
-                        type: institute.type,
-                        notificationList: [],
-                      });
+                      Account.register(email, password, institute.institute)
+                        .then((res) => {
+                          console.log(res);
+                          history.push("/");
+                          setIsLoggedIn(Account.isLoggedIn());
+                        })
+                        .catch((err) => console.log(err.message));
                     }
                     setSignupChecker(checker);
                   }}

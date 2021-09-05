@@ -1,38 +1,36 @@
-import React, { useContext } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import useFetch from "../../../hooks/useFetch";
 
-import ErrorComponent from "../../../shared/components/ErrorComponent";
 import LoadingComponent from "../../../shared/components/LoadingComponent";
 import ProjectEditor from "../pages/ProjectEditor";
-import { serverUrl } from "../../../utils/serverUrl";
-import { AuthContext } from "../../../contexts/AuthContext";
+import { Projects } from "../../../utils/bulsupis_mw";
 
 function ProjectEditorWrapper({isNew}) {
   const { id } = useParams();
-  const { user } = useContext(AuthContext);
+  const [project, setProject] = useState(null);
 
-  const {
-    error,
-    isPending,
-    data: institute,
-  } = useFetch(`${serverUrl}institutes?id=${user.institute.abbv}`);
+  useEffect(() => {
+    Projects.get(id)
+    .then((res) => {
+      console.log(res.data);
+      setProject(res.data);
+    })
+    .catch((err) => {
+      console.log(err.message);
+    })
+  }, [])
 
   return (
     <React.Fragment>
-      {error && <ErrorComponent message="Can't load project" />}
-      {isPending && <LoadingComponent />}
-      {institute && (
+      {!project && <LoadingComponent />}
+      {project && (
         isNew ? <ProjectEditor
           isNew={true}
-          priority={institute[0].priority}
-          institute={institute[0]}
+          project={project}
         /> : 
         <ProjectEditor
           isNew={false}
-          project={institute[0].projects.find((project) => project.id == parseInt(id))}
-          priority={institute[0].priority}
-          institute={institute[0]}
+          project={project}
         />
       )}
     </React.Fragment>

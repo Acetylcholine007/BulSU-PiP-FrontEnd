@@ -8,15 +8,10 @@ import {
   makeStyles,
   Card
 } from "@material-ui/core";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import NotificationModal from "./NotificationModal";
 
-import { AuthContext } from "../../../contexts/AuthContext";
-
-function NotificationList() {
-  const {
-    user: { notificationList },
-  } = useContext(AuthContext);
+function NotificationList({user: {notificationList}}) {
   const [open, setOpen] = useState(false);
   const [notification, setNotification] = useState(null);
 

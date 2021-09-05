@@ -9,7 +9,7 @@ import React from "react";
 
 import NotificationList from "../components/NotificationList";
 
-function NotificationPage() {
+function NotificationPage({user}) {
   const useStyles = makeStyles({
     pageTitle: {
       flexGrow: 11,
@@ -30,7 +30,7 @@ function NotificationPage() {
       </Toolbar>
       <Divider classes={{root: classes.divider}}/>
       <Container>
-        <NotificationList />
+        <NotificationList user = {user}/>
       </Container>
     </React.Fragment>
   );

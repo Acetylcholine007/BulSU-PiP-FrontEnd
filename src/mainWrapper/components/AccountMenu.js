@@ -16,6 +16,7 @@ import { useContext } from "react";
 import { useHistory } from "react-router-dom";
 
 import { AuthContext } from "../../contexts/AuthContext";
+import { Account } from "../../utils/bulsupis_mw";
 import { accountTypes } from "../../utils/constants";
 import { serverUrl } from "../../utils/serverUrl";
 
@@ -40,7 +41,7 @@ function AccountMenu({
 
   const classes = useStyles();
   const history = useHistory();
-  const { user, setUser } = useContext(AuthContext);
+  const { user, setUser, setIsLoggedIn } = useContext(AuthContext);
 
   return (
     <Popover
@@ -58,7 +59,7 @@ function AccountMenu({
     >
       <Card style={{ minimumWidth: "250px" }}>
         <CardHeader
-          avatar={<Avatar src={`${serverUrl}logos/${user.uri}`}/>}
+          avatar={<Avatar src={user.institute.profile_img.src}/>}
           title={
             <Typography variant="h6">
               {accountTypes[user.type].label}
@@ -94,8 +95,8 @@ function AccountMenu({
                 variant="contained"
                 onClick={() => {
                   history.push("/");
-                  setUser(null);
-                  setAnchorEl(null);
+                  Account.logout();
+                  setIsLoggedIn(Account.isLoggedIn());
                 }}
                 className={classes.button}
                 fullWidth

@@ -10,12 +10,21 @@ import {
   Checkbox,
   Divider,
   TextField,
+  List,
+  ListItem,
+  ListItemAvatar,
+  Avatar,
+  ListItemText,
+  ListItemSecondaryAction,
+  IconButton,
 } from "@material-ui/core";
 import { months } from "../../../utils/constants";
 import React, { useContext } from "react";
 import { AuthContext } from "../../../contexts/AuthContext";
+import { Folder, GetApp } from "@material-ui/icons";
 
-function ViewerForm2({ project, proposedProjectCost, setProposedProjectCost, priority, checkerForm2 }) {
+
+function ViewerForm2({ project, proposedProjectCost, setProposedProjectCost, checkerForm2 }) {
   const useStyles = makeStyles(() => ({
     table: {
       minWidth: 700,
@@ -81,7 +90,7 @@ function ViewerForm2({ project, proposedProjectCost, setProposedProjectCost, pri
             <TableRow>
               <TableCell align="center">Priority Ranking</TableCell>
               <TableCell align="center" colSpan={4}>
-                {priority.indexOf(project.id) + 1}
+                {project.priority}
               </TableCell>
             </TableRow>
             <TableRow>
@@ -122,7 +131,7 @@ function ViewerForm2({ project, proposedProjectCost, setProposedProjectCost, pri
             <TableRow>
               <TableCell align="center">Beneficiaries</TableCell>
               <TableCell align="center" colSpan={5}>
-                {project.beneficiary}
+                {project.beneficiaries}
               </TableCell>
             </TableRow>
             <TableRow>
@@ -177,11 +186,11 @@ function ViewerForm2({ project, proposedProjectCost, setProposedProjectCost, pri
               {user.type === 1 && (
                 <React.Fragment>
                   {proposedProjectCost.map((yearCost, index) => (
-                    <TableCell align="center" key = {yearCost.year}>
+                    <TableCell align="center" key={yearCost.year}>
                       <TextField
                         onChange={(e) => {
                           setProposedProjectCost(() => {
-                            var newData = [...proposedProjectCost]
+                            var newData = [...proposedProjectCost];
                             newData[index].cost = e.target.value;
                             return newData;
                           });
@@ -204,7 +213,7 @@ function ViewerForm2({ project, proposedProjectCost, setProposedProjectCost, pri
       </TableContainer>
       <Divider classes={{ root: classes.divider }} />
       <TableContainer component={Paper}>
-        <Table classname={classes.table} aria-label="spanning table">
+        <Table className={classes.table} aria-label="spanning table">
           <TableBody>
             <TableRow>
               <TableCell align="center">Name of Proponent</TableCell>
@@ -249,7 +258,35 @@ function ViewerForm2({ project, proposedProjectCost, setProposedProjectCost, pri
                 {accomplishedDate.toDateString()}
               </TableCell>
               <TableCell align="center" colSpan={2}>
-                Signature Here
+                {project.signature && <img src={project.signature.src} height={100}/>}
+                {!project.signature && (
+                  'No Signature'
+                )}
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell align="center">Attached Files</TableCell>
+              <TableCell align="center" colSpan={3}>
+                <List>
+                  {project.fileList.map((file, index) => (
+                    <ListItem key={index}>
+                      <ListItemAvatar>
+                        <Avatar>
+                          <Folder />
+                        </Avatar>
+                      </ListItemAvatar>
+                      <ListItemText primary={file.metadata.originalname} />
+                      <ListItemSecondaryAction>
+                        <IconButton
+                          edge="end"
+                          onClick={() => window.open(file.src, "_blank")}
+                        >
+                          <GetApp />
+                        </IconButton>
+                      </ListItemSecondaryAction>
+                    </ListItem>
+                  ))}
+                </List>
               </TableCell>
             </TableRow>
           </TableBody>

@@ -35,17 +35,17 @@ export const form1Validator = ({
     },
   };
 
-  if (title.length > 20) {
+  if (title.length > 100) {
     result.title.error = true;
     result.title.messages.push("too long");
-  }
-  if (title.length < 5) {
-    result.title.error = true;
-    result.title.messages.push("too short");
   }
   if (title === "") {
     result.title.error = true;
     result.title.messages.push("Title cannot be blank");
+  }
+  if (title.length < 3) {
+    result.title.error = true;
+    result.title.messages.push("too short");
   }
   if (obligationType === "") {
     result.obligationType.error = true;
@@ -69,16 +69,29 @@ export const form1Validator = ({
     result.investmentReq[index].error = true;
     result.investmentReq[index].messages.push('please put a value');
   } else {
-    var exactValue = /^\d[0-9]$/;
-    if (!item.value.match(exactValue)) {
+    let isNumber = !isNaN(item.value)
+    console.log(isNumber)
+    if (isNumber) {
+      let number = parseFloat(item.value);
+      if(number < 0) {
+        result.investmentReq[index].error = true;
+        result.investmentReq[index].messages.push("Smaller than 0");
+      } else if(number > 10000000)
       result.investmentReq[index].error = true;
-      result.investmentReq[index].messages.push("invalid value");
+      result.investmentReq[index].messages.push("Larger than 10,000,000");
+    } else {
+      result.investmentReq[index].error = true;
+      result.investmentReq[index].messages.push("Not a number");
     }
   }
  
   if(item.value.length >= 9) {
     result.investmentReq[index].error = true;
     result.investmentReq[index].messages.push('it must not exceeded by 100M')
+  }
+  if(isNaN(item.value)) {
+    result.investmentReq[index].error = true;
+    result.investmentReq[index].messages.push('numbers only');
   }
   })
 

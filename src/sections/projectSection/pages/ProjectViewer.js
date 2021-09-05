@@ -15,7 +15,6 @@ import {
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 
-import { serverUrl } from "../../../utils/serverUrl";
 import CommentModal from "../components/CommentModal";
 import ViewerForm1 from "../components/ViewerForm1";
 import ViewerForm2 from "../components/ViewerForm2";
@@ -23,6 +22,7 @@ import ViewerForm3 from "../components/ViewerForm3";
 import { Delete, Edit } from "@material-ui/icons";
 import CommentList from "../components/CommentList";
 import PDFExport from "../../../shared/components/PDFExport";
+import { Projects } from "../../../utils/bulsupis_mw";
 
 const useStyles = makeStyles((theme) => ({
   txt: {
@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
     color: "white",
   },
   card: {
-    marginBottom: 15
+    marginBottom: 15,
   },
   cardHeader: {
     backgroundColor: theme.palette.tertiary.main,
@@ -51,14 +51,14 @@ const useStyles = makeStyles((theme) => ({
     margin: "20px 0px 20px 0px",
   },
   button: {
-    marginLeft: 10
+    marginLeft: 10,
   },
   divider: {
-    marginBottom: 15
-  }
+    marginBottom: 15,
+  },
 }));
 
-function ProjectViewer({ project, projectId, priority, institute }) {
+function ProjectViewer({ project, priority }) {
   const classes = useStyles();
   const history = useHistory();
   const [open, setOpen] = useState(false);
@@ -66,14 +66,8 @@ function ProjectViewer({ project, projectId, priority, institute }) {
   const [tabIndex, setTabIndex] = useState(0);
 
   const handleDelete = () => {
-    var newInstitute = { ...institute };
-    newInstitute.projects.splice(newInstitute.projects.indexOf(project), 1);
-    newInstitute.priority.splice(newInstitute.priority.indexOf(projectId), 1);
-    fetch(`${serverUrl}institutes/${institute.id}`, {
-      method: "PUT",
-      headers: { "Content-type": "application/json" },
-      body: JSON.stringify(newInstitute),
-    }).then(() => {
+    Projects.delete(project.id).then((res) => {
+      console.log(res);
       history.push("/projects");
     });
   };
@@ -104,7 +98,7 @@ function ProjectViewer({ project, projectId, priority, institute }) {
           />
         );
       case 2:
-        return <ViewerForm3 project={project} />;
+        return <ViewerForm3 project={project} PDOSignature={[]} />;
       default:
         return null;
     }
@@ -133,7 +127,7 @@ function ProjectViewer({ project, projectId, priority, institute }) {
           variant="contained"
           startIcon={<Edit />}
           onClick={() => {
-            history.push(`/projects/${projectId}/edit`);
+            history.push(`/projects/${project.id}/edit`);
           }}
           className={classes.button}
         >
@@ -147,7 +141,11 @@ function ProjectViewer({ project, projectId, priority, institute }) {
         >
           Delete Project
         </Button>
-        <PDFExport projects={[project]} filename={project.title} priority={priority}/>
+        <PDFExport
+          projects={[project]}
+          filename={project.title}
+          institute={project.institute.institute}
+        />
       </Toolbar>
       <Divider classes={{ root: classes.divider }} />
       <Container>
@@ -174,11 +172,12 @@ function ProjectViewer({ project, projectId, priority, institute }) {
           <Divider classes={{ root: classes.subDivider }} />
         </Grid>
         <Grid item xs={12}>
-          <Card className = {classes.card}>
+          <Card className={classes.card}>
             <CardHeader title="Comments" className={classes.cardHeader} />
             <CardContent>
               <CommentList
                 comments={project.commentList}
+                newComments={[]}
                 selectComment={selectComment}
               />
             </CardContent>
