@@ -8,11 +8,11 @@ import {
 } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 
-import ErrorComponent from "../../../shared/components/ErrorComponent";
 import LoadingComponent from "../../../shared/components/LoadingComponent";
 import SheetExport from "../../../shared/components/SheetExport";
 import InstituteList from "../components/InstituteList";
 import { Admin } from "../../../utils/bulsupis_mw";
+import { institutesTranslator } from "../../../utils/translators";
 
 function InstitutePage() {
   const [filter, setFilter] = useState({ search: "" });
@@ -51,11 +51,11 @@ function InstitutePage() {
             <Typography variant="h4" className={classes.pageTitle}>
               {"Institute List"}
             </Typography>
-            {/* <SheetExport
-              institutes={institutes}
+            <SheetExport
+              institutes={institutesTranslator(institutes)}
               filename={"BulSU"}
-              buttonLabel="Export Investment Sheet"
-            /> */}
+              buttonLabel="Download Investment Sheet"
+            />
           </Toolbar>
           <Divider classes={{ root: classes.divider }} />
           <Container>

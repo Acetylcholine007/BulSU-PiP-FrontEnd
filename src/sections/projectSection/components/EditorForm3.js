@@ -25,7 +25,9 @@ function EditorForm3({
   setForm3Data,
   PDOSignature,
   setPDOSignature,
-  checkerForm3
+  oldPDOSignature,
+  setOldPDOSignature,
+  checkerForm3,
 }) {
   const useStyles = makeStyles(() => ({
     table: {
@@ -55,7 +57,11 @@ function EditorForm3({
                   fullWidth
                   error={checkerForm3.recievedBy.error}
                   value={form3Data.recievedBy}
-                  helperText={checkerForm3.recievedBy.error ? checkerForm3.recievedBy.messages[0] : null}
+                  helperText={
+                    checkerForm3.recievedBy.error
+                      ? checkerForm3.recievedBy.messages[0]
+                      : null
+                  }
                 />
               </TableCell>
             </TableRow>
@@ -74,7 +80,11 @@ function EditorForm3({
                   fullWidth
                   error={checkerForm3.recieverDesignation.error}
                   value={form3Data.recieverDesignation}
-                  helperText={checkerForm3.recieverDesignation.error ? checkerForm3.recieverDesignation.messages[0] : null}
+                  helperText={
+                    checkerForm3.recieverDesignation.error
+                      ? checkerForm3.recieverDesignation.messages[0]
+                      : null
+                  }
                 />
               </TableCell>
             </TableRow>
@@ -84,7 +94,7 @@ function EditorForm3({
                 {new Date(form3Data.dateRecieved).toDateString()}
               </TableCell>
               <TableCell align="center">
-                {PDOSignature.length == 0 ? (
+                {PDOSignature.length == 0 && oldPDOSignature.length == 0 ? (
                   <React.Fragment>
                     <input
                       accept="image/*"
@@ -108,30 +118,46 @@ function EditorForm3({
                   </React.Fragment>
                 ) : (
                   <List>
-                    <Card>
-                      <ListItem>
+                    {oldPDOSignature.map((file, index) => (
+                      <ListItem key={`${index}-old`} component={Card}>
+                      {console.log(file)}
                         <ListItemAvatar>
                           <Avatar>
                             <Folder />
                           </Avatar>
                         </ListItemAvatar>
-                        <ListItemText primary={PDOSignature[0].name} />
+                        <ListItemText primary={file.title} />
+                        <ListItemSecondaryAction>
+                          <IconButton
+                            edge="end"
+                            onClick={() => setOldPDOSignature([])}
+                          >
+                            <Delete />
+                          </IconButton>
+                        </ListItemSecondaryAction>
+                      </ListItem>
+                    ))}
+                    {PDOSignature.map((file, index) => (
+                      <ListItem key={`${index}-new`} component={Card}>
+                      {console.log(file)}
+                        <ListItemAvatar>
+                          <Avatar>
+                            <Folder />
+                          </Avatar>
+                        </ListItemAvatar>
+                        <ListItemText primary={file.name} />
                         <ListItemSecondaryAction>
                           <IconButton
                             edge="end"
                             onClick={() =>
-                              setPDOSignature(() => {
-                                var newList = [...PDOSignature];
-                                newList.splice(0, 1);
-                                return newList;
-                              })
+                              setPDOSignature([])
                             }
                           >
                             <Delete />
                           </IconButton>
                         </ListItemSecondaryAction>
                       </ListItem>
-                    </Card>
+                    ))}
                   </List>
                 )}
               </TableCell>

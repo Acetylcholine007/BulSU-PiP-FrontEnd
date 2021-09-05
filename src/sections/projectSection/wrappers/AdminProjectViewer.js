@@ -1,35 +1,35 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import ElevatedProjectViewer from "../pages/ElevatedProjectViewer";
 
 import LoadingComponent from "../../../shared/components/LoadingComponent";
-import { Admin, Projects } from "../../../utils/bulsupis_mw";
-import { InstituteContext } from "../../../contexts/InstituteContext";
-import { projectTranslator } from "../../../utils/translators";
+import { Admin } from "../../../utils/bulsupis_mw";
 
 function AdminProjectViewer() {
   const { instituteId, projectId } = useParams();
   const [project, setProject] = useState(null);
-  const { institute } = useContext(InstituteContext);
 
   useEffect(() => {
-    console.log(institute);
-    Admin.Projects.get(projectId)
-      .then((res) => {
-        console.log({
-          ...res.data,
+    Admin.Institutes.get(instituteId)
+    .then((instituteRes) => {
+      Admin.Projects.get(projectId)
+        .then((res) => {
+          console.log({
+            ...res.data,
+          })
+          setProject({
+            ...res.data,
+            institute: instituteRes.data,
+            priority: instituteRes.data.project_list.findIndex((item) => item.id === projectId) + 1,
+            suc: 'Bulacan State University'
+          });
         })
-        setProject({
-          ...res.data,
-          institute: institute,
-          proponentName: { surname: "", firstName: "", middleInitial: "" },
-          implementationPeriod: {start: '', end: ''},
+        .catch((err) => {
+          console.log(err.message);
+          setProject(null);
         });
-      })
-      .catch((err) => {
-        console.log(err.message);
-        setProject(null);
-      });
+    })
+    .catch((err) => console.log(err.message))
   }, []);
 
   return (
@@ -39,8 +39,6 @@ function AdminProjectViewer() {
         <ElevatedProjectViewer
           instituteId={instituteId}
           project={project}
-          institute={institute}
-          projectId={projectId}
           priority={1}
         />
       )}

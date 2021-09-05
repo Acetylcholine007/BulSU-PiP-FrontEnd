@@ -15,12 +15,9 @@ function CreateCommentDialog({
   setAddCommentOpen,
   comments,
   setComments,
-  count,
 }) {
   const [comment, setLocalComment] = useState({
-    id: count + 1,
-    author: "PDO Officer",
-    header: "",
+    author: {institute: "Editor"},
     message: ""
   });
 
@@ -64,9 +61,6 @@ function CreateCommentDialog({
             if(!checkercomment.message.error){
             setComments([...comments, {...comment, datetime: (new Date()).toISOString()}]);
             setLocalComment({
-              id: count + 1,
-              author: "PDO Officer",
-              header: "",
               message: ""
             });
             setAddCommentOpen(false);

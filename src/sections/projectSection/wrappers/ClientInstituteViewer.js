@@ -1,42 +1,36 @@
-import React from "react";
-import { useState } from "react";
-import { useEffect } from "react";
-import { useContext } from "react";
-import { AuthContext } from "../../../contexts/AuthContext";
-import useFetch from "../../../hooks/useFetch";
-import ErrorComponent from "../../../shared/components/ErrorComponent";
+import React, { useEffect, useState } from "react";
+
 import LoadingComponent from "../../../shared/components/LoadingComponent";
-import { Projects } from "../../../utils/bulsupis_mw";
-import { serverUrl } from "../../../utils/serverUrl";
+import { Account, Projects } from "../../../utils/bulsupis_mw";
+import { projectListTranslator } from "../../../utils/translators";
 import InstituteViewer from "../pages/InstituteViewer";
 
 function ClientInstituteViewer() {
-  const { user } = useContext(AuthContext);
   const [institute, setInstitute] = useState(null);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
-    console.log({
-      abbv: user.institute.abbv,
-      instituteId: user.institute.instituteId,
-      projectList: user.projectList,
-      priority: user.projectList.map((project) => project.id)
+    Account.getInfo()
+    .then((accountRes) => {
+      setUser(accountRes.data);
+      Projects.getInstitute(accountRes.data.institute.id)
+      .then((projectRes) => {
+        let institute = projectRes.data;
+        setInstitute({
+          abbv: institute.abbv,
+          instituteId: institute.id,
+          projectList: projectListTranslator(institute.project_list),
+          priority: institute.project_list.map((project) => project.id)
+        });
+      })
     })
-    setInstitute({
-      abbv: user.institute.abbv,
-      instituteId: user.institute.instituteId,
-      projectList: user.projectList,
-      priority: user.projectList.map((project) => project.id)
-    })
+    .catch((err) => console.log(err.message))
   }, []);
 
   return (
     <React.Fragment>
-      {institute == null && <LoadingComponent />}
-      {institute && (
-        <InstituteViewer
-          institute={institute}
-        />
-      )}
+      {(!institute || !user) && <LoadingComponent />}
+      {institute && user && <InstituteViewer institute={institute} user={user}/>}
     </React.Fragment>
   );
 }

@@ -142,8 +142,8 @@ function ProjectList({
         newData.indexOf(filteredProject[source.index]),
         1
       )[0];
-      console.log(target);
-      console.log(filteredProject[destination.index]);
+      //console.log(target);
+      //console.log(filteredProject[destination.index]);
       if (source.index < destination.index) {
         newData.splice(
           newData.indexOf(filteredProject[destination.index]) + 1,
@@ -157,7 +157,7 @@ function ProjectList({
           target
         );
       }
-      console.log(newData);
+      //console.log(newData);
       setLocalPrio(newData.map((project) => project.id));
       return newData;
     });
@@ -215,7 +215,6 @@ function ProjectList({
                       index={index}
                     >
                       {(provided) => {
-                        console.log(project.title)
                         return (
                           <TableRow
                             innerRef={provided.innerRef}

@@ -14,7 +14,7 @@ import {
 } from "@material-ui/core";
 import { FilterList, Search } from "@material-ui/icons";
 import React, { useState, useEffect } from "react";
-import { serverUrl } from "../../../utils/serverUrl";
+import { Admin } from "../../../utils/bulsupis_mw";
 import AccountModal from "./AccountModal";
 
 function AccountList({ users, filter, setFilter, setOpen, setDataChanged }) {
@@ -66,22 +66,17 @@ function AccountList({ users, filter, setFilter, setOpen, setDataChanged }) {
   }, [filter]);
 
   const handleToggle = (user) => {
-    fetch(`${serverUrl}users/${user.id}`, {
-      method: "PUT",
-      headers: { "Content-type": "application/json" },
-      body: JSON.stringify({
-        ...user,
-        verified: !user.verified,
-      }),
-    }).then(() => {
+    Admin.Account.setVerification(user.id, !user.verified)
+    .then((res) => {
+      console.log(res)
       setDataChanged(true);
     });
   };
 
   const handleDelete = (user) => {
-    fetch(`${serverUrl}users/${user.id}`, {
-      method: "DELETE"
-    }).then(() => {
+    Admin.Account.delete(user.id)
+    .then((res) => {
+      console.log(res)
       setDataChanged(true);
     });
   }

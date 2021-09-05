@@ -10,10 +10,18 @@ import {
   Checkbox,
   Divider,
   TextField,
+  List,
+  ListItem,
+  ListItemAvatar,
+  Avatar,
+  ListItemText,
+  ListItemSecondaryAction,
+  IconButton,
 } from "@material-ui/core";
 import { months } from "../../../utils/constants";
 import React, { useContext } from "react";
 import { AuthContext } from "../../../contexts/AuthContext";
+import { Folder, GetApp } from "@material-ui/icons";
 
 function ViewerForm2({ project, proposedProjectCost, setProposedProjectCost }) {
   const useStyles = makeStyles(() => ({
@@ -177,11 +185,11 @@ function ViewerForm2({ project, proposedProjectCost, setProposedProjectCost }) {
               {user.type === 1 && (
                 <React.Fragment>
                   {proposedProjectCost.map((yearCost, index) => (
-                    <TableCell align="center" key = {yearCost.year}>
+                    <TableCell align="center" key={yearCost.year}>
                       <TextField
                         onChange={(e) => {
                           setProposedProjectCost(() => {
-                            var newData = [...proposedProjectCost]
+                            var newData = [...proposedProjectCost];
                             newData[index].cost = e.target.value;
                             return newData;
                           });
@@ -203,7 +211,7 @@ function ViewerForm2({ project, proposedProjectCost, setProposedProjectCost }) {
       </TableContainer>
       <Divider classes={{ root: classes.divider }} />
       <TableContainer component={Paper}>
-        <Table classname={classes.table} aria-label="spanning table">
+        <Table className={classes.table} aria-label="spanning table">
           <TableBody>
             <TableRow>
               <TableCell align="center">Name of Proponent</TableCell>
@@ -248,7 +256,35 @@ function ViewerForm2({ project, proposedProjectCost, setProposedProjectCost }) {
                 {accomplishedDate.toDateString()}
               </TableCell>
               <TableCell align="center" colSpan={2}>
-                Signature Here
+                {project.signature && <img src={project.signature.src} height={100}/>}
+                {!project.signature && (
+                  'No Signature'
+                )}
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell align="center">Attached Files</TableCell>
+              <TableCell align="center" colSpan={3}>
+                <List>
+                  {project.fileList.map((file, index) => (
+                    <ListItem key={index}>
+                      <ListItemAvatar>
+                        <Avatar>
+                          <Folder />
+                        </Avatar>
+                      </ListItemAvatar>
+                      <ListItemText primary={file.metadata.originalname} />
+                      <ListItemSecondaryAction>
+                        <IconButton
+                          edge="end"
+                          onClick={() => window.open(file.src, "_blank")}
+                        >
+                          <GetApp />
+                        </IconButton>
+                      </ListItemSecondaryAction>
+                    </ListItem>
+                  ))}
+                </List>
               </TableCell>
             </TableRow>
           </TableBody>

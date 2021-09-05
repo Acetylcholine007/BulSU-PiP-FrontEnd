@@ -1,31 +1,36 @@
-import React, { useContext } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import useFetch from "../../../hooks/useFetch";
 
-import ErrorComponent from "../../../shared/components/ErrorComponent";
 import LoadingComponent from "../../../shared/components/LoadingComponent";
 import ProjectEditor from "../pages/ProjectEditor";
-import { serverUrl } from "../../../utils/serverUrl";
-import { AuthContext } from "../../../contexts/AuthContext";
+import { Projects } from "../../../utils/bulsupis_mw";
 
 function ProjectEditorWrapper({isNew}) {
   const { id } = useParams();
-  const { user } = useContext(AuthContext);
+  const [project, setProject] = useState(null);
+
+  useEffect(() => {
+    Projects.get(id)
+    .then((res) => {
+      console.log(res.data);
+      setProject(res.data);
+    })
+    .catch((err) => {
+      console.log(err.message);
+    })
+  }, [])
 
   return (
     <React.Fragment>
-      {false && <LoadingComponent />}
-      {true && (
+      {!project && <LoadingComponent />}
+      {project && (
         isNew ? <ProjectEditor
           isNew={true}
-          priority={1}
-          institute={null}
+          project={project}
         /> : 
         <ProjectEditor
           isNew={false}
-          project={null}
-          priority={1}
-          institute={null}
+          project={project}
         />
       )}
     </React.Fragment>

@@ -32,6 +32,10 @@ function EditorForm2({
   setFileList,
   signature,
   setSignature,
+  oldFileList,
+  setOldFileList,
+  oldSignature,
+  setOldSignature,
 }) {
   const useStyles = makeStyles(() => ({
     field: {
@@ -457,7 +461,9 @@ function EditorForm2({
             id="fileUpload"
             multiple
             type="file"
-            onChange={(e) => setFileList(Object.values(e.target.files))}
+            onChange={(e) =>
+              setFileList([...fileList, ...Object.values(e.target.files)])
+            }
           />
           <label htmlFor="fileUpload">
             <Button
@@ -470,8 +476,32 @@ function EditorForm2({
           </label>
           <Paper className={classes.paper}>
             <List>
+              {oldFileList.map((file, index) => (
+                <ListItem key={`${index}-old`}>
+                  <ListItemAvatar>
+                    <Avatar>
+                      <Folder />
+                    </Avatar>
+                  </ListItemAvatar>
+                  <ListItemText primary={file.title} />
+                  <ListItemSecondaryAction>
+                    <IconButton
+                      edge="end"
+                      onClick={() =>
+                        setOldFileList(() => {
+                          var newList = [...oldFileList];
+                          newList.splice(index, 1);
+                          return newList;
+                        })
+                      }
+                    >
+                      <Delete />
+                    </IconButton>
+                  </ListItemSecondaryAction>
+                </ListItem>
+              ))}
               {fileList.map((file, index) => (
-                <ListItem key={index}>
+                <ListItem key={`${index}-new`}>
                   <ListItemAvatar>
                     <Avatar>
                       <Folder />
@@ -519,8 +549,28 @@ function EditorForm2({
           </label>
           <Paper className={classes.paper}>
             <List>
+              {oldSignature.map((file, index) => (
+                <ListItem key={`${index}-old`}>
+                  <ListItemAvatar>
+                    <Avatar>
+                      <Folder />
+                    </Avatar>
+                  </ListItemAvatar>
+                  <ListItemText primary={file.title} />
+                  <ListItemSecondaryAction>
+                    <IconButton
+                      edge="end"
+                      onClick={() =>
+                        setOldSignature([])
+                      }
+                    >
+                      <Delete />
+                    </IconButton>
+                  </ListItemSecondaryAction>
+                </ListItem>
+              ))}
               {signature.map((file, index) => (
-                <ListItem key={index}>
+                <ListItem key={`${index}-new`}>
                   <ListItemAvatar>
                     <Avatar>
                       <Folder />
@@ -530,11 +580,9 @@ function EditorForm2({
                   <ListItemSecondaryAction>
                     <IconButton
                       edge="end"
-                      onClick={() => setSignature(() => {
-                        var newList = [...signature];
-                        newList.splice(index, 1);
-                        return newList;
-                      })}
+                      onClick={() =>
+                        setSignature([])
+                      }
                     >
                       <Delete />
                     </IconButton>

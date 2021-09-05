@@ -24,6 +24,8 @@ import NotFound from "./shared/pages/NotFound";
 import { Account } from "./utils/bulsupis_mw";
 import ClientDashboard from "./sections/dashboardSection/wrappers/ClientDashboard";
 import AdminDashboard from "./sections/dashboardSection/wrappers/AdminDashboard";
+import AccountsWrapper from "./sections/accountSection/wrappers/AccountsWrapper";
+import NotificationWrapper from "./sections/notificationSection/wrappers/NotificationWrapper";
 
 const theme = createTheme({
   palette: {
@@ -74,7 +76,7 @@ function App() {
     if (isLoggedIn) {
       getUserData();
     }
-  }, []);
+  }, [isLoggedIn]);
 
   return (
     <AuthContext.Provider
@@ -117,7 +119,7 @@ function App() {
                       {user.type == 0 ? <ClientDashboard /> : <AdminDashboard />}
                     </Route>
                     <Route exact path="/accounts">
-                      <AccountPage />
+                      <AccountsWrapper />
                     </Route>
                     <Route exact path="/projects">
                       <ClientInstituteViewer />
@@ -141,7 +143,7 @@ function App() {
                       <AdminProjectViewer />
                     </Route>
                     <Route exact path="/notifications">
-                      <NotificationPage />
+                      <NotificationWrapper />
                     </Route>
                     <Route exact path="*">
                       <NotFound />

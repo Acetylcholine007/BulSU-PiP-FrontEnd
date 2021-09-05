@@ -3,6 +3,7 @@ import { GetApp } from "@material-ui/icons";
 import React from "react";
 import ReactExport from "react-export-excel";
 import { statuses } from "../../utils/constants";
+import { GSPTranslator } from "../../utils/translators";
 
 const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
@@ -20,79 +21,76 @@ function SheetExport({ institutes, filename, buttonLabel }) {
           {buttonLabel}
         </Button>
       }
-      filename={filename}
+      filename={`${filename} - Investment Sheet`}
     >
       {institutes.map((institute) => {
-        var sortedProjects = institute.priority.map((projectId) =>
-          institute.projectList.find((project) => project.id == projectId)
-        );
-
-        var newProjects = sortedProjects.map((project, index) => ({
-          priority: index + 1,
-          title: project.title,
-          goals: project.GSP.map((goal, index) =>
-            goal != null ? `${index + 1}, ` : ""
-          ).reduce((a, b) => a + b),
-          subgoals: project.GSP.map((goal, goalIndex) => {
-            if (goal) {
-              return goal
-                .map((subgoal, subgoalIndex) =>
-                  subgoal != null
-                    ? `${goalIndex + 1}.${subgoalIndex + 1}, `
-                    : ""
-                )
-                .reduce((a, b) => a + b);
-            } else {
-              return "";
-            }
-          }).reduce((a, b) => a + b),
-          indicators: project.GSP.map((goal, goalIndex) => {
-            if (goal) {
-              return goal
-                .map((subgoal, subgoalIndex) => {
-                  if (subgoal) {
-                    return subgoal
-                      .map((indicator, indicatorIndex) =>
-                        indicator
-                          ? `${goalIndex + 1}.${subgoalIndex + 1}.${
-                              indicatorIndex + 1
-                            }, `
-                          : ""
-                      )
-                      .reduce((a, b) => a + b);
-                  } else {
-                    return "";
-                  }
-                })
-                .reduce((a, b) => a + b);
-            } else {
-              return "";
-            }
-          }).reduce((a, b) => a + b),
-          obligationType: project.obligationType,
-          proponent: project.proponent,
-          totalEstimatedCost: project.investmentReq
-            .map((item) => parseFloat(item.value))
-            .reduce((a, b) => a + b),
-          year1: project.investmentReq[0].value,
-          year2: project.investmentReq[1].value,
-          year3: project.investmentReq[2].value,
-          year4: project.investmentReq[3].value,
-          year5: project.investmentReq[4].value,
-          implementationPeriod: `${new Date(
-            project.implementationPeriod.start
-          ).toDateString()} - ${new Date(
-            project.implementationPeriod.end
-          ).toDateString()}`,
-          PAPLevel: project.PAPLevel,
-          readiness: project.readiness,
-          status: statuses[project.status].label,
-        }));
-
-        console.log(newProjects);
+        var newProjects = institute.projectList.map((project, index) => {
+          let newGSP = GSPTranslator(project.GSP);
+          return {
+            priority: index + 1,
+            title: project.title,
+            goals: newGSP.map((goal, index) =>
+              goal != null ? `${index + 1}, ` : ""
+            ).reduce((a, b) => a + b),
+            subgoals: newGSP.map((goal, goalIndex) => {
+              if (goal) {
+                return goal
+                  .map((subgoal, subgoalIndex) =>
+                    subgoal != null
+                      ? `${goalIndex + 1}.${subgoalIndex + 1}, `
+                      : ""
+                  )
+                  .reduce((a, b) => a + b);
+              } else {
+                return "";
+              }
+            }).reduce((a, b) => a + b),
+            indicators: newGSP.map((goal, goalIndex) => {
+              if (goal) {
+                return goal
+                  .map((subgoal, subgoalIndex) => {
+                    if (subgoal) {
+                      return subgoal
+                        .map((indicator, indicatorIndex) =>
+                          indicator
+                            ? `${goalIndex + 1}.${subgoalIndex + 1}.${
+                                indicatorIndex + 1
+                              }, `
+                            : ""
+                        )
+                        .reduce((a, b) => a + b);
+                    } else {
+                      return "";
+                    }
+                  })
+                  .reduce((a, b) => a + b);
+              } else {
+                return "";
+              }
+            }).reduce((a, b) => a + b),
+            obligationType: project.obligationType,
+            proponent: project.proponent,
+            totalEstimatedCost: project.investmentReq
+              .map((item) => parseFloat(item.value))
+              .reduce((a, b) => a + b),
+            year1: project.investmentReq[0].value,
+            year2: project.investmentReq[1].value,
+            year3: project.investmentReq[2].value,
+            year4: project.investmentReq[3].value,
+            year5: project.investmentReq[4].value,
+            implementationPeriod: `${new Date(
+              project.implementationPeriod.start
+            ).toDateString()} - ${new Date(
+              project.implementationPeriod.end
+            ).toDateString()}`,
+            PAPLevel: project.PAPLevel,
+            readiness: project.readiness,
+            status: statuses[project.status].label,
+          };
+        });
 
         return (
-          <ExcelSheet data={newProjects} name={institute.id}>
+          <ExcelSheet data={newProjects} name={institute.abbv}>
             <ExcelColumn label="Priority" value="priority" />
             <ExcelColumn label="Title" value="title" />
             <ExcelColumn label="Goals" value="goals" />

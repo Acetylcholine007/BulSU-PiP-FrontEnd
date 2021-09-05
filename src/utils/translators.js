@@ -1,3 +1,5 @@
+import { institutes } from "./constants";
+
 export const projectTranslator = (project) => {
   let newProject = {
     id: project.id,
@@ -10,7 +12,7 @@ export const projectTranslator = (project) => {
     PAPLevel: project.pap_level,
     readiness: project.readiness,
     status: project.status,
-    suc: 'Bulacan State University',
+    suc: "Bulacan State University",
     address: project.address,
     projectLocation: project.project_location,
     categorization: project.categorization,
@@ -40,10 +42,86 @@ export const projectListTranslator = (projectList) => {
   return newProjectList;
 };
 
-export const instituteTranslator = (institute) => {
-  let newInstitute = {
-    institute: ''
+export const institutesTranslator = (rawInstitutes) => {
+  let newInstitutes = rawInstitutes.map((institute) => ({
+    projectList: projectListTranslator(institute.project_list),
+    abbv: institutes.find((item) => item.institute === institute.institute)
+      .abbv,
+  }));
+
+  return newInstitutes;
+};
+
+export const GSPTranslator = (gsp) => {
+  let p_temp = [
+    [
+      [false, false, false, false, false, false, false, false, false],
+      [false, false, false],
+      [false, false, false, false, false, false],
+      [false, false, false, false],
+      [false, false, false, false, false, false],
+      [false, false, false, false, false],
+    ],
+    [
+      [false, false, false, false, false, false, false, false, false, false],
+      [false, false],
+      [false, false, false],
+      [false],
+      [false, false, false, false, false, false],
+      [false, false, false, false, false, false, false, false],
+      [false, false],
+    ],
+    [
+      [false, false, false, false],
+      [false, false, false, false, false, false, false, false, false],
+      [false],
+      [false],
+    ],
+    [
+      [false, false],
+      [false, false, false],
+      [false],
+      [false],
+      [false],
+      [false],
+      [false],
+      [false],
+    ],
+    [
+      [false, false, false, false, false, false, false, false],
+      [false, false],
+      [false, false],
+      [false, false, false, false],
+      [false, false],
+      [false],
+      [false],
+      [false],
+      [false, false],
+    ],
+  ];
+  let s_temp = [
+    [null, null, null, null, null, null],
+    [null, null, null, null, null, null, null],
+    [null, null, null, null],
+    [null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null],
+  ];
+  let g_temp = [null, null, null, null, null];
+
+  for (let i in gsp) {
+    // Populate Subgoal
+    if (g_temp[gsp[i].g - 1] == null) {
+      g_temp[gsp[i].g - 1] = [...s_temp[gsp[i].g - 1]];
+    }
+
+    // Populate Key Performance
+    if (g_temp[gsp[i].g - 1][gsp[i].s - 1] == null) {
+      g_temp[gsp[i].g - 1][gsp[i].s - 1] = [
+        ...p_temp[gsp[i].g - 1][gsp[i].s - 1],
+      ];
+    }
+    g_temp[gsp[i].g - 1][gsp[i].s - 1][gsp[i].p - 1] = true;
   }
 
-  return newInstitute;
-}
+  return g_temp;
+};

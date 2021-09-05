@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
     color: "white",
   },
   card: {
-    marginBottom: 15
+    marginBottom: 15,
   },
   cardHeader: {
     backgroundColor: theme.palette.tertiary.main,
@@ -51,11 +51,11 @@ const useStyles = makeStyles((theme) => ({
     margin: "20px 0px 20px 0px",
   },
   button: {
-    marginLeft: 10
+    marginLeft: 10,
   },
   divider: {
-    marginBottom: 15
-  }
+    marginBottom: 15,
+  },
 }));
 
 function ProjectViewer({ project, priority }) {
@@ -66,11 +66,10 @@ function ProjectViewer({ project, priority }) {
   const [tabIndex, setTabIndex] = useState(0);
 
   const handleDelete = () => {
-    Projects.delete(project.id)
-    .then((res) => {
+    Projects.delete(project.id).then((res) => {
       console.log(res);
       history.push("/projects");
-    })
+    });
   };
 
   const selectComment = (comment) => {
@@ -99,7 +98,7 @@ function ProjectViewer({ project, priority }) {
           />
         );
       case 2:
-        return <ViewerForm3 project={project} />;
+        return <ViewerForm3 project={project} PDOSignature={[]} />;
       default:
         return null;
     }
@@ -128,7 +127,7 @@ function ProjectViewer({ project, priority }) {
           variant="contained"
           startIcon={<Edit />}
           onClick={() => {
-            history.push(`/projects/${project.projectId}/edit`);
+            history.push(`/projects/${project.id}/edit`);
           }}
           className={classes.button}
         >
@@ -142,7 +141,11 @@ function ProjectViewer({ project, priority }) {
         >
           Delete Project
         </Button>
-        <PDFExport projects={[project]} filename={project.title} priority={priority}/>
+        <PDFExport
+          projects={[project]}
+          filename={project.title}
+          institute={project.institute.institute}
+        />
       </Toolbar>
       <Divider classes={{ root: classes.divider }} />
       <Container>
@@ -169,11 +172,12 @@ function ProjectViewer({ project, priority }) {
           <Divider classes={{ root: classes.subDivider }} />
         </Grid>
         <Grid item xs={12}>
-          <Card className = {classes.card}>
+          <Card className={classes.card}>
             <CardHeader title="Comments" className={classes.cardHeader} />
             <CardContent>
               <CommentList
                 comments={project.commentList}
+                newComments={[]}
                 selectComment={selectComment}
               />
             </CardContent>

@@ -29,6 +29,23 @@ async function project_getAll(){
     
 }
 
+async function getInstitute(id){
+    if (Account.isLoggedIn()){
+
+        let response = await _request(`/dev/institutes/${id}`)
+
+        if (response){
+            return response
+        }else{
+            console.error(response)
+            return false
+        }
+    }
+    else{
+        return false
+    }
+}
+
 /**
  * Gets the detail of a specific project provided the Project ID
  * @param  {String} id The first number
@@ -243,6 +260,7 @@ async function project_comment(project_id, message){
 
 const Projects = {
     get : project_get,
+    getInstitute: getInstitute,
     getAll : project_getAll,
     create: project_create,
     edit: project_edit,
