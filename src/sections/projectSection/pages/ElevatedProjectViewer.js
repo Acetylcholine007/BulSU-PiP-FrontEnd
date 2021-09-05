@@ -102,7 +102,13 @@ function ElevatedProjectViewer({ project, priority, instituteId }) {
           { error: false, messages: [] },
       ],
   });
-  const [checkerForm2, setCheckerForm2] = useState();
+  const [checkerForm2, setCheckerForm2] = useState({
+    proposedProjectCost: [
+      { error: false, messages: [] },
+      { error: false, messages: [] },
+      { error: false, messages: [] },
+    ],
+  });
   const [checkerForm3, setCheckerForm3] = useState({
     recievedBy: {
       error: false,

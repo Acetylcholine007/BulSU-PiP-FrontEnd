@@ -33,7 +33,7 @@ function MainDrawer({ drawerWidth, open, handleDrawerClose }) {
       },
       drawerPaper: {
         width: drawerWidth,
-        backgroundImage: `url("images/drawerBackground.svg")`,
+        backgroundImage: `url("/images/drawerBackground.svg")`,
         backgroundSize: 'cover',
       },
       drawerHeader: {

@@ -8,20 +8,11 @@ import {
   makeStyles,
   TextField,
   Typography,
-  Input,
-  CardHeader,
 } from "@material-ui/core";
 import { useState, useContext } from "react";
 import { useHistory } from "react-router";
-import sjcl from "sjcl";
 
-import { serverUrl } from "../../../utils/serverUrl";
 import { AuthContext } from "../../../contexts/AuthContext";
-import Avatar from "@material-ui/core/Avatar";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import { ProjectContext } from "../../../contexts/ProjectContext";
-import LoginDialog from "../components/LoginDialog";
 import loginValidator from "../../../utils/loginValidator";
 import { Account } from "../../../utils/bulsupis_mw";
 
@@ -78,9 +69,6 @@ function LogInPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const [emailError, setEmailError] = useState(false);
-  const [passwordError, setPasswordError] = useState(false);
-
   const history = useHistory();
   const classes = useStyles();
   const [loginChecker, setLoginChecker] = useState({
@@ -98,24 +86,21 @@ function LogInPage() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setEmailError(false);
-    setPasswordError(false);
-
     var checker = loginValidator(email, password);
     if (!checker.email.error && !checker.password.error) {
-      if (!emailError && !passwordError) {
-        let result = await Account.login(email, password);
-        if (result) {
-          console.log("Successful Login");
-          setIsLoggedIn(Account.isLoggedIn());
-        } else {
-          console.log("Invalid Email or Password");
-          setEmailError(true);
-          setPasswordError(true);
-        }
+      let result = await Account.login(email, password);
+      if (result) {
+        console.log("Successful Login");
+        setIsLoggedIn(Account.isLoggedIn());
+      } else {
+        console.log("Invalid Email or Password");
+        checker.email.error = true;
+        checker.password.error = true;
+        checker.email.messages.push("Probably incorrect Email");
+        checker.password.messages.push("Probably incorrect Password");
       }
     }
-    setLoginChecker(checker)
+    setLoginChecker(checker);
   };
 
   return (

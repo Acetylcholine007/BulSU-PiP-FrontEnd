@@ -21,6 +21,7 @@ function AdminProjectViewer() {
             ...res.data,
             institute: instituteRes.data,
             priority: instituteRes.data.project_list.findIndex((item) => item.id === projectId) + 1,
+            proponentName: res.data.proponentName ? res.data.proponentName : {surname: 'No Surname', firstName: 'No First name', middleInitial: 'No Middle Initial'},
             suc: 'Bulacan State University'
           });
         })

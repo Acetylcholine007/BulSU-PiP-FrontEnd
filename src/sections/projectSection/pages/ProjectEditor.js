@@ -243,23 +243,16 @@ function ProjectEditor({ isNew, project }) {
           console.log(err.message);
         });
     } else {
-      console.log({
-        ...project,
-        ...form1Data,
-        ...form2Data,
-        fileList: oldFileList,
-        signature: oldSignature,
-      });
       Projects.edit(
         {
           ...project,
           ...form1Data,
           ...form2Data,
           fileList: oldFileList,
-          signature: oldSignature,
+          signature: oldSignature.length ? oldSignature[0] : null,
         },
         fileList,
-        signature.length == 0 ? undefined : signature
+        signature.length == 0 ? null : signature
       )
         .then(() => {
           history.push("/projects");

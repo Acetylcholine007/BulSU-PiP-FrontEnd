@@ -134,7 +134,7 @@ export const institutes = [
   },
   {
     institute: "College of Nursing",
-    abbv: "CON",
+    abbv: "CN",
     proponents: ["Nursing"],
     type: 0,
     address: "Malolos, Bulacan",

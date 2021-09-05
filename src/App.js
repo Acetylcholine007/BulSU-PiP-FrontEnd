@@ -110,7 +110,6 @@ function App() {
                 </Switch>
               </Router>
             )}
-            {user == null && <LoadingComponent />}
             {Account.isLoggedIn() && user && (
               <Router>
                 <MainWrapper>
