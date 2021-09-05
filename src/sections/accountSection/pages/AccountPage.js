@@ -11,8 +11,9 @@ import React, { useState } from "react";
 import AccountFilterDialog from "../components/AccountFilterDialog";
 import AccountList from "../components/AccountList";
 
-function AccountPage({ users, setDataChanged }) {
+function AccountPage({ serverUsers, setDataChanged }) {
   const [open, setOpen] = useState(false);
+  const [users, setUsers] = useState(serverUsers);
   const [filter, setFilter] = useState({
     search: "",
     verified: { enabled: false, value: 1 },
@@ -42,6 +43,7 @@ function AccountPage({ users, setDataChanged }) {
           <Grid item xs={12}>
             <AccountList
               users={users}
+              setUsers={setUsers}
               filter={filter}
               setFilter={setFilter}
               setOpen={setOpen}

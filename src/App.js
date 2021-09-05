@@ -75,6 +75,8 @@ function App() {
   useEffect(() => {
     if (isLoggedIn) {
       getUserData();
+    } else {
+      setUser(null);
     }
   }, [isLoggedIn]);
 

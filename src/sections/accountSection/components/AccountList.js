@@ -17,7 +17,7 @@ import React, { useState, useEffect } from "react";
 import { Admin } from "../../../utils/bulsupis_mw";
 import AccountModal from "./AccountModal";
 
-function AccountList({ users, filter, setFilter, setOpen, setDataChanged }) {
+function AccountList({ users, setUsers, filter, setFilter, setOpen, setDataChanged }) {
   const [user, setUser] = useState(null);
   const [openUserModal, setOpenUserModal] = useState(false);
   
@@ -63,22 +63,31 @@ function AccountList({ users, filter, setFilter, setOpen, setDataChanged }) {
 
   useEffect(() => {
     setFilteredUser(users.filter(filterLogic));
-  }, [filter]);
+  }, [filter, users]);
 
   const handleToggle = (user) => {
     Admin.Account.setVerification(user.id, !user.verified)
     .then((res) => {
       console.log(res)
-      setDataChanged(true);
-    });
+      setUsers(() => {
+        let newUsers = [...users];
+        newUsers.find((item) => item.id === user.id).verified = !user.verified
+        return newUsers;
+      });
+    })
+    .catch((err) => console.log(err.message))
   };
 
   const handleDelete = (user) => {
     Admin.Account.delete(user.id)
     .then((res) => {
-      console.log(res)
-      setDataChanged(true);
-    });
+      setUsers(() => {
+        let newUsers = [...users];
+        newUsers.splice(newUsers.findIndex((item) => item.id === user.id), 1)
+        return newUsers;
+      });
+    })
+    .catch((err) => console.log(err.message))
   }
 
   return (

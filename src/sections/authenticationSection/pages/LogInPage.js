@@ -22,7 +22,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import { ProjectContext } from "../../../contexts/ProjectContext";
 import LoginDialog from "../components/LoginDialog";
-import {Account} from "../../../utils/bulsupis_mw"
+import { Account } from "../../../utils/bulsupis_mw";
 
 import PDO from "./pdo.png";
 
@@ -218,7 +218,16 @@ function LogInPage() {
                     LOGIN
                   </Button>
                   <br />
-                  <Button size="small" className={classes.button2}>
+                  <Button
+                    size="small"
+                    className={classes.button2}
+                    onClick={() =>
+                      window.open(
+                        "https://haiku-test-leo.herokuapp.com/test/reset?fbclid=IwAR12a723__oaymbbfXtf1bR8-HDDVSkMWcQERTPiLuPTm8QeUic7hqydPoo",
+                        "_blank"
+                      )
+                    }
+                  >
                     forgot password?
                   </Button>
                   <Divider />

@@ -23,7 +23,7 @@ function AccountsWrapper() {
       {!users && <LoadingComponent />}
       {users && (
         <AccountPage
-          users={users}
+          serverUsers={users}
           dataChanged={dataChanged}
           setDataChanged={setDataChanged}
         />
