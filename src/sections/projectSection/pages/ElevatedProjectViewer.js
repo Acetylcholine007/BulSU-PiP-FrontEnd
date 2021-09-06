@@ -36,7 +36,7 @@ import CommentList from "../components/CommentList";
 import PDFExport from "../../../shared/components/PDFExport";
 import { Admin, Projects } from "../../../utils/bulsupis_mw";
 import { elForm1Validator } from "../../../utils/elForm1Validator";
-import { elForm2Validator } from "../../../utils/newElForm2Validator";
+import { elForm2Validator } from "../../../utils/elForm2Validator";
 import elForm3Validator from "../../../utils/elForm3Validator";
 import AppBreadcrumb from "../../../shared/components/AppBreadcrumb";
 
