@@ -30,7 +30,7 @@ export const elForm2Validator = (proposedProjectCost) => {
         result.proposedProjectCost[index].error = true;
         result.proposedProjectCost[index].messages.push(
           "The value is not a number"
-        );
+        )
       }
     }
   });
