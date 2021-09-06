@@ -1,7 +1,4 @@
-export const ElForm2Validator = ({
-  proposedProjectCost,
-  
-}) => {
+export const elForm2Validator = (proposedProjectCost) => {
   var result = {
     proposedProjectCost: [
       { error: false, messages: [] },
@@ -11,21 +8,32 @@ export const ElForm2Validator = ({
   };
 
   proposedProjectCost.forEach((item, index) => {
-  if(item.value === '') {
-    result.proposedProjectCost[index].error = true;
-    result.proposedProjectCost[index].messages.push('please put a value');
-  }
-  if(item.value > 100000000) {
-    result.proposedProjectCost[index].error = true;
-    result.proposedProjectCost[index].messages.push('it must not exceed by 100M');
-  }
-  if(isNan(item.value)) {
-    result.proposedProjectCost[index].error = true;
-    result.proposedProjectCost[index].messages.push('numbers only');
-  }
-  
-  })
-  
-  return result;
+    if (item.cost === "") {
+      result.proposedProjectCost[index].error = true;
+      result.proposedProjectCost[index].messages.push("Please input a value");
+    } else {
+      let isNumber = !isNaN(item.cost);
+      console.log(isNumber);
+      if (isNumber) {
+        let number = parseFloat(item.cost);
+        if (number < 0) {
+          result.proposedProjectCost[index].error = true;
+          result.proposedProjectCost[index].messages.push(
+            "The value is smaller than 0"
+          );
+        } else if (number > 10000000)
+          result.proposedProjectCost[index].error = true;
+        result.proposedProjectCost[index].messages.push(
+          "The value is larger than 10,000,000"
+        );
+      } else {
+        result.proposedProjectCost[index].error = true;
+        result.proposedProjectCost[index].messages.push(
+          "The value is not a number"
+        );
+      }
+    }
+  });
 
+  return result;
 };

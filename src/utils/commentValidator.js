@@ -8,7 +8,7 @@ function commentValidator(
         },
       };
 
-    if (message.length > 20) {
+    if (message.length > 300) {
         result.message.error = true;
         result.message.messages.push("Comment is too long");
     }

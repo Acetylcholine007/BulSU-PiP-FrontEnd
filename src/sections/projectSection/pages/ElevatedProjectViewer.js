@@ -32,6 +32,9 @@ import CreateCommentDialog from "../components/CreateCommentDialog";
 import CommentList from "../components/CommentList";
 import PDFExport from "../../../shared/components/PDFExport";
 import { Admin, Projects } from "../../../utils/bulsupis_mw";
+import { elForm1Validator } from "../../../utils/elForm1Validator";
+import { elForm2Validator } from "../../../utils/elForm2Validator";
+import elForm3Validator from "../../../utils/elForm3Validator";
 
 const useStyles = makeStyles((theme) => ({
   txt: {
@@ -94,13 +97,13 @@ function ElevatedProjectViewer({ project, priority, instituteId }) {
   );
 
   const [checkerForm1, setCheckerForm1] = useState({
-      investmentReq: [
-          { error: false, messages: [] },
-          { error: false, messages: [] },
-          { error: false, messages: [] },
-          { error: false, messages: [] },
-          { error: false, messages: [] },
-      ],
+    investmentReq: [
+      { error: false, messages: [] },
+      { error: false, messages: [] },
+      { error: false, messages: [] },
+      { error: false, messages: [] },
+      { error: false, messages: [] },
+    ],
   });
   const [checkerForm2, setCheckerForm2] = useState({
     proposedProjectCost: [
@@ -126,10 +129,10 @@ function ElevatedProjectViewer({ project, priority, instituteId }) {
   };
 
   const saveComments = async (comments) => {
-    for(var i = 0; i < comments.length; i++) {
-      await Projects.comment(project.id, comments[i].message)
+    for (var i = 0; i < comments.length; i++) {
+      await Projects.comment(project.id, comments[i].message);
     }
-  }
+  };
 
   const handleSubmit = () => {
     Admin.Projects.edit(
@@ -144,11 +147,10 @@ function ElevatedProjectViewer({ project, priority, instituteId }) {
       PDOSignature
     )
       .then(() => {
-        if(newComments.length) {
-          saveComments(newComments)
-          .then(() => {
+        if (newComments.length) {
+          saveComments(newComments).then(() => {
             history.push(`/institutes/${instituteId}`);
-          })
+          });
         } else {
           history.push(`/institutes/${instituteId}`);
         }
@@ -256,7 +258,42 @@ function ElevatedProjectViewer({ project, priority, instituteId }) {
           variant="contained"
           startIcon={<Save />}
           onClick={() => {
-            handleSubmit();
+            switch (tabIndex) {
+              case 0:
+                let checker1 = elForm1Validator(investmentReq);
+                if (
+                  checker1.investmentReq
+                    .map((item) => !item.error)
+                    .reduce((a, b) => a && b)
+                ) {
+                  handleSubmit();
+                }
+                setCheckerForm1(checker1);
+                break;
+              case 1:
+                let checker2 = elForm2Validator(proposedProjectCost);
+                if (
+                  checker2.proposedProjectCost
+                    .map((item) => !item.error)
+                    .reduce((a, b) => a && b)
+                ) {
+                  handleSubmit();
+                }
+                setCheckerForm2(checker2);
+                break;
+              case 2:
+                let checker3 = elForm3Validator(form3Data);
+                if (
+                  !checker3.recievedBy.error &&
+                  !checker3.recieverDesignation.error
+                ) {
+                  handleSubmit();
+                } else {
+                  setShowForm3Editor(true);
+                }
+                setCheckerForm3(checker3);
+                break;
+            }
           }}
           className={classes.button}
         >
@@ -277,25 +314,40 @@ function ElevatedProjectViewer({ project, priority, instituteId }) {
               onChange={(event, index) => {
                 switch (tabIndex) {
                   case 0:
-                    var checker = null;
-                    if (true) {
+                    let checker1 = elForm1Validator(investmentReq);
+                    if (
+                      checker1.investmentReq
+                        .map((item) => !item.error)
+                        .reduce((a, b) => a && b)
+                    ) {
                       setTabIndex(index);
                     }
-                    //setCheckerForm1({});
+                    setCheckerForm1(checker1);
                     break;
                   case 1:
-                    var checker = null;
-                    if (true) {
+                    let checker2 = elForm2Validator(proposedProjectCost);
+                    if (
+                      checker2.proposedProjectCost
+                        .map((item) => !item.error)
+                        .reduce((a, b) => a && b)
+                    ) {
                       setTabIndex(index);
                     }
-                    //setCheckerForm2({});
+                    setCheckerForm2(checker2);
                     break;
                   case 2:
-                    var checker = null;
-                    if (true) {
+                    let checker3 = elForm3Validator(form3Data);
+                    console.log(form3Data);
+                    console.log(checker3);
+                    if (
+                      !checker3.recievedBy.error &&
+                      !checker3.recieverDesignation.error
+                    ) {
                       setTabIndex(index);
+                    } else {
+                      setShowForm3Editor(true);
                     }
-                    //setCheckerForm3({});
+                    setCheckerForm3(checker3);
                     break;
                 }
               }}

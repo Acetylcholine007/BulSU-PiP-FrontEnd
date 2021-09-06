@@ -1,4 +1,4 @@
-function form3Validator(recievedBy, recieverDesignation) {
+function elForm3Validator({recievedBy, recieverDesignation}) {
     var result = {
       recievedBy: {
         error: false,
@@ -10,11 +10,11 @@ function form3Validator(recievedBy, recieverDesignation) {
       },
     };
   
-    if (recievedBy == "") {
+    if (recievedBy == "" || recievedBy == undefined) {
       result.recievedBy.error = true;
       result.recievedBy.messages.push("Invalid Reciever Name");
     }
-    if (recieverDesignation == "") {
+    if (recieverDesignation == "" || recieverDesignation == undefined) {
       result.recieverDesignation.error = true;
       result.recieverDesignation.messages.push("Invalid Reciever Designation");
     }
@@ -23,6 +23,6 @@ function form3Validator(recievedBy, recieverDesignation) {
     return result;
   }
   
-  export default form3Validator;
+  export default elForm3Validator;
   
   
