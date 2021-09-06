@@ -21,6 +21,8 @@ import { institutes } from "../../../utils/constants";
 import { form1Validator } from "../../../utils/form1Validator";
 import form2Validator from "../../../utils/form2Validator";
 import { Projects } from "../../../utils/bulsupis_mw";
+import AppBreadcrumb from "../../../shared/components/AppBreadcrumb";
+import { Description, Edit, LibraryBooks } from "@material-ui/icons";
 
 function ProjectEditor({ isNew, project }) {
   const [page, setPage] = useState(1);
@@ -124,7 +126,9 @@ function ProjectEditor({ isNew, project }) {
         }
   );
 
-  const [oldFileList, setOldFileList] = useState(project ? project.fileList : []);
+  const [oldFileList, setOldFileList] = useState(
+    project ? project.fileList : []
+  );
 
   const [fileList, setFileList] = useState([]);
 
@@ -301,6 +305,27 @@ function ProjectEditor({ isNew, project }) {
           {isNew ? "New Project" : "Edit Project"}
         </Typography>
       </Toolbar>
+      {!isNew && (
+        <AppBreadcrumb
+          links={[
+            {
+              link: "/projects",
+              label: "Projects",
+              icon: <LibraryBooks fontSize="small" />,
+            },
+            {
+              link: `/projects/${project.id}`,
+              label: project.title,
+              icon: <Description fontSize="small" />,
+            },
+            {
+              link: `/projects/${project.id}/edit`,
+              label: 'Edit',
+              icon: <Edit fontSize="small" />,
+            },
+          ]}
+        />
+      )}
       <Divider className={classes.divider} />
       <Container>
         <Grid container>
@@ -326,14 +351,14 @@ function ProjectEditor({ isNew, project }) {
                     onClick={() => {
                       var checker = form1Validator(form1Data);
                       if (
-                        (!checker.title.error &&
-                          !checker.obligationType.error &&
-                          !checker.proponent.error &&
-                          !checker.startYear.error &&
-                          !checker.endYear.error &&
-                          checker.investmentReq
-                            .map((item) => !item.error)
-                            .reduce((a, b) => a && b))
+                        !checker.title.error &&
+                        !checker.obligationType.error &&
+                        !checker.proponent.error &&
+                        !checker.startYear.error &&
+                        !checker.endYear.error &&
+                        checker.investmentReq
+                          .map((item) => !item.error)
+                          .reduce((a, b) => a && b)
                       ) {
                         setPage(2);
                       }
@@ -348,18 +373,18 @@ function ProjectEditor({ isNew, project }) {
                     onClick={() => {
                       var checker = form2Validator(form2Data);
                       if (
-                        (!checker.projectLocation.error &&
-                          !checker.description.error &&
-                          !checker.purpose.error &&
-                          !checker.beneficiaries.error &&
-                          !checker.surName.error &&
-                          !checker.firstName.error &&
-                          !checker.telephoneNumber.error &&
-                          !checker.email.error &&
-                          !checker.phoneNumber.error &&
-                          checker.proposedProjectCost
-                            .map((item) => !item.error)
-                            .reduce((a, b) => a && b))
+                        !checker.projectLocation.error &&
+                        !checker.description.error &&
+                        !checker.purpose.error &&
+                        !checker.beneficiaries.error &&
+                        !checker.surName.error &&
+                        !checker.firstName.error &&
+                        !checker.telephoneNumber.error &&
+                        !checker.email.error &&
+                        !checker.phoneNumber.error &&
+                        checker.proposedProjectCost
+                          .map((item) => !item.error)
+                          .reduce((a, b) => a && b)
                       ) {
                         handleSubmit();
                       }

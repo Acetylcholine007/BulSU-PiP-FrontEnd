@@ -19,10 +19,11 @@ import CommentModal from "../components/CommentModal";
 import ViewerForm1 from "../components/ViewerForm1";
 import ViewerForm2 from "../components/ViewerForm2";
 import ViewerForm3 from "../components/ViewerForm3";
-import { Delete, Edit } from "@material-ui/icons";
+import { Delete, Description, Edit, LibraryBooks } from "@material-ui/icons";
 import CommentList from "../components/CommentList";
 import PDFExport from "../../../shared/components/PDFExport";
 import { Projects } from "../../../utils/bulsupis_mw";
+import AppBreadcrumb from "../../../shared/components/AppBreadcrumb";
 
 const useStyles = makeStyles((theme) => ({
   txt: {
@@ -147,6 +148,20 @@ function ProjectViewer({ project, priority }) {
           institute={project.institute.institute}
         />
       </Toolbar>
+      <AppBreadcrumb
+          links={[
+            {
+              link: "/projects",
+              label: 'Projects',
+              icon: <LibraryBooks fontSize="small" />,
+            },
+            {
+              link: `/projects/${project.id}`,
+              label: project.title,
+              icon: <Description fontSize="small" />,
+            },
+          ]}
+        />
       <Divider classes={{ root: classes.divider }} />
       <Container>
         <Grid container>

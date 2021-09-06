@@ -9,16 +9,14 @@ import {
   Popover,
   Typography,
   makeStyles,
-  Divider,
 } from "@material-ui/core";
-import { Edit, ExitToApp, Lock } from "@material-ui/icons";
+import { ExitToApp, Lock } from "@material-ui/icons";
 import { useContext } from "react";
 import { useHistory } from "react-router-dom";
 
 import { AuthContext } from "../../contexts/AuthContext";
 import { Account } from "../../utils/bulsupis_mw";
 import { accountTypes } from "../../utils/constants";
-import { serverUrl } from "../../utils/serverUrl";
 
 function AccountMenu({
   showDialog,

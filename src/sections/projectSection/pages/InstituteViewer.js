@@ -7,10 +7,11 @@ import {
   Typography,
   makeStyles,
   ButtonGroup,
+  Breadcrumbs,
 } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import React, { useState } from "react";
-import { Add, Save } from "@material-ui/icons";
+import { Add, Domain, Home, Save, Settings } from "@material-ui/icons";
 
 import ProjectList from "../components/ProjectList";
 import ProjectFilterDialog from "../components/ProjectFilterDialog";
@@ -18,6 +19,7 @@ import SheetExport from "../../../shared/components/SheetExport";
 import PDFExport from "../../../shared/components/PDFExport";
 import { Projects } from "../../../utils/bulsupis_mw";
 import { institutes } from "../../../utils/constants";
+import AppBreadcrumb from "../../../shared/components/AppBreadcrumb";
 
 function InstituteViewer({ institute, user }) {
   const [open, setOpen] = useState(false);
@@ -85,18 +87,21 @@ function InstituteViewer({ institute, user }) {
         )}
         <SheetExport
           institutes={[institute]}
-          filename={institutes.find((item) => item.abbv === institute.abbv).institute}
+          filename={
+            institutes.find((item) => item.abbv === institute.abbv).institute
+          }
           buttonLabel="Download Investment Sheet"
         />
         <PDFExport
-          filename={institutes.find((item) => item.abbv === institute.abbv).institute}
+          filename={
+            institutes.find((item) => item.abbv === institute.abbv).institute
+          }
           projects={institute.projectList}
-          institute={institutes.find((item) => item.abbv === institute.abbv).institute}
+          institute={
+            institutes.find((item) => item.abbv === institute.abbv).institute
+          }
         />
-        <ButtonGroup
-        orientation="vertical">
-
-        </ButtonGroup>
+        <ButtonGroup orientation="vertical"></ButtonGroup>
         {!compareArray(institute.priority, localPrio) && user.type == 0 && (
           <Button
             className={classes.button}
@@ -124,6 +129,22 @@ function InstituteViewer({ institute, user }) {
           </Button>
         )}
       </Toolbar>
+      {user.type !== 0 && (
+        <AppBreadcrumb
+          links={[
+            {
+              link: "/institutes",
+              label: 'Institutes',
+              icon: <Domain fontSize="small" />,
+            },
+            {
+              link: `/institutes/${institute.id}`,
+              label: institute.institute,
+              icon: <Settings fontSize="small" />,
+            },
+          ]}
+        />
+      )}
       <Divider classes={{ root: classes.divider }} />
       <Container>
         <Grid container>

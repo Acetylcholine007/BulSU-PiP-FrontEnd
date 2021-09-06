@@ -17,8 +17,11 @@ import {
   AddCircleOutline,
   Cancel,
   CheckCircle,
+  Description,
+  Domain,
   Edit,
   Save,
+  Settings,
 } from "@material-ui/icons";
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
@@ -35,6 +38,7 @@ import { Admin, Projects } from "../../../utils/bulsupis_mw";
 import { elForm1Validator } from "../../../utils/elForm1Validator";
 import { elForm2Validator } from "../../../utils/elForm2Validator";
 import elForm3Validator from "../../../utils/elForm3Validator";
+import AppBreadcrumb from "../../../shared/components/AppBreadcrumb";
 
 const useStyles = makeStyles((theme) => ({
   txt: {
@@ -305,6 +309,25 @@ function ElevatedProjectViewer({ project, priority, instituteId }) {
           priority={priority}
         />
       </Toolbar>
+      <AppBreadcrumb
+        links={[
+          {
+            link: "/institutes",
+            label: 'Institutes',
+            icon: <Domain fontSize="small" />,
+          },
+          {
+            link: `/institutes/${instituteId}`,
+            label: project.institute.institute,
+            icon: <Settings fontSize="small" />,
+          },
+          {
+            link: `/institutes/${instituteId}/${project.id}`,
+            label: project.title,
+            icon: <Description fontSize="small" />,
+          },
+        ]}
+      />
       <Divider classes={{ root: classes.divider }} />
       <Container>
         <Grid container>

@@ -15,9 +15,11 @@ function AdminInstituteViewer() {
     Admin.Institutes.get(instituteId)
       .then((res) => {
         let institute = res.data;
+        console.log(institute)
         setInstitute({
           abbv: institute.abbv,
           instituteId: institute.id,
+          institute: institute.institute,
           projectList: projectListTranslator(institute.project_list),
           priority: institute.project_list.map((project) => project.id),
         });

@@ -55,6 +55,12 @@ function EditorForm2({
 
   const classes = useStyles();
 
+  const getSum = () => {
+    var sum = 0;
+    form2Data.proposedProjectCost.forEach((item) => sum += parseFloat(item.cost === '' ? '0' : item.cost));
+    return `Sum: ${sum}`
+  }
+
   return (
     <form>
       <Grid container spacing={2}>
@@ -209,6 +215,9 @@ function EditorForm2({
         <Grid item xs={12}>
           <Typography variant="h5" display="inline">
             Proposed Project Cost
+          </Typography>
+          <Typography variant="h5" display="inline" style = {{marginLeft: 20}}>
+            {getSum()}
           </Typography>
         </Grid>
         {form2Data.proposedProjectCost.map((item, index) => (

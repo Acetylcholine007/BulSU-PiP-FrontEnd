@@ -12,14 +12,10 @@ import {
 } from "@material-ui/core";
 import { useContext, useState } from "react";
 import { useHistory } from "react-router";
-import sjcl from "sjcl";
-
-import { serverUrl } from "../../../utils/serverUrl";
 
 import { institutes } from "../../../utils/constants";
 import signupValidator from "../../../utils/signupValidator";
 
-import PDO from "./pdo.png";
 import { Account } from "../../../utils/bulsupis_mw";
 import { AuthContext } from "../../../contexts/AuthContext";
 
@@ -110,7 +106,7 @@ function SignUpPage() {
                     src="favicon.ico"
                     alt="BulSU Icon"
                   ></img>
-                  <img className={classes.avtr2} src={PDO} alt="PDO Icon"></img>
+                  <img className={classes.avtr2} src='./pdoLogo.png' alt="PDO Icon"></img>
                 </p>
                 <p>BulSU PIPS - ver 0.1</p>
                 <Typography variant="h4" component="h1">

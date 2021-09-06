@@ -16,8 +16,6 @@ import { AuthContext } from "../../../contexts/AuthContext";
 import loginValidator from "../../../utils/loginValidator";
 import { Account } from "../../../utils/bulsupis_mw";
 
-import PDO from "./pdo.png";
-
 const useStyles = makeStyles((theme) => ({
   motherPane: {
     padding: 0,
@@ -81,7 +79,6 @@ function LogInPage() {
       messages: [],
     },
   });
-  console.log(PDO);
   const { setIsLoggedIn } = useContext(AuthContext);
 
   const handleLogin = async (e) => {
@@ -116,7 +113,7 @@ function LogInPage() {
                     src="favicon.ico"
                     alt="BulSU Icon"
                   ></img>
-                  <img className={classes.avtr2} src={PDO} alt="PDO Icon"></img>
+                  <img className={classes.avtr2} src='./pdoLogo.png' alt="PDO Icon"></img>
                 </p>
                 <p>BulSU PIPS - ver 0.1</p>
                 <Typography variant="h4" component="h1">

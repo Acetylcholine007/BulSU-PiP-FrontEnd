@@ -11,7 +11,6 @@ import { useContext } from "react";
 import MenuIcon from "@material-ui/icons/Menu";
 
 import { AuthContext } from "../../contexts/AuthContext";
-import { serverUrl } from "../../utils/serverUrl";
 
 function MainAppBar({
   open,
