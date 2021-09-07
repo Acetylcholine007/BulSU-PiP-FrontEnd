@@ -2,6 +2,7 @@ import Account from './Accounts'
 import Notifications from './Notifications'
 import Projects from './Projects'
 import Admin from './Admin'
+import Institute from './Institutes'
 import _bulsupips_test from './utils/_ping'
 import Maps from './utils/_map'
 
@@ -11,5 +12,6 @@ export {
     Notifications,
     Projects,
     Admin,
-    Maps
+    Maps,
+    Institute
 }

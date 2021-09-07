@@ -7,7 +7,6 @@ import "animate.css";
 import "./App.css";
 import MainWrapper from "./mainWrapper/pages/MainWrapper";
 import LogInPage from "./sections/authenticationSection/pages/LogInPage";
-import SignUpPage from "./sections/authenticationSection/pages/SignUpPage";
 import ProjectEditorWrapper from "./sections/projectSection/wrappers/ProjectEditorWrapper";
 import { AuthContext } from "./contexts/AuthContext";
 import { InstituteContext } from "./contexts/InstituteContext";
@@ -24,6 +23,7 @@ import AdminDashboard from "./sections/dashboardSection/wrappers/AdminDashboard"
 import AccountsWrapper from "./sections/accountSection/wrappers/AccountsWrapper";
 import NotificationWrapper from "./sections/notificationSection/wrappers/NotificationWrapper";
 import ProjectEditor from "./sections/projectSection/pages/ProjectEditor";
+import SignUpWrapper from "./sections/authenticationSection/wrappers/SignUpWrapper";
 
 const theme = createTheme({
   palette: {
@@ -55,9 +55,8 @@ const theme = createTheme({
   },
 });
 
-function App() {
+function App({ isLoggedIn, setIsLoggedIn }) {
   const [user, setUser] = useState(null);
-  const [isLoggedIn, setIsLoggedIn] = useState(Account.isLoggedIn());
   const [institute, setInstitute] = useState(null);
 
   const getUserData = async () =>
@@ -92,11 +91,11 @@ function App() {
       >
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
           <ThemeProvider theme={theme}>
-            {!Account.isLoggedIn() && (
+            {!isLoggedIn && (
               <Router>
                 <Switch>
                   <Route exact path="/signup">
-                    <SignUpPage />
+                    <SignUpWrapper />
                   </Route>
                   <Route path="/">
                     <LogInPage />
@@ -107,7 +106,7 @@ function App() {
                 </Switch>
               </Router>
             )}
-            {Account.isLoggedIn() && user && (
+            {isLoggedIn && user && (
               <Router>
                 <MainWrapper>
                   <Switch>
