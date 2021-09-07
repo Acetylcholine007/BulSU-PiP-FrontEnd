@@ -26,7 +26,6 @@ function MainWrapper({ children }) {
     return {
       root: {
         display: "flex",
-        background: "#F9F9F9",
         width: "100%",
         height: "100%",
       },
@@ -40,7 +39,6 @@ function MainWrapper({ children }) {
       },
       content: {
         flexGrow: 1,
-        padding: theme.spacing(3),
         transition: theme.transitions.create("margin", {
           easing: theme.transitions.easing.sharp,
           duration: theme.transitions.duration.leavingScreen,
@@ -58,6 +56,18 @@ function MainWrapper({ children }) {
         }),
         marginLeft: 0,
       },
+      box: {
+        flex: "1",
+        background: "#F9F9F9",
+        paddingBottom: 20,
+        overflowY: 'auto',
+        overflowX: 'auto',
+      },
+      wrapper: {
+        display: 'flex',
+        flexDirection: 'column',
+        height: '100vh'
+      }
     };
   });
 
@@ -85,10 +95,12 @@ function MainWrapper({ children }) {
         handleDrawerClose={handleDrawerClose}
       />
       <div className={clsx(classes.content, { [classes.contentShift]: openDrawer })}>
-        <div className={classes.drawerHeader} />
-        <Box display="flex" flexDirection="column">
-        {children}
-        </Box>
+        <div className={classes.wrapper}>
+          <div className={classes.drawerHeader} />
+          <Box className={classes.box}>
+            {children}
+          </Box>
+        </div>
       </div>
       <AccountEditorModal open = {openModal} setOpen = {setOpenModal}/>
     </div>
