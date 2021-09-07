@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import LoadingComponent from "../../../shared/components/LoadingComponent";
 import { Account } from "../../../utils/bulsupis_mw";
-import DashboardPage from "../pages/DashboardPage";
+import DashboardPage2 from "../pages/DashboardPage2";
 
 function ClientDashboard() {
   const [data, setData] = useState(null);
@@ -109,7 +109,7 @@ function ClientDashboard() {
   return (
     <React.Fragment>
       {(!data || !user) && <LoadingComponent />}
-      {data && user && <DashboardPage data={data} user={user}/>}
+      {data && user && <DashboardPage2 data={data} user={user}/>}
     </React.Fragment>
   );
 }

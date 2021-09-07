@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import {
-  Avatar,
   Card,
   CardContent,
   CardHeader,
@@ -8,7 +7,6 @@ import {
   Grid,
   IconButton,
   makeStyles,
-  Typography,
 } from "@material-ui/core";
 import { LaunchOutlined } from "@material-ui/icons";
 import { useHistory } from "react-router-dom";
@@ -33,15 +31,11 @@ function DashboardPage({ data, user }) {
       backgroundColor: theme.palette.tertiary.main,
     },
     cardTextHeader: {
-      fontSize: 40,
+      fontSize: 40
     },
     cardTextContent: {
-      fontSize: 35,
-    },
-    avatarLogo: {
-      width: "auto",
-      height: "auto",
-    },
+      fontSize: 40
+    }
   }));
 
   const classes = useStyles();
@@ -51,58 +45,37 @@ function DashboardPage({ data, user }) {
     <Container>
       <Grid container spacing={2}>
         <Grid item md={8} xs={12}>
-          <Grid container spacing={4}>
-            <Grid item xs={3}>
-              <Avatar className={classes.avatarLogo}>h</Avatar>
+
+            <Grid container spacing={4}>
+              <Grid item xs={3}>
+                <Card>
+                  <CardHeader className={classes.cardTextHeader} title="Revision" />
+                  <CardContent className={classes.cardTextContent}>sample</CardContent>
+                </Card>
+              </Grid>
+              <Grid item xs={3}>
+                <Card>
+                  <CardHeader title="On-Going" />
+                  <CardContent>sample</CardContent>
+                </Card>
+              </Grid>
+              <Grid item xs={3}>
+                <Card>
+                  <CardHeader title="Rejected" />
+                  <CardContent>sample</CardContent>
+                </Card>
+              </Grid>
+              <Grid item xs={3}>
+                <Card>
+                  <CardHeader title="Completed" />
+                  <CardContent>sample</CardContent>
+                </Card>
+              </Grid>
             </Grid>
-            <Grid item xs={6}>
-              <Typography variant="h4"> College of Engineering </Typography>
-            </Grid>
-            <Grid item xs={3}>
-            <Card>
-                <CardHeader
-                  className={classes.cardTextHeader}
-                  title="Revision"
-                />
-                <CardContent className={classes.cardTextContent}>
-                  sample
-                </CardContent>
-              </Card>
-            </Grid>
-            <Grid item xs={3}>
-              <Card>
-                <CardHeader
-                  className={classes.cardTextHeader}
-                  title="Revision"
-                />
-                <CardContent className={classes.cardTextContent}>
-                  sample
-                </CardContent>
-              </Card>
-            </Grid>
-            <Grid item xs={3}>
-              <Card>
-                <CardHeader title="On-Going" />
-                <CardContent className={classes.cardTextContent}>sample</CardContent>
-              </Card>
-            </Grid>
-            <Grid item xs={3}>
-              <Card>
-                <CardHeader title="Rejected" />
-                <CardContent className={classes.cardTextContent}>sample</CardContent>
-              </Card>
-            </Grid>
-            <Grid item xs={3}>
-              <Card>
-                <CardHeader title="Completed" />
-                <CardContent className={classes.cardTextContent}>sample</CardContent>
-              </Card>
-            </Grid>
-          </Grid>
         </Grid>
         <Grid item md={4} xs={12}>
           <Card>
-            <CardHeader
+          <CardHeader
               title={
                 user.type == 0
                   ? `${user.institute.institute} Projects`
@@ -138,7 +111,7 @@ function DashboardPage({ data, user }) {
             </CardContent>
           </Card>
         </Grid>
-        <Grid item md={7} xs={12}>
+        <Grid item xs={7}>
           <Card>
             <CardHeader
               title="Total Cost Distribution"
@@ -168,7 +141,7 @@ function DashboardPage({ data, user }) {
             </CardContent>
           </Card>
         </Grid>
-        <Grid item md={5} xs={12}>
+        <Grid item xs={5}>
           <Card>
             <CardHeader
               title="Notifications"
