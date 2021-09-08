@@ -132,12 +132,6 @@ function ElevatedProjectViewer({ project, priority, instituteId }) {
     setOpen(true);
   };
 
-  const saveComments = async (comments) => {
-    for (var i = 0; i < comments.length; i++) {
-      await Projects.comment(project.id, comments[i].message);
-    }
-  };
-
   const handleSubmit = () => {
     Admin.Projects.edit(
       {
@@ -150,14 +144,8 @@ function ElevatedProjectViewer({ project, priority, instituteId }) {
       },
       PDOSignature
     )
-      .then(() => {
-        if (newComments.length) {
-          saveComments(newComments).then(() => {
-            history.push(`/institutes/${instituteId}`);
-          });
-        } else {
-          history.push(`/institutes/${instituteId}`);
-        }
+      .then((res) => {
+        history.push(`/institutes/${instituteId}`);
       })
       .catch((err) => console.log(err.message));
   };
@@ -445,6 +433,7 @@ function ElevatedProjectViewer({ project, priority, instituteId }) {
           setAddCommentOpen={setAddCommentOpen}
           comments={newComments}
           setComments={setNewComments}
+          projectId={project.id}
         />
       </Container>
     </React.Fragment>

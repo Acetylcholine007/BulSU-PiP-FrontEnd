@@ -13,7 +13,6 @@ import {
 import { useContext, useState } from "react";
 import { useHistory } from "react-router";
 
-import { institutes } from "../../../utils/constants";
 import signupValidator from "../../../utils/signupValidator";
 
 import { Account } from "../../../utils/bulsupis_mw";
@@ -64,7 +63,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function SignUpPage() {
+function SignUpPage({institutes}) {
   const history = useHistory();
   const classes = useStyles();
   const {setIsLoggedIn} = useContext(AuthContext);
@@ -206,8 +205,8 @@ function SignUpPage() {
                     }
                   >
                     {institutes.map((institute) => (
-                      <MenuItem key={institute.abbv} value={institute}>
-                        {institute.institute}
+                      <MenuItem key={institute} value={institute}>
+                        {institute}
                       </MenuItem>
                     ))}
                   </TextField>

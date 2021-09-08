@@ -11,7 +11,7 @@ import _request from '../utils/_request'
  * @return {Object} Response from the server in format { data: [...], query: <String>, total:<Number> } 
  */
 async function notif_get(){
-    if (Account.isLoggedIn()){
+    if (await Account.isLoggedIn()){
         let response = await _request('/api/notification')
 
         if (response){

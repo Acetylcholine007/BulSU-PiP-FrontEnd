@@ -94,10 +94,24 @@ function account_logout(){
  * Checks if a token exist in the localStorage. If it exist, then the user is logged In
  * @return {Object} Response from the server in format { data: [...], query: <String>, total:<Number> } 
  */
-function account_check(){
-    if (localStorage.getItem(localStorage_tokenloc)){
-        return true
+async function account_check(){
+
+    let tokenCheck = localStorage.getItem(localStorage_tokenloc)
+
+    if (tokenCheck){
+
+        let resp = await _request('/api/account')
+
+        if (resp){
+            console.log("Logged In")
+            return true
+        }else{
+            console.error(resp)
+            return false
+        }
+
     }
+    
     return false
 }
 

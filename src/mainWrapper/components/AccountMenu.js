@@ -87,10 +87,10 @@ function AccountMenu({
               <Button
                 color="secondary"
                 variant="contained"
-                onClick={() => {
+                onClick={async () => {
                   history.push("/");
                   Account.logout();
-                  setIsLoggedIn(Account.isLoggedIn());
+                  setIsLoggedIn(await Account.isLoggedIn());
                 }}
                 className={classes.button}
                 fullWidth
