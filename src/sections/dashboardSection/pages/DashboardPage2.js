@@ -30,17 +30,25 @@ function DashboardPage({ data, user }) {
 
   const useStyles = makeStyles((theme) => ({
     cardHeader: {
-      backgroundColor: theme.palette.tertiary.main,
+      background: 'linear-gradient(45deg, #800000 30%, #FF8E53 90%)',
+      color: 'white',
     },
     cardTextHeader: {
-      fontSize: 40,
+      fontSize: 35,
+      background: '#800000',
+      border: 0,
+      borderRadius: 3,
+      boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+      color: 'white',
+      height: 48,
+      
     },
     cardTextContent: {
-      fontSize: 35,
+      fontSize: 25,
     },
     avatarLogo: {
-      width: "auto",
-      height: "auto",
+      width: 150,
+      height: 150,
     },
   }));
 
@@ -53,7 +61,9 @@ function DashboardPage({ data, user }) {
         <Grid item md={8} xs={12}>
           <Grid container spacing={4}>
             <Grid item xs={3}>
-              <Avatar className={classes.avatarLogo}>h</Avatar>
+              <Avatar 
+              className={classes.avatarLogo}
+              src={user.institute.profile_img.src} />
             </Grid>
             <Grid item xs={6}>
               <Typography variant="h4"> College of Engineering </Typography>
@@ -62,7 +72,7 @@ function DashboardPage({ data, user }) {
             <Card>
                 <CardHeader
                   className={classes.cardTextHeader}
-                  title="Revision"
+                  title="Completed"
                 />
                 <CardContent className={classes.cardTextContent}>
                   sample
@@ -82,19 +92,25 @@ function DashboardPage({ data, user }) {
             </Grid>
             <Grid item xs={3}>
               <Card>
-                <CardHeader title="On-Going" />
+                <CardHeader
+                className={classes.cardTextHeader} 
+                title="On-Going" />
                 <CardContent className={classes.cardTextContent}>sample</CardContent>
               </Card>
             </Grid>
             <Grid item xs={3}>
               <Card>
-                <CardHeader title="Rejected" />
+                <CardHeader 
+                className={classes.cardTextHeader}
+                title="Rejected" />
                 <CardContent className={classes.cardTextContent}>sample</CardContent>
               </Card>
             </Grid>
             <Grid item xs={3}>
               <Card>
-                <CardHeader title="Completed" />
+                <CardHeader 
+                className={classes.cardTextHeader}
+                title="Proposed" />
                 <CardContent className={classes.cardTextContent}>sample</CardContent>
               </Card>
             </Grid>
