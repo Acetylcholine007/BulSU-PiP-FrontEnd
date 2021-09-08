@@ -15,14 +15,14 @@ async function notif_get(){
         let response = await _request('/api/notification')
 
         if (response){
-            return response
+            return {simple: response, full: response}
         }else{
             console.error(response)
-            return false
+            return {simple: false, full: response}
         }
     }
     else{
-        return false
+        return {simple: false, full: 'Not logged in'}
     }
     
 }
@@ -37,10 +37,10 @@ async function notif_delete(id){
 
     if (response && !('Error' in response)){
         console.log("Notification Deleted Successfully")
-        return true
+        return {simple: true, full: response}
     }else{
         console.error(response)
-        return false
+        return {simple: false, full: response}
     }
 }
 

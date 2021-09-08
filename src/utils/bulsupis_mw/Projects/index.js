@@ -17,14 +17,14 @@ async function project_getAll(){
         }
 
         if (response){
-            return response
+            return {simple: response, full: response}
         }else{
             console.error(response)
-            return false
+            return {simple: false, full: response}
         }
     }
     else{
-        return false
+        return {simple: false, full: 'Not logged in'}
     }
     
 }
@@ -35,14 +35,14 @@ async function getInstitute(id){
         let response = await _request(`/dev/institutes/${id}`)
 
         if (response){
-            return response
+            return {simple: response, full: response}
         }else{
             console.error(response)
-            return false
+            return {simple: false, full: response}
         }
     }
     else{
-        return false
+        return {simple: false, full: 'Not logged in'}
     }
 }
 
@@ -58,14 +58,14 @@ async function project_get(id){
         response.data = Maps.project_camelCase(response.data)
         
         if (response){
-            return response
+            return {simple: response, full: response}
         }else{
             console.error(response)
-            return false
+            return {simple: false, full: response}
         }
     }
     else{
-        return false
+        return {simple: false, full: 'Not logged in'}
     }
     
 }
@@ -84,14 +84,14 @@ async function project_dummyCreate(){
         let response = await _request('/api/project', formData, 'POST')
 
         if (response){
-            return response
+            return {simple: response, full: response}
         }else{
             console.error(response)
-            return false
+            return {simple: false, full: response}
         }
     }
     else{
-        return false
+        return {simple: false, full: 'Not logged in'}
     }
     
 }
@@ -129,14 +129,14 @@ async function project_create(data, files, signature){
         let response = await _request('/api/project', formData, 'POST')
 
         if (response){
-            return response
+            return {simple: response, full: response}
         }else{
             console.error(response)
-            return false
+            return {simple: false, full: response}
         }
     }
     else{
-        return false
+        return {simple: false, full: 'Not logged in'}
     }
     
 }
@@ -180,14 +180,14 @@ async function project_edit(data, files, signature, args){
         let response = await _request('/api/project', formData, 'PUT', false, args)
 
         if (response){
-            return response
+            return {simple: response, full: response}
         }else{
             console.error(response)
-            return false
+            return {simple: false, full: response}
         }
     }
     else{
-        return false
+        return {simple: false, full: 'Not logged in'}
     }
     
 }
@@ -203,14 +203,14 @@ async function project_rearrange(new_arrangement){
         let response = await _request('/api/project/rearrange', JSON.stringify(new_arrangement), 'POST', 'application/json')
 
         if (response){
-            return response
+            return {simple: response, full: response}
         }else{
             console.error(response)
-            return false
+            return {simple: false, full: response}
         }
     }
     else{
-        return false
+        return {simple: false, full: 'Not logged in'}
     }
     
 }
@@ -225,10 +225,10 @@ async function project_delete(id){
 
     if (response && !('Error' in response)){
         console.log("Project Deleted Successfully")
-        return true
+        return {simple: true, full: response}
     }else{
         console.error(response)
-        return false
+        return {simple: false, full: response}
     }
 }
 
@@ -247,14 +247,14 @@ async function project_comment(project_id, message){
         }), 'POST', 'application/json')
 
         if (response){
-            return response
+            return {simple: response, full: response}
         }else{
             console.error(response)
-            return false
+            return {simple: false, full: response}
         }
     }
     else{
-        return false
+        return {simple: false, full: 'Not logged in'}
     }
 }
 

@@ -9,14 +9,14 @@ async function admin_getInstitute(id){
         let response = await _request(`/dev/institutes/${id}`)
 
         if (response){
-            return response
+            return {simple: response, full: response}
         }else{
             console.error(response)
-            return false
+            return {simple: false, full: response}
         }
     }
     else{
-        return false
+        return {simple: false, full: 'Not logged in'}
     }
 }
 
@@ -26,14 +26,14 @@ async function admin_getAllInstitute(){
         let response = await _request('/dev/institutes')
 
         if (response){
-            return response
+            return {simple: response, full: response}
         }else{
             console.error(response)
-            return false
+            return {simple: false, full: response}
         }
     }
     else{
-        return false
+        return {simple: false, full: 'Not logged in'}
     }
 }
 
@@ -43,14 +43,14 @@ async function admin_getAllAccounts(){
         let response = await _request('/dev/accounts')
 
         if (response){
-            return response
+            return {simple: response, full: response}
         }else{
             console.error(response)
-            return false
+            return {simple: false, full: response}
         }
     }
     else{
-        return false
+        return {simple: false, full: 'Not logged in'}
     }
 }
 
@@ -64,14 +64,14 @@ async function admin_setAccountAccess(id, verified){
         let response = await _request(`/dev/accounts/${id || -1}`, fd, 'PUT')
 
         if (response){
-            return response
+            return {simple: response, full: response}
         }else{
             console.error(response)
-            return false
+            return {simple: false, full: response}
         }
     }
     else{
-        return false
+        return {simple: false, full: 'Not logged in'}
     }
 }
 
@@ -90,14 +90,14 @@ async function admin_setAccountDelete(id){
         let response = await _request(`/dev/accounts/${id || -1}`, fd, 'DELETE')
 
         if (response){
-            return response
+            return {simple: response, full: response}
         }else{
             console.error(response)
-            return false
+            return {simple: false, full: response}
         }
     }
     else{
-        return false
+        return {simple: false, full: 'Not logged in'}
     }
 }
 
@@ -109,14 +109,14 @@ async function admin_getProjectInfo(id){
         response.data = Maps.project_camelCase(response.data)
 
         if (response){
-            return response
+            return {simple: response, full: response}
         }else{
             console.error(response)
-            return false
+            return {simple: false, full: response}
         }
     }
     else{
-        return false
+        return {simple: false, full: 'Not logged in'}
     }
 }
 
@@ -130,14 +130,14 @@ async function admin_setStatus(id, status_code){
         let response = await _request(`/dev/projects/${id || -1}`, fd, 'PUT')
 
         if (response){
-            return response
+            return {simple: response, full: response}
         }else{
             console.error(response)
-            return false
+            return {simple: false, full: response}
         }
     }
     else{
-        return false
+        return {simple: false, full: 'Not logged in'}
     }
 }
 
@@ -159,14 +159,14 @@ async function admin_projectEdit(data, pdo_signature){
         let response = await _request(`/dev/projects/${-1}`, fd, 'PUT')
 
         if (response){
-            return response
+            return {simple: response, full: response}
         }else{
             console.error(response)
-            return false
+            return {simple: false, full: response}
         }
     }
     else{
-        return false
+        return {simple: false, full: 'Not logged in'}
     }
 }
 
