@@ -47,8 +47,8 @@ function DashboardPage({ data, user }) {
       fontSize: 25,
     },
     avatarLogo: {
-      width: 150,
-      height: 150,
+      width: 'auto',
+      height: 'auto',
     },
   }));
 
@@ -66,7 +66,11 @@ function DashboardPage({ data, user }) {
               src={user.institute.profile_img.src} />
             </Grid>
             <Grid item xs={6}>
-              <Typography variant="h4"> College of Engineering </Typography>
+              <Typography variant="h4"> {
+                user.type == 0
+                  ? `${user.institute.institute}`
+                  : "BulSU Projects"
+              } </Typography>
             </Grid>
             <Grid item xs={3}>
             <Card>
