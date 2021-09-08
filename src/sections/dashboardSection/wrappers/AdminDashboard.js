@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import ErrorComponent from "../../../shared/components/ErrorComponent";
 
 import LoadingComponent from "../../../shared/components/LoadingComponent";
 import { Account, Admin } from "../../../utils/bulsupis_mw";
@@ -8,10 +9,13 @@ import DashboardPage from "../pages/DashboardPage";
 function AdminDashboard() {
   const [data, setData] = useState(null);
   const [user, setUser] = useState(null);
+  const [dataError, setDataError] = useState(null);
+  const [userError, setUserError] = useState(null);
 
   useEffect(() => {
-      Admin.Institutes.getAll()
-      .then((res) => {
+    Admin.Institutes.getAll()
+      .then(({ simple, full }) => {
+        if (simple) {
           let projects = [];
           let costs = [
             {
@@ -36,11 +40,13 @@ function AdminDashboard() {
             },
           ];
 
-          res.data.slice(0, res.data.length - 3).forEach((institute) => {
+          simple.data.slice(0, simple.data.length - 3).forEach((institute) => {
             let instituteTally = {
-              institute: institutes.find((item) => item.institute === institute.institute).abbv,
+              institute: institutes.find(
+                (item) => item.institute === institute.institute
+              ).abbv,
               tally: [0, 0, 0, 0, 0],
-            }
+            };
 
             institute.project_list.forEach((project) => {
               switch (project.status) {
@@ -91,32 +97,41 @@ function AdminDashboard() {
                   break;
               }
             });
-
-            projects.push(instituteTally)
-          })
+            projects.push(instituteTally);
+          });
           setData({
             projects: projects,
             costs: costs,
           });
+        } else {
+          setData(simple);
+          setDataError(full);
+        }
       })
       .then(() => {
         Account.getInfo()
-        .then((res) => {
-          setUser(res.data);
-        })
-        .catch((err) => {
-          console.log(err.message);
-        })
+          .then(({simple, full}) => {
+            if(simple) {
+              setUser(simple.data);
+            } else {
+              setUser(simple);
+              setUserError(full);
+            }
+          })
+          .catch((err) => {
+            setUserError(err.message);
+          });
       })
       .catch((err) => {
-          console.log(err.message)
-      })
+        setDataError(err.message);
+      });
   }, []);
 
   return (
     <React.Fragment>
-      {(!data || !user) && <LoadingComponent />}
-      {data && user && <DashboardPage data={data} user={user}/>}
+      {(data == null || user == null) && <LoadingComponent />}
+      {(dataError || userError) && <ErrorComponent message={`${dataError}\n${userError}`} />}
+      {data && user && !(dataError || userError) && <DashboardPage data={data} user={user} />}
     </React.Fragment>
   );
 }

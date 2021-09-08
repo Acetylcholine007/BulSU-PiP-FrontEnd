@@ -93,7 +93,7 @@ function InstituteList({ filter, setFilter, institutes }) {
         <Table>
           <TableHead className={classes.tableHead}>
             <TableRow>
-              <TableCell>Logo</TableCell>
+              <TableCell styles={{ padding: 0, width: "10%" }} align = 'center'>Logo</TableCell>
               <TableCell>Institute</TableCell>
               <TableCell align="center">Projects</TableCell>
             </TableRow>
@@ -108,7 +108,7 @@ function InstituteList({ filter, setFilter, institutes }) {
                 }}
                 key={institute.abbv}
               >
-                <TableCell>
+                <TableCell style={{ width: "10%" }} align = 'center'>
                   <Avatar src={institute.profile_img.src} />
                 </TableCell>
                 <TableCell>{institute.institute}</TableCell>

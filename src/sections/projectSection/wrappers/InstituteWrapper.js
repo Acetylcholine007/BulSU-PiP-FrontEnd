@@ -1,37 +1,37 @@
 import React, { useEffect, useState } from "react";
 import ErrorComponent from "../../../shared/components/ErrorComponent";
 import LoadingComponent from "../../../shared/components/LoadingComponent";
-import { Institute } from "../../../utils/bulsupis_mw";
-import SignUpPage from "../pages/SignUpPage";
+import { Admin } from "../../../utils/bulsupis_mw";
+import InstitutePage from "../pages/InstitutePage";
 
-function SignUpWrapper() {
+function InstituteWrapper() {
   const [institutes, setInstitutes] = useState(null);
-  const [error, setError] = useState(null);
+  const [instituteError, setInstituteError] = useState(null);
 
   useEffect(() => {
-    Institute.get()
+    Admin.Institutes.getAll()
       .then(({ simple, full }) => {
         if (simple) {
-          setInstitutes(simple.data.map((item) => item.institute));
+          setInstitutes(simple.data.slice(0, simple.data.length - 1));
         } else {
           setInstitutes(simple);
-          setError(full);
+          setInstituteError(full);
         }
       })
       .catch((err) => {
-        setError(err.message);
+        setInstituteError(err.message);
       });
   }, []);
 
   return (
     <React.Fragment>
       {institutes == null && <LoadingComponent />}
-      {error && <ErrorComponent message={error} />}
-      {institutes !== null && !error && (
-        <SignUpPage institutes={institutes} />
+      {instituteError && <ErrorComponent message={instituteError} />}
+      {institutes && !instituteError && (
+        <InstitutePage institutes={institutes} />
       )}
     </React.Fragment>
   );
 }
 
-export default SignUpWrapper;
+export default InstituteWrapper;

@@ -4,29 +4,15 @@ import {
   Toolbar,
   Typography,
   makeStyles,
-  Button,
 } from "@material-ui/core";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
-import LoadingComponent from "../../../shared/components/LoadingComponent";
 import SheetExport from "../../../shared/components/SheetExport";
 import InstituteList from "../components/InstituteList";
-import { Admin } from "../../../utils/bulsupis_mw";
 import { institutesTranslator } from "../../../utils/translators";
 
-function InstitutePage() {
+function InstitutePage({institutes}) {
   const [filter, setFilter] = useState({ search: "" });
-  const [institutes, setInstitutes] = useState(null);
-
-  useEffect(() => {
-    Admin.Institutes.getAll()
-    .then((res) => {
-      setInstitutes(res.data.slice(0, res.data.length - 1));
-    })
-    .catch((err) => {
-      console.log(err.message)
-    })
-  }, [])
 
   const useStyles = makeStyles({
     divider: {
@@ -44,25 +30,20 @@ function InstitutePage() {
 
   return (
     <React.Fragment>
-      {!institutes && <LoadingComponent />}
-      {institutes && (
-        <React.Fragment>
-          <Toolbar>
-            <Typography variant="h4" className={classes.pageTitle}>
-              {"Institute List"}
-            </Typography>
-            <SheetExport
-              institutes={institutesTranslator(institutes)}
-              filename={"BulSU"}
-              buttonLabel="Download Investment Sheet"
-            />
-          </Toolbar>
-          <Divider classes={{ root: classes.divider }} />
-          <Container>
-            <InstituteList filter={filter} setFilter={setFilter} institutes={institutes}/>
-          </Container>
-        </React.Fragment>
-      )}
+      <Toolbar>
+        <Typography variant="h4" className={classes.pageTitle}>
+          {"Institute List"}
+        </Typography>
+        <SheetExport
+          institutes={institutesTranslator(institutes)}
+          filename={"BulSU"}
+          buttonLabel="Download Investment Sheet"
+        />
+      </Toolbar>
+      <Divider classes={{ root: classes.divider }} />
+      <Container>
+        <InstituteList filter={filter} setFilter={setFilter} institutes={institutes}/>
+      </Container>
     </React.Fragment>
   );
 }

@@ -34,6 +34,7 @@ function CreateCommentDialog({
       open={open}
       onClose={() => setAddCommentOpen(false)}
       aria-labelledby="form-dialog-title"
+      fullWidth={true}
     >
       <DialogTitle id="form-dialog-title">Add Comment</DialogTitle>
       <DialogContent>
@@ -65,17 +66,17 @@ function CreateCommentDialog({
           onClick={() => {
             var checkercomment = commentValidator(comment.message);
             if (!checkercomment.message.error) {
-              Projects.comment(projectId, comment.message).then((res) => {
-                console.log(res);
-                if (res) {
-                  setComments([...comments, {...res.data, author: 'Editor'}]);
+              Projects.comment(projectId, comment.message).then(({simple, full}) => {
+                console.log(full);
+                if (simple) {
+                  setComments([...comments, {...simple.data, author: 'Editor'}]);
                   setLocalComment({
                     message: "",
                   });
                   setAddCommentOpen(false);
                 } else {
                   checkercomment.message.error = true;
-                  checkercomment.message.messages.push("Failed to add comment");
+                  checkercomment.message.messages.push(full);
                 }
               });
             }

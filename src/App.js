@@ -11,7 +11,6 @@ import ProjectEditorWrapper from "./sections/projectSection/wrappers/ProjectEdit
 import { AuthContext } from "./contexts/AuthContext";
 import { InstituteContext } from "./contexts/InstituteContext";
 import DateFnsUtils from "@date-io/date-fns";
-import InstitutePage from "./sections/projectSection/pages/InstitutePage";
 import AdminProjectViewer from "./sections/projectSection/wrappers/AdminProjectViewer";
 import ClientProjectViewer from "./sections/projectSection/wrappers/ClientProjectViewer";
 import ClientInstituteViewer from "./sections/projectSection/wrappers/ClientInstituteViewer";
@@ -24,6 +23,8 @@ import AccountsWrapper from "./sections/accountSection/wrappers/AccountsWrapper"
 import NotificationWrapper from "./sections/notificationSection/wrappers/NotificationWrapper";
 import ProjectEditor from "./sections/projectSection/pages/ProjectEditor";
 import SignUpWrapper from "./sections/authenticationSection/wrappers/SignUpWrapper";
+import ErrorComponent from "./shared/components/ErrorComponent";
+import InstituteWrapper from "./sections/projectSection/wrappers/InstituteWrapper";
 
 const theme = createTheme({
   palette: {
@@ -58,15 +59,20 @@ const theme = createTheme({
 function App({ isLoggedIn, setIsLoggedIn }) {
   const [user, setUser] = useState(null);
   const [institute, setInstitute] = useState(null);
+  const [error, setError] = useState(null);
 
   const getUserData = async () =>
     await Account.getInfo()
-      .then((res) => {
-        setUser(res.data);
+      .then(({ simple, full }) => {
+        if (simple) {
+          setUser(simple.data);
+        } else {
+          setUser(simple);
+          setError(full);
+        }
       })
       .catch((err) => {
-        console.log(err.message);
-        setUser(null);
+        setError(err.message);
       });
 
   useEffect(() => {
@@ -106,7 +112,8 @@ function App({ isLoggedIn, setIsLoggedIn }) {
                 </Switch>
               </Router>
             )}
-            {isLoggedIn && user && (
+            {error && <ErrorComponent message={error} />}
+            {isLoggedIn && user && !error && (
               <Router>
                 <MainWrapper>
                   <Switch>
@@ -140,7 +147,7 @@ function App({ isLoggedIn, setIsLoggedIn }) {
                       <ProjectEditorWrapper isNew={false} />
                     </Route>
                     <Route exact path="/institutes">
-                      <InstitutePage />
+                      <InstituteWrapper />
                     </Route>
                     <Route exact path="/institutes/:instituteId">
                       <AdminInstituteViewer />

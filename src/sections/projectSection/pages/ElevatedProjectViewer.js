@@ -69,8 +69,44 @@ const useStyles = makeStyles((theme) => ({
   button: {
     marginLeft: 10,
   },
+  buttonGroup: {
+    margin: '0px 0px 0px 10px',
+  },
   divider: {
     marginBottom: 15,
+  },
+  appoveButtonRaised: {
+    backgroundColor: '#81C784',
+    '&:hover': {
+      backgroundColor: '#81C784',
+    }
+  },
+  reviseButtonRaised: {
+    backgroundColor: '#FFB74D',
+    '&:hover': {
+      backgroundColor: '#FFB74D',
+    }
+  },
+  rejectButtonRaised: {
+    backgroundColor: '#E57373',
+    '&:hover': {
+      backgroundColor: '#E57373',
+    }
+  },
+  appoveButton: {
+    '&:hover': {
+      backgroundColor: '#81C784',
+    }
+  },
+  reviseButton: {
+    '&:hover': {
+      backgroundColor: '#FFB74D',
+    }
+  },
+  rejectButton: {
+    '&:hover': {
+      backgroundColor: '#E57373',
+    }
   },
 }));
 
@@ -217,31 +253,34 @@ function ElevatedProjectViewer({ project, priority, instituteId }) {
         <Typography variant="h4" className={classes.pageTitle}>
           {"Project Viewer"}
         </Typography>
-        <ButtonGroup className={classes.button}>
+        <ButtonGroup className={classes.buttonGroup} size='medium' variant = 'contained'>
           <Button
-            variant={status == 3 ? "contained" : "outlined"}
+            variant={status == 3 ? "contained" : "text"}
             startIcon={<CheckCircle />}
             onClick={() => {
               setStatus(3);
             }}
+            classes={{contained: classes.appoveButtonRaised, text: classes.appoveButton}}
           >
             Approve
           </Button>
           <Button
-            variant={status == 2 ? "contained" : "outlined"}
+            variant={status == 2 ? "contained" : "text"}
             startIcon={<Edit />}
             onClick={() => {
               setStatus(2);
             }}
+            classes={{contained: classes.reviseButtonRaised, text: classes.reviseButton}}
           >
             Revise
           </Button>
           <Button
-            variant={status == 0 ? "contained" : "outlined"}
+            variant={status == 0 ? "contained" : "text"}
             startIcon={<Cancel />}
             onClick={() => {
               setStatus(0);
             }}
+            classes={{contained: classes.rejectButtonRaised, text: classes.rejectButton}}
           >
             Reject
           </Button>
