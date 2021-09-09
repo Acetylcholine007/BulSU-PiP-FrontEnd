@@ -89,8 +89,7 @@ function EditorForm1({ form1Data, setForm1Data, checkerForm1}) {
           </Tabs>
           <GSPPicker index={tabIndex} form1Data= {form1Data} setForm1Data = {setForm1Data}/>
         </Grid>
-        <Grid item xs={12}>
-          <Divider className={classes.divider} />
+        <Grid item xs={12}>   
         </Grid>
         <Grid item xs={6}>
           <TextField
@@ -184,14 +183,13 @@ function EditorForm1({ form1Data, setForm1Data, checkerForm1}) {
             format="MM/dd/yyyy"
           />
         </Grid>
-        <Grid item xs={12}>
-          <Divider className={classes.divider} />
+        <Grid item xs={12}>  
         </Grid>
         <Grid item xs={12}>
           <Typography variant="h5" display="inline">
             Investment Requirement
           </Typography>
-          <Typography variant="h5" display="inline" style = {{marginLeft: 20}}>
+          <Typography variant="h5" display="outline">
             {getSum()}
           </Typography>
         </Grid>
