@@ -29,12 +29,16 @@ function DashboardPage({ data, user }) {
       (project) => project.status == status
     );
     if (projects.length == 0) {
-      return <Typography>sample</Typography>;
+      return (
+      <Typography>There is no content for now</Typography>
+      )
     } else if (projects.length <= 3) {
       return (
         <List>
           {projects.map((item, index) => (
-            <ListItem></ListItem>
+            <ListItem>
+              {item.title}
+            </ListItem>
           ))}
         </List>
       );
@@ -42,7 +46,9 @@ function DashboardPage({ data, user }) {
       return (
         <List>
           {projects.slice(0, 3).map((item) => (
-            <ListItem></ListItem>
+            <ListItem>
+            {item.title}
+            </ListItem>
           ))}
         </List>
       );
@@ -73,8 +79,8 @@ function DashboardPage({ data, user }) {
       textAlign: "center",
     },
     cardTextContent: {
-      fontSize: 25,
-      textAlign: "center",
+      fontSize: 15,
+      textAlign: "left",
       overflowY: "scroll",
       height: 74
     },
