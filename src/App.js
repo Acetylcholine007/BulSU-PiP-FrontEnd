@@ -25,6 +25,9 @@ import ProjectEditor from "./sections/projectSection/pages/ProjectEditor";
 import SignUpWrapper from "./sections/authenticationSection/wrappers/SignUpWrapper";
 import ErrorComponent from "./shared/components/ErrorComponent";
 import InstituteWrapper from "./sections/projectSection/wrappers/InstituteWrapper";
+import { SnackbarContext } from "./contexts/SnackbarContext";
+import { DialogContext } from "./contexts/DialogContext";
+import AppSnackbar from "./shared/components/AppSnackbar";
 
 const theme = createTheme({
   palette: {
@@ -60,6 +63,10 @@ function App({ isLoggedIn, setIsLoggedIn }) {
   const [user, setUser] = useState(null);
   const [institute, setInstitute] = useState(null);
   const [error, setError] = useState(null);
+  const [snackbarData, setSnackbarData] = useState(null);
+  const [showSnackbar, setShowSnackbar] = useState(false);
+  const [dialogData, setDialogData] = useState(null);
+  const [showDialog, setShowDialog] = useState(false);
 
   const getUserData = async () =>
     await Account.getInfo()
@@ -95,78 +102,97 @@ function App({ isLoggedIn, setIsLoggedIn }) {
       <InstituteContext.Provider
         value={{ institute: institute, setInstitute: setInstitute }}
       >
-        <MuiPickersUtilsProvider utils={DateFnsUtils}>
-          <ThemeProvider theme={theme}>
-            {!isLoggedIn && (
-              <Router>
-                <Switch>
-                  <Route exact path="/signup">
-                    <SignUpWrapper />
-                  </Route>
-                  <Route path="/">
-                    <LogInPage />
-                  </Route>
-                  <Route exact path="*">
-                    <NotFound />
-                  </Route>
-                </Switch>
-              </Router>
-            )}
-            {error && <ErrorComponent message={error} />}
-            {isLoggedIn && user && !error && (
-              <Router>
-                <MainWrapper>
-                  <Switch>
-                    <Route exact path="/">
-                      {user.type == 0 ? (
-                        <ClientDashboard />
-                      ) : (
-                        <AdminDashboard />
-                      )}
-                    </Route>
-                    <Route exact path="/dashboard">
-                      {user.type == 0 ? (
-                        <ClientDashboard />
-                      ) : (
-                        <AdminDashboard />
-                      )}
-                    </Route>
-                    <Route exact path="/accounts">
-                      <AccountsWrapper />
-                    </Route>
-                    <Route exact path="/projects">
-                      <ClientInstituteViewer />
-                    </Route>
-                    <Route exact path="/projects/new">
-                      <ProjectEditor isNew={true} project={null} />
-                    </Route>
-                    <Route exact path="/projects/:id">
-                      <ClientProjectViewer />
-                    </Route>
-                    <Route exact path="/projects/:id/edit">
-                      <ProjectEditorWrapper isNew={false} />
-                    </Route>
-                    <Route exact path="/institutes">
-                      <InstituteWrapper />
-                    </Route>
-                    <Route exact path="/institutes/:instituteId">
-                      <AdminInstituteViewer />
-                    </Route>
-                    <Route exact path="/institutes/:instituteId/:projectId">
-                      <AdminProjectViewer />
-                    </Route>
-                    <Route exact path="/notifications">
-                      <NotificationWrapper />
-                    </Route>
-                    <Route exact path="*">
-                      <NotFound />
-                    </Route>
-                  </Switch>
-                </MainWrapper>
-              </Router>
-            )}
-          </ThemeProvider>
-        </MuiPickersUtilsProvider>
+        <SnackbarContext.Provider
+          value={{
+            snackbarData: snackbarData,
+            setSnackbarData: setSnackbarData,
+            showSnackbar: showSnackbar,
+            setShowSnackbar: setShowSnackbar,
+          }}
+        >
+          <DialogContext.Provider
+            value={{
+              dialogData: dialogData,
+              setDialogData: setDialogData,
+              showDialog: showDialog,
+              setShowDialog: setShowDialog,
+            }}
+          >
+            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+              <ThemeProvider theme={theme}>
+                {!isLoggedIn && (
+                  <Router>
+                    <Switch>
+                      <Route exact path="/signup">
+                        <SignUpWrapper />
+                      </Route>
+                      <Route path="/">
+                        <LogInPage />
+                      </Route>
+                      <Route exact path="*">
+                        <NotFound />
+                      </Route>
+                    </Switch>
+                  </Router>
+                )}
+                {error && <ErrorComponent message={error} />}
+                {isLoggedIn && user && !error && (
+                  <Router>
+                    <MainWrapper>
+                      <Switch>
+                        <Route exact path="/">
+                          {user.type == 0 ? (
+                            <ClientDashboard />
+                          ) : (
+                            <AdminDashboard />
+                          )}
+                        </Route>
+                        <Route exact path="/dashboard">
+                          {user.type == 0 ? (
+                            <ClientDashboard />
+                          ) : (
+                            <AdminDashboard />
+                          )}
+                        </Route>
+                        <Route exact path="/accounts">
+                          <AccountsWrapper />
+                        </Route>
+                        <Route exact path="/projects">
+                          <ClientInstituteViewer />
+                        </Route>
+                        <Route exact path="/projects/new">
+                          <ProjectEditor isNew={true} project={null} />
+                        </Route>
+                        <Route exact path="/projects/:id">
+                          <ClientProjectViewer />
+                        </Route>
+                        <Route exact path="/projects/:id/edit">
+                          <ProjectEditorWrapper isNew={false} />
+                        </Route>
+                        <Route exact path="/institutes">
+                          <InstituteWrapper />
+                        </Route>
+                        <Route exact path="/institutes/:instituteId">
+                          <AdminInstituteViewer />
+                        </Route>
+                        <Route exact path="/institutes/:instituteId/:projectId">
+                          <AdminProjectViewer />
+                        </Route>
+                        <Route exact path="/notifications">
+                          <NotificationWrapper />
+                        </Route>
+                        <Route exact path="*">
+                          <NotFound />
+                        </Route>
+                      </Switch>
+                    </MainWrapper>
+                  </Router>
+                )}
+                {snackbarData && <AppSnackbar />}
+              </ThemeProvider>
+            </MuiPickersUtilsProvider>
+          </DialogContext.Provider>
+        </SnackbarContext.Provider>
       </InstituteContext.Provider>
     </AuthContext.Provider>
   );

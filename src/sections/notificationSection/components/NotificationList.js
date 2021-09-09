@@ -10,13 +10,15 @@ import {
   IconButton,
 } from "@material-ui/core";
 import { Delete } from "@material-ui/icons";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { SnackbarContext } from "../../../contexts/SnackbarContext";
 import { Notifications } from "../../../utils/bulsupis_mw";
 import NotificationModal from "./NotificationModal";
 
 function NotificationList({ user: { notificationList } }) {
   const [open, setOpen] = useState(false);
   const [notification, setNotification] = useState(null);
+  const { setShowSnackbar, setSnackbarData } = useContext(SnackbarContext);
 
   const selectNotification = (notification) => {
     setNotification(notification);
@@ -44,7 +46,7 @@ function NotificationList({ user: { notificationList } }) {
               <TableCell>Header</TableCell>
               <TableCell>Author</TableCell>
               <TableCell>Date and Time</TableCell>
-              <TableCell style={{padding: 0, width:"8%"}}>Delete</TableCell>
+              <TableCell style={{ padding: 0, width: "8%" }}>Delete</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -71,14 +73,33 @@ function NotificationList({ user: { notificationList } }) {
                 >
                   {new Date(notification.datetime).toDateString()}
                 </TableCell>
-                <TableCell style={{padding: 0}}>
-                  <IconButton onClick={() => {
-                    Notifications.delete(notification.id)
-                    .then(({simple, full}) => {
-                      console.log(simple)
-                      console.log(full)
-                    })
-                  }}>
+                <TableCell style={{ padding: 0 }}>
+                  <IconButton
+                    onClick={() => {
+                      Notifications.delete(notification.id)
+                        .then(({ simple, full }) => {
+                          if (simple) {
+                            setSnackbarData({
+                              type: 0,
+                              message: "Notification deleted",
+                            });
+                          } else {
+                            console.log(full);
+                            setSnackbarData({
+                              type: 3,
+                              message: full,
+                            });
+                          }
+                        })
+                        .catch((err) =>
+                          setSnackbarData({
+                            type: 3,
+                            message: err.message,
+                          })
+                        )
+                        .finally(() => setShowSnackbar(true));
+                    }}
+                  >
                     <Delete />
                   </IconButton>
                 </TableCell>

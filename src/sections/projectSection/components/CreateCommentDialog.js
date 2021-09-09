@@ -6,8 +6,9 @@ import {
   DialogTitle,
   TextField,
 } from "@material-ui/core";
-import React from "react";
+import React, { useContext } from "react";
 import { useState } from "react";
+import { SnackbarContext } from "../../../contexts/SnackbarContext";
 import { Projects } from "../../../utils/bulsupis_mw";
 import commentValidator from "../../../utils/commentValidator";
 
@@ -18,6 +19,7 @@ function CreateCommentDialog({
   setComments,
   projectId,
 }) {
+  const { setShowSnackbar, setSnackbarData } = useContext(SnackbarContext);
   const [comment, setLocalComment] = useState({
     author: { institute: "Editor" },
     message: "",
@@ -66,19 +68,37 @@ function CreateCommentDialog({
           onClick={() => {
             var checkercomment = commentValidator(comment.message);
             if (!checkercomment.message.error) {
-              Projects.comment(projectId, comment.message).then(({simple, full}) => {
-                console.log(full);
-                if (simple) {
-                  setComments([...comments, {...simple.data, author: 'Editor'}]);
-                  setLocalComment({
-                    message: "",
+              Projects.comment(projectId, comment.message)
+                .then(({ simple, full }) => {
+                  if (simple) {
+                    setComments([
+                      ...comments,
+                      { ...simple.data, author: "Editor" },
+                    ]);
+                    setLocalComment({
+                      message: "",
+                    });
+                    setSnackbarData({
+                      type: 0,
+                      message: "Comment added",
+                    });
+                    setAddCommentOpen(false);
+                  } else {
+                    setSnackbarData({
+                      type: 3,
+                      message: full,
+                    });
+                    setAddCommentOpen(false);
+                  }
+                })
+                .catch((err) => {
+                  setSnackbarData({
+                    type: 3,
+                    message: err.message,
                   });
                   setAddCommentOpen(false);
-                } else {
-                  checkercomment.message.error = true;
-                  checkercomment.message.messages.push(full);
-                }
-              });
+                })
+                .finally(() => setShowSnackbar(true));
             }
             setcheckercomment(checkercomment);
           }}

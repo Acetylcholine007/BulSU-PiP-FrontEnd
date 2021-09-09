@@ -23,7 +23,7 @@ import {
   Save,
   Settings,
 } from "@material-ui/icons";
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 
 import CommentModal from "../components/CommentModal";
@@ -34,11 +34,12 @@ import EditorForm3 from "../components/EditorForm3";
 import CreateCommentDialog from "../components/CreateCommentDialog";
 import CommentList from "../components/CommentList";
 import PDFExport from "../../../shared/components/PDFExport";
-import { Admin, Projects } from "../../../utils/bulsupis_mw";
+import { Admin } from "../../../utils/bulsupis_mw";
 import { elForm1Validator } from "../../../utils/elForm1Validator";
 import { elForm2Validator } from "../../../utils/elForm2Validator";
 import elForm3Validator from "../../../utils/elForm3Validator";
 import AppBreadcrumb from "../../../shared/components/AppBreadcrumb";
+import { SnackbarContext } from "../../../contexts/SnackbarContext";
 
 const useStyles = makeStyles((theme) => ({
   txt: {
@@ -70,49 +71,50 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: 10,
   },
   buttonGroup: {
-    margin: '0px 0px 0px 10px',
+    margin: "0px 0px 0px 10px",
   },
   divider: {
     marginBottom: 15,
   },
   appoveButtonRaised: {
-    backgroundColor: '#81C784',
-    '&:hover': {
-      backgroundColor: '#81C784',
-    }
+    backgroundColor: "#81C784",
+    "&:hover": {
+      backgroundColor: "#81C784",
+    },
   },
   reviseButtonRaised: {
-    backgroundColor: '#FFB74D',
-    '&:hover': {
-      backgroundColor: '#FFB74D',
-    }
+    backgroundColor: "#FFB74D",
+    "&:hover": {
+      backgroundColor: "#FFB74D",
+    },
   },
   rejectButtonRaised: {
-    backgroundColor: '#E57373',
-    '&:hover': {
-      backgroundColor: '#E57373',
-    }
+    backgroundColor: "#E57373",
+    "&:hover": {
+      backgroundColor: "#E57373",
+    },
   },
   appoveButton: {
-    '&:hover': {
-      backgroundColor: '#81C784',
-    }
+    "&:hover": {
+      backgroundColor: "#81C784",
+    },
   },
   reviseButton: {
-    '&:hover': {
-      backgroundColor: '#FFB74D',
-    }
+    "&:hover": {
+      backgroundColor: "#FFB74D",
+    },
   },
   rejectButton: {
-    '&:hover': {
-      backgroundColor: '#E57373',
-    }
+    "&:hover": {
+      backgroundColor: "#E57373",
+    },
   },
 }));
 
 function ElevatedProjectViewer({ project, priority, instituteId }) {
   const classes = useStyles();
   const history = useHistory();
+  const { setShowSnackbar, setSnackbarData } = useContext(SnackbarContext);
 
   const [open, setOpen] = useState(false);
   const [addCommentOpen, setAddCommentOpen] = useState(false);
@@ -180,10 +182,28 @@ function ElevatedProjectViewer({ project, priority, instituteId }) {
       },
       PDOSignature
     )
-      .then((res) => {
+      .then(({ simple, full }) => {
+        if (simple) {
+          setSnackbarData({
+            type: 0,
+            message: "Project action saved",
+          });
+          history.push(`/institutes/${instituteId}`);
+        } else {
+          setSnackbarData({
+            type: 3,
+            message: "Failed to save project action",
+          });
+        }
+      })
+      .catch((err) => {
+        setSnackbarData({
+          type: 3,
+          message: err.message,
+        });
         history.push(`/institutes/${instituteId}`);
       })
-      .catch((err) => console.log(err.message));
+      .finally(() => setShowSnackbar(true));
   };
 
   const selectForm = (project) => {
@@ -253,14 +273,21 @@ function ElevatedProjectViewer({ project, priority, instituteId }) {
         <Typography variant="h4" className={classes.pageTitle}>
           {"Project Viewer"}
         </Typography>
-        <ButtonGroup className={classes.buttonGroup} size='medium' variant = 'contained'>
+        <ButtonGroup
+          className={classes.buttonGroup}
+          size="medium"
+          variant="contained"
+        >
           <Button
             variant={status == 3 ? "contained" : "text"}
             startIcon={<CheckCircle />}
             onClick={() => {
               setStatus(3);
             }}
-            classes={{contained: classes.appoveButtonRaised, text: classes.appoveButton}}
+            classes={{
+              contained: classes.appoveButtonRaised,
+              text: classes.appoveButton,
+            }}
           >
             Approve
           </Button>
@@ -270,7 +297,10 @@ function ElevatedProjectViewer({ project, priority, instituteId }) {
             onClick={() => {
               setStatus(2);
             }}
-            classes={{contained: classes.reviseButtonRaised, text: classes.reviseButton}}
+            classes={{
+              contained: classes.reviseButtonRaised,
+              text: classes.reviseButton,
+            }}
           >
             Revise
           </Button>
@@ -280,7 +310,10 @@ function ElevatedProjectViewer({ project, priority, instituteId }) {
             onClick={() => {
               setStatus(0);
             }}
-            classes={{contained: classes.rejectButtonRaised, text: classes.rejectButton}}
+            classes={{
+              contained: classes.rejectButtonRaised,
+              text: classes.rejectButton,
+            }}
           >
             Reject
           </Button>
@@ -340,7 +373,7 @@ function ElevatedProjectViewer({ project, priority, instituteId }) {
         links={[
           {
             link: "/institutes",
-            label: 'Institutes',
+            label: "Institutes",
             icon: <Domain fontSize="small" />,
           },
           {

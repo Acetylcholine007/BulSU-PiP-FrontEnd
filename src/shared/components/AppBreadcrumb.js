@@ -10,7 +10,7 @@ import { useHistory } from "react-router";
 
 const StyledBreadcrumb = withStyles((theme) => ({
   root: {
-    backgroundColor: theme.palette.grey[100],
+    backgroundColor: theme.palette.grey[300],
     height: theme.spacing(3),
     color: theme.palette.grey[800],
     fontWeight: theme.typography.fontWeightRegular,

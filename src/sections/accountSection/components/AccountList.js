@@ -19,9 +19,10 @@ import {
   Search,
   VerifiedUser,
 } from "@material-ui/icons";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Admin } from "../../../utils/bulsupis_mw";
 import AccountModal from "./AccountModal";
+import { SnackbarContext } from "../../../contexts/SnackbarContext";
 
 function AccountList({
   users,
@@ -33,6 +34,7 @@ function AccountList({
 }) {
   const [user, setUser] = useState(null);
   const [openUserModal, setOpenUserModal] = useState(false);
+  const { setShowSnackbar, setSnackbarData } = useContext(SnackbarContext);
 
   const useStyles = makeStyles((theme) => ({
     noBorder: {
@@ -81,8 +83,11 @@ function AccountList({
   const handleToggle = (user) => {
     Admin.Account.setVerification(user.id, !user.verified)
       .then(({ simple, full }) => {
-        console.log(full);
         if (simple) {
+          setSnackbarData({
+            type: 0,
+            message: "Account status changed",
+          });
           setUsers(() => {
             let newUsers = [...users];
             newUsers.find((item) => item.id === user.id).verified =
@@ -91,16 +96,29 @@ function AccountList({
           });
         } else {
           console.log(full);
+          setSnackbarData({
+            type: 3,
+            message: full,
+          });
         }
       })
-      .catch((err) => console.log(err.message));
+      .catch((err) =>
+        setSnackbarData({
+          type: 3,
+          message: err.message,
+        })
+      )
+      .finally(() => setShowSnackbar(true));
   };
 
   const handleDelete = (user) => {
     Admin.Account.delete(user.id)
       .then(({ simple, full }) => {
-        console.log(full);
         if (simple) {
+          setSnackbarData({
+            type: 0,
+            message: "Account deleted",
+          });
           setUsers(() => {
             let newUsers = [...users];
             newUsers.splice(
@@ -111,9 +129,19 @@ function AccountList({
           });
         } else {
           console.log(full);
+          setSnackbarData({
+            type: 3,
+            message: full,
+          });
         }
       })
-      .catch((err) => console.log(err.message));
+      .catch((err) =>
+        setSnackbarData({
+          type: 3,
+          message: err.message,
+        })
+      )
+      .finally(() => setShowSnackbar(true));
   };
 
   return (
