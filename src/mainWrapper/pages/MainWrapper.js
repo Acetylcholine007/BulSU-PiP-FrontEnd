@@ -59,7 +59,11 @@ function MainWrapper({ children }) {
       box: {
         flex: "1",
         background: "#F9F9F9",
+<<<<<<< HEAD
+        paddingTop: 20,
+=======
         paddingTop: 10,
+>>>>>>> 44a45da1180606f3f0f218fead024550430c2e5c
         paddingBottom: 20,
         overflowY: 'auto',
         overflowX: 'auto',
