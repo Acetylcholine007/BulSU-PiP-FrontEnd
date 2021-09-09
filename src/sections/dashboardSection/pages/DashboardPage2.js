@@ -9,6 +9,8 @@ import {
   IconButton,
   makeStyles,
   Typography,
+  List,
+  ListItem,
 } from "@material-ui/core";
 import { LaunchOutlined } from "@material-ui/icons";
 import { useHistory } from "react-router-dom";
@@ -22,6 +24,30 @@ import ClientProjectChart from "../components/ClientProjectChart";
 function DashboardPage({ data, user }) {
   const [open, setOpen] = useState(false);
   const [notification, setNotification] = useState(null);
+  const statusContent = (status) => {
+    let projects = user.projectList.filter(
+      (project) => project.status == status
+    );
+    if (projects.length == 0) {
+      return <Typography>sample</Typography>;
+    } else if (projects.length <= 3) {
+      return (
+        <List>
+          {projects.map((item, index) => (
+            <ListItem></ListItem>
+          ))}
+        </List>
+      );
+    } else {
+      return (
+        <List>
+          {projects.slice(0, 3).map((item) => (
+            <ListItem></ListItem>
+          ))}
+        </List>
+      );
+    }
+  };
 
   const selectNotification = (notification) => {
     setNotification(notification);
@@ -30,37 +56,39 @@ function DashboardPage({ data, user }) {
 
   const useStyles = makeStyles((theme) => ({
     cardHeader: {
-      background: 'linear-gradient(45deg, #800000 30%, #FF8E53 90%)',
-      color: 'white',
+      background: "linear-gradient(45deg, #800000 30%, #FF8E53 90%)",
+      color: "white",
       height: 50,
       border: 0,
       borderRadius: 3,
     },
     cardTextHeader: {
       fontSize: 35,
-      background: '#800000',
+      background: "#800000",
       border: 0,
       borderRadius: 3,
-      boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
-      color: 'white',
+      boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
+      color: "white",
       height: 48,
-      textAlign: 'center'
+      textAlign: "center",
     },
     cardTextContent: {
       fontSize: 25,
-      textAlign: 'center'
+      textAlign: "center",
+      overflowY: "scroll",
+      height: 74
     },
     avatarLogo: {
-      width: 'auto',
-      height: 'auto',
-      justifyContent: 'center'
+      width: "auto",
+      height: "auto",
+      justifyContent: "center",
     },
     test: {
-      height: '100%'
+      overflowY: 'scroll',
     },
     institue: {
-      paddingTop: 20
-    }
+      paddingTop: 20,
+    },
   }));
 
   const classes = useStyles();
@@ -72,25 +100,27 @@ function DashboardPage({ data, user }) {
         <Grid item md={8} xs={12}>
           <Grid container spacing={4}>
             <Grid item md={2} xs={3}>
-              <Avatar 
-              className={classes.avatarLogo}
-              src={user.institute.profile_img.src} />
+              <Avatar
+                className={classes.avatarLogo}
+                src={user.institute.profile_img.src}
+              />
             </Grid>
             <Grid item md={7} xs={9}>
-              <Typography  variant="h4"> {
-                user.type == 0
+              <Typography variant="h4">
+                {" "}
+                {user.type == 0
                   ? `${user.institute.institute}`
-                  : "BulSU Projects"
-              } </Typography>
+                  : "BulSU Projects"}{" "}
+              </Typography>
             </Grid>
             <Grid item md={3} xs={12}>
-            <Card>
+              <Card>
                 <CardHeader
                   className={classes.cardTextHeader}
                   title="Completed"
                 />
                 <CardContent className={classes.cardTextContent}>
-                  sample
+                  {statusContent(4)}
                 </CardContent>
               </Card>
             </Grid>
@@ -101,32 +131,41 @@ function DashboardPage({ data, user }) {
                   title="Revision"
                 />
                 <CardContent className={classes.cardTextContent}>
-                  sample
+                  {statusContent(2)}
                 </CardContent>
               </Card>
             </Grid>
             <Grid item md={3} xs={6}>
               <Card>
                 <CardHeader
-                className={classes.cardTextHeader} 
-                title="On-Going" />
-                <CardContent className={classes.cardTextContent}>sample</CardContent>
+                  className={classes.cardTextHeader}
+                  title="On-Going"
+                />
+                <CardContent className={classes.cardTextContent}>
+                  {statusContent(3)}
+                </CardContent>
               </Card>
             </Grid>
             <Grid item md={3} xs={6}>
               <Card>
-                <CardHeader 
-                className={classes.cardTextHeader}
-                title="Rejected" />
-                <CardContent className={classes.cardTextContent}>sample</CardContent>
+                <CardHeader
+                  className={classes.cardTextHeader}
+                  title="Rejected"
+                />
+                <CardContent className={classes.cardTextContent}>
+                  {statusContent(0)}
+                </CardContent>
               </Card>
             </Grid>
             <Grid item md={3} xs={6}>
               <Card>
-                <CardHeader 
-                className={classes.cardTextHeader}
-                title="Proposed" />
-                <CardContent className={classes.cardTextContent}>sample</CardContent>
+                <CardHeader
+                  className={classes.cardTextHeader}
+                  title="Proposed"
+                />
+                <CardContent className={classes.cardTextContent}>
+                  {statusContent(1)}
+                </CardContent>
               </Card>
             </Grid>
           </Grid>
