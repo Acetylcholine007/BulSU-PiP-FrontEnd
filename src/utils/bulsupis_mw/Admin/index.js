@@ -4,7 +4,8 @@ import _request from '../utils/_request'
 import Maps from "../utils/_map"
 
 async function admin_getInstitute(id){
-    if (await Account.isLoggedIn()){
+    let checkUser = await Account.isLoggedIn()
+    if (checkUser.simple){
 
         let response = await _request(`/dev/institutes/${id}`)
 
@@ -21,7 +22,8 @@ async function admin_getInstitute(id){
 }
 
 async function admin_getAllInstitute(){
-    if (await Account.isLoggedIn()){
+    let checkUser = await Account.isLoggedIn()
+    if (checkUser.simple){
 
         let response = await _request('/dev/institutes')
 
@@ -38,7 +40,8 @@ async function admin_getAllInstitute(){
 }
 
 async function admin_getAllAccounts(){
-    if (await Account.isLoggedIn()){
+    let checkUser = await Account.isLoggedIn()
+    if (checkUser.simple){
 
         let response = await _request('/dev/accounts')
 
@@ -55,7 +58,8 @@ async function admin_getAllAccounts(){
 }
 
 async function admin_setAccountAccess(id, verified){
-    if (await Account.isLoggedIn()){
+    let checkUser = await Account.isLoggedIn()
+    if (checkUser.simple){
 
         let fd = new FormData()
 
@@ -81,7 +85,8 @@ async function admin_setAccountAccess(id, verified){
  * @return {Object}      { data: {...}, query: "..." }
  */
 async function admin_setAccountDelete(id){
-    if (await Account.isLoggedIn()){
+    let checkUser = await Account.isLoggedIn()
+    if (checkUser.simple){
 
         let fd = new FormData()
 
@@ -102,7 +107,8 @@ async function admin_setAccountDelete(id){
 }
 
 async function admin_getProjectInfo(id){
-    if (await Account.isLoggedIn()){
+    let checkUser = await Account.isLoggedIn()
+    if (checkUser.simple){
 
         let response = await _request(`/dev/projects/${id || -1}`)
 
@@ -121,7 +127,8 @@ async function admin_getProjectInfo(id){
 }
 
 async function admin_setStatus(id, status_code){
-    if (await Account.isLoggedIn()){
+    let checkUser = await Account.isLoggedIn()
+    if (checkUser.simple){
 
         let fd = new FormData()
 
@@ -142,7 +149,8 @@ async function admin_setStatus(id, status_code){
 }
 
 async function admin_projectEdit(data, pdo_signature){
-    if (await Account.isLoggedIn()){
+    let checkUser = await Account.isLoggedIn()
+    if (checkUser.simple){
 
         let fd = new FormData()
 

@@ -35,6 +35,8 @@ function DashboardPage({ data, user }) {
   const classes = useStyles();
   const history = useHistory();
 
+  console.log(user)
+
   return (
     <Container>
       <Grid container spacing={2}>

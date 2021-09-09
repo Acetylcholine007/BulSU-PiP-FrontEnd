@@ -60,7 +60,7 @@ function AccountList({
     }
 
     if (filter.search !== "") {
-      searchFilterPassed = user.institute.institute
+      searchFilterPassed = user.email
         .toLowerCase()
         .includes(filter.search.toLowerCase());
     }
@@ -174,8 +174,8 @@ function AccountList({
         <Table>
           <TableHead className={classes.tableHead}>
             <TableRow>
-              <TableCell>User Institute</TableCell>
               <TableCell>Email Address</TableCell>
+              <TableCell>User Institute</TableCell>
               <TableCell>Status</TableCell>
               <TableCell style={{ padding: 0, width: "10%" }} align="center">
                 Actions
@@ -190,14 +190,14 @@ function AccountList({
                     selectUser(user);
                   }}
                 >
-                  {user.institute.institute}
+                  {user.email}
                 </TableCell>
                 <TableCell
                   onClick={(e) => {
                     selectUser(user);
                   }}
                 >
-                  {user.email}
+                  {user.institute.institute}
                 </TableCell>
                 <TableCell
                   onClick={(e) => {
@@ -208,10 +208,14 @@ function AccountList({
                 </TableCell>
                 <TableCell style={{ padding: 0 }} align="center">
                   <IconButton onClick={() => handleToggle(user)}>
-                    {user.verified ? <VerifiedUser /> : <Block />}
+                    {user.verified ? (
+                      <VerifiedUser style={{ color: "#4caf50" }} />
+                    ) : (
+                      <Block style={{ color: "#ff9800" }} />
+                    )}
                   </IconButton>
                   <IconButton onClick={() => handleDelete(user)}>
-                    <Delete />
+                    <Delete style={{ color: "#f44336" }} />
                   </IconButton>
                 </TableCell>
               </TableRow>

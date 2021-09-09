@@ -9,7 +9,8 @@ import Maps from "../utils/_map"
  * @return {Object} Response from the server in format { data: [...], query: <String>, total:<Number> } 
  */
 async function project_getAll(){
-    if (await Account.isLoggedIn()){
+    let checkUser = await Account.isLoggedIn()
+    if (checkUser.simple){
         let response = await _request('/api/project')
 
         for(let p in response.data){
@@ -30,7 +31,8 @@ async function project_getAll(){
 }
 
 async function getInstitute(id){
-    if (await Account.isLoggedIn()){
+    let checkUser = await Account.isLoggedIn()
+    if (checkUser.simple){
 
         let response = await _request(`/dev/institutes/${id}`)
 
@@ -52,7 +54,8 @@ async function getInstitute(id){
  * @return {Object} Response from the server in format { data: [...], query: <String>, total:<Number> } 
  */
 async function project_get(id){
-    if (await Account.isLoggedIn()){
+    let checkUser = await Account.isLoggedIn()
+    if (checkUser.simple){
         let response = await _request(`/api/project/${id || -1}`)
 
         response.data = Maps.project_camelCase(response.data)
@@ -75,7 +78,8 @@ async function project_get(id){
  * @return {Object} Response from the server in format { data: [...], query: <String>, total:<Number> } 
  */
 async function project_dummyCreate(){
-    if (await Account.isLoggedIn()){
+    let checkUser = await Account.isLoggedIn()
+    if (checkUser.simple){
 
         let formData = new FormData()
 
@@ -104,7 +108,8 @@ async function project_dummyCreate(){
  * @return {Object} Response from the server in format { data: [...], query: <String>, total:<Number> } 
  */
 async function project_create(data, files, signature){
-    if (await Account.isLoggedIn()){
+    let checkUser = await Account.isLoggedIn()
+    if (checkUser.simple){
 
         let formData = new FormData()
 
@@ -149,7 +154,8 @@ async function project_create(data, files, signature){
  * @return {Object} Response from the server in format { data: [...], query: <String>, total:<Number> } 
  */
 async function project_edit(data, files, signature, args){
-    if (await Account.isLoggedIn()){
+    let checkUser = await Account.isLoggedIn()
+    if (checkUser.simple){
 
         let formData = new FormData()
 
@@ -198,7 +204,8 @@ async function project_edit(data, files, signature, args){
  * @return {Object} Response from the server in format { data: [...], query: <String>, total:<Number> } 
  */
 async function project_rearrange(new_arrangement){
-    if (await Account.isLoggedIn()){
+    let checkUser = await Account.isLoggedIn()
+    if (checkUser.simple){
 
         let response = await _request('/api/project/rearrange', JSON.stringify(new_arrangement), 'POST', 'application/json')
 
@@ -239,7 +246,8 @@ async function project_delete(id){
  * @return {Object} Response from the server in format { data: [...], query: <String>, total:<Number> } 
  */
 async function project_comment(project_id, message){
-    if (await Account.isLoggedIn()){
+    let checkUser = await Account.isLoggedIn()
+    if (checkUser.simple){
 
         let response = await _request('/api/comment', JSON.stringify({
             message: message || "",

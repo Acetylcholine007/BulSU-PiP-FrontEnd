@@ -11,7 +11,8 @@ import _request from '../utils/_request'
  * @return {Object} Response from the server in format { data: [...], query: <String>, total:<Number> } 
  */
 async function notif_get(){
-    if (await Account.isLoggedIn()){
+    let checkUser = await Account.isLoggedIn()
+    if (checkUser.simple){
         let response = await _request('/api/notification')
 
         if (response){
@@ -33,14 +34,20 @@ async function notif_get(){
  * @return {Object} Response from the server in format { data: [...], query: <String>, total:<Number> } 
  */
 async function notif_delete(id){
-    let response = await _request(`/api/notification/${id}`, undefined, 'DELETE')
+    let checkUser = await Account.isLoggedIn()
+    if (checkUser.simple){
+        let response = await _request(`/api/notification/${id}`, undefined, 'DELETE')
 
-    if (response && !('Error' in response)){
-        console.log("Notification Deleted Successfully")
-        return {simple: true, full: response}
-    }else{
-        console.error(response)
-        return {simple: false, full: response}
+        if (response && !('Error' in response)){
+            console.log("Notification Deleted Successfully")
+            return {simple: true, full: response}
+        }else{
+            console.error(response)
+            return {simple: false, full: response}
+        }
+    }
+    else{
+        return {simple: false, full: "Not Logged In"}
     }
 }
 

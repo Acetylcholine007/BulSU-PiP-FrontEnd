@@ -5,7 +5,7 @@ import {
     DialogContentText,
     DialogTitle,
   } from "@material-ui/core";
-  import React from "react";
+  import React, { useContext } from "react";
 import { DialogContext } from "../../contexts/DialogContext";
   
   function AppDialog() {
@@ -17,6 +17,8 @@ import { DialogContext } from "../../contexts/DialogContext";
         onClose={() => setShowDialog(false)}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
+        fullWidth={true}
+        maxWidth='xs'
       >
         <DialogTitle id="alert-dialog-title">{dialogData.title}</DialogTitle>
         <DialogContent>

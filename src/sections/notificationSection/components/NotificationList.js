@@ -100,7 +100,7 @@ function NotificationList({ user: { notificationList } }) {
                         .finally(() => setShowSnackbar(true));
                     }}
                   >
-                    <Delete />
+                    <Delete style={{ color: "#f44336" }}/>
                   </IconButton>
                 </TableCell>
               </TableRow>

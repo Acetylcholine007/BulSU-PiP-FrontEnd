@@ -12,7 +12,7 @@ import {
   CardContent,
   Toolbar,
 } from "@material-ui/core";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 
 import CommentModal from "../components/CommentModal";
@@ -24,6 +24,7 @@ import CommentList from "../components/CommentList";
 import PDFExport from "../../../shared/components/PDFExport";
 import { Projects } from "../../../utils/bulsupis_mw";
 import AppBreadcrumb from "../../../shared/components/AppBreadcrumb";
+import { SnackbarContext } from "../../../contexts/SnackbarContext";
 
 const useStyles = makeStyles((theme) => ({
   txt: {
@@ -60,6 +61,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function ProjectViewer({ project, priority }) {
+  const { setShowSnackbar, setSnackbarData } = useContext(SnackbarContext);
   const classes = useStyles();
   const history = useHistory();
   const [open, setOpen] = useState(false);
@@ -67,10 +69,29 @@ function ProjectViewer({ project, priority }) {
   const [tabIndex, setTabIndex] = useState(0);
 
   const handleDelete = () => {
-    Projects.delete(project.id).then((res) => {
-      console.log(res);
-      history.push("/projects");
-    });
+    Projects.delete(project.id)
+      .then(({ simple, full }) => {
+        if (simple) {
+          setSnackbarData({
+            type: 0,
+            message: "Project deleted",
+          });
+          history.push("/projects");
+        } else {
+          console.log(full);
+          setSnackbarData({
+            type: 3,
+            message: "Failed to delete project",
+          });
+        }
+      })
+      .catch((err) => {
+        setSnackbarData({
+          type: 3,
+          message: err.message,
+        });
+      })
+      .finally(() => setShowSnackbar(true));
   };
 
   const selectComment = (comment) => {
@@ -149,19 +170,19 @@ function ProjectViewer({ project, priority }) {
         />
       </Toolbar>
       <AppBreadcrumb
-          links={[
-            {
-              link: "/projects",
-              label: 'Projects',
-              icon: <LibraryBooks fontSize="small" />,
-            },
-            {
-              link: `/projects/${project.id}`,
-              label: project.title,
-              icon: <Description fontSize="small" />,
-            },
-          ]}
-        />
+        links={[
+          {
+            link: "/projects",
+            label: "Projects",
+            icon: <LibraryBooks fontSize="small" />,
+          },
+          {
+            link: `/projects/${project.id}`,
+            label: project.title,
+            icon: <Description fontSize="small" />,
+          },
+        ]}
+      />
       <Divider classes={{ root: classes.divider }} />
       <Container>
         <Grid container>

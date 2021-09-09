@@ -15,6 +15,8 @@ import { useHistory } from "react-router";
 import { AuthContext } from "../../../contexts/AuthContext";
 import loginValidator from "../../../utils/loginValidator";
 import { Account } from "../../../utils/bulsupis_mw";
+import { DialogContext } from "../../../contexts/DialogContext";
+import { SnackbarContext } from "../../../contexts/SnackbarContext";
 
 const useStyles = makeStyles((theme) => ({
   motherPane: {
@@ -64,6 +66,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function LogInPage() {
+  const { setShowSnackbar, setSnackbarData } = useContext(SnackbarContext);
+  const { setShowDialog, setDialogData } = useContext(DialogContext);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -85,19 +90,43 @@ function LogInPage() {
     e.preventDefault();
     var checker = loginValidator(email, password);
     if (!checker.email.error && !checker.password.error) {
-      let result = await Account.login(email, password);
-      if (result) {
-        console.log("Successful Login");
-        setIsLoggedIn(Account.isLoggedIn());
-      } else {
-        console.log("Invalid Email or Password");
-        checker.email.error = true;
-        checker.password.error = true;
-        checker.email.messages.push("Probably incorrect Email");
-        checker.password.messages.push("Probably incorrect Password");
-      }
+      Account.login(email, password)
+        .then(({ simple, full }) => {
+          if (simple) {
+            setIsLoggedIn(Account.isLoggedIn());
+          } else {
+            console.log(full)
+            if ( full.message && full.message.includes("401")) {
+              setDialogData({
+                title: "Login",
+                message: 'Your account is on pending status. Contact PDO editor to verify your account',
+                actions: (
+                  <Button
+                    onClick={() => setShowDialog(false)}
+                    color="primary"
+                  >
+                    OK
+                  </Button>
+                ),
+              });
+              setShowDialog(true);
+            } else if (full.Error) {
+              checker.email.error = true;
+              checker.password.error = true;
+              checker.email.messages.push("Probably incorrect Email");
+              checker.password.messages.push("Probably incorrect Password");
+            }
+          }
+        })
+        .catch((err) => {
+          setSnackbarData({
+            type: 3,
+            message: err.message,
+          });
+          setShowSnackbar(true);
+        })
+        .finally(() => setLoginChecker(checker));
     }
-    setLoginChecker(checker);
   };
 
   return (
@@ -113,7 +142,11 @@ function LogInPage() {
                     src="favicon.ico"
                     alt="BulSU Icon"
                   ></img>
-                  <img className={classes.avtr2} src='./pdoLogo.png' alt="PDO Icon"></img>
+                  <img
+                    className={classes.avtr2}
+                    src="./pdoLogo.png"
+                    alt="PDO Icon"
+                  ></img>
                 </p>
                 <p>BulSU PIPS - ver 0.1</p>
                 <Typography variant="h4" component="h1">

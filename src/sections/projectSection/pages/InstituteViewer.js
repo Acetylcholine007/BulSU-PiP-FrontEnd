@@ -7,10 +7,9 @@ import {
   Typography,
   makeStyles,
   ButtonGroup,
-  Breadcrumbs,
 } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Add, Domain, Home, Save, Settings } from "@material-ui/icons";
 
 import ProjectList from "../components/ProjectList";
@@ -20,8 +19,10 @@ import PDFExport from "../../../shared/components/PDFExport";
 import { Projects } from "../../../utils/bulsupis_mw";
 import { institutes } from "../../../utils/constants";
 import AppBreadcrumb from "../../../shared/components/AppBreadcrumb";
+import { SnackbarContext } from "../../../contexts/SnackbarContext";
 
 function InstituteViewer({ institute, user }) {
+  const { setShowSnackbar, setSnackbarData } = useContext(SnackbarContext);
   const [open, setOpen] = useState(false);
   const [projects, setProject] = useState(institute.projectList);
   const [localPrio, setLocalPrio] = useState([...institute.priority]);
@@ -109,20 +110,38 @@ function InstituteViewer({ institute, user }) {
             startIcon={<Save />}
             onClick={() => {
               Projects.rearrange(localPrio)
-                .then((res) => {
-                  switch (user.type) {
-                    case 0:
-                      history.push("/projects");
-                      break;
-                    case 1:
-                      history.push(`/institutes/${institute.instituteId}`);
-                      break;
-                    case 2:
-                      history.push(`/institutes/${institute.instituteId}`);
-                      break;
+                .then(({ simple, full }) => {
+                  if (simple) {
+                    setSnackbarData({
+                      type: 0,
+                      message: "Projects rearranged",
+                    });
+                    switch (user.type) {
+                      case 0:
+                        history.push("/projects");
+                        break;
+                      case 1:
+                        history.push(`/institutes/${institute.instituteId}`);
+                        break;
+                      case 2:
+                        history.push(`/institutes/${institute.instituteId}`);
+                        break;
+                    }
+                  } else {
+                    console.log(full);
+                    setSnackbarData({
+                      type: 3,
+                      message: "Failed to rearrange projects",
+                    });
                   }
                 })
-                .catch((err) => console.log(err.message));
+                .catch((err) => {
+                  setSnackbarData({
+                    type: 3,
+                    message: err.message,
+                  });
+                })
+                .finally(() => setShowSnackbar(true));
             }}
           >
             Save Changes
@@ -134,7 +153,7 @@ function InstituteViewer({ institute, user }) {
           links={[
             {
               link: "/institutes",
-              label: 'Institutes',
+              label: "Institutes",
               icon: <Domain fontSize="small" />,
             },
             {

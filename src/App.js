@@ -15,7 +15,7 @@ import AdminProjectViewer from "./sections/projectSection/wrappers/AdminProjectV
 import ClientProjectViewer from "./sections/projectSection/wrappers/ClientProjectViewer";
 import ClientInstituteViewer from "./sections/projectSection/wrappers/ClientInstituteViewer";
 import AdminInstituteViewer from "./sections/projectSection/wrappers/AdminInstituteViewer";
-import NotFound from "./shared/pages/NotFound";
+import NotFoundPage from "./shared/pages/NotFoundPage";
 import { Account } from "./utils/bulsupis_mw";
 import ClientDashboard from "./sections/dashboardSection/wrappers/ClientDashboard";
 import AdminDashboard from "./sections/dashboardSection/wrappers/AdminDashboard";
@@ -28,6 +28,7 @@ import InstituteWrapper from "./sections/projectSection/wrappers/InstituteWrappe
 import { SnackbarContext } from "./contexts/SnackbarContext";
 import { DialogContext } from "./contexts/DialogContext";
 import AppSnackbar from "./shared/components/AppSnackbar";
+import AppDialog from "./shared/components/AppDialog";
 
 const theme = createTheme({
   palette: {
@@ -130,7 +131,7 @@ function App({ isLoggedIn, setIsLoggedIn }) {
                         <LogInPage />
                       </Route>
                       <Route exact path="*">
-                        <NotFound />
+                        <NotFoundPage />
                       </Route>
                     </Switch>
                   </Router>
@@ -182,13 +183,14 @@ function App({ isLoggedIn, setIsLoggedIn }) {
                           <NotificationWrapper />
                         </Route>
                         <Route exact path="*">
-                          <NotFound />
+                          <NotFoundPage />
                         </Route>
                       </Switch>
                     </MainWrapper>
                   </Router>
                 )}
                 {snackbarData && <AppSnackbar />}
+                {dialogData && <AppDialog />}
               </ThemeProvider>
             </MuiPickersUtilsProvider>
           </DialogContext.Provider>

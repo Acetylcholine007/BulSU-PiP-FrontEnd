@@ -1,8 +1,8 @@
 import { Box, makeStyles, Typography, Grid } from "@material-ui/core";
-import { ErrorTwoTone } from "@material-ui/icons";
+import { FindInPageTwoTone } from "@material-ui/icons";
 import React from "react";
 
-function ErrorComponent({ message }) {
+function NotFoundPage() {
   const useStyles = makeStyles((theme) => ({
     root: {
       position: "relative",
@@ -30,10 +30,10 @@ function ErrorComponent({ message }) {
         <div className={classes.root}>
           <Grid container>
             <Grid item xs={12} align = 'center'>
-              <ErrorTwoTone className={classes.icon} color="error" />
+              <FindInPageTwoTone className={classes.icon} color="error" />
             </Grid>
             <Grid item xs={12} align = 'center'>
-              <Typography variant="h3">{message}</Typography>
+              <Typography variant="h3">404 - Not found!</Typography>
             </Grid>
           </Grid>
         </div>
@@ -42,4 +42,4 @@ function ErrorComponent({ message }) {
   );
 }
 
-export default ErrorComponent;
+export default NotFoundPage;

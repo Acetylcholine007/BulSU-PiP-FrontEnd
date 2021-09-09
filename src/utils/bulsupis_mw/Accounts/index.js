@@ -100,13 +100,14 @@ async function account_check(){
 
     if (tokenCheck){
 
-        let response = await _request('/api/account')
+        let response = false 
 
-        if (response){
-            console.log("Logged In")
+        try{
+            response = await _request('/api/account')
+            //console.log("Logged In")
             return {simple: true, full: response}
-        }else{
-            console.error(response)
+        }catch(err){
+            console.error(err)
             return {simple: false, full: response}
         }
 
