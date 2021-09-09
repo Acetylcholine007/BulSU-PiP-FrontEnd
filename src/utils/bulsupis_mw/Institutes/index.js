@@ -4,10 +4,10 @@ async function get_institutes(){
     let response = await _request('/test/institutes')
 
     if (response){
-        return response
+        return {simple: response, full: response}
     }else{
         console.error(response)
-        return false
+        return {simple: false, full: response}
     }
 }
 

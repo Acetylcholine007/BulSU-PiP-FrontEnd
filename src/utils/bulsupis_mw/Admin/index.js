@@ -4,58 +4,62 @@ import _request from '../utils/_request'
 import Maps from "../utils/_map"
 
 async function admin_getInstitute(id){
-    if (await Account.isLoggedIn()){
+    let checkUser = await Account.isLoggedIn()
+    if (checkUser.simple){
 
         let response = await _request(`/dev/institutes/${id}`)
 
         if (response){
-            return response
+            return {simple: response, full: response}
         }else{
             console.error(response)
-            return false
+            return {simple: false, full: response}
         }
     }
     else{
-        return false
+        return {simple: false, full: 'Not logged in'}
     }
 }
 
 async function admin_getAllInstitute(){
-    if (await Account.isLoggedIn()){
+    let checkUser = await Account.isLoggedIn()
+    if (checkUser.simple){
 
         let response = await _request('/dev/institutes')
 
         if (response){
-            return response
+            return {simple: response, full: response}
         }else{
             console.error(response)
-            return false
+            return {simple: false, full: response}
         }
     }
     else{
-        return false
+        return {simple: false, full: 'Not logged in'}
     }
 }
 
 async function admin_getAllAccounts(){
-    if (await Account.isLoggedIn()){
+    let checkUser = await Account.isLoggedIn()
+    if (checkUser.simple){
 
         let response = await _request('/dev/accounts')
 
         if (response){
-            return response
+            return {simple: response, full: response}
         }else{
             console.error(response)
-            return false
+            return {simple: false, full: response}
         }
     }
     else{
-        return false
+        return {simple: false, full: 'Not logged in'}
     }
 }
 
 async function admin_setAccountAccess(id, verified){
-    if (await Account.isLoggedIn()){
+    let checkUser = await Account.isLoggedIn()
+    if (checkUser.simple){
 
         let fd = new FormData()
 
@@ -64,14 +68,14 @@ async function admin_setAccountAccess(id, verified){
         let response = await _request(`/dev/accounts/${id || -1}`, fd, 'PUT')
 
         if (response){
-            return response
+            return {simple: response, full: response}
         }else{
             console.error(response)
-            return false
+            return {simple: false, full: response}
         }
     }
     else{
-        return false
+        return {simple: false, full: 'Not logged in'}
     }
 }
 
@@ -81,7 +85,8 @@ async function admin_setAccountAccess(id, verified){
  * @return {Object}      { data: {...}, query: "..." }
  */
 async function admin_setAccountDelete(id){
-    if (await Account.isLoggedIn()){
+    let checkUser = await Account.isLoggedIn()
+    if (checkUser.simple){
 
         let fd = new FormData()
 
@@ -90,38 +95,40 @@ async function admin_setAccountDelete(id){
         let response = await _request(`/dev/accounts/${id || -1}`, fd, 'DELETE')
 
         if (response){
-            return response
+            return {simple: response, full: response}
         }else{
             console.error(response)
-            return false
+            return {simple: false, full: response}
         }
     }
     else{
-        return false
+        return {simple: false, full: 'Not logged in'}
     }
 }
 
 async function admin_getProjectInfo(id){
-    if (await Account.isLoggedIn()){
+    let checkUser = await Account.isLoggedIn()
+    if (checkUser.simple){
 
         let response = await _request(`/dev/projects/${id || -1}`)
 
         response.data = Maps.project_camelCase(response.data)
 
         if (response){
-            return response
+            return {simple: response, full: response}
         }else{
             console.error(response)
-            return false
+            return {simple: false, full: response}
         }
     }
     else{
-        return false
+        return {simple: false, full: 'Not logged in'}
     }
 }
 
 async function admin_setStatus(id, status_code){
-    if (await Account.isLoggedIn()){
+    let checkUser = await Account.isLoggedIn()
+    if (checkUser.simple){
 
         let fd = new FormData()
 
@@ -130,19 +137,20 @@ async function admin_setStatus(id, status_code){
         let response = await _request(`/dev/projects/${id || -1}`, fd, 'PUT')
 
         if (response){
-            return response
+            return {simple: response, full: response}
         }else{
             console.error(response)
-            return false
+            return {simple: false, full: response}
         }
     }
     else{
-        return false
+        return {simple: false, full: 'Not logged in'}
     }
 }
 
 async function admin_projectEdit(data, pdo_signature){
-    if (await Account.isLoggedIn()){
+    let checkUser = await Account.isLoggedIn()
+    if (checkUser.simple){
 
         let fd = new FormData()
 
@@ -159,14 +167,14 @@ async function admin_projectEdit(data, pdo_signature){
         let response = await _request(`/dev/projects/${-1}`, fd, 'PUT')
 
         if (response){
-            return response
+            return {simple: response, full: response}
         }else{
             console.error(response)
-            return false
+            return {simple: false, full: response}
         }
     }
     else{
-        return false
+        return {simple: false, full: 'Not logged in'}
     }
 }
 

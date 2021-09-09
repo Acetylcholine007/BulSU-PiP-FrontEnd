@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import ErrorComponent from "../../../shared/components/ErrorComponent";
 
 import LoadingComponent from "../../../shared/components/LoadingComponent";
 import { Account, Projects } from "../../../utils/bulsupis_mw";
@@ -8,29 +9,45 @@ import InstituteViewer from "../pages/InstituteViewer";
 function ClientInstituteViewer() {
   const [institute, setInstitute] = useState(null);
   const [user, setUser] = useState(null);
+  const [projectError, setProjectError] = useState(null);
+  const [userError, setUserError] = useState(null);
 
   useEffect(() => {
     Account.getInfo()
-    .then((accountRes) => {
-      setUser(accountRes.data);
-      Projects.getInstitute(accountRes.data.institute.id)
-      .then((projectRes) => {
-        let institute = projectRes.data;
-        setInstitute({
-          abbv: institute.abbv,
-          instituteId: institute.id,
-          projectList: projectListTranslator(institute.project_list),
-          priority: institute.project_list.map((project) => project.id)
-        });
+      .then(({ simple: accountSimple, full: accountFull }) => {
+        if (accountSimple) {
+          setUser(accountSimple.data);
+          Projects.getInstitute(accountSimple.data.institute.id)
+            .then(({ simple: projectSimple, full: projectFull }) => {
+              if (projectSimple) {
+                let institute = projectSimple.data;
+                setInstitute({
+                  abbv: institute.abbv,
+                  instituteId: institute.id,
+                  projectList: projectListTranslator(institute.project_list),
+                  priority: institute.project_list.map((project) => project.id),
+                });
+              } else {
+                setInstitute(projectSimple);
+                setProjectError(projectFull);
+              }
+            })
+            .catch((err) => setProjectError(err.message));
+        } else {
+          setUser(accountSimple);
+          setUserError(accountFull);
+        }
       })
-    })
-    .catch((err) => console.log(err.message))
+      .catch((err) => setUserError(err.message));
   }, []);
 
   return (
     <React.Fragment>
-      {(!institute || !user) && <LoadingComponent />}
-      {institute && user && <InstituteViewer institute={institute} user={user}/>}
+      {(institute == null || user == null) && <LoadingComponent />}
+      {(projectError || userError) && <ErrorComponent message={`${projectError}\n${userError}`} />}
+      {institute && user && !(projectError || userError) && (
+        <InstituteViewer institute={institute} user={user} />
+      )}
     </React.Fragment>
   );
 }

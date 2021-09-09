@@ -21,10 +21,10 @@ async function account_login(email, password){
 
     if (response && ('token' in response)){
         await localStorage.setItem(localStorage_tokenloc, response.token)
-        return true
+        return {simple: true, full: response}
     }else{
         console.error(response)
-        return false
+        return {simple: false, full: response}
     }
 }
 
@@ -53,10 +53,10 @@ async function account_register(email, password, institute, profile_image){
 
     if (response && ('token' in response)){
         await localStorage.setItem(localStorage_tokenloc, response.token)
-        return true
+        return {simple: true, full: response}
     }else{
         console.error(response)
-        return false
+        return {simple: false, full: response}
     }
 }
 
@@ -74,10 +74,10 @@ async function account_info(){
     }
 
     if (response){
-        return response
+        return {simple: response, full: response}
     }else{
         console.error(response)
-        return false
+        return {simple: false, full: response}
     }
 }
 
@@ -87,7 +87,7 @@ async function account_info(){
  */
 function account_logout(){
     localStorage.removeItem(localStorage_tokenloc)
-    return true
+    return {simple: true, full: true}
 }
 
 /**
@@ -100,14 +100,15 @@ async function account_check(){
 
     if (tokenCheck){
 
-        let resp = await _request('/api/account')
+        let response = false 
 
-        if (resp){
-            console.log("Logged In")
-            return true
-        }else{
-            console.error(resp)
-            return false
+        try{
+            response = await _request('/api/account')
+            //console.log("Logged In")
+            return {simple: true, full: response}
+        }catch(err){
+            console.error(err)
+            return {simple: false, full: response}
         }
 
     }
@@ -133,10 +134,10 @@ async function account_check(){
 
     if (response && !('Error' in response)){
         console.log("Password Change Success")
-        return true
+        return {simple: true, full: response}
     }else{
         console.error(response)
-        return false
+        return {simple: false, full: response}
     }
 }
 

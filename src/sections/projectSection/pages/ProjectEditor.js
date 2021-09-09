@@ -23,8 +23,10 @@ import form2Validator from "../../../utils/form2Validator";
 import { Projects } from "../../../utils/bulsupis_mw";
 import AppBreadcrumb from "../../../shared/components/AppBreadcrumb";
 import { Description, Edit, LibraryBooks } from "@material-ui/icons";
+import { SnackbarContext } from "../../../contexts/SnackbarContext";
 
 function ProjectEditor({ isNew, project }) {
+  const { setShowSnackbar, setSnackbarData } = useContext(SnackbarContext);
   const [page, setPage] = useState(1);
   const history = useHistory();
   const { user } = useContext(AuthContext);
@@ -240,12 +242,29 @@ function ProjectEditor({ isNew, project }) {
         fileList,
         signature.length == 0 ? undefined : signature
       )
-        .then((res) => {
-          history.push("/projects");
+        .then(({simple, full}) => {
+          if(simple) {
+            setSnackbarData({
+              type: 0,
+              message: "Project created",
+            });
+            history.push("/projects");
+          } else {
+            console.log(full);
+            setSnackbarData({
+              type: 3,
+              message: "Failed to create project",
+            });
+          }
         })
         .catch((err) => {
-          console.log(err.message);
-        });
+          setSnackbarData({
+            type: 3,
+            message: err.message,
+          });
+          history.push("/projects");
+        })
+        .finally(() => setShowSnackbar(true));
     } else {
       Projects.edit(
         {
@@ -258,12 +277,28 @@ function ProjectEditor({ isNew, project }) {
         fileList,
         signature.length == 0 ? null : signature
       )
-        .then(() => {
-          history.push("/projects");
+        .then(({simple, full}) => {
+          if(simple) {
+            setSnackbarData({
+              type: 0,
+              message: "Project edited",
+            });
+            history.push("/projects");
+          } else {
+            console.log(full);
+            setSnackbarData({
+              type: 3,
+              message: "Failed to edit project",
+            });
+          }
         })
         .catch((err) => {
-          console.log(err.message);
-        });
+          setSnackbarData({
+            type: 3,
+            message: err.message,
+          });
+        })
+        .finally(() => setShowSnackbar(true));
     }
   };
 

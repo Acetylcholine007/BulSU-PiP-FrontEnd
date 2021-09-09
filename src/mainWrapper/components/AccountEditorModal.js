@@ -10,12 +10,14 @@ import {
   Button,
 } from "@material-ui/core";
 import { useContext, useState } from "react";
+import { SnackbarContext } from "../../contexts/SnackbarContext";
 
-import { AuthContext } from "../../contexts/AuthContext";
 import accountEditorValidator from "../../utils/accountEditorValidator";
 import { Account } from "../../utils/bulsupis_mw";
 
 function AccountEditorModal({ open, setOpen }) {
+  const { setShowSnackbar, setSnackbarData } = useContext(SnackbarContext);
+
   const useStyles = makeStyles((theme) => ({
     modal: {
       display: "flex",
@@ -41,7 +43,6 @@ function AccountEditorModal({ open, setOpen }) {
   }));
 
   const classes = useStyles();
-  const { user } = useContext(AuthContext);
   const [password, setPassword] = useState("");
   const [accountEditorChecker, setaccountEditorChecker] = useState({
     password: {
@@ -55,11 +56,29 @@ function AccountEditorModal({ open, setOpen }) {
     var checker = accountEditorValidator(password);
     if (!checker.password.error) {
       Account.changePassword(password)
-        .then((res) => {
-          console.log("Successfully edited");
+        .then(({ simple, full }) => {
+          if (simple) {
+            setSnackbarData({
+              type: 0,
+              message: "Password changed",
+            });
+            setOpen(false);
+          } else {
+            setSnackbarData({
+              type: 3,
+              message: full,
+            });
+            setOpen(false);
+          }
+        })
+        .catch((err) => {
+          setSnackbarData({
+            type: 3,
+            message: err.message,
+          });
           setOpen(false);
         })
-        .catch((err) => console.log(err.message));
+        .finally(() => setShowSnackbar(true));
     }
     setaccountEditorChecker(checker);
   };
@@ -77,7 +96,7 @@ function AccountEditorModal({ open, setOpen }) {
     >
       <Fade in={open}>
         <div className={classes.paper}>
-          <Container maxWidth='xs'>
+          <Container maxWidth="xs">
             <Grid container>
               <Grid item xs={12}>
                 <Typography variant="h4">Edit Account</Typography>

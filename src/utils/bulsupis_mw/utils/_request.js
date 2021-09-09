@@ -77,15 +77,22 @@ async function _request_axios(link, body, method, type, args){
             args = {}
             args.uploadProgress = progressEvent => console.log(progressEvent.loaded/progressEvent.total*100)
         }
-        
 
-        let response = await axios({
-            url: `${SOURCE}${link}`,
-            method: method,
-            data :  method === 'GET' ? undefined : body,
-            headers,
-            onUploadProgress: args.uploadProgress
-        })
+        let response = false
+
+        try{
+            response = await axios({
+                url: `${SOURCE}${link}`,
+                method: method,
+                data :  method === 'GET' ? undefined : body,
+                headers,
+                onUploadProgress: args.uploadProgress
+            })
+        }
+        catch(err){
+            return err.toJSON()
+        }
+        
 
         try {
             if (response.status >= 400){
@@ -95,7 +102,7 @@ async function _request_axios(link, body, method, type, args){
         }
         catch (err){
             console.error(err)
-            return false
+            return response.data
         }
     }
     catch(err){
