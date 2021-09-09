@@ -3,7 +3,7 @@ import ErrorComponent from "../../../shared/components/ErrorComponent";
 
 import LoadingComponent from "../../../shared/components/LoadingComponent";
 import { Account } from "../../../utils/bulsupis_mw";
-import DashboardPage2 from "../pages/DashboardPage2";
+import ClientDashboardPage from "../pages/ClientDashboardPage";
 
 function ClientDashboard() {
   const [data, setData] = useState(null);
@@ -111,18 +111,13 @@ function ClientDashboard() {
 
   return (
     <React.Fragment>
-<<<<<<< HEAD
-      {(!data || !user) && <LoadingComponent />}
-      {data && user && <DashboardPage2 data={data} user={user}/>}
-=======
       {(data == null || user == null) && <LoadingComponent />}
       {(dataError || userError) && (
         <ErrorComponent message={`${dataError}\n${userError}`} />
       )}
       {data && user && !(dataError || userError) && (
-        <DashboardPage data={data} user={user} />
+        <ClientDashboardPage data={data} user={user} />
       )}
->>>>>>> 44a45da1180606f3f0f218fead024550430c2e5c
     </React.Fragment>
   );
 }

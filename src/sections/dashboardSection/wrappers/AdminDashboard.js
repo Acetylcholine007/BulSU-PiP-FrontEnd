@@ -4,7 +4,7 @@ import ErrorComponent from "../../../shared/components/ErrorComponent";
 import LoadingComponent from "../../../shared/components/LoadingComponent";
 import { Account, Admin } from "../../../utils/bulsupis_mw";
 import { institutes } from "../../../utils/constants";
-import DashboardPage from "../pages/DashboardPage";
+import AdminDashboardPage from "../pages/AdminDashboardPage";
 
 function AdminDashboard() {
   const [data, setData] = useState(null);
@@ -131,7 +131,7 @@ function AdminDashboard() {
     <React.Fragment>
       {(data == null || user == null) && <LoadingComponent />}
       {(dataError || userError) && <ErrorComponent message={`${dataError}\n${userError}`} />}
-      {data && user && !(dataError || userError) && <DashboardPage data={data} user={user} />}
+      {data && user && !(dataError || userError) && <AdminDashboardPage data={data} user={user} />}
     </React.Fragment>
   );
 }
