@@ -14,12 +14,11 @@ import {
 } from "@material-ui/core";
 import React, { useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
-
 import CommentModal from "../components/CommentModal";
 import ViewerForm1 from "../components/ViewerForm1";
 import ViewerForm2 from "../components/ViewerForm2";
 import ViewerForm3 from "../components/ViewerForm3";
-import { Delete, Description, Edit, LibraryBooks } from "@material-ui/icons";
+import { Delete, Description, Edit, InsertComment, InsertCommentOutlined, InsertCommentRounded, LibraryBooks } from "@material-ui/icons";
 import CommentList from "../components/CommentList";
 import PDFExport from "../../../shared/components/PDFExport";
 import { Projects } from "../../../utils/bulsupis_mw";
@@ -41,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: 15,
   },
   cardHeader: {
-    backgroundColor: theme.palette.tertiary.main,
+    backgroundColor: theme.palette.secondary.main,
   },
   pageTitle: {
     flexGrow: 11,
@@ -142,11 +141,12 @@ function ProjectViewer({ project, priority }) {
   return (
     <React.Fragment>
       <Toolbar>
-        <Typography variant="h4" className={classes.pageTitle}>
+        <Typography variant="h3" className={classes.pageTitle}>
           {"Project Viewer"}
         </Typography>
         <Button
           variant="contained"
+          color="primary"
           startIcon={<Edit />}
           onClick={() => {
             history.push(`/projects/${project.id}/edit`);
@@ -157,6 +157,7 @@ function ProjectViewer({ project, priority }) {
         </Button>
         <Button
           variant="contained"
+          color="primary"
           startIcon={<Delete />}
           onClick={handleDelete}
           className={classes.button}
@@ -168,6 +169,7 @@ function ProjectViewer({ project, priority }) {
           filename={project.title}
           institute={project.institute.institute}
         />
+      
       </Toolbar>
       <AppBreadcrumb
         links={[
@@ -190,7 +192,7 @@ function ProjectViewer({ project, priority }) {
             <Tabs
               value={tabIndex}
               onChange={(event, index) => setTabIndex(index)}
-              indicatorColor="primary"
+              indicatorColor="secondary"
               textColor="primary"
               variant="fullWidth"
             >
@@ -208,8 +210,12 @@ function ProjectViewer({ project, priority }) {
           <Divider classes={{ root: classes.subDivider }} />
         </Grid>
         <Grid item xs={12}>
+        
           <Card className={classes.card}>
-            <CardHeader title="Comments" className={classes.cardHeader} />
+            <CardHeader title="Comments" 
+            className={classes.cardHeader} 
+            />
+          
             <CardContent>
               <CommentList
                 comments={project.commentList}

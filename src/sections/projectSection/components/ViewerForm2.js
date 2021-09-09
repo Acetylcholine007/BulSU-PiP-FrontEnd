@@ -99,8 +99,9 @@ function ViewerForm2({ project, proposedProjectCost, setProposedProjectCost, che
               </TableCell>
               <TableCell align="center">New</TableCell>
               <TableCell align="center">
-                <Checkbox checked={project.categorization.new} />
-              </TableCell>
+
+                <Checkbox checked={project.categorization.new} /> 
+              </TableCell> 
               <TableCell align="center">Infrastructure</TableCell>
               <TableCell align="center">
                 <Checkbox checked={project.categorization.infrastructure} />
