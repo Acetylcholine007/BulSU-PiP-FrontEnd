@@ -24,10 +24,23 @@ import { AuthContext } from "../../../contexts/AuthContext";
 import { Folder, GetApp } from "@material-ui/icons";
 
 
+
 function ViewerForm2({ project, proposedProjectCost, setProposedProjectCost, checkerForm2 }) {
   const useStyles = makeStyles(() => ({
     table: {
       minWidth: 700,
+      background: 'linear-gradient(45deg, #800000 30%, #FF8E53 90%)',
+    },
+    txt: {
+      fontSize: 30,
+      fontStyle: 'Bold' ,
+      color: 'white' ,
+
+    },
+    text:{
+      fontSize: 24,
+      color: 'white',
+      
     },
     divider: {
       margin: "20px 0px 20px 0px",
