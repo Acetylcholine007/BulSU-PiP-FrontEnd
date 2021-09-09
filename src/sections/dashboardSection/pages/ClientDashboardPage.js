@@ -58,6 +58,8 @@ function ClientDashboardPage({ data, user }) {
     avatarLogo: {
       width: "auto",
       height: "auto",
+      display: "flex",
+      flexDirection: "column",
       justifyContent: "center",
     },
     card: {
@@ -94,6 +96,18 @@ function ClientDashboardPage({ data, user }) {
       height: '50%'
     },
     list: {
+    },
+    barGraph: {
+      height: "auto",
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center"
+    },
+    institute: {
+      height: 100,
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center"
     }
   }));
 
@@ -138,7 +152,7 @@ function ClientDashboardPage({ data, user }) {
                 />
               </Grid>
               <Grid item md={7} xs={9} className={classes.upperInnerGridItem}>
-                <Typography variant="h4">
+                <Typography className={classes.institute} variant="h4">
                   {" "}
                   {user.type == 0
                     ? `${user.institute.institute}`
@@ -227,7 +241,7 @@ function ClientDashboardPage({ data, user }) {
                   </IconButton>
                 }
               />
-              <CardContent>
+              <CardContent className={classes.barGraph}> 
                 {user.type == 1 ? (
                   <AdminProjectChart rawData={data.projects} />
                 ) : (
