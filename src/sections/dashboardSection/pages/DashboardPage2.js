@@ -32,6 +32,9 @@ function DashboardPage({ data, user }) {
     cardHeader: {
       background: 'linear-gradient(45deg, #800000 30%, #FF8E53 90%)',
       color: 'white',
+      height: 50,
+      border: 0,
+      borderRadius: 3,
     },
     cardTextHeader: {
       fontSize: 35,
@@ -41,15 +44,23 @@ function DashboardPage({ data, user }) {
       boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
       color: 'white',
       height: 48,
-      
+      textAlign: 'center'
     },
     cardTextContent: {
       fontSize: 25,
+      textAlign: 'center'
     },
     avatarLogo: {
       width: 'auto',
       height: 'auto',
+      justifyContent: 'center'
     },
+    test: {
+      height: '100%'
+    },
+    institue: {
+      paddingTop: 20
+    }
   }));
 
   const classes = useStyles();
@@ -60,19 +71,19 @@ function DashboardPage({ data, user }) {
       <Grid container spacing={2}>
         <Grid item md={8} xs={12}>
           <Grid container spacing={4}>
-            <Grid item xs={3}>
+            <Grid item md={2} xs={3}>
               <Avatar 
               className={classes.avatarLogo}
               src={user.institute.profile_img.src} />
             </Grid>
-            <Grid item xs={6}>
-              <Typography variant="h4"> {
+            <Grid item md={7} xs={9}>
+              <Typography  variant="h4"> {
                 user.type == 0
                   ? `${user.institute.institute}`
                   : "BulSU Projects"
               } </Typography>
             </Grid>
-            <Grid item xs={3}>
+            <Grid item md={3} xs={12}>
             <Card>
                 <CardHeader
                   className={classes.cardTextHeader}
@@ -83,7 +94,7 @@ function DashboardPage({ data, user }) {
                 </CardContent>
               </Card>
             </Grid>
-            <Grid item xs={3}>
+            <Grid item md={3} xs={6}>
               <Card>
                 <CardHeader
                   className={classes.cardTextHeader}
@@ -94,7 +105,7 @@ function DashboardPage({ data, user }) {
                 </CardContent>
               </Card>
             </Grid>
-            <Grid item xs={3}>
+            <Grid item md={3} xs={6}>
               <Card>
                 <CardHeader
                 className={classes.cardTextHeader} 
@@ -102,7 +113,7 @@ function DashboardPage({ data, user }) {
                 <CardContent className={classes.cardTextContent}>sample</CardContent>
               </Card>
             </Grid>
-            <Grid item xs={3}>
+            <Grid item md={3} xs={6}>
               <Card>
                 <CardHeader 
                 className={classes.cardTextHeader}
@@ -110,7 +121,7 @@ function DashboardPage({ data, user }) {
                 <CardContent className={classes.cardTextContent}>sample</CardContent>
               </Card>
             </Grid>
-            <Grid item xs={3}>
+            <Grid item md={3} xs={6}>
               <Card>
                 <CardHeader 
                 className={classes.cardTextHeader}
@@ -123,11 +134,7 @@ function DashboardPage({ data, user }) {
         <Grid item md={4} xs={12}>
           <Card>
             <CardHeader
-              title={
-                user.type == 0
-                  ? `${user.institute.institute} Projects`
-                  : "BulSU Projects"
-              }
+              title={"Projects"}
               className={classes.cardHeader}
               action={
                 <IconButton
