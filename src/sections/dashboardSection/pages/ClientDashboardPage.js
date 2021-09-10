@@ -149,7 +149,8 @@ function ClientDashboardPage({ data, user }) {
                     variant="h4"
                     style={{
                       verticalAlign: "middle",
-                      paddingLeft: '1em'
+                      paddingLeft: '1em',
+                      fontWeight: 'bold'
                     }}
                   >
                     {" "}
