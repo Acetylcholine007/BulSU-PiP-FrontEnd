@@ -126,7 +126,7 @@ function App({ isLoggedIn, setIsLoggedIn }) {
           >
             <MuiPickersUtilsProvider utils={DateFnsUtils}>
               <ThemeProvider theme={theme}>
-                {!isLoggedIn && (
+                {!error && !isLoggedIn && (
                   <Router>
                     <Switch>
                       <Route exact path="/signup">
@@ -142,7 +142,7 @@ function App({ isLoggedIn, setIsLoggedIn }) {
                   </Router>
                 )}
                 {error && <ErrorComponent message={error} />}
-                {isLoggedIn && user && !error && (
+                {!error && isLoggedIn && user && !error && (
                   <Router>
                     <MainWrapper>{mainRoutes(user.type)}</MainWrapper>
                   </Router>

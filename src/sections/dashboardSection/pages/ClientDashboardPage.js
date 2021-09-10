@@ -135,19 +135,29 @@ function ClientDashboardPage({ data, user }) {
         <Grid container className={classes.gridContainer}>
           <Grid item md={8} xs={12} className={classes.innerGridContainer}>
             <Grid container className={classes.gridContainer}>
-              <Grid item md={2} xs={3} className={classes.upperInnerGridItem} container spacing={0} align="center" justify="center" direction="column">
-                <Avatar
-                  className={classes.avatarLogo}
-                  src={user.institute.profile_img.src}
-                />
-              </Grid>
-              <Grid item md={7} xs={9} className={classes.upperInnerGridItem}>
-                <Typography className={classes.institute} container spacing={0} align="start" justify="center" direction="column">
-                  {" "}
-                  {user.type == 0
-                    ? `${user.institute.institute}`
-                    : "BulSU Projects"}{" "}
-                </Typography>
+              <Grid item md={9} xs={9} className={classes.upperInnerGridItem}>
+                <Box
+                  display="flex"
+                  alignItems="center"
+                  style={{ height: "100%" }}
+                >
+                  <Avatar
+                    className={classes.avatarLogo}
+                    src={user.institute.profile_img.src}
+                  />
+                  <Typography
+                    variant="h4"
+                    style={{
+                      verticalAlign: "middle",
+                      paddingLeft: '1em'
+                    }}
+                  >
+                    {" "}
+                    {user.type == 0
+                      ? `${user.institute.institute}`
+                      : "BulSU Projects"}{" "}
+                  </Typography>
+                </Box>
               </Grid>
               <Hidden xsDown>
               <Grid item md={3} xs={12} className={classes.upperInnerGridItem}>
@@ -219,7 +229,10 @@ function ClientDashboardPage({ data, user }) {
           <Grid item md={4} xs={12} className={classes.gridItem}>
             <Card className={classes.card}>
               <CardContent className={classes.cardContent}>
-              <ClientProjectChart rawData={data.projects} title={`${user.institute.institute} Projects`}/>
+                <ClientProjectChart
+                  rawData={data.projects}
+                  title={`${user.institute.institute} Projects`}
+                />
               </CardContent>
             </Card>
           </Grid>
