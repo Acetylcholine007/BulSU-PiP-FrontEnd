@@ -4,19 +4,14 @@ import {
   Card,
   CardContent,
   CardHeader,
-  Container,
   Grid,
-  IconButton,
   makeStyles,
   Typography,
   List,
   ListItem,
   Box,
 } from "@material-ui/core";
-import { LaunchOutlined } from "@material-ui/icons";
-import { useHistory } from "react-router-dom";
 
-import AdminProjectChart from "../components/AdminProjectChart";
 import CostChart from "../components/CostChart";
 import DashboardNotificationList from "../components/DashboardNotificationList";
 import NotificationModal from "../../notificationSection/components/NotificationModal";
@@ -33,9 +28,12 @@ function ClientDashboardPage({ data, user }) {
 
   const useStyles = makeStyles((theme) => ({
     root: {
-      [theme.breakpoints.up('md')]: {height: "100%",
-      display: "flex",
-      flexDirection: "column",}
+      [theme.breakpoints.up("md")]: {
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+      },
+      padding: "0px 20px",
     },
     cardTextHeader: {
       fontSize: 35,
@@ -50,10 +48,9 @@ function ClientDashboardPage({ data, user }) {
     cardTextContent: {
       fontSize: 15,
       textAlign: "left",
-      height: '100%',
+      height: "100%",
       overflowY: "auto",
-      padding: '0px 20px 0px 20px'
-
+      padding: "0px 20px 0px 20px",
     },
     avatarLogo: {
       width: "auto",
@@ -63,7 +60,7 @@ function ClientDashboardPage({ data, user }) {
       justifyContent: "center",
     },
     card: {
-      height: '100%',
+      height: "100%",
     },
     cardHeader: {
       background: "linear-gradient(45deg, #800000 30%, #FF8E53 90%)",
@@ -73,46 +70,32 @@ function ClientDashboardPage({ data, user }) {
       borderRadius: 3,
     },
     cardContent: {
-      height: '100%',
-      overflowY: 'auto'
+      height: "100%",
+      overflowY: "auto",
     },
     gridContainer: {
-      height: '100%'
+      height: "100%",
     },
     gridItem: {
       padding: 10,
-      height: '100%'
+      height: "100%",
     },
     innerGridContainer: {
-      padding: '10px 0px 10px 0px',
-      height: '100%'
+      padding: "10px 0px 10px 0px",
+      height: "100%",
     },
     upperInnerGridItem: {
-      padding: '0px 10px 10px 10px',
-      height: '50%'
+      padding: "0px 10px 10px 10px",
+      height: "50%",
     },
     lowerInnerGridItem: {
-      padding: '10px 10px 0px 10px',
-      height: '50%'
+      padding: "10px 10px 0px 10px",
+      height: "50%",
     },
-    list: {
-    },
-    barGraph: {
-      height: "auto",
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: "center"
-    },
-    institute: {
-      height: 100,
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: "center"
-    }
+    list: {},
   }));
 
   const classes = useStyles();
-  const history = useHistory();
 
   const statusContent = (status) => {
     let projects = user.projectList.filter(
@@ -140,8 +123,8 @@ function ClientDashboardPage({ data, user }) {
   };
 
   return (
-    <Container className={classes.root}>
-      <Box style={{ flexGrow: 5 }}>
+    <Box className={classes.root}>
+      <Box style={{ flexGrow: 1 }}>
         <Grid container className={classes.gridContainer}>
           <Grid item md={8} xs={12} className={classes.innerGridContainer}>
             <Grid container className={classes.gridContainer}>
@@ -217,89 +200,26 @@ function ClientDashboardPage({ data, user }) {
             </Grid>
           </Grid>
           <Grid item md={4} xs={12} className={classes.gridItem}>
-            <Card style={{height: '100%'}}>
-              <CardHeader
-                title={"Projects"}
-                className={classes.cardHeader}
-                action={
-                  <IconButton
-                    onClick={() => {
-                      switch (user.type) {
-                        case 0:
-                          history.push("/projects");
-                          break;
-                        case 1:
-                          history.push("/institutes");
-                          break;
-                        case 2:
-                          history.push("/institutes");
-                          break;
-                      }
-                    }}
-                  >
-                    <LaunchOutlined />
-                  </IconButton>
-                }
-              />
-              <CardContent className={classes.barGraph}> 
-                {user.type == 1 ? (
-                  <AdminProjectChart rawData={data.projects} />
-                ) : (
-                  <ClientProjectChart rawData={data.projects} />
-                )}
+            <Card className={classes.card}>
+              <CardContent className={classes.cardContent}>
+              <ClientProjectChart rawData={data.projects} title={`${user.institute.institute} Projects`}/>
               </CardContent>
             </Card>
           </Grid>
         </Grid>
       </Box>
-      <Box style={{ flexGrow: 1 }}>
+      <Box style={{ flexGrow: 7 }}>
         <Grid container className={classes.gridContainer}>
           <Grid item md={7} xs={12} className={classes.gridItem}>
             <Card className={classes.card}>
-              <CardHeader
-                title="Total Cost Distribution"
-                className={classes.cardHeader}
-                action={
-                  <IconButton
-                    onClick={() => {
-                      switch (user.type) {
-                        case 0:
-                          history.push("/projects");
-                          break;
-                        case 1:
-                          history.push("/institutes");
-                          break;
-                        case 2:
-                          history.push("/institutes");
-                          break;
-                      }
-                    }}
-                  >
-                    <LaunchOutlined />
-                  </IconButton>
-                }
-              />
-              <CardContent className = {classes.cardContent}>
+              <CardContent className={classes.cardContent}>
                 <CostChart costs={data.costs} />
               </CardContent>
             </Card>
           </Grid>
           <Grid item md={5} xs={12} className={classes.gridItem}>
             <Card className={classes.card}>
-              <CardHeader
-                title="Notifications"
-                className={classes.cardHeader}
-                action={
-                  <IconButton
-                    onClick={() => {
-                      history.push("/notifications");
-                    }}
-                  >
-                    <LaunchOutlined />
-                  </IconButton>
-                }
-              />
-              <CardContent className = {classes.cardContent}>
+              <CardContent className={classes.cardContent}>
                 <DashboardNotificationList
                   notifications={user.notificationList}
                   selectNotification={selectNotification}
@@ -317,7 +237,7 @@ function ClientDashboardPage({ data, user }) {
           notification={notification}
         />
       )}
-    </Container>
+    </Box>
   );
 }
 

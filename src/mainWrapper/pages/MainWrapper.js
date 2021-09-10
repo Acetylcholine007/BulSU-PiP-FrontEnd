@@ -58,7 +58,7 @@ function MainWrapper({ children }) {
       },
       box: {
         flex: "1",
-        background: "#F9F9F9",
+        background: theme.palette.grey[200],
         paddingTop: 10,
         paddingBottom: 10,
         overflowY: 'auto',
