@@ -3,20 +3,14 @@ import {
   Box,
   Card,
   CardContent,
-  CardHeader,
-  Container,
   Grid,
-  IconButton,
   makeStyles,
 } from "@material-ui/core";
-import { LaunchOutlined } from "@material-ui/icons";
-import { useHistory } from "react-router-dom";
 
 import AdminProjectChart from "../components/AdminProjectChart";
 import CostChart from "../components/CostChart";
 import DashboardNotificationList from "../components/DashboardNotificationList";
 import NotificationModal from "../../notificationSection/components/NotificationModal";
-import ClientProjectChart from "../components/ClientProjectChart";
 
 function AdminDashboardPage({ data, user }) {
   const [open, setOpen] = useState(false);
@@ -34,6 +28,7 @@ function AdminDashboardPage({ data, user }) {
         display: "flex",
         flexDirection: "column",
       },
+      padding: "0px 20px",
     },
     cardTextHeader: {
       fontSize: 35,
@@ -94,102 +89,34 @@ function AdminDashboardPage({ data, user }) {
   }));
 
   const classes = useStyles();
-  const history = useHistory();
 
   console.log(user);
 
   return (
-    <Container className={classes.root}>
+    <Box className={classes.root}>
       <Box style={{ flexGrow: 1 }}>
         <Grid container className={classes.gridContainer}>
           <Grid item xs={12} className={classes.gridItem}>
             <Card className={classes.card}>
-              <CardHeader
-                title={
-                  user.type == 0
-                    ? `${user.institute.institute} Projects`
-                    : "BulSU Projects"
-                }
-                className={classes.cardHeader}
-                action={
-                  <IconButton
-                    onClick={() => {
-                      switch (user.type) {
-                        case 0:
-                          history.push("/projects");
-                          break;
-                        case 1:
-                          history.push("/institutes");
-                          break;
-                        case 2:
-                          history.push("/institutes");
-                          break;
-                      }
-                    }}
-                  >
-                    <LaunchOutlined />
-                  </IconButton>
-                }
-              />
-              <CardContent>
-                {user.type == 1 ? (
-                  <AdminProjectChart rawData={data.projects} />
-                ) : (
-                  <ClientProjectChart rawData={data.projects} />
-                )}
+              <CardContent className={classes.cardContent}>
+              <AdminProjectChart rawData={data.projects} title='BulSU Projects' />
               </CardContent>
             </Card>
           </Grid>
         </Grid>
       </Box>
-      <Box style={{ flexGrow: 1 }}>
+      <Box style={{ flexGrow: 2 }}>
         <Grid container className={classes.gridContainer}>
-          <Grid item xs={7} className={classes.gridItem}>
+          <Grid item md={7} xs={12} className={classes.gridItem}>
             <Card className={classes.card}>
-              <CardHeader
-                title="Total Cost Distribution"
-                className={classes.cardHeader}
-                action={
-                  <IconButton
-                    onClick={() => {
-                      switch (user.type) {
-                        case 0:
-                          history.push("/projects");
-                          break;
-                        case 1:
-                          history.push("/institutes");
-                          break;
-                        case 2:
-                          history.push("/institutes");
-                          break;
-                      }
-                    }}
-                  >
-                    <LaunchOutlined />
-                  </IconButton>
-                }
-              />
-              <CardContent>
+              <CardContent className={classes.cardContent}>
                 <CostChart costs={data.costs} />
               </CardContent>
             </Card>
           </Grid>
-          <Grid item xs={5} className={classes.gridItem}>
+          <Grid item md={5} xs={12} className={classes.gridItem}>
             <Card className={classes.card}>
-              <CardHeader
-                title="Notifications"
-                className={classes.cardHeader}
-                action={
-                  <IconButton
-                    onClick={() => {
-                      history.push("/notifications");
-                    }}
-                  >
-                    <LaunchOutlined />
-                  </IconButton>
-                }
-              />
-              <CardContent>
+              <CardContent className={classes.cardContent}>
                 <DashboardNotificationList
                   notifications={user.notificationList}
                   selectNotification={selectNotification}
@@ -206,7 +133,7 @@ function AdminDashboardPage({ data, user }) {
           notification={notification}
         />
       )}
-    </Container>
+    </Box>
   );
 }
 

@@ -1,4 +1,4 @@
-import { Grid, Typography } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import React from "react";
 import { Pie } from "react-chartjs-2";
 import { statuses } from "../../../utils/constants";
@@ -26,15 +26,43 @@ function CostChart({ costs }) {
     ],
   };
 
+  const options1 = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      title: {
+        display: true,
+        text: "Total Investment Costs Distribution",
+        fullSize: true,
+        font: {
+          size: 18,
+        },
+      },
+    },
+  };
+
+  const options2 = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      title: {
+        display: true,
+        text: "Total Project Costs Distribution",
+        fullSize: true,
+        font: {
+          size: 18,
+        },
+      },
+    },
+  };
+
   return (
-    <Grid container>
-      <Grid item xs={6} align='center'>
-        <Typography variant = 'body1'>Total Investment Costs Distribution</Typography>
-        <Pie data={investmentCost} />
+    <Grid container style={{ height: "100%" }}>
+      <Grid item xs={12} md={6}>
+        <Pie data={investmentCost} options={options1} />
       </Grid>
-      <Grid item xs={6} align='center'>
-        <Typography variant = 'body1'>Total Project Costs Distribution</Typography>
-        <Pie data={projectCost} />
+      <Grid item xs={12} md={6}>
+        <Pie data={projectCost} options={options2} />
       </Grid>
     </Grid>
   );
