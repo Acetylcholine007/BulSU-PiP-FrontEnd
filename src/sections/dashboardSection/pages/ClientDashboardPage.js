@@ -51,7 +51,8 @@ function ClientDashboardPage({ data, user }) {
       textAlign: "left",
       height: "100%",
       overflowY: "auto",
-      padding: "0px 20px 0px 20px",
+      padding: "5px 20px 5px 20px",
+      fontWeight: 600,
     },
     avatarLogo: {
       width: "auto",
@@ -94,13 +95,10 @@ function ClientDashboardPage({ data, user }) {
       padding: "10px 10px 0px 10px",
       height: "50%",
     },
-    list: {
-
-    },
     institute: {
       fontSize: 40,
       fontWeight: 'bold',
-      marginTop: 15
+      marginTop: 15,
     }
   }));
 
@@ -111,7 +109,7 @@ function ClientDashboardPage({ data, user }) {
       (project) => project.status == status
     );
     if (projects.length == 0) {
-      return <Typography>There is no content for now</Typography>;
+      return <CardContent className={classes.cardTextContent}><Typography>There is no content for now</Typography></CardContent>;
     } else if (projects.length <= 3) {
       return (
         <List>
