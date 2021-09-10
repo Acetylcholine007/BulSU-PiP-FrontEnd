@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import ErrorComponent from "../../../shared/components/ErrorComponent";
+import ErrorPage from "../../../shared/pages/ErrorPage";
 import LoadingPage from "../../../shared/pages/LoadingPage";
 import { Institute } from "../../../utils/bulsupis_mw";
 import SignUpPage from "../pages/SignUpPage";
@@ -12,6 +12,7 @@ function SignUpWrapper() {
     Institute.get()
       .then(({ simple, full }) => {
         if (simple) {
+          console.log(simple)
           setInstitutes(simple.data.map((item) => item.institute));
         } else {
           setInstitutes(simple);
@@ -26,7 +27,7 @@ function SignUpWrapper() {
   return (
     <React.Fragment>
       {institutes == null && <LoadingPage />}
-      {error && <ErrorComponent message={error} />}
+      {error && <ErrorPage message={error} />}
       {institutes !== null && !error && (
         <SignUpPage institutes={institutes} />
       )}
