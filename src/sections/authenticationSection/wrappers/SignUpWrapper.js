@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ErrorComponent from "../../../shared/components/ErrorComponent";
-import LoadingComponent from "../../../shared/components/LoadingComponent";
+import LoadingPage from "../../../shared/pages/LoadingPage";
 import { Institute } from "../../../utils/bulsupis_mw";
 import SignUpPage from "../pages/SignUpPage";
 
@@ -25,7 +25,7 @@ function SignUpWrapper() {
 
   return (
     <React.Fragment>
-      {institutes == null && <LoadingComponent />}
+      {institutes == null && <LoadingPage />}
       {error && <ErrorComponent message={error} />}
       {institutes !== null && !error && (
         <SignUpPage institutes={institutes} />
