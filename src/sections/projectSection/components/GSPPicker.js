@@ -51,7 +51,7 @@ function GSPPicker({ index, form1Data, setForm1Data }) {
               <CardHeader
                 title={subgoal.value}
                 action={
-                  <Switch
+                  <Checkbox
                     checked={form1Data.GSP[index][subgoalIndex]}
                     onChange={(e) => {
                       setForm1Data(() => {

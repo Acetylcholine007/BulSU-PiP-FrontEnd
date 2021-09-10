@@ -189,7 +189,7 @@ function EditorForm1({ form1Data, setForm1Data, checkerForm1}) {
           <Typography variant="h5" display="inline">
             Investment Requirement
           </Typography>
-          <Typography variant="h5" display="outline">
+          <Typography variant="h6" display="outline">
             {getSum()}
           </Typography>
         </Grid>
@@ -240,7 +240,6 @@ function EditorForm1({ form1Data, setForm1Data, checkerForm1}) {
           </GridList>
         </Grid>
         <Grid item xs={12}>
-          <Divider className={classes.divider} />
         </Grid>
         <Grid item xs={12}>
           <TextField
