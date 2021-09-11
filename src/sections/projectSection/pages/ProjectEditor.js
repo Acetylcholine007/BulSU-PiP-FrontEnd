@@ -8,7 +8,6 @@ import {
   Grid,
   Typography,
   makeStyles,
-  CardActions,
   Toolbar,
 } from "@material-ui/core";
 import React, { useState, useContext } from "react";

@@ -13,7 +13,7 @@ import {
   Radio,
   Container,
 } from "@material-ui/core";
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 function AccountFilterDialog({ open, setOpen, filter, setFilter }) {
   return (

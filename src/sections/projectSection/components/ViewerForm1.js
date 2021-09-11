@@ -12,11 +12,7 @@ import {
 import React, { useContext } from "react";
 
 import { AuthContext } from "../../../contexts/AuthContext";
-import {
-  papLevels,
-  readinessLevels,
-  statuses,
-} from "../../../utils/constants";
+import { papLevels, readinessLevels, statuses } from "../../../utils/constants";
 import GSPViewer from "./GSPViewer";
 
 function ViewerForm1({
@@ -59,17 +55,6 @@ function ViewerForm1({
         color: "white",
       },
     },
-    txt: {
-      fontSize: 30,
-      fontStyle: 'Bold',
-      color: 'white',
-
-    },
-    text:{
-      fontSize: 24,
-      color: 'white',
-      
-    }
   }));
   const classes = useStyles();
   const startDate = new Date(project.implementationPeriod.start);

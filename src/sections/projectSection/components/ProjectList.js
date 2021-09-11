@@ -11,7 +11,6 @@ import {
   TableCell,
   TableBody,
   Card,
-  Typography,
 } from "@material-ui/core";
 import { FilterList, Search } from "@material-ui/icons";
 import React, { useEffect, useState } from "react";
@@ -85,7 +84,7 @@ function ProjectList({
     }
 
     if (filter.projectCost.enabled) {
-      var sum = project.proposedProjectCost
+      let sum = project.proposedProjectCost
         .map((item) => parseFloat(item.cost))
         .reduce((a, b) => a + b, 0);
       projectCostFilterPassed =
@@ -112,7 +111,7 @@ function ProjectList({
   };
 
   const sortingLogic = (projectId) =>
-    projects.find((project) => project.id == projectId);
+    projects.find((project) => project.id === projectId);
 
   const classes = useStyles();
   const history = useHistory();

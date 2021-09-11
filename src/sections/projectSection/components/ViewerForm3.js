@@ -79,7 +79,11 @@ function ViewerForm3({ project, PDOSignature }) {
               </TableCell>
               <TableCell className={classes.rowContent} align="center">
                 {PDOSignature.length == 0 && project.pdoSignature && (
-                  <img src={project.pdoSignature.src} height={100} />
+                  <img
+                    src={project.pdoSignature.src}
+                    height={100}
+                    alt="PDO signature"
+                  />
                 )}
                 {PDOSignature.length !== 0 && (
                   <List>

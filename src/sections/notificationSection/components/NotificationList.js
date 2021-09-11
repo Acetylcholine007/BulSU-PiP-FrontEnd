@@ -8,7 +8,6 @@ import {
   makeStyles,
   Card,
   IconButton,
-  Typography,
 } from "@material-ui/core";
 import { Delete } from "@material-ui/icons";
 import { useContext, useState } from "react";

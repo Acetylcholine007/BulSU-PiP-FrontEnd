@@ -128,19 +128,6 @@ function ProjectViewer({ project, priority }) {
     }
   };
 
-  const getTitle = () => {
-    switch (tabIndex) {
-      case 0:
-        return "Investment Programming Entry";
-      case 1:
-        return "PAPs Form";
-      case 2:
-        return "PDO Personnel Feedback";
-      default:
-        return null;
-    }
-  };
-
   return (
     <React.Fragment>
       <Toolbar>

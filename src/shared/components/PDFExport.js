@@ -71,7 +71,7 @@ function PDFExport({ projects, filename, institute }) {
             [
               "10",
               "Beneficiaries",
-              { content: project.beneficiary, colSpan: 4 },
+              { content: project.beneficiaries, colSpan: 4 },
             ],
             [
               { content: "11", rowSpan: 2 },
@@ -131,9 +131,9 @@ function PDFExport({ projects, filename, institute }) {
               project.contactInformation.others,
             ],
             [
-              ("Date Accomplished",
+              "Date Accomplished",
               new Date(project.dateAccomplished).toDateString(),
-              { content: "Signature", colSpan: 2 }),
+              { content: "Signature", colSpan: 2 },
             ],
           ],
           startY: doc.lastAutoTable.finalY + 0.6,
