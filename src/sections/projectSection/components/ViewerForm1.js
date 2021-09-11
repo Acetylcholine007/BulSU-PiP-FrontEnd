@@ -19,7 +19,19 @@ function ViewerForm1({ project, investmentReq, setInvestmentReq, status, checker
   const useStyles = makeStyles(() => ({
     table: {
       minWidth: 700,
+      background: 'linear-gradient(45deg, #800000 30%, #FF8E53 110%)',
     },
+    txt: {
+      fontSize: 30,
+      fontStyle: 'Bold',
+      color: 'white',
+
+    },
+    text:{
+      fontSize: 24,
+      color: 'white',
+      
+    }
   }));
   const classes = useStyles();
   const startDate = new Date(project.implementationPeriod.start);
@@ -31,8 +43,8 @@ function ViewerForm1({ project, investmentReq, setInvestmentReq, status, checker
       <Table className={classes.table} aria-label="spanning table">
         <TableHead>
           <TableRow>
-            <TableCell align="center">Item</TableCell>
-            <TableCell align="center" colSpan={5}>
+            <TableCell className={classes.txt} align="center">Item</TableCell>
+            <TableCell className={classes.text} align="center" colSpan={5}>
               Particulars
             </TableCell>
           </TableRow>
@@ -40,78 +52,78 @@ function ViewerForm1({ project, investmentReq, setInvestmentReq, status, checker
         <TableBody>
           <TableRow></TableRow>
           <TableRow>
-            <TableCell align="center">Project/Activity/Program Title</TableCell>
-            <TableCell align="center" colSpan={5}>
+            <TableCell className={classes.txt} align="center">Project/Activity/Program Title</TableCell>
+            <TableCell className={classes.text} align="center" colSpan={5}>
               {project.title}
             </TableCell>
           </TableRow>
           <TableRow>
-            <TableCell align="center">GSPs</TableCell>
-            <TableCell align="left" colSpan={5}>
+            <TableCell className={classes.txt} align="center">GSPs</TableCell>
+            <TableCell className={classes.text} align="left" colSpan={5}>
               <GSPViewer GSP={project.GSP} />
             </TableCell>
           </TableRow>
           <TableRow>
-            <TableCell align="center">Type of Obligation</TableCell>
-            <TableCell align="center" colSpan={5}>
+            <TableCell className={classes.txt} align="center">Type of Obligation</TableCell>
+            <TableCell className={classes.text} align="center" colSpan={5}>
               {project.obligationType}
             </TableCell>
           </TableRow>
           <TableRow>
-            <TableCell align="center">Proponent</TableCell>
-            <TableCell align="center" colSpan={5}>
+            <TableCell className={classes.txt} align="center">Proponent</TableCell>
+            <TableCell className={classes.text} align="center" colSpan={5}>
               {project.proponent}
             </TableCell>
           </TableRow>
           <TableRow>
-            <TableCell align="center">Total Estimated Cost</TableCell>
-            <TableCell align="center" colSpan={5}>
+            <TableCell className={classes.txt} align="center">Total Estimated Cost</TableCell>
+            <TableCell className={classes.text} align="center" colSpan={5}>
               {`Php ${project.investmentReq.map(item => parseFloat(item.value)).reduce((a,b) => a+b)}`}
             </TableCell>
           </TableRow>
           <TableRow>
-            <TableCell align="center" rowSpan={2}>
+            <TableCell className={classes.txt} align="center" rowSpan={2}>
               Investment Requirement
             </TableCell>
-            <TableCell align="center">
+            <TableCell className={classes.text} align="center">
               {`F.Y. ${project.investmentReq[0].year}`}
             </TableCell>
-            <TableCell align="center">
+            <TableCell className={classes.text} align="center">
               {`F.Y. ${project.investmentReq[1].year}`}
             </TableCell>
-            <TableCell align="center">
+            <TableCell className={classes.text} align="center">
               {`F.Y. ${project.investmentReq[2].year}`}
             </TableCell>
-            <TableCell align="center">
+            <TableCell className={classes.text} align="center">
               {`F.Y. ${project.investmentReq[3].year}`}
             </TableCell>
-            <TableCell align="center">
+            <TableCell className={classes.text} align="center">
               {`F.Y. ${project.investmentReq[4].year}`}
             </TableCell>
           </TableRow>
           <TableRow>
             {user.type === 0 && (
               <React.Fragment>
-                <TableCell align="center">
+                <TableCell className={classes.text} align="center">
                   {`Php ${project.investmentReq[0].value}`}
                 </TableCell>
-                <TableCell align="center">
+                <TableCell className={classes.text} align="center">
                   {`Php ${project.investmentReq[1].value}`}
                 </TableCell>
-                <TableCell align="center">
+                <TableCell className={classes.text} align="center">
                   {`Php ${project.investmentReq[2].value}`}
                 </TableCell>
-                <TableCell align="center">
+                <TableCell className={classes.text} align="center">
                   {`Php ${project.investmentReq[3].value}`}
                 </TableCell>
-                <TableCell align="center">
+                <TableCell className={classes.text} align="center">
                   {`Php ${project.investmentReq[4].value}`}
                 </TableCell>
               </React.Fragment>
             )}
             {user.type === 1 &&
               investmentReq.map((investment, index) => (
-                <TableCell align="center" key={investment.year}>
+                <TableCell className={classes.text} align="center" key={investment.year}>
                   <TextField
                     onChange={(e) => {
                       setInvestmentReq(() => {
@@ -131,26 +143,26 @@ function ViewerForm1({ project, investmentReq, setInvestmentReq, status, checker
               ))}
           </TableRow>
           <TableRow>
-            <TableCell align="center">Implementation Period</TableCell>
-            <TableCell align="center" colSpan={5}>
+            <TableCell className={classes.txt} align="center">Implementation Period</TableCell>
+            <TableCell className={classes.text} align="center" colSpan={5}>
               {`${startDate.toDateString()} - ${finishDate.toDateString()}`}
             </TableCell>
           </TableRow>
           <TableRow>
-            <TableCell align="center">Level of PAP Need</TableCell>
-            <TableCell align="center" colSpan={5}>
+            <TableCell className={classes.txt} align="center">Level of PAP Need</TableCell>
+            <TableCell className={classes.text} align="center" colSpan={5}>
               {papLevels[project.PAPLevel - 1].label}
             </TableCell>
           </TableRow>
           <TableRow>
-            <TableCell align="center">Level of Readiness</TableCell>
-            <TableCell align="center" colSpan={5}>
+            <TableCell className={classes.txt} align="center">Level of Readiness</TableCell>
+            <TableCell className={classes.text} align="center" colSpan={5}>
               {readinessLevels[project.readiness - 1].label}
             </TableCell>
           </TableRow>
           <TableRow>
-            <TableCell align="center">Status of Implementation</TableCell>
-            <TableCell align="center" colSpan={5}>
+            <TableCell className={classes.txt} align="center">Status of Implementation</TableCell>
+            <TableCell className={classes.text} align="center" colSpan={5}>
               {statuses[user.type === 0 ? project.status : status].label}
             </TableCell>
           </TableRow>
