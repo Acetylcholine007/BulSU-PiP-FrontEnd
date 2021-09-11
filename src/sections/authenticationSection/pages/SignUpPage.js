@@ -17,6 +17,7 @@ import signupValidator from "../../../utils/signupValidator";
 
 import { Account } from "../../../utils/bulsupis_mw";
 import { AuthContext } from "../../../contexts/AuthContext";
+import { SnackbarContext } from "../../../contexts/SnackbarContext";
 
 const useStyles = makeStyles((theme) => ({
   motherPane: {
@@ -63,10 +64,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function SignUpPage({institutes}) {
+function SignUpPage({ institutes }) {
+  const { setShowSnackbar, setSnackbarData } = useContext(SnackbarContext);
   const history = useHistory();
   const classes = useStyles();
-  const {setIsLoggedIn} = useContext(AuthContext);
+  const { setIsLoggedIn } = useContext(AuthContext);
 
   const [institute, setInstitute] = useState("");
   const [email, setEmail] = useState("");
@@ -105,7 +107,11 @@ function SignUpPage({institutes}) {
                     src="favicon.ico"
                     alt="BulSU Icon"
                   ></img>
-                  <img className={classes.avtr2} src='./pdoLogo.png' alt="PDO Icon"></img>
+                  <img
+                    className={classes.avtr2}
+                    src="./pdoLogo.png"
+                    alt="PDO Icon"
+                  ></img>
                 </p>
                 <p>BulSU PIPS - ver 0.1</p>
                 <Typography variant="h4" component="h1">
@@ -129,15 +135,29 @@ function SignUpPage({institutes}) {
                       !checker.institute.error &&
                       !checker.confirmPassword.error
                     ) {
-                      Account.register(email, password, institute.institute)
-                        .then((res) => {
-                          console.log(res);
-                          history.push("/");
-                          setIsLoggedIn(Account.isLoggedIn());
+                      Account.register(email, password, institute)
+                        .then(({ simple, full }) => {
+                          if (simple) {
+                            history.push("/");
+                            setIsLoggedIn(Account.isLoggedIn());
+                          } else {
+                            console.log(full);
+                            setSnackbarData({
+                              type: 3,
+                              message: full,
+                            });
+                            setShowSnackbar(true);
+                          }
                         })
-                        .catch((err) => console.log(err.message));
+                        .catch((err) => {
+                          setSnackbarData({
+                            type: 3,
+                            message: err.message,
+                          });
+                          setShowSnackbar(true);
+                        })
+                        .finally(() => setSignupChecker(checker));
                     }
-                    setSignupChecker(checker);
                   }}
                 >
                   <TextField

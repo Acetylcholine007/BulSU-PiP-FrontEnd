@@ -5,6 +5,8 @@ import {
 import _request from '../utils/_request'
 import Maps from "../utils/_map"
 
+let account_life = false
+
 /**
  * Sends a Login Request to the Backend Server. On success, this will store the token
  * received from the server into localStorage. You can check if login is success through
@@ -67,18 +69,22 @@ async function account_register(email, password, institute, profile_image){
 async function account_info(){
     let response = await _request('/api/account')
 
-    response.data = Maps.account_camelCase(response.data)
+    if(response.name !== "Error"){
+        response.data = Maps.account_camelCase(response.data)
 
-    for(let p in response.data.projectList){
-        response.data.projectList[p] = Maps.project_camelCase(response.data.projectList[p])
+        for(let p in response.data.projectList){
+            response.data.projectList[p] = Maps.project_camelCase(response.data.projectList[p])
+        }
+
+        if (response){
+            return {simple: response, full: response}
+        }else{
+            console.error(response)
+            return {simple: false, full: response}
+        }
     }
 
-    if (response){
-        return {simple: response, full: response}
-    }else{
-        console.error(response)
-        return {simple: false, full: response}
-    }
+    return {simple: false, full: response}
 }
 
 /**
@@ -101,10 +107,25 @@ async function account_check(){
     if (tokenCheck){
 
         let response = false 
+        console.log(account_life)
+
+        if (account_life){
+            return {simple: true, full: response}
+        }
 
         try{
             response = await _request('/api/account')
-            //console.log("Logged In")
+            if(response.name == "Error"){
+                account_logout()
+                return {simple: false, full: response}
+            }       
+
+            account_life = true
+
+            setTimeout( () => {
+                account_life = false
+            }, 1000*60*60*3)
+
             return {simple: true, full: response}
         }catch(err){
             console.error(err)

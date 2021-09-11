@@ -22,7 +22,7 @@ import { form1Validator } from "../../../utils/form1Validator";
 import form2Validator from "../../../utils/form2Validator";
 import { Projects } from "../../../utils/bulsupis_mw";
 import AppBreadcrumb from "../../../shared/components/AppBreadcrumb";
-import { Description, Edit, LibraryBooks } from "@material-ui/icons";
+import { AddCircle, Description, Edit, LibraryBooks } from "@material-ui/icons";
 import { SnackbarContext } from "../../../contexts/SnackbarContext";
 
 function ProjectEditor({ isNew, project }) {
@@ -32,18 +32,20 @@ function ProjectEditor({ isNew, project }) {
   const { user } = useContext(AuthContext);
   const useStyles = makeStyles((theme) => ({
     cardHeader: {
-      backgroundColor: theme.palette.tertiary.main,
-    },
-    cardActions: {
-      backgroundColor: theme.palette.tertiary.main,
-      display: "flex",
-      justifyContent: "space-evenly",
+      background: "linear-gradient(45deg, #800000 30%, #FF8E53 110%)",
+      color: "white",
     },
     divider: {
       marginBottom: 15,
     },
     card: {
       marginBottom: 15,
+    },
+    button: {
+      marginLeft: 10,
+    },
+    cardHeaderAction: {
+      margin: "auto",
     },
   }));
 
@@ -58,11 +60,11 @@ function ProjectEditor({ isNew, project }) {
           obligationType: "",
           proponent: "",
           investmentReq: [
-            { year: currentDate.getFullYear().toString(), value: "" },
-            { year: (currentDate.getFullYear() + 1).toString(), value: "" },
-            { year: (currentDate.getFullYear() + 2).toString(), value: "" },
-            { year: (currentDate.getFullYear() + 3).toString(), value: "" },
-            { year: (currentDate.getFullYear() + 4).toString(), value: "" },
+            { year: currentDate.getFullYear().toString(), value: 0 },
+            { year: (currentDate.getFullYear() + 1).toString(), value: 0 },
+            { year: (currentDate.getFullYear() + 2).toString(), value: 0 },
+            { year: (currentDate.getFullYear() + 3).toString(), value: 0 },
+            { year: (currentDate.getFullYear() + 4).toString(), value: 0 },
           ],
           implementationPeriod: { start: null, end: null },
           PAPLevel: 1,
@@ -98,9 +100,9 @@ function ProjectEditor({ isNew, project }) {
           purpose: "",
           beneficiaries: "",
           proposedProjectCost: [
-            { year: "2021", cost: "0" },
-            { year: "2021", cost: "0" },
-            { year: "2021", cost: "0" },
+            { year: currentDate.getFullYear().toString(), cost: 0 },
+            { year: (currentDate.getFullYear() + 1).toString(), cost: 0 },
+            { year: (currentDate.getFullYear() + 2).toString(), cost: 0 },
           ],
           proponentName: { surname: "", firstName: "", middleInitial: "" },
           designation: "",
@@ -242,8 +244,8 @@ function ProjectEditor({ isNew, project }) {
         fileList,
         signature.length == 0 ? undefined : signature
       )
-        .then(({simple, full}) => {
-          if(simple) {
+        .then(({ simple, full }) => {
+          if (simple) {
             setSnackbarData({
               type: 0,
               message: "Project created",
@@ -277,8 +279,8 @@ function ProjectEditor({ isNew, project }) {
         fileList,
         signature.length == 0 ? null : signature
       )
-        .then(({simple, full}) => {
-          if(simple) {
+        .then(({ simple, full }) => {
+          if (simple) {
             setSnackbarData({
               type: 0,
               message: "Project edited",
@@ -355,8 +357,24 @@ function ProjectEditor({ isNew, project }) {
             },
             {
               link: `/projects/${project.id}/edit`,
-              label: 'Edit',
+              label: "Edit",
               icon: <Edit fontSize="small" />,
+            },
+          ]}
+        />
+      )}
+      {isNew && (
+        <AppBreadcrumb
+          links={[
+            {
+              link: "/projects",
+              label: "Projects",
+              icon: <LibraryBooks fontSize="small" />,
+            },
+            {
+              link: `/projects/new`,
+              label: "New",
+              icon: <AddCircle fontSize="small" />,
             },
           ]}
         />
@@ -370,66 +388,75 @@ function ProjectEditor({ isNew, project }) {
                 title={
                   page === 1 ? "Investment Programming Entry" : "PAPs Form"
                 }
-                subheader={`Page ${page} of 2`}
+                subheader={
+                  <Typography variant="body2">{`Page ${page} of 2`}</Typography>
+                }
                 className={classes.cardHeader}
+                classes={{
+                  action: classes.cardHeaderAction,
+                }}
+                action={
+                  <React.Fragment>
+                    {page === 2 && (
+                      <Button variant="contained" onClick={() => setPage(1)}>
+                        Previous
+                      </Button>
+                    )}
+                    {page === 1 ? (
+                      <Button
+                        variant="contained"
+                        onClick={() => {
+                          var checker = form1Validator(form1Data);
+                          if (
+                            !checker.title.error &&
+                            !checker.obligationType.error &&
+                            !checker.proponent.error &&
+                            !checker.startYear.error &&
+                            !checker.endYear.error &&
+                            checker.investmentReq
+                              .map((item) => !item.error)
+                              .reduce((a, b) => a && b)
+                          ) {
+                            setPage(2);
+                          }
+                          setCheckerForm1(checker);
+                        }}
+                        className={classes.button}
+                      >
+                        Next
+                      </Button>
+                    ) : (
+                      <Button
+                        variant="contained"
+                        onClick={() => {
+                          var checker = form2Validator(form2Data);
+                          if (
+                            !checker.projectLocation.error &&
+                            !checker.description.error &&
+                            !checker.purpose.error &&
+                            !checker.beneficiaries.error &&
+                            !checker.surName.error &&
+                            !checker.firstName.error &&
+                            !checker.telephoneNumber.error &&
+                            !checker.email.error &&
+                            !checker.phoneNumber.error &&
+                            checker.proposedProjectCost
+                              .map((item) => !item.error)
+                              .reduce((a, b) => a && b)
+                          ) {
+                            handleSubmit();
+                          }
+                          setCheckerForm2(checker);
+                        }}
+                        className={classes.button}
+                      >
+                        Submit
+                      </Button>
+                    )}
+                  </React.Fragment>
+                }
               />
               <CardContent>{formSelector()}</CardContent>
-              <CardActions className={classes.cardActions}>
-                {page === 2 && (
-                  <Button variant="contained" onClick={() => setPage(1)}>
-                    Previous
-                  </Button>
-                )}
-                {page === 1 ? (
-                  <Button
-                    variant="contained"
-                    onClick={() => {
-                      var checker = form1Validator(form1Data);
-                      if (
-                        !checker.title.error &&
-                        !checker.obligationType.error &&
-                        !checker.proponent.error &&
-                        !checker.startYear.error &&
-                        !checker.endYear.error &&
-                        checker.investmentReq
-                          .map((item) => !item.error)
-                          .reduce((a, b) => a && b)
-                      ) {
-                        setPage(2);
-                      }
-                      setCheckerForm1(checker);
-                    }}
-                  >
-                    Next
-                  </Button>
-                ) : (
-                  <Button
-                    variant="contained"
-                    onClick={() => {
-                      var checker = form2Validator(form2Data);
-                      if (
-                        !checker.projectLocation.error &&
-                        !checker.description.error &&
-                        !checker.purpose.error &&
-                        !checker.beneficiaries.error &&
-                        !checker.surName.error &&
-                        !checker.firstName.error &&
-                        !checker.telephoneNumber.error &&
-                        !checker.email.error &&
-                        !checker.phoneNumber.error &&
-                        checker.proposedProjectCost
-                          .map((item) => !item.error)
-                          .reduce((a, b) => a && b)
-                      ) {
-                        handleSubmit();
-                      }
-                      setCheckerForm2(checker);
-                    }}
-                  >
-                    Submit
-                  </Button>
-                )}
-              </CardActions>
             </Card>
           </Grid>
         </Grid>

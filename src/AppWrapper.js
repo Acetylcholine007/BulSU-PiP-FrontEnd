@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import App from "./App";
 import LoadingPage from "./shared/pages/LoadingPage";
-import ErrorComponent from "./shared/components/ErrorComponent";
 import { Account } from "./utils/bulsupis_mw";
+import ErrorPage from "./shared/pages/ErrorPage";
 
 function AppWrapper() {
   const [isLoggedIn, setIsLoggedIn] = useState(null);
@@ -15,7 +15,6 @@ function AppWrapper() {
           setIsLoggedIn(simple);
         } else {
           setIsLoggedIn(false);
-          setError(full);
         }
       })
       .catch((err) => {
@@ -27,7 +26,7 @@ function AppWrapper() {
   return (
     <React.Fragment>
       {isLoggedIn == null && <LoadingPage />}
-      {error && <ErrorComponent message={error} />}
+      {error && <ErrorPage message={error} />}
       {isLoggedIn !== null && !error && (
         <App isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
       )}

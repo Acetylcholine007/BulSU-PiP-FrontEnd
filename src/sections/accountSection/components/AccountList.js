@@ -23,6 +23,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { Admin } from "../../../utils/bulsupis_mw";
 import AccountModal from "./AccountModal";
 import { SnackbarContext } from "../../../contexts/SnackbarContext";
+import EmptyTableContent from "../../../shared/components/EmptyTableContent";
 
 function AccountList({
   users,
@@ -41,13 +42,13 @@ function AccountList({
       border: "none",
     },
     searchBox: {
-      background: theme.palette.tertiary.light,
+      background: theme.palette.grey[300],
     },
     toolbar: {
-      background: theme.palette.tertiary.main,
+      background: theme.palette.grey[500],
     },
     tableHead: {
-      background: theme.palette.tertiary.main,
+      background: theme.palette.grey[500],
     },
   }));
 
@@ -183,43 +184,47 @@ function AccountList({
             </TableRow>
           </TableHead>
           <TableBody>
-            {filteredUser.map((user) => (
-              <TableRow hover key={user.id}>
-                <TableCell
-                  onClick={(e) => {
-                    selectUser(user);
-                  }}
-                >
-                  {user.email}
-                </TableCell>
-                <TableCell
-                  onClick={(e) => {
-                    selectUser(user);
-                  }}
-                >
-                  {user.institute.institute}
-                </TableCell>
-                <TableCell
-                  onClick={(e) => {
-                    selectUser(user);
-                  }}
-                >
-                  {user.verified ? "Verified" : "Pending"}
-                </TableCell>
-                <TableCell style={{ padding: 0 }} align="center">
-                  <IconButton onClick={() => handleToggle(user)}>
-                    {user.verified ? (
-                      <VerifiedUser style={{ color: "#4caf50" }} />
-                    ) : (
-                      <Block style={{ color: "#ff9800" }} />
-                    )}
-                  </IconButton>
-                  <IconButton onClick={() => handleDelete(user)}>
-                    <Delete style={{ color: "#f44336" }} />
-                  </IconButton>
-                </TableCell>
-              </TableRow>
-            ))}
+            {filteredUser.length == 0 && (
+              <EmptyTableContent message="No available accounts" span={4} />
+            )}
+            {filteredUser.length !== 0 &&
+              filteredUser.map((user) => (
+                <TableRow hover key={user.id}>
+                  <TableCell
+                    onClick={(e) => {
+                      selectUser(user);
+                    }}
+                  >
+                    {user.email}
+                  </TableCell>
+                  <TableCell
+                    onClick={(e) => {
+                      selectUser(user);
+                    }}
+                  >
+                    {user.institute.institute}
+                  </TableCell>
+                  <TableCell
+                    onClick={(e) => {
+                      selectUser(user);
+                    }}
+                  >
+                    {user.verified ? "Verified" : "Pending"}
+                  </TableCell>
+                  <TableCell style={{ padding: 0 }} align="center">
+                    <IconButton onClick={() => handleToggle(user)}>
+                      {user.verified ? (
+                        <VerifiedUser style={{ color: "#4caf50" }} />
+                      ) : (
+                        <Block style={{ color: "#ff9800" }} />
+                      )}
+                    </IconButton>
+                    <IconButton onClick={() => handleDelete(user)}>
+                      <Delete style={{ color: "#f44336" }} />
+                    </IconButton>
+                  </TableCell>
+                </TableRow>
+              ))}
           </TableBody>
         </Table>
       </TableContainer>

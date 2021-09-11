@@ -17,7 +17,10 @@ function GSPPicker({ index, form1Data, setForm1Data }) {
       margin: "10px 0px 10px 0px",
     },
     cardHeader: {
-      background: theme.palette.tertiary.light,
+      background: theme.palette.secondary.light,
+    },
+    cardHeaderAction: {
+      margin: "auto",
     },
   }));
 
@@ -28,6 +31,9 @@ function GSPPicker({ index, form1Data, setForm1Data }) {
       <CardHeader
         title={GSPs[index].value}
         className={classes.cardHeader}
+        classes={{
+          action: classes.cardHeaderAction,
+        }}
         action={
           <Switch
             checked={form1Data.GSP[index]}
@@ -41,6 +47,7 @@ function GSPPicker({ index, form1Data, setForm1Data }) {
             }}
             name={`Goal${index + 1}`}
             inputProps={{ "aria-label": "secondary checkbox" }}
+            color="action"
           />
         }
       />
@@ -51,7 +58,7 @@ function GSPPicker({ index, form1Data, setForm1Data }) {
               <CardHeader
                 title={subgoal.value}
                 action={
-                  <Switch
+                  <Checkbox
                     checked={form1Data.GSP[index][subgoalIndex]}
                     onChange={(e) => {
                       setForm1Data(() => {
@@ -67,6 +74,9 @@ function GSPPicker({ index, form1Data, setForm1Data }) {
                     inputProps={{ "aria-label": "secondary checkbox" }}
                   />
                 }
+                classes={{
+                  action: classes.cardHeaderAction,
+                }}
               />
               {form1Data.GSP[index][subgoalIndex] && (
                 <CardContent>
@@ -80,7 +90,9 @@ function GSPPicker({ index, form1Data, setForm1Data }) {
                             }
                             onChange={(e) => {
                               setForm1Data(() => {
-                                form1Data.GSP[index][subgoalIndex][indicatorIndex] = e.target.checked
+                                form1Data.GSP[index][subgoalIndex][
+                                  indicatorIndex
+                                ] = e.target.checked;
                                 return { ...form1Data };
                               });
                             }}

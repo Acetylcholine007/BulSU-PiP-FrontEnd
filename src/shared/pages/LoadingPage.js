@@ -44,7 +44,7 @@ import {
             variant="determinate"
             className={classes.bottom}
             size={100}
-            thickness={10}
+            thickness={8}
             value={100}
           />
           <CircularProgress
@@ -55,7 +55,7 @@ import {
               circle: classes.circle,
             }}
             size={100}
-            thickness={10}
+            thickness={8}
           />
         </div>
         </div>

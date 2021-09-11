@@ -11,6 +11,7 @@ import {
   TableCell,
   TableBody,
   Card,
+  Typography,
 } from "@material-ui/core";
 import { FilterList, Search } from "@material-ui/icons";
 import React, { useEffect, useState } from "react";
@@ -18,6 +19,7 @@ import { useContext } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { useHistory } from "react-router-dom";
 import { AuthContext } from "../../../contexts/AuthContext";
+import EmptyTableContent from "../../../shared/components/EmptyTableContent";
 import { statuses } from "../../../utils/constants";
 
 function ProjectList({
@@ -37,20 +39,20 @@ function ProjectList({
       border: "none",
     },
     searchBox: {
-      background: theme.palette.tertiary.light,
+      background: theme.palette.grey[300],
     },
     toolbar: {
-      background: theme.palette.tertiary.main,
+      background: theme.palette.grey[500],
     },
     tableHead: {
-      background: theme.palette.tertiary.main,
+      background: theme.palette.grey[500],
     },
     card: {
-      marginBottom: 15
+      marginBottom: 15,
     },
     statusCell: {
-      borderRadius: '10px 0px 0px 10px'
-    }
+      borderRadius: "10px 0px 0px 10px",
+    },
   }));
 
   const handleClick = (project) => {
@@ -137,13 +139,10 @@ function ProjectList({
 
     setProject(() => {
       const newData = [...projects];
-      //console.log(filteredProject);
       const target = newData.splice(
         newData.indexOf(filteredProject[source.index]),
         1
       )[0];
-      //console.log(target);
-      //console.log(filteredProject[destination.index]);
       if (source.index < destination.index) {
         newData.splice(
           newData.indexOf(filteredProject[destination.index]) + 1,
@@ -157,14 +156,13 @@ function ProjectList({
           target
         );
       }
-      //console.log(newData);
       setLocalPrio(newData.map((project) => project.id));
       return newData;
     });
   };
 
   return (
-    <Card className = {classes.card}>
+    <Card className={classes.card}>
       <Toolbar className={classes.toolbar}>
         <TextField
           placeholder="Search"
@@ -198,7 +196,7 @@ function ProjectList({
               <TableCell>Proponent</TableCell>
               <TableCell>Total Investment Requirement</TableCell>
               <TableCell>Total Project Cost</TableCell>
-              <TableCell align='center'>Status</TableCell>
+              <TableCell align="center">Status</TableCell>
             </TableRow>
           </TableHead>
           <DragDropContext onDragEnd={onDragEnd}>
@@ -208,50 +206,63 @@ function ProjectList({
                   innerRef={provided.innerRef}
                   {...provided.droppableProps}
                 >
-                  {filteredProject.map((project, index) => (
-                    <Draggable
-                      key={project.id.toString()}
-                      draggableId={project.id.toString()}
-                      index={index}
-                    >
-                      {(provided) => {
-                        return (
-                          <TableRow
-                            innerRef={provided.innerRef}
-                            {...provided.draggableProps}
-                            {...provided.dragHandleProps}
-                            hover
-                            style={{
-                              ...provided.draggableProps.style,
-                            }}
-                            key={project.id}
-                            onClick={() => handleClick(project)}
-                          >
-                            <TableCell>
-                              {localPrio.indexOf(project.id) + 1}
-                            </TableCell>
-                            <TableCell>{project.title}</TableCell>
-                            <TableCell>{project.proponent}</TableCell>
-                            <TableCell>{`Php ${project.investmentReq
-                              .map((item) => parseFloat(item.value))
-                              .reduce((a, b) => a + b, 0)}`}</TableCell>
-                            <TableCell>{`Php ${project.proposedProjectCost
-                              .map((item) => parseFloat(item.cost))
-                              .reduce((a, b) => a + b, 0)}`}</TableCell>
-                            <TableCell
-                              align='center'
+                  {filteredProject.length == 0 && (
+                    <EmptyTableContent
+                      message="No available projects"
+                      span={6}
+                    />
+                  )}
+                  {filteredProject.length !== 0 &&
+                    filteredProject.map((project, index) => (
+                      <Draggable
+                        key={project.id.toString()}
+                        draggableId={project.id.toString()}
+                        index={index}
+                      >
+                        {(provided) => {
+                          return (
+                            <TableRow
+                              innerRef={provided.innerRef}
+                              {...provided.draggableProps}
+                              {...provided.dragHandleProps}
+                              hover
                               style={{
-                                backgroundColor: statuses[project.status ? project.status : 0].color,
+                                ...provided.draggableProps.style,
                               }}
-                              className={classes.statusCell}
+                              key={project.id}
+                              onClick={() => handleClick(project)}
                             >
-                              {statuses[project.status ? project.status : 0].label}
-                            </TableCell>
-                          </TableRow>
-                        );
-                      }}
-                    </Draggable>
-                  ))}
+                              <TableCell>
+                                {localPrio.indexOf(project.id) + 1}
+                              </TableCell>
+                              <TableCell>{project.title}</TableCell>
+                              <TableCell>{project.proponent}</TableCell>
+                              <TableCell>{`Php ${project.investmentReq
+                                .map((item) => parseFloat(item.value))
+                                .reduce((a, b) => a + b, 0)}`}</TableCell>
+                              <TableCell>{`Php ${project.proposedProjectCost
+                                .map((item) => parseFloat(item.cost))
+                                .reduce((a, b) => a + b, 0)}`}</TableCell>
+                              <TableCell
+                                align="center"
+                                style={{
+                                  backgroundColor:
+                                    statuses[
+                                      project.status ? project.status : 0
+                                    ].color,
+                                }}
+                                className={classes.statusCell}
+                              >
+                                {
+                                  statuses[project.status ? project.status : 0]
+                                    .label
+                                }
+                              </TableCell>
+                            </TableRow>
+                          );
+                        }}
+                      </Draggable>
+                    ))}
                   {provided.placeholder}
                 </TableBody>
               )}
