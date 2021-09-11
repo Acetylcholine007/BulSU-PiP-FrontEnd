@@ -29,7 +29,7 @@ function ViewerForm2({ project, proposedProjectCost, setProposedProjectCost, che
   const useStyles = makeStyles(() => ({
     table: {
       minWidth: 700,
-      background: 'linear-gradient(45deg, #800000 30%, #FF8E53 90%)',
+      background: 'linear-gradient(45deg, #800000 30%, #FF8E53 110%)',
     },
     txt: {
       fontSize: 30,
@@ -57,150 +57,151 @@ function ViewerForm2({ project, proposedProjectCost, setProposedProjectCost, che
     .map((project) => parseFloat(project.cost))
     .reduce((a, b) => a + b, 0);
 
+  
   return (
     <React.Fragment>
       <TableContainer component={Paper}>
-        <Table classname={classes.table} aria-label="spanning table">
+        <Table className={classes.table} aria-label="spanning table">
           <TableHead>
             <TableRow>
-              <TableCell align="center">Item</TableCell>
-              <TableCell align="center" colSpan={4}>
+              <TableCell className={classes.txt} align="center">Item</TableCell>
+              <TableCell className={classes.text} align="center" colSpan={4}>
                 Particulars
               </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             <TableRow>
-              <TableCell align="center">Name of SUC</TableCell>
-              <TableCell align="center" colSpan={4}>
+              <TableCell className={classes.txt} align="center">Name of SUC</TableCell>
+              <TableCell className={classes.text} align="center" colSpan={4}>
                 {project.suc}
               </TableCell>
             </TableRow>
             <TableRow>
-              <TableCell align="center">College/Campus/Office</TableCell>
-              <TableCell align="center" colSpan={4}>
+              <TableCell className={classes.txt} align="center">College/Campus/Office</TableCell>
+              <TableCell className={classes.text}align="center" colSpan={4}>
                 {project.institute.institute}
               </TableCell>
             </TableRow>
             <TableRow>
-              <TableCell align="center">Address</TableCell>
-              <TableCell align="center" colSpan={4}>
+              <TableCell className={classes.txt} align="center">Address</TableCell>
+              <TableCell className={classes.text} align="center" colSpan={4}>
                 {project.address}
               </TableCell>
             </TableRow>
             <TableRow>
-              <TableCell align="center">Project Title</TableCell>
-              <TableCell align="center" colSpan={4}>
+              <TableCell className={classes.txt} align="center">Project Title</TableCell>
+              <TableCell className={classes.text} align="center" colSpan={4}>
                 {project.title}
               </TableCell>
             </TableRow>
             <TableRow>
-              <TableCell align="center">Location of Project</TableCell>
-              <TableCell align="center" colSpan={4}>
+              <TableCell className={classes.txt} align="center">Location of Project</TableCell>
+              <TableCell className={classes.text} align="center" colSpan={4}>
                 {project.projectLocation}
               </TableCell>
             </TableRow>
             <TableRow>
-              <TableCell align="center">Priority Ranking</TableCell>
-              <TableCell align="center" colSpan={4}>
+              <TableCell className={classes.txt} align="center">Priority Ranking</TableCell>
+              <TableCell className={classes.text} align="center" colSpan={4}>
                 {project.priority}
               </TableCell>
             </TableRow>
             <TableRow>
-              <TableCell align="center" rowSpan={2}>
+              <TableCell className={classes.txt} align="center" rowSpan={2}>
                 Categorization
               </TableCell>
-              <TableCell align="center">New</TableCell>
-              <TableCell align="center">
+              <TableCell className={classes.txt} align="center">New</TableCell>
+              <TableCell className={classes.text} align="center">
 
                 <Checkbox checked={project.categorization.new} /> 
               </TableCell> 
-              <TableCell align="center">Infrastructure</TableCell>
-              <TableCell align="center">
+              <TableCell className={classes.txt} align="center">Infrastructure</TableCell>
+              <TableCell className={classes.text} align="center">
                 <Checkbox checked={project.categorization.infrastructure} />
               </TableCell>
             </TableRow>
             <TableRow>
-              <TableCell align="center">Expanded/Revised</TableCell>
-              <TableCell align="center">
+              <TableCell className={classes.txt} align="center">Expanded/Revised</TableCell>
+              <TableCell className={classes.text} align="center">
                 <Checkbox checked={project.categorization.expanded} />
               </TableCell>
-              <TableCell align="center">Non-infrastructure</TableCell>
-              <TableCell align="center">
+              <TableCell className={classes.txt} align="center">Non-infrastructure</TableCell>
+              <TableCell className={classes.text} align="center">
                 <Checkbox checked={project.categorization.nonInfrastructure} />
               </TableCell>
             </TableRow>
             <TableRow>
-              <TableCell align="center">Description</TableCell>
-              <TableCell align="center" colSpan={5}>
+              <TableCell className={classes.txt} align="center">Description</TableCell>
+              <TableCell className={classes.text} align="center" colSpan={5}>
                 {project.description}
               </TableCell>
             </TableRow>
             <TableRow>
-              <TableCell align="center">Purpose</TableCell>
-              <TableCell align="center" colSpan={5}>
+              <TableCell className={classes.txt} align="center">Purpose</TableCell>
+              <TableCell className={classes.text} align="center" colSpan={5}>
                 {project.purpose}
               </TableCell>
             </TableRow>
             <TableRow>
-              <TableCell align="center">Beneficiaries</TableCell>
-              <TableCell align="center" colSpan={5}>
+              <TableCell className={classes.txt} align="center">Beneficiaries</TableCell>
+              <TableCell className={classes.text} align="center" colSpan={5}>
                 {project.beneficiaries}
               </TableCell>
             </TableRow>
             <TableRow>
-              <TableCell align="center" rowSpan={2}>
+              <TableCell className={classes.txt} align="center" rowSpan={2}>
                 Implementation Period
               </TableCell>
-              <TableCell align="center">Start Date</TableCell>
-              <TableCell align="center">
+              <TableCell className={classes.txt} align="center">Start Date</TableCell>
+              <TableCell className={classes.text} align="center">
                 {months[startDate.getMonth()]}
               </TableCell>
-              <TableCell align="center">{startDate.getDate()}</TableCell>
-              <TableCell align="center">{startDate.getFullYear()}</TableCell>
+              <TableCell className={classes.text} align="center">{startDate.getDate()}</TableCell>
+              <TableCell className={classes.text} align="center">{startDate.getFullYear()}</TableCell>
             </TableRow>
             <TableRow>
-              <TableCell align="center">Finish Date</TableCell>
-              <TableCell align="center">
+              <TableCell className={classes.txt} align="center">Finish Date</TableCell>
+              <TableCell className={classes.text} align="center">
                 {months[finishDate.getMonth()]}
               </TableCell>
-              <TableCell align="center">{finishDate.getDate()}</TableCell>
-              <TableCell align="center">{finishDate.getFullYear()}</TableCell>
+              <TableCell className={classes.text} align="center">{finishDate.getDate()}</TableCell>
+              <TableCell className={classes.text} align="center">{finishDate.getFullYear()}</TableCell>
             </TableRow>
             <TableRow>
-              <TableCell align="center" rowSpan={2}>
+              <TableCell className={classes.txt} align="center" rowSpan={2}>
                 Proposed Project Cost
               </TableCell>
-              <TableCell align="center">
+              <TableCell className={classes.text} align="center">
                 {`F.Y. ${project.proposedProjectCost[0].year}`}
               </TableCell>
-              <TableCell align="center">
+              <TableCell className={classes.text} align="center">
                 {`F.Y. ${project.proposedProjectCost[1].year}`}
               </TableCell>
-              <TableCell align="center">
+              <TableCell className={classes.text} align="center">
                 {`F.Y. ${project.proposedProjectCost[2].year}`}
               </TableCell>
-              <TableCell align="center">TOTAL</TableCell>
+              <TableCell className={classes.txt} align="center">TOTAL</TableCell>
             </TableRow>
             <TableRow>
               {user.type === 0 && (
                 <React.Fragment>
-                  <TableCell align="center">
+                  <TableCell className={classes.text} align="center">
                     {`Php ${project.proposedProjectCost[0].cost}`}
                   </TableCell>
-                  <TableCell align="center">
+                  <TableCell className={classes.text} align="center">
                     {`Php ${project.proposedProjectCost[1].cost}`}
                   </TableCell>
-                  <TableCell align="center">
+                  <TableCell className={classes.text} align="center">
                     {`Php ${project.proposedProjectCost[2].cost}`}
                   </TableCell>
-                  <TableCell align="center">{`Php ${totalCost}`}</TableCell>
+                  <TableCell className={classes.text} align="center">{`Php ${totalCost}`}</TableCell>
                 </React.Fragment>
               )}
               {user.type === 1 && (
                 <React.Fragment>
                   {proposedProjectCost.map((yearCost, index) => (
-                    <TableCell align="center" key={yearCost.year}>
+                    <TableCell className={classes.text} align="center" key={yearCost.year}>
                       <TextField
                         onChange={(e) => {
                           setProposedProjectCost(() => {
@@ -218,60 +219,63 @@ function ViewerForm2({ project, proposedProjectCost, setProposedProjectCost, che
                       />
                     </TableCell>
                   ))}
-                  <TableCell align="center">{`Php ${totalCost}`}</TableCell>
+                  <TableCell className={classes.text} align="center">{`Php ${totalCost}`}</TableCell>
                 </React.Fragment>
               )}
             </TableRow>
           </TableBody>
         </Table>
       </TableContainer>
+      
       <Divider classes={{ root: classes.divider }} />
+      
+    
       <TableContainer component={Paper}>
         <Table className={classes.table} aria-label="spanning table">
           <TableBody>
             <TableRow>
-              <TableCell align="center">Name of Proponent</TableCell>
-              <TableCell align="center">
+              <TableCell className={classes.txt} align="center">Name of Proponent</TableCell>
+              <TableCell className={classes.text} align="center">
                 {project.proponentName.surname}
               </TableCell>
-              <TableCell align="center">
+              <TableCell className={classes.text} align="center">
                 {project.proponentName.firstName}
               </TableCell>
-              <TableCell align="center">
+              <TableCell className={classes.text} align="center">
                 {project.proponentName.middleInitial}
               </TableCell>
             </TableRow>
             <TableRow>
-              <TableCell align="center">Designation</TableCell>
-              <TableCell align="center" colSpan={3}>
+              <TableCell className={classes.txt} align="center">Designation</TableCell>
+              <TableCell className={classes.text} align="center" colSpan={3}>
                 {project.designation}
               </TableCell>
             </TableRow>
             <TableRow>
-              <TableCell align="center" rowSpan={2}>
+              <TableCell className={classes.txt} align="center" rowSpan={2}>
                 Contact Information
               </TableCell>
-              <TableCell align="center">
+              <TableCell className={classes.text} align="center">
                 {project.contactInformation.telNumber}
               </TableCell>
-              <TableCell align="center" colSpan={2}>
+              <TableCell className={classes.text} align="center" colSpan={2}>
                 {project.contactInformation.email}
               </TableCell>
             </TableRow>
             <TableRow>
-              <TableCell align="center">
+              <TableCell className={classes.text} align="center">
                 {project.contactInformation.phoneNumber}
               </TableCell>
-              <TableCell align="center" colSpan={2}>
+              <TableCell className={classes.text} align="center" colSpan={2}>
                 {project.contactInformation.others}
               </TableCell>
             </TableRow>
             <TableRow>
-              <TableCell align="center">Date Accomplished</TableCell>
-              <TableCell align="center">
+              <TableCell className={classes.txt} align="center">Date Accomplished</TableCell>
+              <TableCell className={classes.text} align="center">
                 {accomplishedDate.toDateString()}
               </TableCell>
-              <TableCell align="center" colSpan={2}>
+              <TableCell className={classes.text} align="center" colSpan={2}>
                 {project.signature && <img src={project.signature.src} height={100}/>}
                 {!project.signature && (
                   'No Signature'
@@ -279,8 +283,8 @@ function ViewerForm2({ project, proposedProjectCost, setProposedProjectCost, che
               </TableCell>
             </TableRow>
             <TableRow>
-              <TableCell align="center">Attached Files</TableCell>
-              <TableCell align="center" colSpan={3}>
+              <TableCell className={classes.txt} align="center">Attached Files</TableCell>
+              <TableCell className={classes.text} align="center" colSpan={3}>
                 <List>
                   {project.fileList.map((file, index) => (
                     <ListItem key={index}>

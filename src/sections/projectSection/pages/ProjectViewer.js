@@ -215,7 +215,6 @@ function ProjectViewer({ project, priority }) {
             <CardHeader title="Comments" 
             className={classes.cardHeader} 
             />
-          
             <CardContent>
               <CommentList
                 comments={project.commentList}
