@@ -22,7 +22,12 @@ import { form1Validator } from "../../../utils/form1Validator";
 import form2Validator from "../../../utils/form2Validator";
 import { Projects } from "../../../utils/bulsupis_mw";
 import AppBreadcrumb from "../../../shared/components/AppBreadcrumb";
-import { Description, Edit, LibraryBooks } from "@material-ui/icons";
+import {
+  AddCircle,
+  Description,
+  Edit,
+  LibraryBooks,
+} from "@material-ui/icons";
 import { SnackbarContext } from "../../../contexts/SnackbarContext";
 
 function ProjectEditor({ isNew, project }) {
@@ -98,7 +103,7 @@ function ProjectEditor({ isNew, project }) {
           purpose: "",
           beneficiaries: "",
           proposedProjectCost: [
-            { year: (currentDate.getFullYear()).toString(), cost: 0 },
+            { year: currentDate.getFullYear().toString(), cost: 0 },
             { year: (currentDate.getFullYear() + 1).toString(), cost: 0 },
             { year: (currentDate.getFullYear() + 2).toString(), cost: 0 },
           ],
@@ -242,8 +247,8 @@ function ProjectEditor({ isNew, project }) {
         fileList,
         signature.length == 0 ? undefined : signature
       )
-        .then(({simple, full}) => {
-          if(simple) {
+        .then(({ simple, full }) => {
+          if (simple) {
             setSnackbarData({
               type: 0,
               message: "Project created",
@@ -277,8 +282,8 @@ function ProjectEditor({ isNew, project }) {
         fileList,
         signature.length == 0 ? null : signature
       )
-        .then(({simple, full}) => {
-          if(simple) {
+        .then(({ simple, full }) => {
+          if (simple) {
             setSnackbarData({
               type: 0,
               message: "Project edited",
@@ -355,8 +360,24 @@ function ProjectEditor({ isNew, project }) {
             },
             {
               link: `/projects/${project.id}/edit`,
-              label: 'Edit',
+              label: "Edit",
               icon: <Edit fontSize="small" />,
+            },
+          ]}
+        />
+      )}
+      {isNew && (
+        <AppBreadcrumb
+          links={[
+            {
+              link: "/projects",
+              label: "Projects",
+              icon: <LibraryBooks fontSize="small" />,
+            },
+            {
+              link: `/projects/new`,
+              label: "New",
+              icon: <AddCircle fontSize="small" />,
             },
           ]}
         />
