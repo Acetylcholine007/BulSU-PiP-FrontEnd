@@ -84,13 +84,16 @@ function EditorForm2({
       overflowY: "auto",
       padding: 5,
     },
+    cardHeaderAction: {
+      margin: "auto",
+    },
     border: {
-      borderStyle: 'solid',
+      borderStyle: "solid",
       borderWidth: 1,
       borderColor: theme.palette.grey[400],
       borderRadius: 3,
       padding: 10,
-    }
+    },
   }));
 
   const classes = useStyles();
@@ -601,7 +604,7 @@ function EditorForm2({
                   />
                   <label htmlFor="fileUpload">
                     <Button
-                      variant="outlined"
+                      variant="contained"
                       component="span"
                       startIcon={<AddCircleOutline />}
                     >
@@ -611,6 +614,9 @@ function EditorForm2({
                 </React.Fragment>
               }
               className={classes.cardHeader}
+              classes={{
+                action: classes.cardHeaderAction,
+              }}
             />
             <CardContent className={classes.cardContent}>
               <List className={classes.list}>
@@ -683,7 +689,7 @@ function EditorForm2({
                   />
                   <label htmlFor="userSignature">
                     <Button
-                      variant="outlined"
+                      variant="contained"
                       component="span"
                       startIcon={<AddCircleOutline />}
                     >
@@ -693,6 +699,9 @@ function EditorForm2({
                 </React.Fragment>
               }
               className={classes.cardHeader}
+              classes={{
+                action: classes.cardHeaderAction,
+              }}
             />
             <CardContent className={classes.cardContent}>
               <List>

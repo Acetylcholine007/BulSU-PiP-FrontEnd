@@ -30,7 +30,6 @@ const useStyles = makeStyles((theme) => ({
     padding: "10px",
   },
   root: {
-    background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
     border: 0,
     borderRadius: 3,
     boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
@@ -40,7 +39,8 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: 15,
   },
   cardHeader: {
-    backgroundColor: theme.palette.secondary.main,
+    background: "linear-gradient(45deg, #800000 30%, #FF8E53 110%)",
+    color: "white",
   },
   pageTitle: {
     flexGrow: 11,
@@ -56,6 +56,9 @@ const useStyles = makeStyles((theme) => ({
   },
   divider: {
     marginBottom: 15,
+  },
+  cardHeaderAction: {
+    margin: "auto",
   },
 }));
 
@@ -169,7 +172,6 @@ function ProjectViewer({ project, priority }) {
           filename={project.title}
           institute={project.institute.institute}
         />
-      
       </Toolbar>
       <AppBreadcrumb
         links={[
@@ -200,22 +202,22 @@ function ProjectViewer({ project, priority }) {
               <Tab label="PAPs Form" />
               <Tab label="PDO Personnel Feedback" />
             </Tabs>
-            <Card>
-              <CardHeader title={getTitle()} className={classes.cardHeader} />
-              <CardContent>{selectForm(project)}</CardContent>
-            </Card>
+            {selectForm(project)}
           </Grid>
         </Grid>
         <Grid item xs={12}>
           <Divider classes={{ root: classes.subDivider }} />
         </Grid>
         <Grid item xs={12}>
-        
           <Card className={classes.card}>
-            <CardHeader title="Comments" 
-            className={classes.cardHeader} 
+            <CardHeader
+              title="Comments"
+              className={classes.cardHeader}
+              classes={{
+                action: classes.cardHeaderAction,
+              }}
             />
-          
+
             <CardContent>
               <CommentList
                 comments={project.commentList}

@@ -54,6 +54,7 @@ function AdminDashboardPage({ data, user }) {
     },
     card: {
       height: "100%",
+      borderRadius: 20,
     },
     cardHeader: {
       background: "linear-gradient(45deg, #800000 30%, #FF8E53 90%)",

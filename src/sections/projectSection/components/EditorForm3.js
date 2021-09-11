@@ -31,10 +31,28 @@ function EditorForm3({
 }) {
   const useStyles = makeStyles(() => ({
     table: {
-      minWidth: 700,
+      background: "linear-gradient(45deg, #800000 30%, #FF8E53 110%)",
     },
     divider: {
       margin: "20px 0px 20px 0px",
+    },
+    rowTitle: {
+      fontSize: 20,
+      fontStyle: "Bold",
+      color: "white",
+      borderRight: "solid 1px",
+    },
+    rowContent: {
+      fontSize: 20,
+      color: "white",
+      borderLeft: "solid 1px",
+    },
+    textField: {
+      fontSize: 20,
+      color: "white",
+      floatingLabelFocusStyle: {
+        color: "white",
+      },
     },
   }));
 
@@ -43,11 +61,17 @@ function EditorForm3({
   return (
     <React.Fragment>
       <TableContainer component={Paper}>
-        <Table classname={classes.table} aria-label="spanning table">
+        <Table className={classes.table} aria-label="spanning table">
           <TableBody>
             <TableRow>
-              <TableCell align="center">Recieved By</TableCell>
-              <TableCell align="center" colSpan={2}>
+              <TableCell className={classes.rowTitle} align="center">
+                Recieved By
+              </TableCell>
+              <TableCell
+                className={classes.rowContent}
+                align="center"
+                colSpan={2}
+              >
                 <TextField
                   onChange={(e) =>
                     setForm3Data({ ...form3Data, recievedBy: e.target.value })
@@ -62,12 +86,20 @@ function EditorForm3({
                       ? checkerForm3.recievedBy.messages[0]
                       : null
                   }
+                  InputProps={{ className: classes.textField }}
+                  InputLabelProps={{ className: classes.textField }}
                 />
               </TableCell>
             </TableRow>
             <TableRow>
-              <TableCell align="center">Designation</TableCell>
-              <TableCell align="center" colSpan={2}>
+              <TableCell className={classes.rowTitle} align="center">
+                Designation
+              </TableCell>
+              <TableCell
+                className={classes.rowContent}
+                align="center"
+                colSpan={2}
+              >
                 <TextField
                   onChange={(e) =>
                     setForm3Data({
@@ -85,15 +117,19 @@ function EditorForm3({
                       ? checkerForm3.recieverDesignation.messages[0]
                       : null
                   }
+                  InputProps={{ className: classes.textField }}
+                  InputLabelProps={{ className: classes.textField }}
                 />
               </TableCell>
             </TableRow>
             <TableRow>
-              <TableCell align="center">Date Recieved</TableCell>
-              <TableCell align="center">
+              <TableCell className={classes.rowTitle} align="center">
+                Date Recieved
+              </TableCell>
+              <TableCell className={classes.rowContent} align="center">
                 {new Date(form3Data.dateRecieved).toDateString()}
               </TableCell>
-              <TableCell align="center">
+              <TableCell className={classes.rowContent} align="center">
                 {PDOSignature.length == 0 && oldPDOSignature.length == 0 ? (
                   <React.Fragment>
                     <input
@@ -120,7 +156,7 @@ function EditorForm3({
                   <List>
                     {oldPDOSignature.map((file, index) => (
                       <ListItem key={`${index}-old`} component={Card}>
-                      {console.log(file)}
+                        {console.log(file)}
                         <ListItemAvatar>
                           <Avatar>
                             <Folder />
@@ -139,7 +175,7 @@ function EditorForm3({
                     ))}
                     {PDOSignature.map((file, index) => (
                       <ListItem key={`${index}-new`} component={Card}>
-                      {console.log(file)}
+                        {console.log(file)}
                         <ListItemAvatar>
                           <Avatar>
                             <Folder />
@@ -149,9 +185,7 @@ function EditorForm3({
                         <ListItemSecondaryAction>
                           <IconButton
                             edge="end"
-                            onClick={() =>
-                              setPDOSignature([])
-                            }
+                            onClick={() => setPDOSignature([])}
                           >
                             <Delete />
                           </IconButton>

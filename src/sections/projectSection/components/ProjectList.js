@@ -39,13 +39,13 @@ function ProjectList({
       border: "none",
     },
     searchBox: {
-      background: theme.palette.tertiary.light,
+      background: theme.palette.grey[300],
     },
     toolbar: {
-      background: theme.palette.tertiary.main,
+      background: theme.palette.grey[500],
     },
     tableHead: {
-      background: theme.palette.tertiary.main,
+      background: theme.palette.grey[500],
     },
     card: {
       marginBottom: 15,

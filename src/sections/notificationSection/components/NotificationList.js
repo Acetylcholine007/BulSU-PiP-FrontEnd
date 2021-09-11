@@ -29,7 +29,7 @@ function NotificationList({ user: { notificationList } }) {
 
   const useStyles = makeStyles((theme) => ({
     tableHead: {
-      background: theme.palette.tertiary.main,
+      background: theme.palette.grey[500],
       borderRadius: "5px 5px 0px 0px",
     },
     card: {
