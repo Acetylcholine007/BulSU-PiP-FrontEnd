@@ -8,10 +8,12 @@ import {
   makeStyles,
   Card,
   IconButton,
+  Typography,
 } from "@material-ui/core";
 import { Delete } from "@material-ui/icons";
 import { useContext, useState } from "react";
 import { SnackbarContext } from "../../../contexts/SnackbarContext";
+import EmptyTableContent from "../../../shared/components/EmptyTableContent";
 import { Notifications } from "../../../utils/bulsupis_mw";
 import NotificationModal from "./NotificationModal";
 
@@ -50,61 +52,65 @@ function NotificationList({ user: { notificationList } }) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {notificationList.map((notification) => (
-              <TableRow hover key={notification.id}>
-                <TableCell
-                  onClick={(e) => {
-                    selectNotification(notification);
-                  }}
-                >
-                  {notification.header}
-                </TableCell>
-                <TableCell
-                  onClick={(e) => {
-                    selectNotification(notification);
-                  }}
-                >
-                  {notification.author}
-                </TableCell>
-                <TableCell
-                  onClick={(e) => {
-                    selectNotification(notification);
-                  }}
-                >
-                  {new Date(notification.datetime).toDateString()}
-                </TableCell>
-                <TableCell style={{ padding: 0 }}>
-                  <IconButton
-                    onClick={() => {
-                      Notifications.delete(notification.id)
-                        .then(({ simple, full }) => {
-                          if (simple) {
-                            setSnackbarData({
-                              type: 0,
-                              message: "Notification deleted",
-                            });
-                          } else {
-                            console.log(full);
-                            setSnackbarData({
-                              type: 3,
-                              message: full,
-                            });
-                          }
-                        })
-                        .catch((err) =>
-                          setSnackbarData({
-                            type: 3,
-                            message: err.message,
-                          })
-                        )
-                        .finally(() => setShowSnackbar(true));
+            {notificationList.length == 0 && (
+              <EmptyTableContent message="No notifications" span={4} />
+            )}
+            {notificationList.length !== 0 &&
+              notificationList.map((notification) => (
+                <TableRow hover key={notification.id}>
+                  <TableCell
+                    onClick={(e) => {
+                      selectNotification(notification);
                     }}
                   >
-                    <Delete style={{ color: "#f44336" }}/>
-                  </IconButton>
-                </TableCell>
-              </TableRow>
-            ))}
+                    {notification.header}
+                  </TableCell>
+                  <TableCell
+                    onClick={(e) => {
+                      selectNotification(notification);
+                    }}
+                  >
+                    {notification.author}
+                  </TableCell>
+                  <TableCell
+                    onClick={(e) => {
+                      selectNotification(notification);
+                    }}
+                  >
+                    {new Date(notification.datetime).toDateString()}
+                  </TableCell>
+                  <TableCell style={{ padding: 0 }}>
+                    <IconButton
+                      onClick={() => {
+                        Notifications.delete(notification.id)
+                          .then(({ simple, full }) => {
+                            if (simple) {
+                              setSnackbarData({
+                                type: 0,
+                                message: "Notification deleted",
+                              });
+                            } else {
+                              console.log(full);
+                              setSnackbarData({
+                                type: 3,
+                                message: full,
+                              });
+                            }
+                          })
+                          .catch((err) =>
+                            setSnackbarData({
+                              type: 3,
+                              message: err.message,
+                            })
+                          )
+                          .finally(() => setShowSnackbar(true));
+                      }}
+                    >
+                      <Delete style={{ color: "#f44336" }} />
+                    </IconButton>
+                  </TableCell>
+                </TableRow>
+              ))}
           </TableBody>
         </Table>
       </TableContainer>

@@ -18,7 +18,7 @@ import CommentModal from "../components/CommentModal";
 import ViewerForm1 from "../components/ViewerForm1";
 import ViewerForm2 from "../components/ViewerForm2";
 import ViewerForm3 from "../components/ViewerForm3";
-import { Delete, Description, Edit, InsertComment, InsertCommentOutlined, InsertCommentRounded, LibraryBooks } from "@material-ui/icons";
+import { Delete, Description, Edit, LibraryBooks } from "@material-ui/icons";
 import CommentList from "../components/CommentList";
 import PDFExport from "../../../shared/components/PDFExport";
 import { Projects } from "../../../utils/bulsupis_mw";

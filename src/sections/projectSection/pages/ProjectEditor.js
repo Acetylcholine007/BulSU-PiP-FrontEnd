@@ -32,10 +32,10 @@ function ProjectEditor({ isNew, project }) {
   const { user } = useContext(AuthContext);
   const useStyles = makeStyles((theme) => ({
     cardHeader: {
-      backgroundColor: theme.palette.tertiary.main,
+      backgroundColor: theme.palette.secondary.main,
     },
     cardActions: {
-      backgroundColor: theme.palette.tertiary.main,
+      backgroundColor: theme.palette.secondary.main,
       display: "flex",
       justifyContent: "space-evenly",
     },
@@ -58,11 +58,11 @@ function ProjectEditor({ isNew, project }) {
           obligationType: "",
           proponent: "",
           investmentReq: [
-            { year: currentDate.getFullYear().toString(), value: "" },
-            { year: (currentDate.getFullYear() + 1).toString(), value: "" },
-            { year: (currentDate.getFullYear() + 2).toString(), value: "" },
-            { year: (currentDate.getFullYear() + 3).toString(), value: "" },
-            { year: (currentDate.getFullYear() + 4).toString(), value: "" },
+            { year: currentDate.getFullYear().toString(), value: 0 },
+            { year: (currentDate.getFullYear() + 1).toString(), value: 0 },
+            { year: (currentDate.getFullYear() + 2).toString(), value: 0 },
+            { year: (currentDate.getFullYear() + 3).toString(), value: 0 },
+            { year: (currentDate.getFullYear() + 4).toString(), value: 0 },
           ],
           implementationPeriod: { start: null, end: null },
           PAPLevel: 1,
@@ -98,9 +98,9 @@ function ProjectEditor({ isNew, project }) {
           purpose: "",
           beneficiaries: "",
           proposedProjectCost: [
-            { year: "2021", cost: "0" },
-            { year: "2021", cost: "0" },
-            { year: "2021", cost: "0" },
+            { year: (currentDate.getFullYear()).toString(), cost: 0 },
+            { year: (currentDate.getFullYear() + 1).toString(), cost: 0 },
+            { year: (currentDate.getFullYear() + 2).toString(), cost: 0 },
           ],
           proponentName: { surname: "", firstName: "", middleInitial: "" },
           designation: "",
