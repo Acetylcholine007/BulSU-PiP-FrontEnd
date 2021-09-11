@@ -77,6 +77,7 @@ function ViewerForm2({
     .map((project) => parseFloat(project.cost))
     .reduce((a, b) => a + b, 0);
 
+  
   return (
     <React.Fragment>
       <TableContainer component={Paper}>
@@ -355,7 +356,10 @@ function ViewerForm2({
           </TableBody>
         </Table>
       </TableContainer>
+      
       <Divider classes={{ root: classes.divider }} />
+      
+    
       <TableContainer component={Paper}>
         <Table className={classes.table} aria-label="spanning table">
           <TableBody>

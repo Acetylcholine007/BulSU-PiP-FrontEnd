@@ -59,6 +59,17 @@ function ViewerForm1({
         color: "white",
       },
     },
+    txt: {
+      fontSize: 30,
+      fontStyle: 'Bold',
+      color: 'white',
+
+    },
+    text:{
+      fontSize: 24,
+      color: 'white',
+      
+    }
   }));
   const classes = useStyles();
   const startDate = new Date(project.implementationPeriod.start);
