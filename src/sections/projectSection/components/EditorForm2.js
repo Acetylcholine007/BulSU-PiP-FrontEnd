@@ -210,19 +210,17 @@ function EditorForm2({
           />
         </Grid>
         <Grid item xs={12}>
-          <Divider className={classes.divider} />
         </Grid>
         <Grid item xs={12}>
           <Typography variant="h5" display="inline">
             Proposed Project Cost
           </Typography>
-          <Typography variant="h5" display="inline" style = {{marginLeft: 20}}>
+          <Typography variant="h6" display="outline" >
             {getSum()}
           </Typography>
         </Grid>
         {form2Data.proposedProjectCost.map((item, index) => (
           <Grid item xs={4}>
-            <Card>
               <DatePicker
                 autoOk
                 fullWidth
@@ -265,11 +263,9 @@ function EditorForm2({
                     : null
                 }
               />
-            </Card>
           </Grid>
         ))}
         <Grid item xs={12}>
-          <Divider className={classes.divider} />
         </Grid>
         <Grid item xs={12}>
           <Typography variant="h5" display="inline">
@@ -459,12 +455,8 @@ function EditorForm2({
           />
         </Grid>
         <Grid item xs={12}>
-          <Divider className={classes.divider} />
         </Grid>
         <Grid item xs={6} align="center">
-          <Typography variant="h5" align="left" display="inline">
-            Upload Files
-          </Typography>
           <input
             style={{ display: "none" }}
             id="fileUpload"
@@ -537,9 +529,6 @@ function EditorForm2({
           </Paper>
         </Grid>
         <Grid item xs={6} align="center">
-          <Typography variant="h5" align="left" display="inline">
-            Signature
-          </Typography>
           <input
             accept="image/*"
             style={{ display: "none" }}
