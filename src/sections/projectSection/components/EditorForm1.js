@@ -346,7 +346,6 @@ function EditorForm1({ form1Data, setForm1Data, checkerForm1 }) {
           </Grid>
         </Hidden>
         <Grid item xs={12}>
-          <Divider className={classes.divider} />
         </Grid>
         <Grid item xs={12}>
           <TextField
