@@ -1,7 +1,6 @@
 import {
   Card,
   Chip,
-  Divider,
   Grid,
   Hidden,
   makeStyles,
@@ -13,7 +12,6 @@ import {
   TableRow,
   Tabs,
   TextField,
-  Toolbar,
   Typography,
 } from "@material-ui/core";
 import { FunctionsRounded } from "@material-ui/icons";
@@ -81,9 +79,6 @@ function EditorForm1({ form1Data, setForm1Data, checkerForm1 }) {
           />
         </Grid>
         <Grid item xs={12}>
-          <Divider className={classes.divider} />
-        </Grid>
-        <Grid item xs={12}>
           <Tabs
             value={tabIndex}
             onChange={(event, index) => setTabIndex(index)}
@@ -103,7 +98,7 @@ function EditorForm1({ form1Data, setForm1Data, checkerForm1 }) {
             setForm1Data={setForm1Data}
           />
         </Grid>
-        <Grid item xs ={12} md={6}>
+        <Grid item xs={12} md={6}>
           <TextField
             color="primary"
             fullWidth
@@ -129,7 +124,7 @@ function EditorForm1({ form1Data, setForm1Data, checkerForm1 }) {
             ))}
           </TextField>
         </Grid>
-        <Grid item xs ={12} md={6}>
+        <Grid item xs={12} md={6}>
           <TextField
             color="primary"
             fullWidth
@@ -157,7 +152,7 @@ function EditorForm1({ form1Data, setForm1Data, checkerForm1 }) {
               ))}
           </TextField>
         </Grid>
-        <Grid item xs ={12} md={6}>
+        <Grid item xs={12} md={6}>
           <KeyboardDatePicker
             fullWidth
             autoOk
@@ -184,7 +179,7 @@ function EditorForm1({ form1Data, setForm1Data, checkerForm1 }) {
             format="MM/dd/yyyy"
           />
         </Grid>
-        <Grid item xs ={12} md={6}>
+        <Grid item xs={12} md={6}>
           <KeyboardDatePicker
             fullWidth
             autoOk
@@ -212,18 +207,12 @@ function EditorForm1({ form1Data, setForm1Data, checkerForm1 }) {
           />
         </Grid>
         <Grid item xs={12}>
-          <Divider className={classes.divider} />
-        </Grid>
-        <Grid item xs={12}>
-          <Toolbar style={{padding: 0}}>
-            <Typography variant="h5">Investment Requirement</Typography>
-            <Chip
-              label={<Typography variant="h6">{`${getSum()}`}</Typography>}
-              color="primary"
-              icon={<FunctionsRounded />}
-              style={{ marginLeft: "1em" }}
-            />
-          </Toolbar>
+          <Typography variant="h5">Investment Requirement</Typography>
+          <Chip
+            label={<Typography variant="h6">{`${getSum()}`}</Typography>}
+            color="primary"
+            icon={<FunctionsRounded />}
+          />
         </Grid>
         <Hidden mdUp>
           <Grid item xs={12}>
@@ -345,8 +334,6 @@ function EditorForm1({ form1Data, setForm1Data, checkerForm1 }) {
             </Table>
           </Grid>
         </Hidden>
-        <Grid item xs={12}>
-        </Grid>
         <Grid item xs={12}>
           <TextField
             color="primary"

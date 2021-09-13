@@ -2,7 +2,6 @@ import {
   Button,
   Card,
   CardHeader,
-  Divider,
   FormControl,
   FormControlLabel,
   FormLabel,
@@ -26,7 +25,6 @@ import {
   TableBody,
   TableRow,
   TableCell,
-  Toolbar,
   CardContent,
 } from "@material-ui/core";
 import {
@@ -260,14 +258,11 @@ function EditorForm2({
           />
         </Grid>
         <Grid item xs={12}>
-        </Grid>
-        <Grid item xs={12}>
           <Typography variant="h5">Proposed Project Cost</Typography>
           <Chip
             label={<Typography variant="h6">{`${getSum()}`}</Typography>}
             color="primary"
             icon={<FunctionsRounded />}
-            style={{ marginLeft: "1em" }}
           />
         </Grid>
         <Hidden mdUp>
@@ -387,8 +382,6 @@ function EditorForm2({
             </Table>
           </Grid>
         </Hidden>
-        <Grid item xs={12}>
-        </Grid>
         <Grid item xs={12}>
           <Typography variant="h5" display="inline">
             Proponent Information
@@ -576,7 +569,6 @@ function EditorForm2({
             helperText={false ? "Error Password" : null}
           />
         </Grid>
-        <Grid item xs={12}>
         <Grid item xs={12} md={6}>
           <Card className={classes.card}>
             <CardHeader
