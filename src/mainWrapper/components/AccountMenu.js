@@ -39,7 +39,7 @@ function AccountMenu({
 
   const classes = useStyles();
   const history = useHistory();
-  const { user, setUser, setIsLoggedIn } = useContext(AuthContext);
+  const { user, setIsLoggedIn } = useContext(AuthContext);
 
   return (
     <Popover

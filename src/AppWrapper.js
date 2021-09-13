@@ -15,7 +15,6 @@ function AppWrapper() {
           setIsLoggedIn(simple);
         } else {
           setIsLoggedIn(false);
-          setError(full);
         }
       })
       .catch((err) => {

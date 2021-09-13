@@ -18,7 +18,7 @@ import CommentModal from "../components/CommentModal";
 import ViewerForm1 from "../components/ViewerForm1";
 import ViewerForm2 from "../components/ViewerForm2";
 import ViewerForm3 from "../components/ViewerForm3";
-import { Delete, Description, Edit, InsertComment, InsertCommentOutlined, InsertCommentRounded, LibraryBooks } from "@material-ui/icons";
+import { Delete, Description, Edit, LibraryBooks } from "@material-ui/icons";
 import CommentList from "../components/CommentList";
 import PDFExport from "../../../shared/components/PDFExport";
 import { Projects } from "../../../utils/bulsupis_mw";
@@ -30,7 +30,6 @@ const useStyles = makeStyles((theme) => ({
     padding: "10px",
   },
   root: {
-    background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
     border: 0,
     borderRadius: 3,
     boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
@@ -40,7 +39,8 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: 15,
   },
   cardHeader: {
-    backgroundColor: theme.palette.secondary.main,
+    background: "linear-gradient(45deg, #800000 30%, #FF8E53 110%)",
+    color: "white",
   },
   pageTitle: {
     flexGrow: 11,
@@ -56,6 +56,9 @@ const useStyles = makeStyles((theme) => ({
   },
   divider: {
     marginBottom: 15,
+  },
+  cardHeaderAction: {
+    margin: "auto",
   },
 }));
 
@@ -125,19 +128,6 @@ function ProjectViewer({ project, priority }) {
     }
   };
 
-  const getTitle = () => {
-    switch (tabIndex) {
-      case 0:
-        return "Investment Programming Entry";
-      case 1:
-        return "PAPs Form";
-      case 2:
-        return "PDO Personnel Feedback";
-      default:
-        return null;
-    }
-  };
-
   return (
     <React.Fragment>
       <Toolbar>
@@ -169,7 +159,6 @@ function ProjectViewer({ project, priority }) {
           filename={project.title}
           institute={project.institute.institute}
         />
-      
       </Toolbar>
       <AppBreadcrumb
         links={[
@@ -200,22 +189,21 @@ function ProjectViewer({ project, priority }) {
               <Tab label="PAPs Form" />
               <Tab label="PDO Personnel Feedback" />
             </Tabs>
-            <Card>
-              <CardHeader title={getTitle()} className={classes.cardHeader} />
-              <CardContent>{selectForm(project)}</CardContent>
-            </Card>
+            {selectForm(project)}
           </Grid>
         </Grid>
         <Grid item xs={12}>
           <Divider classes={{ root: classes.subDivider }} />
         </Grid>
         <Grid item xs={12}>
-        
           <Card className={classes.card}>
-            <CardHeader title="Comments" 
-            className={classes.cardHeader} 
+            <CardHeader
+              title="Comments"
+              className={classes.cardHeader}
+              classes={{
+                action: classes.cardHeaderAction,
+              }}
             />
-          
             <CardContent>
               <CommentList
                 comments={project.commentList}

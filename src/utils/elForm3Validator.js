@@ -10,11 +10,11 @@ function elForm3Validator({recievedBy, recieverDesignation}) {
       },
     };
   
-    if (recievedBy == "" || recievedBy == undefined) {
+    if (recievedBy === "" || recievedBy == undefined) {
       result.recievedBy.error = true;
       result.recievedBy.messages.push("Invalid Reciever Name");
     }
-    if (recieverDesignation == "" || recieverDesignation == undefined) {
+    if (recieverDesignation === "" || recieverDesignation == undefined) {
       result.recieverDesignation.error = true;
       result.recieverDesignation.messages.push("Invalid Reciever Designation");
     }

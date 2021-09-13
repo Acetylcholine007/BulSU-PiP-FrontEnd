@@ -6,7 +6,7 @@ function accountEditorValidator(password) {
       },
     };
   
-    if (password == "") {
+    if (password === "") {
       result.password.error = true;
       result.password.messages.push("Password cannot be blank");
     } else {

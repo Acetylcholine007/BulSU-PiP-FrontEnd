@@ -56,7 +56,8 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: 15,
   },
   cardHeader: {
-    backgroundColor: theme.palette.tertiary.main,
+    background: "linear-gradient(45deg, #800000 30%, #FF8E53 110%)",
+    color: "white",
   },
   pageTitle: {
     flexGrow: 11,
@@ -108,6 +109,9 @@ const useStyles = makeStyles((theme) => ({
     "&:hover": {
       backgroundColor: "#E57373",
     },
+  },
+  cardHeaderAction: {
+    margin: "auto",
   },
 }));
 
@@ -254,19 +258,6 @@ function ElevatedProjectViewer({ project, priority, instituteId }) {
     }
   };
 
-  const getTitle = () => {
-    switch (tabIndex) {
-      case 0:
-        return "Investment Programming Entry";
-      case 1:
-        return "PAPs Form";
-      case 2:
-        return "PDO Personnel Feedback";
-      default:
-        return null;
-    }
-  };
-
   return (
     <React.Fragment>
       <Toolbar>
@@ -318,6 +309,22 @@ function ElevatedProjectViewer({ project, priority, instituteId }) {
             Reject
           </Button>
         </ButtonGroup>
+        {tabIndex === 2 && project.dateRecieved === undefined && (
+          <Button
+            variant="contained"
+            onClick={() => {
+              setForm3Data({
+                ...form3Data,
+                dateRecieved: new Date().toISOString(),
+              });
+              setShowForm3Editor(!showForm3Editor);
+            }}
+            startIcon={showForm3Editor ? <CheckCircle /> : <Edit />}
+            className={classes.button}
+          >
+            {showForm3Editor ? "Done" : "Edit"}
+          </Button>
+        )}
         <Button
           variant="contained"
           startIcon={<Save />}
@@ -442,29 +449,7 @@ function ElevatedProjectViewer({ project, priority, instituteId }) {
               <Tab label="PAPs Form" />
               <Tab label="PDO Personnel Feedback" />
             </Tabs>
-            <Card>
-              <CardHeader
-                title={getTitle()}
-                className={classes.cardHeader}
-                action={
-                  tabIndex === 2 && project.dateRecieved === undefined ? (
-                    <Button
-                      variant="outlined"
-                      onClick={() => {
-                        setForm3Data({
-                          ...form3Data,
-                          dateRecieved: new Date().toISOString(),
-                        });
-                        setShowForm3Editor(!showForm3Editor);
-                      }}
-                    >
-                      {showForm3Editor ? "Done" : "Edit"}
-                    </Button>
-                  ) : null
-                }
-              />
-              <CardContent>{selectForm(project)}</CardContent>
-            </Card>
+            {selectForm(project)}
           </Grid>
           <Grid item xs={12}>
             <Divider classes={{ root: classes.subDivider }} />
@@ -474,9 +459,12 @@ function ElevatedProjectViewer({ project, priority, instituteId }) {
               <CardHeader
                 title="Comments"
                 className={classes.cardHeader}
+                classes={{
+                  action: classes.cardHeaderAction,
+                }}
                 action={
                   <Button
-                    variant="outlined"
+                    variant="contained"
                     startIcon={<AddCircleOutline />}
                     onClick={() => {
                       setAddCommentOpen(true);

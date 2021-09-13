@@ -13,7 +13,7 @@ import {
   Checkbox,
   FormControlLabel,
 } from "@material-ui/core";
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 import { statuses } from "../../../utils/constants";
 

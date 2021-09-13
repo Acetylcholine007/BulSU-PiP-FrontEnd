@@ -1,19 +1,21 @@
-import { ButtonBase, makeStyles } from "@material-ui/core";
 import {
   Divider,
   List,
   ListItem,
   ListItemText,
   Typography,
+  Grid,
+  makeStyles,
+  Button,
 } from "@material-ui/core";
+import { Block } from "@material-ui/icons";
 import React from "react";
 
 function DashboardNotificationList({ notifications, selectNotification }) {
   const useStyles = makeStyles(() => ({
-    item: {
-      border: "1px solid #D3D3D3",
-      borderRadius: 5,
-      margin: "10px 0px 10px 0px",
+    button: {
+      textTransform: "none",
+      marginBottom: 10
     },
   }));
 
@@ -21,14 +23,25 @@ function DashboardNotificationList({ notifications, selectNotification }) {
 
   return (
     <List dense>
-      {notifications.map((notification) => (
-        <div className={classes.item} key={notification.id}>
-          <ButtonBase
-            focusRipple
+      {notifications.length == 0 && (
+        <Grid container align="center">
+          <Grid item xs={12} align="center">
+            <Block className={classes.icon} color="action" />
+          </Grid>
+          <Grid item xs={12} align="center">
+            <Typography variant="h5">No notifications to show</Typography>
+          </Grid>
+        </Grid>
+      )}
+      {notifications.length !== 0 &&
+        notifications.map((notification) => (
+          <Button
+            className={classes.button}
             key={notification.id}
             onClick={() => selectNotification(notification)}
+            variant="outlined"
           >
-            <ListItem alignItems="flex-start" dense button>
+            <ListItem alignItems="flex-start" dense>
               <ListItemText
                 primary={
                   <Typography variant="h6">{notification.header}</Typography>
@@ -46,9 +59,8 @@ function DashboardNotificationList({ notifications, selectNotification }) {
                 }
               />
             </ListItem>
-          </ButtonBase>
-        </div>
-      ))}
+          </Button>
+        ))}
     </List>
   );
 }

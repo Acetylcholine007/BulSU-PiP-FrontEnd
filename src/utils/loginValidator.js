@@ -11,12 +11,12 @@ function loginValidator(email, password) {
       
     };
   
-    if (email == "") {
+    if (email === "") {
       result.email.error = true;
       result.email.messages.push("Email cannot be blank");
     } 
     
-    if (password == "") {
+    if (password === "") {
       result.password.error = true;
       result.password.messages.push("Password cannot be blank");
       

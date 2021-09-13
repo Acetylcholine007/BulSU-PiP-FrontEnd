@@ -1,4 +1,4 @@
-import { Button, Snackbar } from "@material-ui/core";
+import { Snackbar } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 import React, { useContext } from "react";
 import { SnackbarContext } from "../../contexts/SnackbarContext";

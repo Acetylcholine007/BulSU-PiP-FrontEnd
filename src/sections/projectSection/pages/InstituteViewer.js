@@ -10,7 +10,7 @@ import {
 } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import React, { useContext, useState } from "react";
-import { Add, Domain, Home, Save, Settings } from "@material-ui/icons";
+import { Add, Domain, Save, Settings } from "@material-ui/icons";
 
 import ProjectList from "../components/ProjectList";
 import ProjectFilterDialog from "../components/ProjectFilterDialog";

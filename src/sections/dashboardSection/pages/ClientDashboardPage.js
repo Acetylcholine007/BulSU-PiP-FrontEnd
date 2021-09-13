@@ -10,7 +10,9 @@ import {
   List,
   ListItem,
   Box,
+  Hidden,
 } from "@material-ui/core";
+import { Block } from "@material-ui/icons";
 
 import CostChart from "../components/CostChart";
 import DashboardNotificationList from "../components/DashboardNotificationList";
@@ -50,15 +52,19 @@ function ClientDashboardPage({ data, user }) {
       textAlign: "left",
       height: "100%",
       overflowY: "auto",
-      padding: "0px 20px 0px 20px",
+      padding: "5px 20px 5px 20px",
+      fontWeight: 600,
     },
     avatarLogo: {
       width: "auto",
       height: "auto",
+      display: "flex",
+      flexDirection: "column",
       justifyContent: "center",
     },
     card: {
       height: "100%",
+      borderRadius: 20,
     },
     cardHeader: {
       background: "linear-gradient(45deg, #800000 30%, #FF8E53 90%)",
@@ -90,22 +96,45 @@ function ClientDashboardPage({ data, user }) {
       padding: "10px 10px 0px 10px",
       height: "50%",
     },
-    list: {},
+    institute: {
+      fontSize: 40,
+      fontWeight: "bold",
+      marginTop: 15,
+    },
+    listItem: {
+      border: "1px solid",
+      borderColor: theme.palette.grey[300],
+      borderRadius: 5,
+      marginBottom: 10,
+      backgroundColor: theme.palette.grey[300],
+    },
+    icon: {
+      fontSize: "5em",
+    },
   }));
 
   const classes = useStyles();
 
-  const statusContent = (status) => {
+  const statusContent = (status, label) => {
     let projects = user.projectList.filter(
       (project) => project.status == status
     );
     if (projects.length == 0) {
-      return <Typography>There is no content for now</Typography>;
+      return (
+        <Grid container>
+          <Grid item xs={12} align="center">
+            <Block className={classes.icon} color="action" />
+          </Grid>
+          <Grid item xs={12} align="center">
+            <Typography variant="body1">{`No ${label} projects yet`}</Typography>
+          </Grid>
+        </Grid>
+      );
     } else if (projects.length <= 3) {
       return (
         <List>
           {projects.map((item, index) => (
-            <ListItem>{item.title}</ListItem>
+            <ListItem className={classes.listItem}>{item.title}</ListItem>
           ))}
         </List>
       );
@@ -113,7 +142,7 @@ function ClientDashboardPage({ data, user }) {
       return (
         <List>
           {projects.slice(0, 3).map((item) => (
-            <ListItem>{item.title}</ListItem>
+            <ListItem className={classes.listItem}>{item.title}</ListItem>
           ))}
         </List>
       );
@@ -140,7 +169,8 @@ function ClientDashboardPage({ data, user }) {
                     variant="h4"
                     style={{
                       verticalAlign: "middle",
-                      paddingLeft: '1em'
+                      paddingLeft: "1em",
+                      fontWeight: "bold",
                     }}
                   >
                     {" "}
@@ -150,61 +180,76 @@ function ClientDashboardPage({ data, user }) {
                   </Typography>
                 </Box>
               </Grid>
-              <Grid item md={3} xs={12} className={classes.upperInnerGridItem}>
-                <Card className={classes.card}>
-                  <CardHeader
-                    className={classes.cardTextHeader}
-                    title="Completed"
-                  />
-                  <CardContent className={classes.cardTextContent}>
-                    {statusContent(4)}
-                  </CardContent>
-                </Card>
-              </Grid>
-              <Grid item md={3} xs={6} className={classes.lowerInnerGridItem}>
-                <Card className={classes.card}>
-                  <CardHeader
-                    className={classes.cardTextHeader}
-                    title="Revision"
-                  />
-                  <CardContent className={classes.cardTextContent}>
-                    {statusContent(2)}
-                  </CardContent>
-                </Card>
-              </Grid>
-              <Grid item md={3} xs={6} className={classes.lowerInnerGridItem}>
-                <Card className={classes.card}>
-                  <CardHeader
-                    className={classes.cardTextHeader}
-                    title="On-Going"
-                  />
-                  <CardContent className={classes.cardTextContent}>
-                    {statusContent(3)}
-                  </CardContent>
-                </Card>
-              </Grid>
-              <Grid item md={3} xs={6} className={classes.lowerInnerGridItem}>
-                <Card className={classes.card}>
-                  <CardHeader
-                    className={classes.cardTextHeader}
-                    title="Rejected"
-                  />
-                  <CardContent className={classes.cardTextContent}>
-                    {statusContent(0)}
-                  </CardContent>
-                </Card>
-              </Grid>
-              <Grid item md={3} xs={6} className={classes.lowerInnerGridItem}>
-                <Card className={classes.card}>
-                  <CardHeader
-                    className={classes.cardTextHeader}
-                    title="Proposed"
-                  />
-                  <CardContent className={classes.cardTextContent}>
-                    {statusContent(1)}
-                  </CardContent>
-                </Card>
-              </Grid>
+              <Hidden xsDown>
+                <Grid
+                  item
+                  md={3}
+                  xs={12}
+                  className={classes.upperInnerGridItem}
+                >
+                  <Card className={classes.card}>
+                    <CardHeader
+                      className={classes.cardTextHeader}
+                      title="Completed"
+                    />
+                    <CardContent className={classes.cardTextContent}>
+                      {statusContent(4, "Completed")}
+                    </CardContent>
+                  </Card>
+                </Grid>
+              </Hidden>
+              <Hidden xsDown>
+                <Grid item md={3} xs={6} className={classes.lowerInnerGridItem}>
+                  <Card className={classes.card}>
+                    <CardHeader
+                      className={classes.cardTextHeader}
+                      title="Proposed"
+                    />
+                    <CardContent className={classes.cardTextContent}>
+                      {statusContent(1, "Proposed")}
+                    </CardContent>
+                  </Card>
+                </Grid>
+              </Hidden>
+              <Hidden xsDown>
+                <Grid item md={3} xs={6} className={classes.lowerInnerGridItem}>
+                  <Card className={classes.card}>
+                    <CardHeader
+                      className={classes.cardTextHeader}
+                      title="Revision"
+                    />
+                    <CardContent className={classes.cardTextContent}>
+                      {statusContent(2, "Revision")}
+                    </CardContent>
+                  </Card>
+                </Grid>
+              </Hidden>
+              <Hidden xsDown>
+                <Grid item md={3} xs={6} className={classes.lowerInnerGridItem}>
+                  <Card className={classes.card}>
+                    <CardHeader
+                      className={classes.cardTextHeader}
+                      title="On-Going"
+                    />
+                    <CardContent className={classes.cardTextContent}>
+                      {statusContent(3, "On-Going")}
+                    </CardContent>
+                  </Card>
+                </Grid>
+              </Hidden>
+              <Hidden xsDown>
+                <Grid item md={3} xs={6} className={classes.lowerInnerGridItem}>
+                  <Card className={classes.card}>
+                    <CardHeader
+                      className={classes.cardTextHeader}
+                      title="Rejected"
+                    />
+                    <CardContent className={classes.cardTextContent}>
+                      {statusContent(0, "Rejected")}
+                    </CardContent>
+                  </Card>
+                </Grid>
+              </Hidden>
             </Grid>
           </Grid>
           <Grid item md={4} xs={12} className={classes.gridItem}>
@@ -219,7 +264,7 @@ function ClientDashboardPage({ data, user }) {
           </Grid>
         </Grid>
       </Box>
-      <Box style={{ flexGrow: 7 }}>
+      <Box style={{ flexGrow: 2 }}>
         <Grid container className={classes.gridContainer}>
           <Grid item md={7} xs={12} className={classes.gridItem}>
             <Card className={classes.card}>
