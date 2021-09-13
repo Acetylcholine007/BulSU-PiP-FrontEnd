@@ -260,18 +260,15 @@ function EditorForm2({
           />
         </Grid>
         <Grid item xs={12}>
-          <Divider className={classes.divider} />
         </Grid>
         <Grid item xs={12}>
-          <Toolbar style={{ padding: 0 }}>
-            <Typography variant="h5">Proposed Project Cost</Typography>
-            <Chip
-              label={<Typography variant="h6">{`${getSum()}`}</Typography>}
-              color="primary"
-              icon={<FunctionsRounded />}
-              style={{ marginLeft: "1em" }}
-            />
-          </Toolbar>
+          <Typography variant="h5">Proposed Project Cost</Typography>
+          <Chip
+            label={<Typography variant="h6">{`${getSum()}`}</Typography>}
+            color="primary"
+            icon={<FunctionsRounded />}
+            style={{ marginLeft: "1em" }}
+          />
         </Grid>
         <Hidden mdUp>
           <Grid item xs={12}>
@@ -391,7 +388,6 @@ function EditorForm2({
           </Grid>
         </Hidden>
         <Grid item xs={12}>
-          <Divider className={classes.divider} />
         </Grid>
         <Grid item xs={12}>
           <Typography variant="h5" display="inline">
@@ -581,8 +577,6 @@ function EditorForm2({
           />
         </Grid>
         <Grid item xs={12}>
-          <Divider className={classes.divider} />
-        </Grid>
         <Grid item xs={12} md={6}>
           <Card className={classes.card}>
             <CardHeader
