@@ -50,9 +50,9 @@ function MainDrawer({ drawerWidth, open, handleDrawerClose }) {
       drawerSubHeader: {
         display: "block",
         alignItems: "center",
-        backgroundColor: "#CDCECB",
         borderRadius: "0px 0px 15px 15px",
         padding: 15,
+        color: 'white'
       },
 
       active: {
@@ -64,13 +64,16 @@ function MainDrawer({ drawerWidth, open, handleDrawerClose }) {
       listItemContent: {
         color: "white",
       },
+      h5: {
+        fontSize: '1.6rem'
+      }
     };
   });
 
   const ListItem = withStyles({
     root: {
       "&:hover": {
-        backgroundColor: "rgba(247,204,0,0.3)",
+        backgroundColor: "rgba(255,255,255,0.1)",
         color: "white",
         "& .MuiListItemIcon-root": {
           color: "white",
@@ -110,7 +113,7 @@ function MainDrawer({ drawerWidth, open, handleDrawerClose }) {
           background-position="center"
           alt="BSU Logo"
         />
-        <Typography variant="h5">BULACAN STATE UNIVERSITY</Typography>
+        <Typography variant="h5" classes={{h5: classes.h5}}>BULACAN STATE UNIVERSITY</Typography>
       </Container>
       <List>
         <React.Fragment>

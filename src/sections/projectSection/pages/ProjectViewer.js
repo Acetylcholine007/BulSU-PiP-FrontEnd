@@ -131,7 +131,7 @@ function ProjectViewer({ project, priority }) {
   return (
     <React.Fragment>
       <Toolbar>
-        <Typography variant="h3" className={classes.pageTitle}>
+        <Typography variant="h4" className={classes.pageTitle}>
           {"Project Viewer"}
         </Typography>
         <Button

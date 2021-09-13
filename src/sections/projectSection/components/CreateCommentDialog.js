@@ -73,7 +73,7 @@ function CreateCommentDialog({
                   if (simple) {
                     setComments([
                       ...comments,
-                      { ...simple.data, author: "Editor" },
+                      { ...simple.data, author: {institute: "Editor"} },
                     ]);
                     setLocalComment({
                       message: "",

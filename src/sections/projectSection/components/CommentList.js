@@ -73,6 +73,7 @@ function CommentList({ comments, selectComment, newComments }) {
             className={classes.button}
             onClick={() => selectComment(comment)}
             key={comment.datetime}
+            fullWidth
             variant="outlined"
           >
             <ListItem alignItems="flex-start" dense>
