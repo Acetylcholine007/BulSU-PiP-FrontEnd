@@ -30,7 +30,7 @@ function ProjectFilterDialog({ open, setOpen, filter, setFilter }) {
         <Grid container>
           <Grid item xs={11}>
             <DialogContentText>
-              Total Investment Requirement Range (per 100,000)
+              Total Investment Requirement Range (per 10,000,000)
             </DialogContentText>
           </Grid>
           <Grid item xs={1}>
@@ -56,38 +56,6 @@ function ProjectFilterDialog({ open, setOpen, filter, setFilter }) {
                 })
               }
               disabled={!filter.investmentReq.enabled}
-              valueLabelDisplay="auto"
-              aria-labelledby="range-slider"
-            />
-          </Grid>
-          <Grid item xs={11}>
-            <DialogContentText>
-              Total Project Cost Range (per 100,000)
-            </DialogContentText>
-          </Grid>
-          <Grid item xs={1}>
-            <Switch
-              checked={filter.projectCost.enabled}
-              onChange={(e) =>
-                setFilter(() => {
-                  var newFilter = { ...filter };
-                  newFilter.projectCost.enabled = e.target.checked;
-                  return newFilter;
-                })
-              }
-            ></Switch>
-          </Grid>
-          <Grid item xs={12}>
-            <Slider
-              value={filter.projectCost.value}
-              onChange={(e, val) =>
-                setFilter(() => {
-                  var newFilter = { ...filter };
-                  newFilter.projectCost.value = val;
-                  return newFilter;
-                })
-              }
-              disabled={!filter.projectCost.enabled}
               valueLabelDisplay="auto"
               aria-labelledby="range-slider"
             />

@@ -79,6 +79,7 @@ function InstituteViewer({ institute, user }) {
         {user.type === 0 && (
           <Button
             className={classes.button}
+            color='primary'
             variant="contained"
             startIcon={<Add />}
             onClick={() => {

@@ -12,7 +12,7 @@ import {
   TableBody,
   Card,
 } from "@material-ui/core";
-import { FilterList, Search } from "@material-ui/icons";
+import { DragHandle, FilterList, Search } from "@material-ui/icons";
 import React, { useEffect, useState } from "react";
 import { useContext } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
@@ -70,7 +70,6 @@ function ProjectList({
 
   const filterLogic = (project) => {
     var investmentFilterPassed = true;
-    var projectCostFilterPassed = true;
     var statusFilterPassed = true;
     var searchFilterPassed = true;
 
@@ -79,17 +78,8 @@ function ProjectList({
         .map((item) => parseFloat(item.value))
         .reduce((a, b) => a + b, 0);
       investmentFilterPassed =
-        sum >= filter.investmentReq.value[0] * 100000 &&
-        sum <= filter.investmentReq.value[1] * 100000;
-    }
-
-    if (filter.projectCost.enabled) {
-      let sum = project.proposedProjectCost
-        .map((item) => parseFloat(item.cost))
-        .reduce((a, b) => a + b, 0);
-      projectCostFilterPassed =
-        sum >= filter.projectCost.value[0] * 100000 &&
-        sum <= filter.projectCost.value[1] * 100000;
+        sum >= filter.investmentReq.value[0] * 10000000 &&
+        sum <= filter.investmentReq.value[1] * 10000000;
     }
 
     if (filter.status.enabled) {
@@ -102,12 +92,7 @@ function ProjectList({
         .includes(filter.search.toLowerCase());
     }
 
-    return (
-      investmentFilterPassed &&
-      projectCostFilterPassed &&
-      statusFilterPassed &&
-      searchFilterPassed
-    );
+    return investmentFilterPassed && statusFilterPassed && searchFilterPassed;
   };
 
   const sortingLogic = (projectId) =>
@@ -190,11 +175,15 @@ function ProjectList({
         <Table>
           <TableHead className={classes.tableHead}>
             <TableRow>
-              <TableCell>Priority</TableCell>
+              {user.type === 0 && (
+                <TableCell width="5%" align="center">
+                  Drag Handle
+                </TableCell>
+              )}
+              <TableCell align="center">Priority</TableCell>
               <TableCell>Title</TableCell>
               <TableCell>Proponent</TableCell>
               <TableCell>Total Investment Requirement</TableCell>
-              <TableCell>Total Project Cost</TableCell>
               <TableCell align="center">Status</TableCell>
             </TableRow>
           </TableHead>
@@ -231,16 +220,18 @@ function ProjectList({
                               key={project.id}
                               onClick={() => handleClick(project)}
                             >
-                              <TableCell>
+                              {user.type === 0 && (
+                                <TableCell align="center">
+                                  <DragHandle />
+                                </TableCell>
+                              )}
+                              <TableCell align="center" align="center">
                                 {localPrio.indexOf(project.id) + 1}
                               </TableCell>
                               <TableCell>{project.title}</TableCell>
                               <TableCell>{project.proponent}</TableCell>
                               <TableCell>{`Php ${project.investmentReq
                                 .map((item) => parseFloat(item.value))
-                                .reduce((a, b) => a + b, 0)}`}</TableCell>
-                              <TableCell>{`Php ${project.proposedProjectCost
-                                .map((item) => parseFloat(item.cost))
                                 .reduce((a, b) => a + b, 0)}`}</TableCell>
                               <TableCell
                                 align="center"

@@ -3,18 +3,11 @@ function form2Validator({
   description,
   purpose,
   beneficiaries,
-  proposedProjectCost,
   proponentName: { surname: surName, firstName },
   designation,
   contactInformation: { telNumber: telephoneNumber, email, phoneNumber },
 }) {
   const result = {
-    proposedProjectCost: [
-      { error: false, messages: [] },
-      { error: false, messages: [] },
-      { error: false, messages: [] },
-    ],
-
     email: {
       error: false,
       messages: [],
@@ -134,34 +127,6 @@ function form2Validator({
       result.phoneNumber.messages.push("Invalid Phone Number");
     }
   }
-
-  proposedProjectCost.forEach((item, index) => {
-    if (item.cost === "") {
-      result.proposedProjectCost[index].error = true;
-      result.proposedProjectCost[index].messages.push("Please input a value");
-    } else {
-      let isNumber = !isNaN(item.cost);
-      console.log(isNumber);
-      if (isNumber) {
-        let number = parseFloat(item.cost);
-        if (number < 0) {
-          result.proposedProjectCost[index].error = true;
-          result.proposedProjectCost[index].messages.push(
-            "The value is smaller than 0"
-          );
-        } else if (number > 10000000)
-          result.proposedProjectCost[index].error = true;
-        result.proposedProjectCost[index].messages.push(
-          "The value is larger than 10,000,000"
-        );
-      } else {
-        result.proposedProjectCost[index].error = true;
-        result.proposedProjectCost[index].messages.push(
-          "The value is not a number"
-        );
-      }
-    }
-  });
 
   return result;
 }

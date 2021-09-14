@@ -15,6 +15,7 @@ function SheetExport({ institutes, filename, buttonLabel }) {
       element={
         <Button
           variant="contained"
+          color='primary'
           startIcon={<GetApp />}
           style={{ marginLeft: 10 }}
         >

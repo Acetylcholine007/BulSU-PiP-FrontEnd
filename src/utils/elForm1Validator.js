@@ -21,21 +21,11 @@ export const elForm1Validator = (investmentReq) => {
         if (number < 0) {
           result.investmentReq[index].error = true;
           result.investmentReq[index].messages.push("Smaller than 0");
-        } else if (number > 10000000) result.investmentReq[index].error = true;
-        result.investmentReq[index].messages.push("Larger than 10,000,000");
+        }
       } else {
         result.investmentReq[index].error = true;
         result.investmentReq[index].messages.push("Not a number");
       }
-    }
-
-    if (item.value.length >= 9) {
-      result.investmentReq[index].error = true;
-      result.investmentReq[index].messages.push("It must not exceeded by 100M");
-    }
-    if (isNaN(item.value)) {
-      result.investmentReq[index].error = true;
-      result.investmentReq[index].messages.push("Numbers only");
     }
   });
 

@@ -86,11 +86,11 @@ function EditorForm1({ form1Data, setForm1Data, checkerForm1 }) {
             textColor="primary"
             variant="fullWidth"
           >
-            <Tab label="1st" />
-            <Tab label="2nd" />
-            <Tab label="3rd" />
-            <Tab label="4th" />
-            <Tab label="5th" />
+            <Tab label="Goal 1" />
+            <Tab label="Goal 2" />
+            <Tab label="Goal 3" />
+            <Tab label="Goal 4" />
+            <Tab label="Goal 5" />
           </Tabs>
           <GSPPicker
             index={tabIndex}

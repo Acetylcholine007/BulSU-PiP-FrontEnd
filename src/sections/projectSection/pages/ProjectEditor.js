@@ -100,11 +100,6 @@ function ProjectEditor({ isNew, project }) {
           description: "",
           purpose: "",
           beneficiaries: "",
-          proposedProjectCost: [
-            { year: currentDate.getFullYear().toString(), cost: 0 },
-            { year: (currentDate.getFullYear() + 1).toString(), cost: 0 },
-            { year: (currentDate.getFullYear() + 2).toString(), cost: 0 },
-          ],
           proponentName: { surname: "", firstName: "", middleInitial: "" },
           designation: "",
           contactInformation: {
@@ -122,7 +117,6 @@ function ProjectEditor({ isNew, project }) {
           description: project.description,
           purpose: project.purpose,
           beneficiaries: project.beneficiaries,
-          proposedProjectCost: project.proposedProjectCost,
           proponentName: project.proponentName,
           designation: project.designation,
           contactInformation: project.contactInformation,
@@ -196,12 +190,6 @@ function ProjectEditor({ isNew, project }) {
       error: false,
       messages: [],
     },
-
-    proposedProjectCost: [
-      { error: false, messages: [] },
-      { error: false, messages: [] },
-      { error: false, messages: [] },
-    ],
 
     surName: {
       error: false,
@@ -448,10 +436,7 @@ function ProjectEditor({ isNew, project }) {
                             !checker.firstName.error &&
                             !checker.telephoneNumber.error &&
                             !checker.email.error &&
-                            !checker.phoneNumber.error &&
-                            checker.proposedProjectCost
-                              .map((item) => !item.error)
-                              .reduce((a, b) => a && b)
+                            !checker.phoneNumber.error
                           ) {
                             handleSubmit();
                           }

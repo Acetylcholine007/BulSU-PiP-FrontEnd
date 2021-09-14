@@ -17,10 +17,7 @@ import GSPViewer from "./GSPViewer";
 
 function ViewerForm1({
   project,
-  investmentReq,
-  setInvestmentReq,
   status,
-  checkerForm1,
 }) {
   const useStyles = makeStyles(() => ({
     table: {
@@ -158,55 +155,21 @@ function ViewerForm1({
             </TableCell>
           </TableRow>
           <TableRow>
-            {user.type === 0 && (
-              <React.Fragment>
-                <TableCell className={classes.rowContent} align="center">
-                  {`Php ${project.investmentReq[0].value}`}
-                </TableCell>
-                <TableCell className={classes.rowContent} align="center">
-                  {`Php ${project.investmentReq[1].value}`}
-                </TableCell>
-                <TableCell className={classes.rowContent} align="center">
-                  {`Php ${project.investmentReq[2].value}`}
-                </TableCell>
-                <TableCell className={classes.rowContent} align="center">
-                  {`Php ${project.investmentReq[3].value}`}
-                </TableCell>
-                <TableCell className={classes.rowContent} align="center">
-                  {`Php ${project.investmentReq[4].value}`}
-                </TableCell>
-              </React.Fragment>
-            )}
-            {user.type === 2 &&
-              investmentReq.map((investment, index) => (
-                <TableCell
-                  className={classes.rowContent}
-                  align="center"
-                  key={investment.year}
-                >
-                  <TextField
-                    onChange={(e) => {
-                      setInvestmentReq(() => {
-                        var newData = [...investmentReq];
-                        newData[index].value = e.target.value;
-                        return newData;
-                      });
-                    }}
-                    label="Value"
-                    variant="outlined"
-                    fullWidth
-                    error={checkerForm1.investmentReq[index].error}
-                    helperText={
-                      checkerForm1.investmentReq[index].error
-                        ? checkerForm1.investmentReq[index].messages[0]
-                        : null
-                    }
-                    value={investment.value}
-                    InputProps={{ className: classes.textField }}
-                    InputLabelProps={{ className: classes.textField }}
-                  />
-                </TableCell>
-              ))}
+            <TableCell className={classes.rowContent} align="center">
+              {`Php ${project.investmentReq[0].value}`}
+            </TableCell>
+            <TableCell className={classes.rowContent} align="center">
+              {`Php ${project.investmentReq[1].value}`}
+            </TableCell>
+            <TableCell className={classes.rowContent} align="center">
+              {`Php ${project.investmentReq[2].value}`}
+            </TableCell>
+            <TableCell className={classes.rowContent} align="center">
+              {`Php ${project.investmentReq[3].value}`}
+            </TableCell>
+            <TableCell className={classes.rowContent} align="center">
+              {`Php ${project.investmentReq[4].value}`}
+            </TableCell>
           </TableRow>
           <TableRow>
             <TableCell className={classes.rowTitle} align="center">

@@ -9,7 +9,6 @@ import {
   makeStyles,
   Checkbox,
   Divider,
-  TextField,
   List,
   ListItem,
   ListItemAvatar,
@@ -23,12 +22,7 @@ import React, { useContext } from "react";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { Folder, GetApp } from "@material-ui/icons";
 
-function ViewerForm2({
-  project,
-  proposedProjectCost,
-  setProposedProjectCost,
-  checkerForm2,
-}) {
+function ViewerForm2({ project }) {
   const useStyles = makeStyles(() => ({
     table: {
       background: "linear-gradient(45deg, #800000 30%, #FF8E53 110%)",
@@ -71,12 +65,6 @@ function ViewerForm2({
   const finishDate = new Date(project.implementationPeriod.end);
   const accomplishedDate = new Date(project.dateAccomplished);
   const { user } = useContext(AuthContext);
-  const totalCost = (
-    user.type === 0 ? project.proposedProjectCost : proposedProjectCost
-  )
-    .map((project) => parseFloat(project.cost))
-    .reduce((a, b) => a + b, 0);
-
   return (
     <React.Fragment>
       <TableContainer component={Paper}>
@@ -273,84 +261,6 @@ function ViewerForm2({
               <TableCell className={classes.rowContent} align="center">
                 {finishDate.getFullYear()}
               </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell
-                className={classes.rowTitle}
-                align="center"
-                rowSpan={2}
-              >
-                Proposed Project Cost
-              </TableCell>
-              <TableCell className={classes.rowContent} align="center">
-                {`F.Y. ${project.proposedProjectCost[0].year}`}
-              </TableCell>
-              <TableCell className={classes.rowContent} align="center">
-                {`F.Y. ${project.proposedProjectCost[1].year}`}
-              </TableCell>
-              <TableCell className={classes.rowContent} align="center">
-                {`F.Y. ${project.proposedProjectCost[2].year}`}
-              </TableCell>
-              <TableCell className={classes.rowContent} align="center">
-                TOTAL
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              {user.type === 0 && (
-                <React.Fragment>
-                  <TableCell className={classes.rowContent} align="center">
-                    {`Php ${project.proposedProjectCost[0].cost}`}
-                  </TableCell>
-                  <TableCell className={classes.rowContent} align="center">
-                    {`Php ${project.proposedProjectCost[1].cost}`}
-                  </TableCell>
-                  <TableCell className={classes.rowContent} align="center">
-                    {`Php ${project.proposedProjectCost[2].cost}`}
-                  </TableCell>
-                  <TableCell
-                    className={classes.rowContent}
-                    align="center"
-                  >{`Php ${totalCost}`}</TableCell>
-                </React.Fragment>
-              )}
-              {user.type === 2 && (
-                <React.Fragment>
-                  {proposedProjectCost.map((yearCost, index) => (
-                    <TableCell
-                      className={classes.rowContent}
-                      align="center"
-                      key={yearCost.year}
-                    >
-                      <TextField
-                        onChange={(e) => {
-                          setProposedProjectCost(() => {
-                            var newData = [...proposedProjectCost];
-                            newData[index].cost = e.target.value;
-                            return newData;
-                          });
-                        }}
-                        label="Value"
-                        variant="outlined"
-                        fullWidth
-                        error={checkerForm2.proposedProjectCost[index].error}
-                        helperText={
-                          checkerForm2.proposedProjectCost[index].error
-                            ? checkerForm2.proposedProjectCost[index]
-                                .messages[0]
-                            : null
-                        }
-                        value={yearCost.cost}
-                        InputProps={{ className: classes.textField }}
-                        InputLabelProps={{ className: classes.textField }}
-                      />
-                    </TableCell>
-                  ))}
-                  <TableCell
-                    className={classes.rowContent}
-                    align="center"
-                  >{`Php ${totalCost}`}</TableCell>
-                </React.Fragment>
-              )}
             </TableRow>
           </TableBody>
         </Table>

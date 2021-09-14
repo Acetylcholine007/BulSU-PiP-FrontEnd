@@ -18,6 +18,7 @@ function PDFExport({ projects, filename, institute }) {
     doc.deletePage(1);
 
     projects.forEach((project, index) => {
+      console.log(institute)
       if (project !== undefined) {
         let startDate = new Date(project.implementationPeriod.start);
         let endDate = new Date(project.implementationPeriod.end);
@@ -86,20 +87,6 @@ function PDFExport({ projects, filename, institute }) {
               months[endDate.getMonth()],
               endDate.getDate(),
               endDate.getFullYear(),
-            ],
-            [
-              { content: "12", rowSpan: 2 },
-              { content: "Proposed Project Cost", rowSpan: 2 },
-              `FY ${project.proposedProjectCost[0].year}`,
-              `FY ${project.proposedProjectCost[1].year}`,
-              `FY ${project.proposedProjectCost[2].year}`,
-              "TOTAL",
-            ],
-            [
-              `${project.proposedProjectCost[0].cost}`,
-              `${project.proposedProjectCost[1].cost}`,
-              `${project.proposedProjectCost[2].cost}`,
-              `${total}`,
             ],
           ],
           startY: 1.6,
@@ -236,10 +223,11 @@ function PDFExport({ projects, filename, institute }) {
     <Button
       variant="contained"
       onClick={exportPDF}
+      color="primary"
       style={{ marginLeft: 10 }}
       startIcon={<GetApp />}
     >
-      Download Prep Form
+      Download PAP Form
     </Button>
   );
 }

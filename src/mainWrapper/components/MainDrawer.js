@@ -64,9 +64,6 @@ function MainDrawer({ drawerWidth, open, handleDrawerClose }) {
       listItemContent: {
         color: "white",
       },
-      h5: {
-        fontSize: '1.6rem'
-      }
     };
   });
 
@@ -113,7 +110,7 @@ function MainDrawer({ drawerWidth, open, handleDrawerClose }) {
           background-position="center"
           alt="BSU Logo"
         />
-        <Typography variant="h5" classes={{h5: classes.h5}}>BULACAN STATE UNIVERSITY</Typography>
+        <Typography variant="h5">BULACAN STATE UNIVERSITY</Typography>
       </Container>
       <List>
         <React.Fragment>

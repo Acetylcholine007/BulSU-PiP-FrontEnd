@@ -15,21 +15,13 @@ function CostChart({ costs }) {
     ],
   };
 
-  const projectCost = {
-    labels: costs.map((item) => item.label),
-    datasets: [
-      {
-        label: "Project Cost Tally",
-        data: costs.map((item) => item.value[1]),
-        backgroundColor: statuses.map((status) => status.color),
-      },
-    ],
-  };
-
   const options1 = {
     responsive: true,
     maintainAspectRatio: false,
-    plugins: {
+    plugins: {legend: {
+      position: 'bottom',
+      align: 'center'
+    },
       title: {
         display: true,
         text: "Total Investment Costs Distribution",
@@ -41,28 +33,10 @@ function CostChart({ costs }) {
     },
   };
 
-  const options2 = {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      title: {
-        display: true,
-        text: "Total Project Costs Distribution",
-        fullSize: true,
-        font: {
-          size: 18,
-        },
-      },
-    },
-  };
-
   return (
     <Grid container style={{ height: "100%" }}>
-      <Grid item xs={12} md={6}>
+      <Grid item xs={12}>
         <Pie data={investmentCost} options={options1} />
-      </Grid>
-      <Grid item xs={12} md={6}>
-        <Pie data={projectCost} options={options2} />
       </Grid>
     </Grid>
   );

@@ -19,12 +19,6 @@ import {
   ListItemAvatar,
   ListItemText,
   ListItemSecondaryAction,
-  Chip,
-  Hidden,
-  Table,
-  TableBody,
-  TableRow,
-  TableCell,
   CardContent,
 } from "@material-ui/core";
 import {
@@ -33,7 +27,6 @@ import {
   Folder,
   FunctionsRounded,
 } from "@material-ui/icons";
-import { DatePicker } from "@material-ui/pickers";
 import React from "react";
 
 function EditorForm2({
@@ -257,7 +250,7 @@ function EditorForm2({
             minRows={3}
           />
         </Grid>
-        <Grid item xs={12}>
+        {/* <Grid item xs={12}>
           <Typography variant="h5">Proposed Project Cost</Typography>
           <Chip
             label={<Typography variant="h6">{`${getSum()}`}</Typography>}
@@ -381,7 +374,7 @@ function EditorForm2({
               </TableBody>
             </Table>
           </Grid>
-        </Hidden>
+        </Hidden> */}
         <Grid item xs={12}>
           <Typography variant="h5" display="inline">
             Proponent Information

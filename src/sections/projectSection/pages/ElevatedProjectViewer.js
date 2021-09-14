@@ -17,9 +17,13 @@ import {
   AddCircleOutline,
   Cancel,
   CheckCircle,
+  CheckCircleOutlined,
+  CheckCircleOutlineOutlined,
   Description,
   Domain,
   Edit,
+  Loop,
+  NewReleases,
   Save,
   Settings,
 } from "@material-ui/icons";
@@ -35,12 +39,11 @@ import CreateCommentDialog from "../components/CreateCommentDialog";
 import CommentList from "../components/CommentList";
 import PDFExport from "../../../shared/components/PDFExport";
 import { Admin } from "../../../utils/bulsupis_mw";
-import { elForm1Validator } from "../../../utils/elForm1Validator";
-import { elForm2Validator } from "../../../utils/elForm2Validator";
 import elForm3Validator from "../../../utils/elForm3Validator";
 import AppBreadcrumb from "../../../shared/components/AppBreadcrumb";
 import { SnackbarContext } from "../../../contexts/SnackbarContext";
 import { LoadingContext } from "../../../contexts/LoadingContext";
+import { statuses } from "../../../utils/constants";
 
 const useStyles = makeStyles((theme) => ({
   txt: {
@@ -78,42 +81,43 @@ const useStyles = makeStyles((theme) => ({
   divider: {
     marginBottom: 15,
   },
-  appoveButtonRaised: {
-    backgroundColor: "#81C784",
-    "&:hover": {
-      backgroundColor: "#81C784",
-    },
-  },
-  reviseButtonRaised: {
-    backgroundColor: "#FFB74D",
-    "&:hover": {
-      backgroundColor: "#FFB74D",
-    },
-  },
-  rejectButtonRaised: {
-    backgroundColor: "#E57373",
-    "&:hover": {
-      backgroundColor: "#E57373",
-    },
-  },
-  appoveButton: {
-    "&:hover": {
-      backgroundColor: "#81C784",
-    },
-  },
-  reviseButton: {
-    "&:hover": {
-      backgroundColor: "#FFB74D",
-    },
-  },
-  rejectButton: {
-    "&:hover": {
-      backgroundColor: "#E57373",
-    },
-  },
   cardHeaderAction: {
     margin: "auto",
   },
+  controlToolbar: {
+    padding: 16,
+    color: "white",
+    background: "linear-gradient(45deg, #800000 30%, #FF8E53 110%)",
+    borderRadius: 5,
+  },
+  raised0: {
+    backgroundColor: statuses[0].color,
+    "&:hover": {
+      backgroundColor: statuses[0].color,
+    },
+  },
+  ...statuses
+    .map((statusItem, index) => ({
+      index: index,
+      value: {
+        backgroundColor: statusItem.color,
+        "&:hover": {
+          backgroundColor: statusItem.color,
+        },
+      },
+    }))
+    .reduce((a, v) => ({ ...a, [`raised${v.index}`]: v.value }), {}),
+  ...statuses
+    .map((statusItem, index) => ({
+      index: index,
+      value: {
+        backgroundColor: theme.palette.grey[200],
+        "&:hover": {
+          backgroundColor: statusItem.color,
+        },
+      },
+    }))
+    .reduce((a, v) => ({ ...a, [`flat${v.index}`]: v.value }), {}),
 }));
 
 function ElevatedProjectViewer({ project, priority, instituteId }) {
@@ -144,22 +148,6 @@ function ElevatedProjectViewer({ project, priority, instituteId }) {
     project.pdoSignature ? [project.pdoSignature] : []
   );
 
-  const [checkerForm1, setCheckerForm1] = useState({
-    investmentReq: [
-      { error: false, messages: [] },
-      { error: false, messages: [] },
-      { error: false, messages: [] },
-      { error: false, messages: [] },
-      { error: false, messages: [] },
-    ],
-  });
-  const [checkerForm2, setCheckerForm2] = useState({
-    proposedProjectCost: [
-      { error: false, messages: [] },
-      { error: false, messages: [] },
-      { error: false, messages: [] },
-    ],
-  });
   const [checkerForm3, setCheckerForm3] = useState({
     recievedBy: {
       error: false,
@@ -225,7 +213,6 @@ function ElevatedProjectViewer({ project, priority, instituteId }) {
             investmentReq={investmentReq}
             setInvestmentReq={setInvestmentReq}
             status={status}
-            checkerForm1={checkerForm1}
           />
         );
       case 1:
@@ -235,7 +222,6 @@ function ElevatedProjectViewer({ project, priority, instituteId }) {
             proposedProjectCost={proposedProjectCost}
             setProposedProjectCost={setProposedProjectCost}
             priority={priority}
-            checkerForm2={checkerForm2}
           />
         );
       case 2:
@@ -270,54 +256,10 @@ function ElevatedProjectViewer({ project, priority, instituteId }) {
         <Typography variant="h4" className={classes.pageTitle}>
           {"Project Viewer"}
         </Typography>
-        <ButtonGroup
-          className={classes.buttonGroup}
-          size="medium"
-          variant="contained"
-        >
-          <Button
-            variant={status == 3 ? "contained" : "text"}
-            startIcon={<CheckCircle />}
-            onClick={() => {
-              setStatus(3);
-            }}
-            classes={{
-              contained: classes.appoveButtonRaised,
-              text: classes.appoveButton,
-            }}
-          >
-            Approve
-          </Button>
-          <Button
-            variant={status == 2 ? "contained" : "text"}
-            startIcon={<Edit />}
-            onClick={() => {
-              setStatus(2);
-            }}
-            classes={{
-              contained: classes.reviseButtonRaised,
-              text: classes.reviseButton,
-            }}
-          >
-            Revise
-          </Button>
-          <Button
-            variant={status == 0 ? "contained" : "text"}
-            startIcon={<Cancel />}
-            onClick={() => {
-              setStatus(0);
-            }}
-            classes={{
-              contained: classes.rejectButtonRaised,
-              text: classes.rejectButton,
-            }}
-          >
-            Reject
-          </Button>
-        </ButtonGroup>
         {tabIndex === 2 && project.dateRecieved === undefined && (
           <Button
             variant="contained"
+            color="primary"
             onClick={() => {
               setForm3Data({
                 ...form3Data,
@@ -333,31 +275,10 @@ function ElevatedProjectViewer({ project, priority, instituteId }) {
         )}
         <Button
           variant="contained"
+          color="primary"
           startIcon={<Save />}
           onClick={() => {
             switch (tabIndex) {
-              case 0:
-                let checker1 = elForm1Validator(investmentReq);
-                if (
-                  checker1.investmentReq
-                    .map((item) => !item.error)
-                    .reduce((a, b) => a && b)
-                ) {
-                  handleSubmit();
-                }
-                setCheckerForm1(checker1);
-                break;
-              case 1:
-                let checker2 = elForm2Validator(proposedProjectCost);
-                if (
-                  checker2.proposedProjectCost
-                    .map((item) => !item.error)
-                    .reduce((a, b) => a && b)
-                ) {
-                  handleSubmit();
-                }
-                setCheckerForm2(checker2);
-                break;
               case 2:
                 let checker3 = elForm3Validator(form3Data);
                 if (
@@ -379,7 +300,7 @@ function ElevatedProjectViewer({ project, priority, instituteId }) {
         <PDFExport
           projects={[project]}
           filename={project.title}
-          priority={priority}
+          institute={project.institute.institute}
         />
       </Toolbar>
       <AppBreadcrumb
@@ -410,26 +331,10 @@ function ElevatedProjectViewer({ project, priority, instituteId }) {
               onChange={(event, index) => {
                 switch (tabIndex) {
                   case 0:
-                    let checker1 = elForm1Validator(investmentReq);
-                    if (
-                      checker1.investmentReq
-                        .map((item) => !item.error)
-                        .reduce((a, b) => a && b)
-                    ) {
-                      setTabIndex(index);
-                    }
-                    setCheckerForm1(checker1);
+                    setTabIndex(index);
                     break;
                   case 1:
-                    let checker2 = elForm2Validator(proposedProjectCost);
-                    if (
-                      checker2.proposedProjectCost
-                        .map((item) => !item.error)
-                        .reduce((a, b) => a && b)
-                    ) {
-                      setTabIndex(index);
-                    }
-                    setCheckerForm2(checker2);
+                    setTabIndex(index);
                     break;
                   case 2:
                     let checker3 = elForm3Validator(form3Data);
@@ -456,6 +361,37 @@ function ElevatedProjectViewer({ project, priority, instituteId }) {
               <Tab label="PDO Personnel Feedback" />
             </Tabs>
             {selectForm(project)}
+          </Grid>
+          <Grid item xs={12}>
+            <Divider classes={{ root: classes.subDivider }} />
+          </Grid>
+          <Grid item xs={12}>
+            <Toolbar className={classes.controlToolbar}>
+              <Typography variant="h5" style={{ flexGrow: 1 }}>
+                Project Actions
+              </Typography>
+              <ButtonGroup
+                className={classes.buttonGroup}
+                size="medium"
+                variant="contained"
+              >
+                {statuses.map((statusItem, index) => (
+                  <Button
+                    variant={status == index ? "contained" : "text"}
+                    startIcon={statusItem.icon}
+                    onClick={() => {
+                      setStatus(index);
+                    }}
+                    classes={{
+                      contained: classes[`raised${statusItem.value}`],
+                      text: classes[`flat${statusItem.value}`],
+                    }}
+                  >
+                    {statusItem.label}
+                  </Button>
+                ))}
+              </ButtonGroup>
+            </Toolbar>
           </Grid>
           <Grid item xs={12}>
             <Divider classes={{ root: classes.subDivider }} />

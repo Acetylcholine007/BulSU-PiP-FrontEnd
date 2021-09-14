@@ -4,6 +4,12 @@ import {
   NotificationsNoneOutlined,
   SupervisorAccountOutlined,
   DomainOutlined,
+  EditRounded,
+  NewReleasesRounded,
+  CheckCircleOutlineRounded,
+  CheckCircleRounded,
+  LoopRounded,
+  CancelRounded,
 } from "@material-ui/icons";
 
 export const months = [
@@ -285,26 +291,37 @@ export const statuses = [
     value: 0,
     label: "Dropped",
     color: "#E57373",
+    icon: <NewReleasesRounded />
   },
   {
     value: 1,
     label: "Proposed",
     color: "#FFF176",
+    icon: <CheckCircleOutlineRounded />
   },
   {
     value: 2,
     label: "Revision",
     color: "#FFB74D",
+    icon: <EditRounded />
   },
   {
     value: 3,
-    label: "On-going",
+    label: "Approved",
     color: "#81C784",
+    icon: <CheckCircleRounded />
   },
   {
     value: 4,
+    label: "On-going",
+    color: "#4db6ac",
+    icon: <LoopRounded />
+  },
+  {
+    value: 5,
     label: "Completed",
     color: "#64B5F6",
+    icon: <CancelRounded />
   },
 ];
 

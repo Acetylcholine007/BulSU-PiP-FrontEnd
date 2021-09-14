@@ -54,6 +54,10 @@ function EditorForm3({
         color: "white",
       },
     },
+    notchedOutline: {
+      borderWidth: "1px",
+      borderColor: "white !important",
+    },
   }));
 
   const classes = useStyles();
@@ -86,7 +90,10 @@ function EditorForm3({
                       ? checkerForm3.recievedBy.messages[0]
                       : null
                   }
-                  InputProps={{ className: classes.textField }}
+                  InputProps={{
+                    className: classes.textField,
+                    classes: { notchedOutline: classes.notchedOutline },
+                  }}
                   InputLabelProps={{ className: classes.textField }}
                 />
               </TableCell>
@@ -117,7 +124,10 @@ function EditorForm3({
                       ? checkerForm3.recieverDesignation.messages[0]
                       : null
                   }
-                  InputProps={{ className: classes.textField }}
+                  InputProps={{
+                    className: classes.textField,
+                    classes: { notchedOutline: classes.notchedOutline },
+                  }}
                   InputLabelProps={{ className: classes.textField }}
                 />
               </TableCell>
