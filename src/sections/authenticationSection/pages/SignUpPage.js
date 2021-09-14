@@ -136,17 +136,18 @@ function SignUpPage({ institutes }) {
                       !checker.confirmPassword.error
                     ) {
                       Account.register(email, password, institute)
-                        .then(({ simple, full }) => {
-                          if (simple) {
-                            history.push("/");
-                            setIsLoggedIn(Account.isLoggedIn());
-                          } else {
-                            console.log(full);
-                            setSnackbarData({
-                              type: 3,
-                              message: full,
+                        .then(({ registerSimple }) => {
+                          if (registerSimple) {
+                            Account.isLoggedIn().then(({ simple }) => {
+                              if (simple) {
+                                history.push("/");
+                                setIsLoggedIn(simple);
+                              } else {
+                                history.push("/");
+                              }
                             });
-                            setShowSnackbar(true);
+                          } else {
+                            history.push("/");
                           }
                         })
                         .catch((err) => {
