@@ -23,6 +23,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { Admin } from "../../../utils/bulsupis_mw";
 import AccountModal from "./AccountModal";
 import { SnackbarContext } from "../../../contexts/SnackbarContext";
+import { LoadingContext } from "../../../contexts/LoadingContext";
 import EmptyTableContent from "../../../shared/components/EmptyTableContent";
 
 function AccountList({
@@ -36,6 +37,7 @@ function AccountList({
   const [user, setUser] = useState(null);
   const [openUserModal, setOpenUserModal] = useState(false);
   const { setShowSnackbar, setSnackbarData } = useContext(SnackbarContext);
+  const { setIsLoading } = useContext(LoadingContext);
 
   const useStyles = makeStyles((theme) => ({
     noBorder: {
@@ -82,6 +84,7 @@ function AccountList({
   }, [filter, users]);
 
   const handleToggle = (user) => {
+    setIsLoading(true);
     Admin.Account.setVerification(user.id, !user.verified)
       .then(({ simple, full }) => {
         if (simple) {
@@ -109,10 +112,14 @@ function AccountList({
           message: err.message,
         })
       )
-      .finally(() => setShowSnackbar(true));
+      .finally(() => {
+        setIsLoading(false);
+        setShowSnackbar(true);
+      });
   };
 
   const handleDelete = (user) => {
+    setIsLoading(true);
     Admin.Account.delete(user.id)
       .then(({ simple, full }) => {
         if (simple) {
@@ -142,7 +149,10 @@ function AccountList({
           message: err.message,
         })
       )
-      .finally(() => setShowSnackbar(true));
+      .finally(() => {
+        setIsLoading(false);
+        setShowSnackbar(true);
+      });
   };
 
   return (

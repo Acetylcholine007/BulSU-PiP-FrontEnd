@@ -9,6 +9,7 @@ import {
 import React, { useContext } from "react";
 import { useState } from "react";
 import { SnackbarContext } from "../../../contexts/SnackbarContext";
+import { LoadingContext } from "../../../contexts/LoadingContext";
 import { Projects } from "../../../utils/bulsupis_mw";
 import commentValidator from "../../../utils/commentValidator";
 
@@ -20,6 +21,7 @@ function CreateCommentDialog({
   projectId,
 }) {
   const { setShowSnackbar, setSnackbarData } = useContext(SnackbarContext);
+  const { setIsLoading } = useContext(LoadingContext);
   const [comment, setLocalComment] = useState({
     author: { institute: "Editor" },
     message: "",
@@ -68,12 +70,13 @@ function CreateCommentDialog({
           onClick={() => {
             var checkercomment = commentValidator(comment.message);
             if (!checkercomment.message.error) {
+              setIsLoading(true);
               Projects.comment(projectId, comment.message)
                 .then(({ simple, full }) => {
                   if (simple) {
                     setComments([
                       ...comments,
-                      { ...simple.data, author: {institute: "Editor"} },
+                      { ...simple.data, author: { institute: "Editor" } },
                     ]);
                     setLocalComment({
                       message: "",
@@ -98,7 +101,10 @@ function CreateCommentDialog({
                   });
                   setAddCommentOpen(false);
                 })
-                .finally(() => setShowSnackbar(true));
+                .finally(() => {
+                  setIsLoading(false);
+                  setShowSnackbar(true);
+                });
             }
             setcheckercomment(checkercomment);
           }}

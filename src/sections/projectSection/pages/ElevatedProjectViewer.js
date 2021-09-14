@@ -40,6 +40,7 @@ import { elForm2Validator } from "../../../utils/elForm2Validator";
 import elForm3Validator from "../../../utils/elForm3Validator";
 import AppBreadcrumb from "../../../shared/components/AppBreadcrumb";
 import { SnackbarContext } from "../../../contexts/SnackbarContext";
+import { LoadingContext } from "../../../contexts/LoadingContext";
 
 const useStyles = makeStyles((theme) => ({
   txt: {
@@ -119,6 +120,7 @@ function ElevatedProjectViewer({ project, priority, instituteId }) {
   const classes = useStyles();
   const history = useHistory();
   const { setShowSnackbar, setSnackbarData } = useContext(SnackbarContext);
+  const { setIsLoading } = useContext(LoadingContext);
 
   const [open, setOpen] = useState(false);
   const [addCommentOpen, setAddCommentOpen] = useState(false);
@@ -175,6 +177,7 @@ function ElevatedProjectViewer({ project, priority, instituteId }) {
   };
 
   const handleSubmit = () => {
+    setIsLoading(true);
     Admin.Projects.edit(
       {
         ...project,
@@ -207,7 +210,10 @@ function ElevatedProjectViewer({ project, priority, instituteId }) {
         });
         history.push(`/institutes/${instituteId}`);
       })
-      .finally(() => setShowSnackbar(true));
+      .finally(() => {
+        setIsLoading(false);
+        setShowSnackbar(true);
+      });
   };
 
   const selectForm = (project) => {

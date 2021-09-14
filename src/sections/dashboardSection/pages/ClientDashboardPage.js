@@ -50,7 +50,7 @@ function ClientDashboardPage({ data, user }) {
     cardTextContent: {
       fontSize: 15,
       textAlign: "left",
-      height: "100%",
+      flexGrow: 1,
       overflowY: "auto",
       padding: "5px 20px 5px 20px",
       fontWeight: 600,
@@ -65,6 +65,8 @@ function ClientDashboardPage({ data, user }) {
     card: {
       height: "100%",
       borderRadius: 20,
+      display: "flex",
+      flexDirection: "column",
     },
     cardHeader: {
       background: "linear-gradient(45deg, #800000 30%, #FF8E53 90%)",

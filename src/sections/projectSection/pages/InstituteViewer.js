@@ -20,9 +20,11 @@ import { Projects } from "../../../utils/bulsupis_mw";
 import { institutes } from "../../../utils/constants";
 import AppBreadcrumb from "../../../shared/components/AppBreadcrumb";
 import { SnackbarContext } from "../../../contexts/SnackbarContext";
+import { LoadingContext } from "../../../contexts/LoadingContext";
 
 function InstituteViewer({ institute, user }) {
   const { setShowSnackbar, setSnackbarData } = useContext(SnackbarContext);
+  const { setIsLoading } = useContext(LoadingContext);
   const [open, setOpen] = useState(false);
   const [projects, setProject] = useState(institute.projectList);
   const [localPrio, setLocalPrio] = useState([...institute.priority]);
@@ -109,6 +111,7 @@ function InstituteViewer({ institute, user }) {
             variant="contained"
             startIcon={<Save />}
             onClick={() => {
+              setIsLoading(true);
               Projects.rearrange(localPrio)
                 .then(({ simple, full }) => {
                   if (simple) {
@@ -141,7 +144,10 @@ function InstituteViewer({ institute, user }) {
                     message: err.message,
                   });
                 })
-                .finally(() => setShowSnackbar(true));
+                .finally(() => {
+                  setIsLoading(false);
+                  setShowSnackbar(true);
+                });
             }}
           >
             Save Changes

@@ -23,9 +23,11 @@ import { Projects } from "../../../utils/bulsupis_mw";
 import AppBreadcrumb from "../../../shared/components/AppBreadcrumb";
 import { AddCircle, Description, Edit, LibraryBooks } from "@material-ui/icons";
 import { SnackbarContext } from "../../../contexts/SnackbarContext";
+import { LoadingContext } from "../../../contexts/LoadingContext";
 
 function ProjectEditor({ isNew, project }) {
   const { setShowSnackbar, setSnackbarData } = useContext(SnackbarContext);
+  const { setIsLoading } = useContext(LoadingContext);
   const [page, setPage] = useState(1);
   const history = useHistory();
   const { user } = useContext(AuthContext);
@@ -229,6 +231,7 @@ function ProjectEditor({ isNew, project }) {
 
   const handleSubmit = () => {
     if (isNew) {
+      setIsLoading(true);
       Projects.create(
         {
           ...form1Data,
@@ -265,8 +268,12 @@ function ProjectEditor({ isNew, project }) {
           });
           history.push("/projects");
         })
-        .finally(() => setShowSnackbar(true));
+        .finally(() => {
+          setIsLoading(false);
+          setShowSnackbar(true);
+        });
     } else {
+      setIsLoading(true);
       Projects.edit(
         {
           ...project,
@@ -299,7 +306,10 @@ function ProjectEditor({ isNew, project }) {
             message: err.message,
           });
         })
-        .finally(() => setShowSnackbar(true));
+        .finally(() => {
+          setIsLoading(false);
+          setShowSnackbar(true);
+        });
     }
   };
 

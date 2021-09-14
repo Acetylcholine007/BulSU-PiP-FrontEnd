@@ -10,6 +10,7 @@ import {
   Button,
 } from "@material-ui/core";
 import { useContext, useState } from "react";
+import { LoadingContext } from "../../contexts/LoadingContext";
 import { SnackbarContext } from "../../contexts/SnackbarContext";
 
 import accountEditorValidator from "../../utils/accountEditorValidator";
@@ -17,6 +18,7 @@ import { Account } from "../../utils/bulsupis_mw";
 
 function AccountEditorModal({ open, setOpen }) {
   const { setShowSnackbar, setSnackbarData } = useContext(SnackbarContext);
+  const { setIsLoading } = useContext(LoadingContext);
 
   const useStyles = makeStyles((theme) => ({
     modal: {
@@ -53,6 +55,7 @@ function AccountEditorModal({ open, setOpen }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setIsLoading(true);
     var checker = accountEditorValidator(password);
     if (!checker.password.error) {
       Account.changePassword(password)
@@ -78,7 +81,10 @@ function AccountEditorModal({ open, setOpen }) {
           });
           setOpen(false);
         })
-        .finally(() => setShowSnackbar(true));
+        .finally(() => {
+          setIsLoading(false);
+          setShowSnackbar(true);
+        });
     }
     setaccountEditorChecker(checker);
   };

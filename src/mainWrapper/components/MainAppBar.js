@@ -5,12 +5,14 @@ import {
   Toolbar,
   Typography,
   Avatar,
+  LinearProgress,
 } from "@material-ui/core";
 import clsx from "clsx";
 import { useContext } from "react";
 import MenuIcon from "@material-ui/icons/Menu";
 
 import { AuthContext } from "../../contexts/AuthContext";
+import { LoadingContext } from "../../contexts/LoadingContext";
 
 function MainAppBar({
   open,
@@ -56,6 +58,7 @@ function MainAppBar({
 
   const classes = useStyles();
   const { user } = useContext(AuthContext);
+  const {isLoading} = useContext(LoadingContext);
 
   return (
     <AppBar
@@ -89,6 +92,7 @@ function MainAppBar({
           <Typography variant="body1">{`${user.college}`}</Typography>
         </Avatar>
       </Toolbar>
+          {isLoading && <LinearProgress />}
     </AppBar>
   );
 }

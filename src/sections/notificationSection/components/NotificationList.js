@@ -11,6 +11,7 @@ import {
 } from "@material-ui/core";
 import { Delete } from "@material-ui/icons";
 import { useContext, useState } from "react";
+import { LoadingContext } from "../../../contexts/LoadingContext";
 import { SnackbarContext } from "../../../contexts/SnackbarContext";
 import EmptyTableContent from "../../../shared/components/EmptyTableContent";
 import { Notifications } from "../../../utils/bulsupis_mw";
@@ -20,6 +21,7 @@ function NotificationList({ user: { notificationList } }) {
   const [open, setOpen] = useState(false);
   const [notification, setNotification] = useState(null);
   const { setShowSnackbar, setSnackbarData } = useContext(SnackbarContext);
+  const { setIsLoading } = useContext(LoadingContext);
 
   const selectNotification = (notification) => {
     setNotification(notification);
@@ -81,6 +83,7 @@ function NotificationList({ user: { notificationList } }) {
                   <TableCell style={{ padding: 0 }}>
                     <IconButton
                       onClick={() => {
+                        setIsLoading(true);
                         Notifications.delete(notification.id)
                           .then(({ simple, full }) => {
                             if (simple) {
@@ -102,7 +105,10 @@ function NotificationList({ user: { notificationList } }) {
                               message: err.message,
                             })
                           )
-                          .finally(() => setShowSnackbar(true));
+                          .finally(() => {
+                            setIsLoading(false);
+                            setShowSnackbar(true);
+                          });
                       }}
                     >
                       <Delete style={{ color: "#f44336" }} />

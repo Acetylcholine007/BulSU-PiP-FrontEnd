@@ -24,6 +24,7 @@ import PDFExport from "../../../shared/components/PDFExport";
 import { Projects } from "../../../utils/bulsupis_mw";
 import AppBreadcrumb from "../../../shared/components/AppBreadcrumb";
 import { SnackbarContext } from "../../../contexts/SnackbarContext";
+import { LoadingContext } from "../../../contexts/LoadingContext";
 
 const useStyles = makeStyles((theme) => ({
   txt: {
@@ -64,6 +65,7 @@ const useStyles = makeStyles((theme) => ({
 
 function ProjectViewer({ project, priority }) {
   const { setShowSnackbar, setSnackbarData } = useContext(SnackbarContext);
+  const { setIsLoading } = useContext(LoadingContext);
   const classes = useStyles();
   const history = useHistory();
   const [open, setOpen] = useState(false);
@@ -71,6 +73,7 @@ function ProjectViewer({ project, priority }) {
   const [tabIndex, setTabIndex] = useState(0);
 
   const handleDelete = () => {
+    setIsLoading(true);
     Projects.delete(project.id)
       .then(({ simple, full }) => {
         if (simple) {
@@ -93,7 +96,10 @@ function ProjectViewer({ project, priority }) {
           message: err.message,
         });
       })
-      .finally(() => setShowSnackbar(true));
+      .finally(() => {
+        setIsLoading(false);
+        setShowSnackbar(true);
+      });
   };
 
   const selectComment = (comment) => {

@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { createTheme, ThemeProvider } from "@material-ui/core";
+import { createTheme, ThemeProvider, LinearProgress } from "@material-ui/core";
 import React, { useState, useEffect } from "react";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 
@@ -16,6 +16,7 @@ import SignUpWrapper from "./sections/authenticationSection/wrappers/SignUpWrapp
 import ErrorComponent from "./shared/components/ErrorComponent";
 import { SnackbarContext } from "./contexts/SnackbarContext";
 import { DialogContext } from "./contexts/DialogContext";
+import { LoadingContext } from "./contexts/LoadingContext";
 import AppSnackbar from "./shared/components/AppSnackbar";
 import AppDialog from "./shared/components/AppDialog";
 import UserRoutes from "./routes/UserRoutes";
@@ -60,6 +61,7 @@ function App({ isLoggedIn, setIsLoggedIn }) {
   const [showSnackbar, setShowSnackbar] = useState(false);
   const [dialogData, setDialogData] = useState(null);
   const [showDialog, setShowDialog] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const getUserData = async () =>
     await Account.getInfo()
@@ -124,33 +126,40 @@ function App({ isLoggedIn, setIsLoggedIn }) {
               setShowDialog: setShowDialog,
             }}
           >
-            <MuiPickersUtilsProvider utils={DateFnsUtils}>
-              <ThemeProvider theme={theme}>
-                {!error && !isLoggedIn && (
-                  <Router>
-                    <Switch>
-                      <Route exact path="/signup">
-                        <SignUpWrapper />
-                      </Route>
-                      <Route path="/">
-                        <LogInPage />
-                      </Route>
-                      <Route exact path="*">
-                        <NotFoundPage />
-                      </Route>
-                    </Switch>
-                  </Router>
-                )}
-                {error && <ErrorComponent message={error} />}
-                {!error && isLoggedIn && user && !error && (
-                  <Router>
-                    <MainWrapper>{mainRoutes(user.type)}</MainWrapper>
-                  </Router>
-                )}
-                {snackbarData && <AppSnackbar />}
-                {dialogData && <AppDialog />}
-              </ThemeProvider>
-            </MuiPickersUtilsProvider>
+            <LoadingContext.Provider
+              value={{
+                isLoading: isLoading,
+                setIsLoading: setIsLoading,
+              }}
+            >
+              <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                <ThemeProvider theme={theme}>
+                  {!error && !isLoggedIn && (
+                    <Router>
+                      <Switch>
+                        <Route exact path="/signup">
+                          <SignUpWrapper />
+                        </Route>
+                        <Route path="/">
+                          <LogInPage />
+                        </Route>
+                        <Route exact path="*">
+                          <NotFoundPage />
+                        </Route>
+                      </Switch>
+                    </Router>
+                  )}
+                  {error && <ErrorComponent message={error} />}
+                  {!error && isLoggedIn && user && !error && (
+                    <Router>
+                      <MainWrapper>{mainRoutes(user.type)}</MainWrapper>
+                    </Router>
+                  )}
+                  {snackbarData && <AppSnackbar />}
+                  {dialogData && <AppDialog />}
+                </ThemeProvider>
+              </MuiPickersUtilsProvider>
+            </LoadingContext.Provider>
           </DialogContext.Provider>
         </SnackbarContext.Provider>
       </InstituteContext.Provider>

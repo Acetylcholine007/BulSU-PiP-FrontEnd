@@ -40,7 +40,7 @@ function CommentModal({ open, setOpen, comment }) {
     >
       <Fade in={open}>
         <div className={classes.paper}>
-          <Container>
+          <Container maxWidth='sm'>
             <Grid container>
               <Grid item xs={12}>
                 <Typography variant="body1">{`${comment.author.institute} — ${(new Date(comment.datetime)).toDateString()}`}</Typography>
