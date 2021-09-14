@@ -50,7 +50,7 @@ function ClientDashboardPage({ data, user }) {
     cardTextContent: {
       fontSize: 15,
       textAlign: "left",
-      flexGrow: 1,
+      height: "100%",
       overflowY: "auto",
       padding: "5px 20px 5px 20px",
       fontWeight: 600,
@@ -65,8 +65,6 @@ function ClientDashboardPage({ data, user }) {
     card: {
       height: "100%",
       borderRadius: 20,
-      display: "flex",
-      flexDirection: "column",
     },
     cardHeader: {
       background: "linear-gradient(45deg, #800000 30%, #FF8E53 90%)",
@@ -157,64 +155,47 @@ function ClientDashboardPage({ data, user }) {
         <Grid container className={classes.gridContainer}>
           <Grid item md={8} xs={12} className={classes.innerGridContainer}>
             <Grid container className={classes.gridContainer}>
-              <Grid item md={9} xs={9} className={classes.upperInnerGridItem}>
-                <Box
-                  display="flex"
-                  alignItems="center"
-                  style={{ height: "100%" }}
-                >
-                  <Avatar
-                    className={classes.avatarLogo}
-                    src={user.institute.profile_img.src}
-                  />
-                  <Typography
-                    variant="h4"
-                    style={{
-                      verticalAlign: "middle",
-                      paddingLeft: "1em",
-                      fontWeight: "bold",
-                    }}
-                  >
-                    {" "}
-                    {user.type == 0
-                      ? `${user.institute.institute}`
-                      : "BulSU Projects"}{" "}
-                  </Typography>
-                </Box>
-              </Grid>
               <Hidden xsDown>
-                <Grid
-                  item
-                  md={3}
-                  xs={12}
-                  className={classes.upperInnerGridItem}
-                >
+                <Grid item md={4} xs={6} className={classes.upperInnerGridItem}>
                   <Card className={classes.card}>
                     <CardHeader
                       className={classes.cardTextHeader}
                       title="Completed"
                     />
                     <CardContent className={classes.cardTextContent}>
-                      {statusContent(4, "Completed")}
+                      {statusContent(5, "Completed")}
                     </CardContent>
                   </Card>
                 </Grid>
               </Hidden>
               <Hidden xsDown>
-                <Grid item md={3} xs={6} className={classes.lowerInnerGridItem}>
+                <Grid item md={4} xs={6} className={classes.upperInnerGridItem}>
                   <Card className={classes.card}>
                     <CardHeader
                       className={classes.cardTextHeader}
-                      title="Proposed"
+                      title="On-Going"
                     />
                     <CardContent className={classes.cardTextContent}>
-                      {statusContent(1, "Proposed")}
+                      {statusContent(4, "On-Going")}
                     </CardContent>
                   </Card>
                 </Grid>
               </Hidden>
               <Hidden xsDown>
-                <Grid item md={3} xs={6} className={classes.lowerInnerGridItem}>
+                <Grid item md={4} xs={6} className={classes.upperInnerGridItem}>
+                  <Card className={classes.card}>
+                    <CardHeader
+                      className={classes.cardTextHeader}
+                      title="Approved"
+                    />
+                    <CardContent className={classes.cardTextContent}>
+                      {statusContent(3, "Approved")}
+                    </CardContent>
+                  </Card>
+                </Grid>
+              </Hidden>
+              <Hidden xsDown>
+                <Grid item md={4} xs={6} className={classes.lowerInnerGridItem}>
                   <Card className={classes.card}>
                     <CardHeader
                       className={classes.cardTextHeader}
@@ -227,20 +208,20 @@ function ClientDashboardPage({ data, user }) {
                 </Grid>
               </Hidden>
               <Hidden xsDown>
-                <Grid item md={3} xs={6} className={classes.lowerInnerGridItem}>
+                <Grid item md={4} xs={6} className={classes.lowerInnerGridItem}>
                   <Card className={classes.card}>
                     <CardHeader
                       className={classes.cardTextHeader}
-                      title="On-Going"
+                      title="Proposed"
                     />
                     <CardContent className={classes.cardTextContent}>
-                      {statusContent(3, "On-Going")}
+                      {statusContent(1, "Proposed")}
                     </CardContent>
                   </Card>
                 </Grid>
               </Hidden>
               <Hidden xsDown>
-                <Grid item md={3} xs={6} className={classes.lowerInnerGridItem}>
+                <Grid item md={4} xs={6} className={classes.lowerInnerGridItem}>
                   <Card className={classes.card}>
                     <CardHeader
                       className={classes.cardTextHeader}
