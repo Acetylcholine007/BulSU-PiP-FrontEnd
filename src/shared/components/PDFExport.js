@@ -22,10 +22,6 @@ function PDFExport({ projects, filename, institute }) {
       if (project !== undefined) {
         let startDate = new Date(project.implementationPeriod.start);
         let endDate = new Date(project.implementationPeriod.end);
-        let total = project.proposedProjectCost
-          .map((item) => parseFloat(item.cost))
-          .reduce((a, b) => a + b);
-
         doc.addPage("a4", "p");
         doc.text(
           "PRIORITY PROJECTS, ACTIVITIES AND PROGRAMS (PAPs) FOR FY___",
