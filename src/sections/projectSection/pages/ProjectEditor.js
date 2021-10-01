@@ -217,6 +217,9 @@ function ProjectEditor({ isNew, project }) {
     },
   });
 
+  const removeComma = (items) =>
+    items.map((item) => ({ ...item, value: item.value.replace(",", "") }));
+
   const handleSubmit = () => {
     if (isNew) {
       setIsLoading(true);
@@ -224,6 +227,7 @@ function ProjectEditor({ isNew, project }) {
         {
           ...form1Data,
           ...form2Data,
+          investmentReq: removeComma(form1Data.investmentReq),
           address: institutes.find(
             (institute) => institute.abbv === user.institute.abbv
           ).address,
@@ -267,6 +271,7 @@ function ProjectEditor({ isNew, project }) {
           ...project,
           ...form1Data,
           ...form2Data,
+          investmentReq: removeComma(form1Data.investmentReq),
           fileList: oldFileList,
           signature: oldSignature.length ? oldSignature[0] : null,
         },

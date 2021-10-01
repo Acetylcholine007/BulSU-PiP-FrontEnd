@@ -53,7 +53,10 @@ function EditorForm1({ form1Data, setForm1Data, checkerForm1 }) {
   const getSum = () => {
     var sum = 0;
     form1Data.investmentReq.forEach(
-      (item) => (sum += parseFloat(item.value === "" ? "0" : item.value))
+      (item) =>
+        (sum += parseFloat(
+          item.value === "" ? "0" : item.value.replace(",", "")
+        ))
     );
     return `Php ${sum.toFixed(2)}`;
   };

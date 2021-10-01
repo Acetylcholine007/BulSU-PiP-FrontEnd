@@ -109,7 +109,11 @@ function form2Validator({
     result.telephoneNumber.messages.push("Needs a Telephone Number");
   } else {
     var telephoneNo = /^\d{3}[-]\d{4}$/;
-    if (!telephoneNumber.match(telephoneNo)) {
+    var telephoneNo2 = /^\(\d{3}\)\d{3}[-]\d{4}$/;
+    if (
+      !telephoneNumber.match(telephoneNo) &&
+      !telephoneNumber.match(telephoneNo2)
+    ) {
       result.telephoneNumber.error = true;
       result.telephoneNumber.messages.push("Invalid Telephone Number");
     }

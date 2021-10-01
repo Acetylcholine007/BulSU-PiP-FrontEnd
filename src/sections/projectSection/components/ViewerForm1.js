@@ -15,10 +15,7 @@ import { AuthContext } from "../../../contexts/AuthContext";
 import { papLevels, readinessLevels, statuses } from "../../../utils/constants";
 import GSPViewer from "./GSPViewer";
 
-function ViewerForm1({
-  project,
-  status,
-}) {
+function ViewerForm1({ project, status }) {
   const useStyles = makeStyles(() => ({
     table: {
       background: "linear-gradient(45deg, #800000 30%, #FF8E53 110%)",
@@ -58,6 +55,11 @@ function ViewerForm1({
   const finishDate = new Date(project.implementationPeriod.end);
   const { user } = useContext(AuthContext);
 
+  const columnCalc = () =>
+    project.investmentReq
+      .map((item) => (parseFloat(item.value) !== 0 ? 1 : 0))
+      .reduce((a, b) => a + b);
+
   return (
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="spanning table">
@@ -69,7 +71,7 @@ function ViewerForm1({
             <TableCell
               className={classes.tableTitle2}
               align="center"
-              colSpan={5}
+              colSpan={columnCalc()}
             >
               Particulars
             </TableCell>
@@ -103,7 +105,7 @@ function ViewerForm1({
             <TableCell
               className={classes.rowContent}
               align="center"
-              colSpan={5}
+              colSpan={columnCalc()}
             >
               {project.obligationType}
             </TableCell>
@@ -115,7 +117,7 @@ function ViewerForm1({
             <TableCell
               className={classes.rowContent}
               align="center"
-              colSpan={5}
+              colSpan={columnCalc()}
             >
               {project.proponent}
             </TableCell>
@@ -127,7 +129,7 @@ function ViewerForm1({
             <TableCell
               className={classes.rowContent}
               align="center"
-              colSpan={5}
+              colSpan={columnCalc()}
             >
               {`Php ${project.investmentReq
                 .map((item) => parseFloat(item.value))
@@ -138,7 +140,14 @@ function ViewerForm1({
             <TableCell className={classes.rowTitle} align="center" rowSpan={2}>
               Investment Requirement
             </TableCell>
-            <TableCell className={classes.rowContent} align="center">
+            {project.investmentReq.map((item) =>
+              parseFloat(item.value) != 0 ? (
+                <TableCell className={classes.rowContent} align="center">
+                  {`F.Y. ${item.year}`}
+                </TableCell>
+              ) : null
+            )}
+            {/* <TableCell className={classes.rowContent} align="center">
               {`F.Y. ${project.investmentReq[0].year}`}
             </TableCell>
             <TableCell className={classes.rowContent} align="center">
@@ -152,10 +161,17 @@ function ViewerForm1({
             </TableCell>
             <TableCell className={classes.rowContent} align="center">
               {`F.Y. ${project.investmentReq[4].year}`}
-            </TableCell>
+            </TableCell> */}
           </TableRow>
           <TableRow>
-            <TableCell className={classes.rowContent} align="center">
+            {project.investmentReq.map((item) =>
+              parseFloat(item.value) != 0 ? (
+                <TableCell className={classes.rowContent} align="center">
+                  {`Php ${item.value}`}
+                </TableCell>
+              ) : null
+            )}
+            {/* <TableCell className={classes.rowContent} align="center">
               {`Php ${project.investmentReq[0].value}`}
             </TableCell>
             <TableCell className={classes.rowContent} align="center">
@@ -169,7 +185,7 @@ function ViewerForm1({
             </TableCell>
             <TableCell className={classes.rowContent} align="center">
               {`Php ${project.investmentReq[4].value}`}
-            </TableCell>
+            </TableCell> */}
           </TableRow>
           <TableRow>
             <TableCell className={classes.rowTitle} align="center">
@@ -178,7 +194,7 @@ function ViewerForm1({
             <TableCell
               className={classes.rowContent}
               align="center"
-              colSpan={5}
+              colSpan={columnCalc()}
             >
               {`${startDate.toDateString()} - ${finishDate.toDateString()}`}
             </TableCell>
@@ -190,7 +206,7 @@ function ViewerForm1({
             <TableCell
               className={classes.rowContent}
               align="center"
-              colSpan={5}
+              colSpan={columnCalc()}
             >
               {papLevels[project.PAPLevel - 1].label}
             </TableCell>
@@ -202,7 +218,7 @@ function ViewerForm1({
             <TableCell
               className={classes.rowContent}
               align="center"
-              colSpan={5}
+              colSpan={columnCalc()}
             >
               {readinessLevels[project.readiness - 1].label}
             </TableCell>
@@ -214,7 +230,7 @@ function ViewerForm1({
             <TableCell
               className={classes.rowContent}
               align="center"
-              colSpan={5}
+              colSpan={columnCalc()}
             >
               {statuses[user.type === 0 ? project.status : status].label}
             </TableCell>

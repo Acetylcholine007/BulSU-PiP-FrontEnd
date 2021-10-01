@@ -18,7 +18,6 @@ function PDFExport({ projects, filename, institute }) {
     doc.deletePage(1);
 
     projects.forEach((project, index) => {
-      console.log(institute)
       if (project !== undefined) {
         let startDate = new Date(project.implementationPeriod.start);
         let endDate = new Date(project.implementationPeriod.end);
@@ -136,7 +135,9 @@ function PDFExport({ projects, filename, institute }) {
             ["Designation", project.recieverDesignation],
             [
               "Date Recieved",
-              new Date(project.dateRecieved).toDateString(),
+              project.dateRecieved !== undefined && project.dateRecieved !== ""
+                ? new Date(project.dateRecieved).toDateString()
+                : "Not yet Received",
               "Signature",
             ],
           ],

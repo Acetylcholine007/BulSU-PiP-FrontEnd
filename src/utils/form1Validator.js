@@ -65,14 +65,15 @@ export const form1Validator = ({
   }
 
   investmentReq.forEach((item, index) => {
-    if (item.value === "") {
+    let newItem = { ...item, value: item.value.replace(",", "") };
+    if (newItem.value === "") {
       result.investmentReq[index].error = true;
       result.investmentReq[index].messages.push("Please put a value");
     } else {
-      let isNumber = !isNaN(item.value);
+      let isNumber = !isNaN(newItem.value);
       console.log(isNumber);
       if (isNumber) {
-        let number = parseFloat(item.value);
+        let number = parseFloat(newItem.value);
         if (number < 0) {
           result.investmentReq[index].error = true;
           result.investmentReq[index].messages.push("Smaller than 0");

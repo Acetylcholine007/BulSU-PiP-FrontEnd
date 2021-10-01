@@ -480,7 +480,7 @@ function EditorForm2({
               })
             }
             className={classes.field}
-            label="Telephone Number format: XXX-XXXX"
+            label="Telephone Number format: XXX-XXXX or (XXX)XXX-XXXX"
             variant="outlined"
             color="primary"
             fullWidth
